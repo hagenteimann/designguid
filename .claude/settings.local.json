@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \":*)",
+      "Bash(del \"kontakt_formular_installation_guide.md\")",
+      "Bash(del \"Design_System_Agent_V4.pdf\")",
+      "Bash(rm -f NAVIGATION.md ASSETS.md ORDNERSTRUKTUR.md CD_MANUAL_WORKFLOW.md)",
+      "Bash(ls -la *.md)",
+      "Bash(mv DESIGN_SYSTEM.md GUIDES/)",
+      "Bash(mv FUNNEL_STRATEGIE.md GUIDES/)",
+      "Bash(mv KONTAKTFORMULAR.md GUIDES/)",
+      "Bash(mv SEO.md GUIDES/)",
+      "Bash(mv SECURITY.md GUIDES/)",
+      "Bash(ls -1 *.md)"
+    ]
+  }
+}
