@@ -46,76 +46,118 @@ Da der `anon_key` öffentlich im HTML/JS steht, gelten folgende Sicherheitsmaßn
 
 ## Implementierungs-Beispiel (HTML + JS)
 
-Variablen anpassen und einfügen:
+Variablen anpassen und einfügen.
+
+**Supabase SDK:** Immer eine fixe Version mit SRI-Hash einbinden. Hash generieren unter [https://www.srihash.org](https://www.srihash.org) oder per CLI:
+```bash
+curl -s https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js | openssl dgst -sha384 -binary | openssl base64 -A
+```
+Dann im Script-Tag:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js"
+        integrity="sha384-GENERIERTER_HASH"
+        crossorigin="anonymous"></script>
+```
+
+---
 
 ```html
+<!-- Feedback-Element (oberhalb des Formulars) -->
+<div id="form-status" role="status" aria-live="polite" style="display:none;"></div>
+
 <!-- Das Formular -->
-<form id="genie-contact-form">
-  <!-- Honeypot (Versteckt für Menschen) -->
-  <div style="display:none;">
+<form id="genie-contact-form" novalidate>
+  <!-- Honeypot (versteckt für Menschen, sichtbar für Bots) -->
+  <div style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
     <input type="text" name="hp_field" id="hp_field" tabindex="-1" autocomplete="off">
   </div>
 
   <!-- Sichtbare Felder -->
-  <input type="text" name="name" placeholder="Dein Name *" required>
-  <input type="email" name="email" placeholder="Deine E-Mail">
-  <input type="text" name="company" placeholder="Firma">
-  <textarea name="message" placeholder="Deine Nachricht"></textarea>
+  <label for="field-name">Name *</label>
+  <input type="text" id="field-name" name="name" required autocomplete="name">
+
+  <label for="field-email">E-Mail</label>
+  <input type="email" id="field-email" name="email" autocomplete="email">
+
+  <label for="field-company">Firma</label>
+  <input type="text" id="field-company" name="company" autocomplete="organization">
+
+  <label for="field-message">Nachricht</label>
+  <textarea id="field-message" name="message" rows="4"></textarea>
 
   <button type="submit" id="submit-btn">Anfrage senden</button>
 </form>
 
-<!-- Supabase SDK laden -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  #form-status {
+    padding: var(--space-300);
+    border-radius: var(--radius-squircle-sm);
+    margin-bottom: var(--space-300);
+  }
+  #form-status.success {
+    background: var(--color-primary-100);
+    color: var(--color-primary-500);
+  }
+  #form-status.error {
+    background: hsl(0, 80%, 95%);
+    color: hsl(0, 80%, 35%);
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js"
+        integrity="sha384-GENERIERTER_HASH"
+        crossorigin="anonymous"></script>
 
 <script>
-  // --- CONFIGURATION ---
-  const SUPABASE_URL = 'DEINE_SUPABASE_URL';
+  const SUPABASE_URL    = 'DEINE_SUPABASE_URL';
   const SUPABASE_ANON_KEY = 'DEIN_SUPABASE_ANON_KEY';
-  const ORG_ID = 'DEINE_ORG_ID_UUID';
-  // ---------------------
+  const ORG_ID          = 'DEINE_ORG_ID_UUID';
 
   const { createClient } = supabase;
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const form = document.getElementById('genie-contact-form');
+
+  const form   = document.getElementById('genie-contact-form');
+  const btn    = document.getElementById('submit-btn');
+  const status = document.getElementById('form-status');
+
+  function showStatus(message, type) {
+    status.textContent = message;
+    status.className = type;
+    status.style.display = 'block';
+    status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = document.getElementById('submit-btn');
+    status.style.display = 'none';
     btn.disabled = true;
-    btn.innerText = 'Wird gesendet...';
+    btn.textContent = 'Wird gesendet…';
 
     const formData = new FormData(form);
 
-    // 1. Honeypot Check
-    if (formData.get('hp_field')) {
-      console.warn('Bot detected.');
-      return;
-    }
+    if (formData.get('hp_field')) return; // Bot – still, kein Feedback
 
-    // 2. Daten vorbereiten
     const payload = {
-      org_id: ORG_ID,
-      name: formData.get('name'),
-      email: formData.get('email'),
+      org_id:  ORG_ID,
+      name:    formData.get('name'),
+      email:   formData.get('email'),
       company: formData.get('company'),
       message: formData.get('message'),
-      source: 'website'
+      source:  'website'
     };
 
-    // 3. An Genie senden
-    const { data, error } = await supabaseClient
+    const { error } = await supabaseClient
       .from('inbound_leads')
       .insert([payload]);
 
     if (error) {
-      alert('Fehler beim Senden: ' + error.message);
+      showStatus('Fehler beim Senden – bitte versuche es erneut.', 'error');
       btn.disabled = false;
-      btn.innerText = 'Anfrage senden';
+      btn.textContent = 'Anfrage senden';
     } else {
-      alert('Vielen Dank! Deine Anfrage ist eingegangen.');
+      showStatus('Vielen Dank! Deine Anfrage ist eingegangen.', 'success');
       form.reset();
-      btn.innerText = 'Gesendet';
+      btn.textContent = 'Gesendet ✓';
     }
   });
 </script>
