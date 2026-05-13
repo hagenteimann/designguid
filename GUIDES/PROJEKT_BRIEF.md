@@ -157,4 +157,18 @@ Bestätigung abwarten bevor mit Coding begonnen wird.
 
 ---
 
+---
+
+## Verbindung zum Ralph Loop
+
+Dieser Brief ist die Pflichtbasis für jeden Ralph Loop Build. Nach Phase 2 (Sektionen bestätigt) wird aus dem Brief direkt der **PLAN.md** generiert:
+
+- Jede Section aus 0.3 → ein Step im PLAN.md
+- Token-Mapping aus Phase 1 → Step 1 im PLAN.md
+- Relevante Guides aus 0.4 → werden pro Step geladen, nicht alle auf einmal
+
+→ Wie PLAN.md strukturiert sein muss: **[RALPH_LOOP.md](./RALPH_LOOP.md)**
+
+---
+
 *Push8 Website Guide – Stand Mai 2026*

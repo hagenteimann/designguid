@@ -7,6 +7,7 @@ Verbindliche Design- und Coding-Regeln für alle Push8-Projekte. Dieser Guide wi
 ## Phase 0: Agent-Initialisierung
 
 > **Bei einem Website-Rebuild: Zuerst [PROJEKT_BRIEF.md](./PROJEKT_BRIEF.md) ausfüllen – dann erst diesen Guide lesen.**
+> **Für autonome Builds mit Validator-Agent:** [RALPH_LOOP.md](./RALPH_LOOP.md) – dieser Guide wird dort pro Step gezielt geladen, nicht als Block.
 
 Bevor eine einzige Zeile Code geschrieben wird, klärt der Agent folgende Punkte:
 

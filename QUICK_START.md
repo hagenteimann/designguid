@@ -10,9 +10,11 @@ Push8 Website-Guide mit **6 Core Workflows** für KI-Agenten. Jeder Workflow hat
 - ✅ **Quick Checklist** (1 Seite, praktisch)
 - 📖 **Detaildoku** (GUIDES/ Ordner, wenn Fragen)
 
+> **Für komplette Website-Builds:** Ralph Loop verwenden – autonomer Zwei-Agenten-Prozess mit Plan, Validator und MEMORY.md-Konsolidierung. Spart 80–90% Kontext-Tokens gegenüber einem kontinuierlichen Loop. → [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md)
+
 ---
 
-## Die 5 Core Workflows
+## Die 6 Core Workflows
 
 ### 1️⃣ **Navigation & Sections hinzufügen**
 
@@ -129,6 +131,7 @@ Push8 Website-Guide mit **6 Core Workflows** für KI-Agenten. Jeder Workflow hat
 
 **Siehe:**
 - 📖 [PROJEKT_BRIEF.md](GUIDES/PROJEKT_BRIEF.md)
+- 📖 [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md) – für autonomen Build mit Validator-Agent
 
 ---
 
@@ -210,6 +213,7 @@ Fertig! ✅
 | Deployment | [Link](CHECKLISTS/deploy.checklist.md) | [Link](GUIDES/WORKFLOW_DEPLOYMENT.md) |
 | Onboarding | [Link](CHECKLISTS/vibe-coder.checklist.md) | — |
 | Website Rebuild | — | [Link](GUIDES/PROJEKT_BRIEF.md) |
+| Ralph Loop | — | [Link](GUIDES/RALPH_LOOP.md) |
 
 ### Alle Guides
 | Topic | Link |

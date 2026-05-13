@@ -15,6 +15,8 @@ Das **Corporate Design Manual (CD-Manual)** ist eine **interaktive HTML-Datei**,
 
 ---
 
+> **Im Ralph Loop:** CD-Manual wird vom Implementer-Agent automatisch nach jedem Step aktualisiert – kein separater Workflow nötig. Jeder Step im PLAN.md enthält ein "Dokumentieren:"-Feld das vorschreibt was eingetragen wird. → [RALPH_LOOP.md](./RALPH_LOOP.md)
+
 ## Agent-Workflow
 
 ### 1. Beim Projekt-Start
