@@ -1,0 +1,23 @@
+# Ralph Loop – Agent-Konfiguration
+# Dokumentation: GUIDES/RALPH_LOOP.md
+
+# ── Implementer ──────────────────────────────────────────────────────────
+# Kapazitätsstarkes Modell – Coding-Qualität
+IMPLEMENTER_CMD="claude"
+
+# ── Validator ────────────────────────────────────────────────────────────
+# Schnelles/günstiges Modell – binäre Checks reichen
+VALIDATOR_CMD="claude"
+
+# ── Alternativ-Konfigurationen ───────────────────────────────────────────
+# Gemini:
+# IMPLEMENTER_CMD="gemini"
+# VALIDATOR_CMD="gemini --model gemini-2.0-flash"
+
+# Gemischt (Implementer Claude, Validator Gemini):
+# IMPLEMENTER_CMD="claude"
+# VALIDATOR_CMD="gemini --model gemini-2.0-flash"
+
+# ── Loop-Verhalten ───────────────────────────────────────────────────────
+# Maximale Retries pro Step bevor Human Review
+MAX_RETRIES=3

@@ -104,23 +104,50 @@ Validator-Check:
 
 ## Agenten-Konfiguration
 
+Der Loop ist **agent-agnostisch** – er funktioniert mit Claude, Gemini, GPT oder jedem anderen CLI-Agent. Konfiguration über `.ralph-config` im Projektroot.
+
+### Rollen statt Modellnamen
+
+| Rolle | Anforderung | Beispiele |
+|---|---|---|
+| **Implementer** | Hohe Coding-Qualität, großes Kontextfenster | claude-sonnet, gemini-2.0-pro, gpt-4o |
+| **Validator** | Schnell, günstig, binäre Checks reichen | claude-haiku, gemini-flash, gpt-4o-mini |
+
+### `.ralph-config` (Projektroot)
+
+```bash
+# Implementer Agent – kapazitätsstarkes Modell
+IMPLEMENTER_CMD="claude"
+
+# Validator Agent – schnelles/günstiges Modell
+VALIDATOR_CMD="claude --model claude-haiku-4-5-20251001"
+
+# Für Gemini:
+# IMPLEMENTER_CMD="gemini"
+# VALIDATOR_CMD="gemini --model gemini-2.0-flash"
+
+# Für OpenAI:
+# IMPLEMENTER_CMD="openai api chat.completions.create -m gpt-4o"
+# VALIDATOR_CMD="openai api chat.completions.create -m gpt-4o-mini"
+
+MAX_RETRIES=3
+```
+
 ### Agent A – Implementer
 
 ```
-Modell:    claude-sonnet (Qualität braucht Kapazität)
-Liest:     PLAN.md → aktueller Step + VALIDATION.md (wenn Retry)
-Schreibt:  Code + CD-Manual Update + DONE_NOTES.md
-Kontextlimit: Nur PLAN.md + relevante Guides aus Step laden
-             (nicht alle 19 Guides – nur die im Step genannten)
+Liest:   PLAN.md → aktueller Step + VALIDATION.md (wenn Retry)
+Schreibt: Code + CD-Manual Update + DONE_NOTES.md (3 Zeilen max)
+Stoppt:  Nach jedem Step – kein kontinuierlicher Loop
+Guides:  Nur die im jeweiligen Step angegebenen laden
 ```
 
 ### Agent B – Validator
 
 ```
-Modell:    claude-haiku (günstig, binäre Checks reichen)
-Liest:     PLAN.md Step N + git diff HEAD~1 + DONE_NOTES.md
-Schreibt:  VALIDATION.md (✅ bestanden / ❌ Fehler + Grund)
-Kontextlimit: Nie die ganze Codebase – nur Diff + Plan-Step
+Liest:   PLAN.md Step N + git diff HEAD~1 + DONE_NOTES.md
+Schreibt: VALIDATION.md (✅ bestanden / ❌ Fehler + Grund)
+Stoppt:  Sofort nach Verdict – nie die ganze Codebase lesen
 ```
 
 ---
@@ -200,15 +227,28 @@ Loop-Durchläufe: [N Steps, X Retries]
 
 ## Token-Budget-Empfehlungen
 
-| Phase | Modell | Erwartete Token pro Step |
+| Phase | Rolle | Erwartete Token pro Step |
 |---|---|---|
-| Plan schreiben | Sonnet | 2.000–5.000 |
-| Implementer pro Step | Sonnet | 3.000–8.000 |
-| Validator pro Step | Haiku | 500–1.500 |
-| MEMORY.md schreiben | Haiku | 1.000–2.000 |
+| Plan schreiben | Implementer | 2.000–5.000 |
+| Implementer pro Step | Implementer | 3.000–8.000 |
+| Validator pro Step | Validator | 500–1.500 |
+| MEMORY.md schreiben | Validator | 1.000–2.000 |
 
 Ein kompletter 10-Step-Build: ~80.000–100.000 Token gesamt.
 Ohne Phasen-Struktur (kontinuierlicher Loop): 300.000–500.000+ Token.
+
+## Loop starten
+
+```bash
+# Einmalig ausführbar machen
+chmod +x ralph.sh
+
+# Loop starten (liest .ralph-config automatisch)
+./ralph.sh
+```
+
+→ Script liegt im Projektroot: `ralph.sh`
+→ Konfiguration: `.ralph-config`
 
 ---
 
