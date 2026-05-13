@@ -150,7 +150,7 @@ nav a[data-active="true"] {
     });
   });
 
-  // Active state based on scroll
+  // Active state based on scroll – passive:true verhindert Blocking des Browser-Threads
   window.addEventListener('scroll', () => {
     document.querySelectorAll('[data-nav-visible="true"]').forEach(section => {
       const rect = section.getBoundingClientRect();
@@ -161,7 +161,7 @@ nav a[data-active="true"] {
         link.dataset.active = false;
       }
     });
-  });
+  }, { passive: true });
 </script>
 ```
 
@@ -210,8 +210,10 @@ nav a[data-active="true"] {
 ## Smooth Scroll
 
 ```css
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 ```
 

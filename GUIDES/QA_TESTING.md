@@ -86,13 +86,15 @@ Best Practices ≥ 90
 SEO            ≥ 90
 ```
 
+> FID wurde im März 2024 durch INP ersetzt. Lighthouse < v11 zeigt noch FID – immer aktuelle Version nutzen.
+
 ### Performance Metrics (Core Web Vitals)
 
-| Metric | Target | Category |
-|--------|--------|----------|
-| LCP (Largest Contentful Paint) | < 2.5s | Good |
-| FID (First Input Delay) | < 100ms | Good |
-| CLS (Cumulative Layout Shift) | < 0.1 | Good |
+| Metric | Target | Hinweis |
+|--------|--------|---------|
+| LCP (Largest Contentful Paint) | < 2.5s | Hero-Bild/Video optimieren |
+| INP (Interaction to Next Paint) | < 200ms | FID-Nachfolger seit März 2024 |
+| CLS (Cumulative Layout Shift) | < 0.1 | Bildgrößen immer definieren |
 
 **Wenn nicht erfüllt:**
 - Bilder optimieren? (GUIDES/WORKFLOW_ASSETS.md)
@@ -131,7 +133,7 @@ SEO            ≥ 90
 **Vor Deploy prüfen:**
 
 - [ ] LCP < 2.5s? (Lighthouse Check)
-- [ ] FID < 100ms?
+- [ ] INP < 200ms?
 - [ ] CLS < 0.1?
 - [ ] Bilder < Limits? (200KB Desktop, 100KB Mobile)
 - [ ] Videos < Limits? (2MB Desktop, 1MB Mobile)

@@ -115,19 +115,31 @@ ffmpeg -i input.mov \
 
 ### HTML Video
 
+`loading="lazy"` ist auf `<video>` nicht gültig (nur `<img>` und `<iframe>`). Responsives Video-Switching per `media` auf `<source>` funktioniert browserübergreifend nicht zuverlässig – stattdessen JS nutzen:
+
 ```html
 <video
+  id="hero-video"
   autoplay
   muted
   loop
   playsinline
   poster="thumbnail.jpg"
-  loading="lazy"
 >
-  <source src="video-desktop.mp4" media="(min-width: 1200px)" type="video/mp4">
-  <source src="video-mobile.mp4" media="(max-width: 768px)" type="video/mp4">
-  <source src="video.mp4" type="video/mp4">
+  <source data-src-desktop="video-desktop.mp4"
+          data-src-mobile="video-mobile.mp4"
+          type="video/mp4">
 </video>
+
+<script>
+  const video  = document.getElementById('hero-video');
+  const source = video.querySelector('source');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  source.src = isMobile
+    ? source.dataset.srcMobile
+    : source.dataset.srcDesktop;
+  video.load();
+</script>
 ```
 
 ---

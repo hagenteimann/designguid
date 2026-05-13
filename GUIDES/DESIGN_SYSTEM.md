@@ -167,15 +167,21 @@ Empty States sind vollwertige UI-Zustände und werden von Anfang an mitdesigned.
 
 ```css
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--color-neutral-200) 25%,
-    var(--color-neutral-100) 50%,
-    var(--color-neutral-200) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s infinite;
+  background: var(--color-neutral-200);
   border-radius: var(--space-200);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-200) 25%,
+      var(--color-neutral-100) 50%,
+      var(--color-neutral-200) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+  }
 }
 
 @keyframes skeleton-shimmer {
