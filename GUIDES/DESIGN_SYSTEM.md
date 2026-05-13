@@ -6,6 +6,8 @@ Verbindliche Design- und Coding-Regeln für alle Push8-Projekte. Dieser Guide wi
 
 ## Phase 0: Agent-Initialisierung
 
+> **Bei einem Website-Rebuild: Zuerst [PROJEKT_BRIEF.md](./PROJEKT_BRIEF.md) ausfüllen – dann erst diesen Guide lesen.**
+
 Bevor eine einzige Zeile Code geschrieben wird, klärt der Agent folgende Punkte:
 
 1. **Branche & Referenz:** Nach Branche und konkreten Mitbewerber-Links fragen.
