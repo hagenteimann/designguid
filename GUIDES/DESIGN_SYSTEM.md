@@ -199,6 +199,75 @@ Empty States sind vollwertige UI-Zustände und werden von Anfang an mitdesigned.
 
 ---
 
+## Phase 5: Quintic Superellipsen
+
+> **Zwischen Rechteck und Kreis: die Superellipse als universelle UI-Form.**
+
+Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **n = 5 (quintic)** entsteht die sogenannte **Squircle** – eine Form, die weicher wirkt als ein Rechteck, aber strukturierter als ein Kreis. Apple nutzt sie seit iOS 7 für alle App-Icons; sie ist heute der Standard für moderne, hochwertige UI-Elemente.
+
+### Wann einsetzen
+
+| Element | Empfehlung |
+|---|---|
+| App-Icons / Feature-Icons | Squircle als Clip-Shape |
+| Prominent platzierte Cards | Superellipse statt hartem `border-radius` |
+| Avatare / Profilbilder | Squircle statt Kreis |
+| Badges, Chips, Tags | Superellipse statt `border-radius: 50%` |
+
+### Design Tokens
+
+```css
+:root {
+  --radius-squircle: 28%;        /* quintic approximation */
+  --radius-squircle-sm: 22%;     /* kleine Elemente (Badges) */
+  --radius-squircle-lg: 32%;     /* große Cards, Hero-Elemente */
+}
+```
+
+### CSS-Implementierung
+
+**Einfache Näherung (für Rechteck-Elemente):**
+
+```css
+.squircle {
+  border-radius: var(--radius-squircle); /* 28% ≈ quintic n=5 */
+}
+```
+
+**Präzise Form via SVG clip-path (für quadratische Icons):**
+
+```css
+.squircle-icon {
+  clip-path: url(#squircle);
+}
+```
+
+```html
+<!-- Einmalig im <body> platzieren -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <clipPath id="squircle" clipPathUnits="objectBoundingBox">
+      <path d="
+        M 0.5,0
+        C 0.78,0 1,0.22 1,0.5
+        C 1,0.78 0.78,1 0.5,1
+        C 0.22,1 0,0.78 0,0.5
+        C 0,0.22 0.22,0 0.5,0 Z
+      "/>
+    </clipPath>
+  </defs>
+</svg>
+```
+
+### Regeln
+
+1. **Kein border-radius: 50% für quadratische UI-Elemente.** Squircle verwenden – Kreise nur für echte kreisförmige Inhalte (Avatare mit Foto).
+2. **Konsistenz erzwingen.** Alle Icons einer Seite nutzen dieselbe Radius-Stufe aus dem Token-System.
+3. **Keine spitzen Ecken neben Squircles.** Rechteckige Elemente im gleichen UI-Bereich bekommen mindestens `--radius-squircle-sm`.
+4. **Skalierungstest:** `border-radius: 28%` skaliert proportional – funktioniert für jede Größe ohne Anpassung.
+
+---
+
 ## Checkliste vor dem Go-Live
 
 - [ ] Alle Abstände aus Token-System, keine Magic Numbers
