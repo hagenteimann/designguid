@@ -11,10 +11,11 @@ DONE_NOTES="$SCRIPT_DIR/DONE_NOTES.md"
 VALIDATION_FILE="$SCRIPT_DIR/VALIDATION.md"
 MEMORY_FILE="$SCRIPT_DIR/MEMORY.md"
 
-# ── Farben ──────────────────────────────────────────────────────────────
-GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'; NC='\033[0m'
+# ── Farben ───────────────────────────────────────────────────────────────
+GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
 
 log()  { echo -e "${GREEN}[Ralph]${NC} $1"; }
+info() { echo -e "${BLUE}[Ralph]${NC} $1"; }
 warn() { echo -e "${YELLOW}[Ralph]${NC} $1"; }
 fail() { echo -e "${RED}[Ralph]${NC} $1"; }
 
@@ -22,17 +23,10 @@ fail() { echo -e "${RED}[Ralph]${NC} $1"; }
 if [[ ! -f "$CONFIG_FILE" ]]; then
   warn ".ralph-config nicht gefunden – erstelle Standard-Konfiguration..."
   cat > "$CONFIG_FILE" << 'EOF'
-# Ralph Loop Konfiguration
-# Implementer: kapazitätsstarkes Modell (Coding-Qualität)
 IMPLEMENTER_CMD="claude"
-
-# Validator: schnelles/günstiges Modell (binäre Checks)
+IMPLEMENTER_FLAGS="-p"
 VALIDATOR_CMD="claude"
-
-# Für Gemini:
-# IMPLEMENTER_CMD="gemini"
-# VALIDATOR_CMD="gemini"
-
+VALIDATOR_FLAGS="-p"
 MAX_RETRIES=3
 EOF
   log ".ralph-config erstellt – bitte anpassen und erneut starten."
@@ -41,15 +35,22 @@ fi
 
 source "$CONFIG_FILE"
 
+# ── Agent aufrufen ────────────────────────────────────────────────────────
+# Gibt stdout zurück. Das Script schreibt alle Steuerdateien selbst –
+# kein Agent muss Dateien schreiben können außer dem Implementer (Code-Dateien).
+call_agent() {
+  local cmd="$1"
+  local flags="$2"
+  local prompt="$3"
+  echo "$prompt" | $cmd $flags 2>&1
+}
+
 # ── Hilfsfunktionen ───────────────────────────────────────────────────────
 check_plan() {
   if [[ ! -f "$PLAN_FILE" ]]; then
     fail "PLAN.md nicht gefunden."
     echo ""
-    echo "  Entweder manuell erstellen (siehe GUIDES/RALPH_LOOP.md)"
-    echo "  oder Agenten beauftragen:"
-    echo ""
-    echo "  Prompt für Implementer:"
+    echo "  Prompt zum Generieren:"
     echo "  'Lies GUIDES/PROJEKT_BRIEF.md und GUIDES/RALPH_LOOP.md."
     echo "   Fülle PROJEKT_BRIEF.md aus, dann erstelle PLAN.md.'"
     exit 1
@@ -61,8 +62,8 @@ extract_steps() {
 }
 
 get_step_content() {
-  local step_line=$1
-  local next_step_line=$2
+  local step_line="$1"
+  local next_step_line="$2"
   if [[ -z "$next_step_line" ]]; then
     sed -n "${step_line},\$p" "$PLAN_FILE"
   else
@@ -71,38 +72,55 @@ get_step_content() {
   fi
 }
 
+validation_passed() {
+  [[ -f "$VALIDATION_FILE" ]] && grep -q "Ergebnis: ✅ BESTANDEN" "$VALIDATION_FILE"
+}
+
+# ── Implementer ───────────────────────────────────────────────────────────
 run_implementer() {
   local step_content="$1"
   local retry_context="$2"
 
   local prompt="Du bist der Implementer-Agent im Ralph Loop.
 
-DEINE AUFGABE – Dieser Step:
+AUFGABE – Dieser Step:
 $step_content"
 
   if [[ -n "$retry_context" ]]; then
     prompt="$prompt
 
-VORHERIGER VERSUCH FEHLGESCHLAGEN:
-$retry_context
-
-Behebe die genannten Fehler."
+VORHERIGER VERSUCH FEHLGESCHLAGEN – behebe diese Fehler:
+$retry_context"
   fi
 
   prompt="$prompt
 
 REGELN:
-- Lade nur die Guides die im Step unter 'Guides:' stehen
-- Aktualisiere CD-Manual wie unter 'Dokumentieren:' beschrieben
-- Schreibe nach Abschluss DONE_NOTES.md (max 3 Zeilen):
-  ## Step [N] – [Name]
-  Gebaut: [1 Satz]
-  Entscheidung: [1 Satz oder 'wie geplant']
-  CD-Manual: [aktualisiert / nicht nötig]"
+- Nur die unter 'Guides:' genannten Guides laden – keine anderen
+- CD-Manual aktualisieren wie unter 'Dokumentieren:' beschrieben
+- Am Ende deiner Antwort diesen Block ausgeben (wird als DONE_NOTES gespeichert):
 
-  echo "$prompt" | $IMPLEMENTER_CMD
+---DONE_NOTES---
+Gebaut: [1 Satz was konkret erstellt wurde]
+Entscheidung: [1 Satz zu Abweichungen, sonst: wie geplant]
+CD-Manual: [aktualisiert / nicht nötig]
+---END_DONE_NOTES---"
+
+  local output
+  output=$(call_agent "$IMPLEMENTER_CMD" "$IMPLEMENTER_FLAGS" "$prompt")
+
+  # DONE_NOTES aus Output extrahieren und speichern
+  echo "## Step – $(date +%Y-%m-%d)" > "$DONE_NOTES"
+  echo "$output" \
+    | sed -n '/---DONE_NOTES---/,/---END_DONE_NOTES---/p' \
+    | grep -v "^---" \
+    >> "$DONE_NOTES" 2>/dev/null || echo "$output" | tail -3 >> "$DONE_NOTES"
+
+  # Output im Terminal zeigen
+  echo "$output"
 }
 
+# ── Validator ─────────────────────────────────────────────────────────────
 run_validator() {
   local step_content="$1"
   local diff_output="$2"
@@ -110,126 +128,142 @@ run_validator() {
   local retry_count="$4"
 
   local prompt="Du bist der Validator-Agent im Ralph Loop.
+Antworte NUR mit dem VALIDATION.md-Inhalt – kein anderer Text.
 
 PLAN – Dieser Step:
 $step_content
 
-GIT DIFF (was wurde gemacht):
+GIT DIFF:
 $diff_output
 
-DONE_NOTES vom Implementer:
+DONE_NOTES:
 $done_notes
 
-AUFGABE:
-Prüfe jeden Punkt unter 'Done wenn:' binär (✅/❌).
-Schreibe VALIDATION.md:
+Prüfe jeden Punkt unter 'Done wenn:' binär. Antworte exakt in diesem Format:
 
-## Validation Step – $(date +%Y-%m-%d)
-Ergebnis: ✅ BESTANDEN / ❌ FEHLER
+## Validation – $(date +%Y-%m-%d)
+Ergebnis: ✅ BESTANDEN
 
-Fehler (wenn ❌, konkret und behebbar):
-- ...
+oder:
 
-Retry: $retry_count/${MAX_RETRIES}
+## Validation – $(date +%Y-%m-%d)
+Ergebnis: ❌ FEHLER
 
-NUR Diff und Plan lesen – nicht die ganze Codebase."
+Fehler:
+- [konkreter Fehler, direkt behebbar]
 
-  echo "$prompt" | $VALIDATOR_CMD
+Retry: $retry_count/${MAX_RETRIES}"
+
+  local output
+  output=$(call_agent "$VALIDATOR_CMD" "$VALIDATOR_FLAGS" "$prompt")
+
+  # Script schreibt VALIDATION.md selbst – kein Agent-File-Access nötig
+  echo "$output" > "$VALIDATION_FILE"
+  echo "$output"
 }
 
+# ── Memory-Konsolidierung ─────────────────────────────────────────────────
 run_memory_consolidation() {
+  local total_steps="$1"
+  local total_retries="$2"
+
+  local plan_content done_content
+  plan_content=$(cat "$PLAN_FILE" 2>/dev/null || echo "")
+  done_content=$(cat "$DONE_NOTES" 2>/dev/null || echo "")
+
   local prompt="Du bist der Validator-Agent im Ralph Loop.
-Der Build ist abgeschlossen. Schreibe MEMORY.md als komprimierte Kontext-Zusammenfassung.
+Antworte NUR mit dem MEMORY.md-Inhalt – kein anderer Text.
 
-Lies dazu:
-- PLAN.md (was geplant war)
-- DONE_NOTES.md (was gemacht wurde)
-- cd-manual/index.html oder CD-Manual-Einträge (Design-Entscheidungen)
+PLAN.md:
+$plan_content
 
-MEMORY.md Format (exakt einhalten):
+DONE_NOTES:
+$done_content
 
-# MEMORY – [Projektname]
+Schreibe MEMORY.md exakt in diesem Format:
+
+# MEMORY – [Projektname aus PLAN.md]
 Stand: $(date +%Y-%m-%d)
-Loop-Durchläufe: [N Steps, X Retries gesamt]
+Loop: $total_steps Steps, $total_retries Retries
 
 ## Was gebaut wurde
 [3–5 Sätze]
 
 ## Schlüssel-Entscheidungen
-- Primärfarbe: #... (Begründung: ...)
-- [Weitere abweichende Entscheidungen]
+- [Entscheidung]: [Wert] ([Begründung])
 
-## Token-System (projektspezifisch)
-- [Nur abweichende Tokens – Rest = Standard DESIGN_SYSTEM.md]
+## Token-System (nur Abweichungen von DESIGN_SYSTEM.md)
+- [Token]: [Wert]
 
-## Guides die relevant waren
+## Relevante Guides
+- [Liste der genutzten Guides]
+
+## Nicht genutzte Guides (beim nächsten Start nicht laden)
 - [Liste]
 
-## Guides die nicht genutzt wurden
-- [Liste – diese beim nächsten Start NICHT laden]
-
 ## Offene Punkte
-- [ ] ...
+- [ ] [Was noch fehlt]
 
-## Nächster Agent liest zuerst
+## Nächste Session liest zuerst
 1. MEMORY.md
-2. PLAN.md (offene Steps falls vorhanden)
-3. [Nur relevante Guides von oben]"
+2. [Nur relevante Guides von oben]"
 
-  echo "$prompt" | $VALIDATOR_CMD
-}
+  local output
+  output=$(call_agent "$VALIDATOR_CMD" "$VALIDATOR_FLAGS" "$prompt")
 
-validation_passed() {
-  if [[ ! -f "$VALIDATION_FILE" ]]; then return 1; fi
-  grep -q "Ergebnis: ✅ BESTANDEN" "$VALIDATION_FILE"
+  # Script schreibt MEMORY.md selbst
+  echo "$output" > "$MEMORY_FILE"
+  echo "$output"
 }
 
 # ── Hauptprozess ──────────────────────────────────────────────────────────
 main() {
-  log "Ralph Loop startet..."
-  log "Implementer: $IMPLEMENTER_CMD"
-  log "Validator:   $VALIDATOR_CMD"
+  log "Ralph Loop startet"
+  info "Implementer: $IMPLEMENTER_CMD $IMPLEMENTER_FLAGS"
+  info "Validator:   $VALIDATOR_CMD $VALIDATOR_FLAGS"
   echo ""
 
   check_plan
 
-  # Steps aus PLAN.md extrahieren
   mapfile -t step_lines < <(extract_steps)
-  total_steps=${#step_lines[@]}
+  local total_steps=${#step_lines[@]}
 
   if [[ $total_steps -eq 0 ]]; then
-    fail "Keine Steps in PLAN.md gefunden. Format: '### Step N – Name'"
+    fail "Keine Steps in PLAN.md. Format: '### Step N – Name'"
     exit 1
   fi
 
-  log "Gefundene Steps: $total_steps"
+  log "$total_steps Steps gefunden"
   echo ""
 
-  total_retries=0
+  local total_retries=0
 
   for (( i=0; i<total_steps; i++ )); do
-    current_line=${step_lines[$i]}
-    next_line=${step_lines[$((i+1))] 2>/dev/null || echo ""}
+    local current_line=${step_lines[$i]}
+    local next_line=""
+    if [[ $((i+1)) -lt $total_steps ]]; then
+      next_line=${step_lines[$((i+1))]}
+    fi
+
+    local step_content step_name
     step_content=$(get_step_content "$current_line" "$next_line")
     step_name=$(sed -n "${current_line}p" "$PLAN_FILE")
 
     log "━━━ $step_name ━━━"
 
-    retry=0
-    passed=false
-    retry_context=""
+    local retry=0
+    local passed=false
+    local retry_context=""
 
     while [[ $retry -lt $MAX_RETRIES ]]; do
-      # Implementer
-      log "Implementer läuft... (Versuch $((retry+1))/${MAX_RETRIES})"
+      info "Implementer läuft... (Versuch $((retry+1))/${MAX_RETRIES})"
       run_implementer "$step_content" "$retry_context"
 
-      # Git diff für Validator
-      diff_output=$(git diff HEAD 2>/dev/null || echo "(kein Git-Repository)")
-      done_notes=$(cat "$DONE_NOTES" 2>/dev/null || echo "(keine DONE_NOTES)")
+      local diff_output done_notes
+      diff_output=$(git diff HEAD 2>/dev/null || echo "(kein Git)")
+      done_notes=$(cat "$DONE_NOTES" 2>/dev/null || echo "")
 
-      # Validator
-      log "Validator prüft..."
+      info "Validator prüft..."
       run_validator "$step_content" "$diff_output" "$done_notes" "$((retry+1))"
 
       if validation_passed; then
@@ -249,19 +283,18 @@ main() {
 
     if [[ "$passed" == false ]]; then
       fail "Step nach ${MAX_RETRIES} Versuchen nicht bestanden – Human Review nötig."
-      fail "Fehlerdetails: $VALIDATION_FILE"
+      fail "Details: $VALIDATION_FILE"
       exit 1
     fi
 
     echo ""
   done
 
-  # MEMORY.md Konsolidierung
   log "━━━ MEMORY.md Konsolidierung ━━━"
-  run_memory_consolidation
-  log "✅ MEMORY.md geschrieben – Kontext für nächste Session komprimiert"
+  run_memory_consolidation "$total_steps" "$total_retries"
+  log "✅ MEMORY.md geschrieben"
   echo ""
-  log "Loop abgeschlossen. $total_steps Steps, $total_retries Retries gesamt."
+  log "Fertig. $total_steps Steps, $total_retries Retries."
 }
 
 main "$@"
