@@ -26,20 +26,16 @@ Weg von Keywords, hin zu Entitäten und Intent.
 - **Conversational Queries:** Optimierung auf natürliche Sprache ("Wie erstelle ich einen Imagefilm für Recruiting?").
 - **Visual SEO:** Hochwertige WebP/AVIF Bilder mit aussagekräftigen Alt-Texten und Video-Transkripten.
 
-## 5. Implementierte Optimierungen (Mai 2026)
-- **Technische SEO:**
-    - [x] **Canonical Tag:** Eindeutige URL-Zuweisung zur Vermeidung von Duplicate Content.
-    - [x] **JSON-LD Schema:** Vollständige `ProfessionalService` Struktur für KI-Suche (Schema.org).
-    - [x] **Video Lazy-Loading:** Bitraten-Optimierung und `IntersectionObserver` zur Schonung der Bandbreite (Core Web Vitals).
-- **On-Page SEO:**
-    - [x] **H1-Optimierung:** Einzigartige, keyword-reiche Hauptüberschrift im Hero-Bereich.
-    - [x] **Alt-Tags:** Alle Bilder (Logos, Team, Testimonials) verfügen über barrierefreie und beschreibende Alt-Texte.
-    - [x] **Social Meta:** OpenGraph (FB/LinkedIn) und Twitter Cards vollständig konfiguriert.
+## 5. Pflicht-Checkliste vor Go-Live
 
-## 6. Offene To-Dos
-- [ ] **Sitemap.xml & Robots.txt:** Erstellen und im Root-Verzeichnis platzieren.
-- [ ] **Google Search Console:** Anmeldung der URL und Einreichung der Sitemap.
-- [ ] **Alt-Tags Monitoring:** Bei neuen Projekt-Uploads im Showcase konsequent Alt-Tags pflegen.
+- [ ] Canonical Tag gesetzt
+- [ ] JSON-LD Schema (Organization / ProfessionalService) vorhanden
+- [ ] H1 eindeutig, keyword-reich, 1× pro Seite
+- [ ] Alt-Tags auf allen Bildern (beschreibend, max 125 Zeichen)
+- [ ] OpenGraph + Twitter Cards konfiguriert
+- [ ] Sitemap.xml + robots.txt im Root
+- [ ] INP < 200ms
+- [ ] Mobile-First überprüft
 
 ---
-*Zuletzt aktualisiert am 05. Mai 2026 für A10 Media.*
+*Push8 Web Agency – SEO Guide – Stand Mai 2026*

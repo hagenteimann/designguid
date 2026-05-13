@@ -232,12 +232,14 @@ document.querySelectorAll('nav a').forEach(link => {
 
 ## Keyboard Navigation
 
+Kein `tabindex` mit positiven Werten setzen – natürliche DOM-Reihenfolge gilt.
+
 ```html
 <nav aria-label="Hauptnavigation">
-  <a href="#section-hero" tabindex="1">Home</a>
-  <a href="#section-features" tabindex="2">Features</a>
-  <a href="#section-pricing" tabindex="3">Pricing</a>
-  <a href="#section-contact" tabindex="4">Kontakt</a>
+  <a href="#section-hero">Home</a>
+  <a href="#section-features">Features</a>
+  <a href="#section-pricing">Pricing</a>
+  <a href="#section-contact">Kontakt</a>
 </nav>
 ```
 

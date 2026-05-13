@@ -226,37 +226,4 @@ cd-manual/
 
 ---
 
-## Bonus: JSON-Export
-
-Optional: CD-Manual auch als **Maschinenlesbares JSON**
-
-```json
-{
-  "project": "My Website",
-  "version": "1.2.0",
-  "lastUpdated": "2026-05-11",
-  "decisions": [
-    {
-      "id": "primary-color",
-      "category": "Farbpalette",
-      "title": "Primary Color",
-      "value": "#FF6B35",
-      "reasoning": "High contrast, distinctive",
-      "date": "2026-05-01",
-      "relatedTo": ["button-styles", "cta-links"]
-    }
-  ]
-}
-```
-
----
-
-## Integration mit anderen Guides
-
-- **DESIGN_SYSTEM.md** → verlinkt auf CD-Manual für Entscheidungen
-- **WORKFLOW_DEPLOYMENT.md** → CD-Manual wird bei Deploy aktualisiert
-- **QUICK_START.md** → CD-Manual ist eine der 5 Workflows
-
----
-
 *Workflow: CD-Manual – Push8 Web Agency – Stand Mai 2026*

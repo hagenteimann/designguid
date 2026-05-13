@@ -124,20 +124,20 @@ Feste Seitenverhältnisse für alle Bento-Grid-Elemente:
 
 ### Assets & Performance
 
-- **Format-Pflicht:** WebP für Fotos, SVG für Icons und Logos. Kein PNG/JPG in Production.
-- **Bildkompression:** Agent komprimiert Bilder automatisch, wenn > 500KB. Ziel: max. 200KB für Desktop, max. 100KB für Mobile.
-- **Videokompression:** Videos müssen komprimiert werden, wenn > 5MB. Ziel: max. 2MB für Desktop, max. 1MB für Mobile. Codec: H.264 (MP4), 30fps max.
-- **Responsive Bilder:** Mit `<picture>` + `srcset` arbeiten für verschiedene Bildschirmgrößen.
-- **Touch-Targets:** Mindestgröße 48x48px für alle interaktiven Elemente.
-- **Skeleton Screens:** Vor dem Laden realer Daten immer einen Skeleton-Platzhalter zeigen (siehe Empty States).
-- **Lazy Loading:** `loading="lazy"` auf alle Bilder außer dem LCP-Element (Hero).
+→ Vollständige Regeln in **[WORKFLOW_ASSETS.md](./WORKFLOW_ASSETS.md)**
+
+- Bilder: WebP, max. 200KB Desktop / 100KB Mobile. Kein PNG/JPG in Production.
+- Videos: MP4 H.264, max. 2MB Desktop / 1MB Mobile.
+- `loading="lazy"` auf alle Bilder außer dem LCP-Element.
+- Responsive Bilder: `<picture>` + `srcset` – immer.
 
 ### Barrierefreiheit (A11y)
 
-- **Kontrast:** Mindestens **4.5:1** für Text auf Hintergrund (WCAG AA). Immer prüfen.
-- **Focus-Styles:** Nie `outline: none` ohne eigenen Focus-Stil.
-- **Alt-Texte:** Jedes Bild mit aussagekräftigem `alt`-Attribut.
-- **ARIA-Labels:** Alle Buttons/Links ohne sichtbaren Text bekommen ein `aria-label`.
+- Kontrast: **4.5:1** Minimum (WCAG AA). Kein Deployment ohne Prüfung.
+- `outline: none` ohne eigenen Focus-Stil: verboten.
+- Jedes Bild bekommt ein aussagekräftiges `alt`-Attribut.
+- Alle Buttons/Links ohne sichtbaren Text: `aria-label` Pflicht.
+- Touch-Targets: **48×48px** Minimum für alle interaktiven Elemente.
 
 ---
 
@@ -272,15 +272,17 @@ Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **
 
 ## Checkliste vor dem Go-Live
 
-- [ ] Alle Abstände aus Token-System, keine Magic Numbers
-- [ ] 3-Column Grid auf Desktop, Single Column auf Mobile getestet
-- [ ] Kontrast 4.5:1 geprüft
-- [ ] Alle Bilder in WebP, SVGs optimiert
-- [ ] Touch-Targets mind. 48px
-- [ ] Skeleton Screens für alle async-geladenen Bereiche
-- [ ] Empty States für alle Listen/Filter-Bereiche
-- [ ] Alt-Texte vollständig
-- [ ] Ankerlinks und Navigation synchron
+**Kein Deploy ohne alle Punkte abgehakt.**
+
+- [ ] Alle Abstände aus Token-System – keine Magic Numbers
+- [ ] 3-Column Grid Desktop + Single Column Mobile getestet
+- [ ] Kontrast 4.5:1 geprüft (Tool: axe oder Lighthouse)
+- [ ] Alle Bilder WebP, alle Icons SVG – kein PNG/JPG
+- [ ] Touch-Targets mind. 48×48px
+- [ ] Skeleton Screens für alle async-Bereiche vorhanden
+- [ ] Empty States für alle Listen/Filter vorhanden
+- [ ] Alt-Texte auf allen Bildern
+- [ ] Ankerlinks und Navigation synchron (IDs stimmen)
 
 ---
 

@@ -81,7 +81,7 @@ Eine Website ist kein digitaler Flyer – sie ist ein strukturiertes Gespräch m
 3. **Testimonials:** Name, Bild, Funktion, Firma, Zitat. Kein anonymes Feedback. Video-Testimonials wenn möglich.
 4. **Awards & Zertifizierungen:** Nur wenn relevant und verifizierbar.
 
-**Regel:** Social Proof so früh wie möglich platzieren – idealerweise direkt nach dem Hero.
+**Pflicht:** Social Proof direkt nach dem Hero. Nicht weiter hinten verschieben, außer Competitive Research zeigt ein klares Gegenargument.
 
 ---
 
@@ -185,7 +185,7 @@ Nach der Competitive Research hat der Agent nun **zwei Datenquellen:**
 
 ## Seitenstruktur-Template
 
-Die **Default-Reihenfolge** für eine Standard-Unternehmens-Website (kann nach Competitive Research angepasst werden):
+Die **Default-Reihenfolge** für eine Standard-Unternehmens-Website. Wird nach Competitive Research angepasst – aber nur mit Begründung:
 
 ```
 1. Navigation (Sticky, mit Primary CTA Button)
@@ -204,11 +204,10 @@ Die **Default-Reihenfolge** für eine Standard-Unternehmens-Website (kann nach C
 
 ## Mobile Funnel-Regeln
 
-- **Thumb Zone:** Primäre CTAs im unteren Drittel des Screens oder als Sticky-Button.
-- **Kein horizontales Scrollen.**
-- **Kürze Texte:** Mobile Nutzer lesen 30% weniger. Headlines und Bullets dominant.
-- **Tap-Targets:** Mindestens 48x48px (siehe Design System).
-- **Ladezeit:** Jede Sekunde über 3s kostet ~10% Conversion. WebP-Assets, Lazy Loading Pflicht.
+- Primäre CTAs im unteren Drittel oder als Sticky-Button – immer erreichbar ohne scrollen.
+- Kein horizontales Scrollen. Niemals.
+- Headlines und Bullets dominieren – keine Textwände.
+- Ladezeit über 3s = ~10% Conversion-Verlust. WebP + Lazy Loading sind Pflicht, keine Option.
 
 ---
 

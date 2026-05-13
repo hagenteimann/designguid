@@ -40,5 +40,18 @@ Die wichtigsten Bedrohungen laut aktuellem OWASP-Standard:
   - `X-Frame-Options: DENY`
   - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
+## 7. Pflicht-Checkliste
+
+- [ ] HTTPS + HSTS-Header gesetzt
+- [ ] TLS 1.3, kein TLS 1.0/1.1
+- [ ] CSP-Header konfiguriert (`default-src 'none'`)
+- [ ] `X-Content-Type-Options: nosniff` gesetzt
+- [ ] `X-Frame-Options: DENY` gesetzt
+- [ ] SRI-Hash auf alle externen Scripts
+- [ ] Formulare: Input-Sanitization serverseitig + CSRF-Token
+- [ ] Cookies: `SameSite=Strict` oder `Lax`
+- [ ] Keine Test-Dateien, kein Debug-Code in Production
+- [ ] `.env` nicht committed, nicht deployed
+
 ---
-*Erstellt am 05. Mai 2026 für A10 Media.*
+*Push8 Web Agency – Security Guide – Stand Mai 2026*
