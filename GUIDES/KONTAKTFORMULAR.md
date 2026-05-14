@@ -48,11 +48,28 @@ Da der `anon_key` öffentlich im HTML/JS steht, gelten folgende Sicherheitsmaßn
 
 Variablen anpassen und einfügen.
 
-**Supabase SDK:** Immer eine fixe Version mit SRI-Hash einbinden. Hash generieren unter [https://www.srihash.org](https://www.srihash.org) oder per CLI:
+**Supabase SDK – Self-Hosting bevorzugen (DSGVO):**
+
+CDN-Einbindung über jsDelivr sendet die IP des Nutzers an US-Server ohne Einwilligung.
+Bevorzuge lokales Hosting:
+
 ```bash
-curl -s https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js | openssl dgst -sha384 -binary | openssl base64 -A
+npm install @supabase/supabase-js
+# oder: Datei einmalig herunterladen und in js/ ablegen
+curl -o js/supabase.min.js \
+  https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js
 ```
-Dann im Script-Tag:
+
+```html
+<!-- ✅ Lokal gehostet – kein externer Request -->
+<script src="/js/supabase.min.js"></script>
+```
+
+**Nur wenn CDN zwingend nötig:** fixe Version + SRI-Hash + Datenschutzerklärung anpassen:
+```bash
+curl -s https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js \
+  | openssl dgst -sha384 -binary | openssl base64 -A
+```
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supabase.min.js"
         integrity="sha384-GENERIERTER_HASH"

@@ -10,6 +10,8 @@ Agent komprimiert **automatisch**, wenn zu groß:
 - **Bilder:** Max 200KB (Desktop), 100KB (Mobile)
 - **Videos:** Max 2MB (Desktop), 1MB (Mobile)
 
+> **Lizenz-Pflicht:** Kein Asset ohne bekannte Lizenz einbauen. Erlaubte Quellen und Icon-Libraries → [DESIGN_SYSTEM.md – Erlaubte Quellen](./DESIGN_SYSTEM.md)
+
 ---
 
 ## Bilder-Komprimierung

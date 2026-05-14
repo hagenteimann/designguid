@@ -132,6 +132,74 @@ Feste Seitenverhältnisse für alle Bento-Grid-Elemente:
 - `loading="lazy"` auf alle Bilder außer dem LCP-Element.
 - Responsive Bilder: `<picture>` + `srcset` – immer.
 
+### Erlaubte Quellen – Icons, Bilder, Fonts
+
+> **Kein Asset ohne bekannte Lizenz. Kein CDN ohne Self-Hosting-Prüfung.**
+
+#### Icons – erlaubte Libraries
+
+| Library | Lizenz | Einbindung |
+|---|---|---|
+| Heroicons | MIT | Inline SVG |
+| Lucide | ISC | Inline SVG |
+| Phosphor Icons | MIT | Inline SVG |
+| Tabler Icons | MIT | Inline SVG |
+| Bootstrap Icons | MIT | Inline SVG |
+| Material Symbols | Apache 2.0 | Inline SVG |
+
+**Einbindung immer als Inline SVG** – nie per CDN, nie als Icon-Font:
+
+```html
+<!-- ✅ Richtig: Inline SVG, kein externer Request -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="..."/>
+</svg>
+
+<!-- ❌ Verboten: CDN-Request → IP an Dritte → DSGVO -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/...">
+```
+
+#### Icons – verboten
+
+- Font Awesome über CDN (fontawesome.com oder cdnjs)
+- Google Material Icons über CDN
+- Ionicons über CDN
+- Icons von Flaticon / Freepik ohne aktive Lizenz
+- Icons aus Google-Bildersuche oder Screenshot
+
+#### Bilder – erlaubte Quellen
+
+| Quelle | Lizenz | Hinweis |
+|---|---|---|
+| Unsplash | Unsplash License | Kostenlos, kommerziell nutzbar, keine Attribution Pflicht |
+| Pexels | CC0 | Kostenlos, keine Attribution nötig |
+| Pixabay | CC0 | Kostenlos, keine Attribution nötig |
+| Undraw | MIT | Illustrationen, anpassbar |
+| Eigene Fotos/Grafiken | Eigentum | Immer bevorzugen |
+
+**Nie verwenden:** Shutterstock, Getty, Adobe Stock ohne aktive Lizenz. Nie Bilder von fremden Websites kopieren.
+
+#### Fonts – Self-Hosting Pflicht
+
+Google Fonts über CDN lädt die IP des Nutzers zu Google – DSGVO-Verstoß.
+
+```html
+<!-- ❌ Verboten: IP geht an Google -->
+<link href="https://fonts.googleapis.com/css2?family=Inter" rel="stylesheet">
+
+<!-- ✅ Richtig: Font lokal hosten -->
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/inter-regular.woff2') format('woff2');
+    font-display: swap;
+  }
+</style>
+```
+
+Font-Dateien herunterladen: [google-webfonts-helper.herokuapp.com](https://google-webfonts-helper.herokuapp.com) – gibt WOFF2 + CSS direkt zum Self-Hosting.
+
 ### Barrierefreiheit (A11y)
 
 - Kontrast: **4.5:1** Minimum (WCAG AA). Kein Deployment ohne Prüfung.
@@ -290,6 +358,10 @@ Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **
 - [ ] Empty States für alle Listen/Filter vorhanden
 - [ ] Alt-Texte auf allen Bildern
 - [ ] Ankerlinks und Navigation synchron (IDs stimmen)
+- [ ] Alle Icons: MIT/Apache-Lizenz, inline SVG – kein CDN
+- [ ] Alle Bilder: Lizenz geprüft (Unsplash/Pexels/Pixabay oder eigen)
+- [ ] Fonts: selbst gehostet (kein Google Fonts CDN)
+- [ ] Keine externen CDN-Requests ohne DSGVO-Prüfung
 
 ---
 
