@@ -37,8 +37,21 @@ Die wichtigsten Bedrohungen laut aktuellem OWASP-Standard:
 - **Minimalismus:** Entferne unnötigen Code, veraltete Plugins und Test-Dateien.
 - **Header-Hardening:** Setze zusätzliche Security-Header:
   - `X-Content-Type-Options: nosniff`
-  - `X-Frame-Options: DENY`
   - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+  - Kein `X-Frame-Options` nötig wenn CSP `frame-ancestors 'none'` gesetzt ist – beide lösen dasselbe Problem, eines reicht.
+
+## 7. Pflicht-Checkliste
+
+- [ ] HTTPS + HSTS-Header gesetzt
+- [ ] TLS 1.3, kein TLS 1.0/1.1
+- [ ] CSP-Header konfiguriert (`default-src 'none'`)
+- [ ] `X-Content-Type-Options: nosniff` gesetzt
+- [ ] `frame-ancestors 'none'` in CSP (ersetzt X-Frame-Options)
+- [ ] SRI-Hash auf alle externen Scripts
+- [ ] Formulare: Input-Sanitization serverseitig + CSRF-Token
+- [ ] Cookies: `SameSite=Strict` oder `Lax`
+- [ ] Keine Test-Dateien, kein Debug-Code in Production
+- [ ] `.env` nicht committed, nicht deployed
 
 ---
-*Erstellt am 05. Mai 2026 für A10 Media.*
+*Push8 Web Agency – Security Guide – Stand Mai 2026*

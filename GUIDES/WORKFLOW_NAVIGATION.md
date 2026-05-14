@@ -150,7 +150,7 @@ nav a[data-active="true"] {
     });
   });
 
-  // Active state based on scroll
+  // Active state based on scroll – passive:true verhindert Blocking des Browser-Threads
   window.addEventListener('scroll', () => {
     document.querySelectorAll('[data-nav-visible="true"]').forEach(section => {
       const rect = section.getBoundingClientRect();
@@ -161,7 +161,7 @@ nav a[data-active="true"] {
         link.dataset.active = false;
       }
     });
-  });
+  }, { passive: true });
 </script>
 ```
 
@@ -210,8 +210,10 @@ nav a[data-active="true"] {
 ## Smooth Scroll
 
 ```css
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 ```
 
@@ -232,12 +234,14 @@ document.querySelectorAll('nav a').forEach(link => {
 
 ## Keyboard Navigation
 
+Kein `tabindex` mit positiven Werten setzen – natürliche DOM-Reihenfolge gilt.
+
 ```html
 <nav aria-label="Hauptnavigation">
-  <a href="#section-hero" tabindex="1">Home</a>
-  <a href="#section-features" tabindex="2">Features</a>
-  <a href="#section-pricing" tabindex="3">Pricing</a>
-  <a href="#section-contact" tabindex="4">Kontakt</a>
+  <a href="#section-hero">Home</a>
+  <a href="#section-features">Features</a>
+  <a href="#section-pricing">Pricing</a>
+  <a href="#section-contact">Kontakt</a>
 </nav>
 ```
 

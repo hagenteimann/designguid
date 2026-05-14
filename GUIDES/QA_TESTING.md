@@ -31,10 +31,7 @@ Agent führt QA-Tests durch bevor Website deployed wird:
 - Animationen/Transitions funktionieren?
 - Forms funktionieren?
 
-**Tools:**
-- BrowserStack (Cloud-Testing)
-- Local: Chrome DevTools, Firefox Developer, Safari Inspector
-- Cross-browser check: https://caniuse.com/
+**Tools:** Chrome DevTools, Firefox Developer Tools, Safari Web Inspector, BrowserStack
 
 ### Mobile Browser
 - ✅ Chrome Mobile (Android)
@@ -74,10 +71,7 @@ Agent führt QA-Tests durch bevor Website deployed wird:
 - [ ] Keine Horizontal Scrollbar?
 - [ ] Touch-Targets größer 48px?
 
-**Tools:**
-- Chrome DevTools (Device Emulation)
-- Local Device Testing (iPhone, Android)
-- Responsive Design Tester: https://www.responsivedesignchecker.com/
+**Tools:** Chrome DevTools Device Emulation, echtes Gerät wenn verfügbar
 
 ---
 
@@ -92,13 +86,15 @@ Best Practices ≥ 90
 SEO            ≥ 90
 ```
 
+> FID wurde im März 2024 durch INP ersetzt. Lighthouse < v11 zeigt noch FID – immer aktuelle Version nutzen.
+
 ### Performance Metrics (Core Web Vitals)
 
-| Metric | Target | Category |
-|--------|--------|----------|
-| LCP (Largest Contentful Paint) | < 2.5s | Good |
-| FID (First Input Delay) | < 100ms | Good |
-| CLS (Cumulative Layout Shift) | < 0.1 | Good |
+| Metric | Target | Hinweis |
+|--------|--------|---------|
+| LCP (Largest Contentful Paint) | < 2.5s | Hero-Bild/Video optimieren |
+| INP (Interaction to Next Paint) | < 200ms | FID-Nachfolger seit März 2024 |
+| CLS (Cumulative Layout Shift) | < 0.1 | Bildgrößen immer definieren |
 
 **Wenn nicht erfüllt:**
 - Bilder optimieren? (GUIDES/WORKFLOW_ASSETS.md)
@@ -137,7 +133,7 @@ SEO            ≥ 90
 **Vor Deploy prüfen:**
 
 - [ ] LCP < 2.5s? (Lighthouse Check)
-- [ ] FID < 100ms?
+- [ ] INP < 200ms?
 - [ ] CLS < 0.1?
 - [ ] Bilder < Limits? (200KB Desktop, 100KB Mobile)
 - [ ] Videos < Limits? (2MB Desktop, 1MB Mobile)
@@ -149,10 +145,7 @@ SEO            ≥ 90
 - [ ] Gzip/Brotli Kompression aktiv?
 - [ ] Keine große Requests? (alles unter 1MB)
 
-**Tools:**
-- Google PageSpeed Insights
-- Lighthouse
-- WebPageTest: https://www.webpagetest.org/
+**Tools:** Google PageSpeed Insights, Lighthouse (Chrome DevTools)
 
 ---
 
@@ -174,16 +167,9 @@ SEO            ≥ 90
 - [ ] Links unterscheidbar? (1.4.1)
 - [ ] ARIA richtig verwendet?
 
-**Tools:**
-- axe DevTools (Chrome Extension)
-- WAVE (Chrome Extension)
-- Lighthouse (Accessibility Score)
-- Screen Reader Test: NVDA (Windows), VoiceOver (Mac)
+**Tools:** axe DevTools, WAVE, Lighthouse Accessibility Score
 
-**Wenn Fehler:**
-→ Detaillierte Fehlerbeschreibung dokumentieren
-→ Fix vor Deploy
-→ Re-test
+**Fehler blockieren den Deploy.** Fix vor Deploy, dann Re-test.
 
 ---
 

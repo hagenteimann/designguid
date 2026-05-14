@@ -6,13 +6,15 @@
 
 ## Was ist das?
 
-Push8 Website-Guide mit **5 Core Workflows** für KI-Agenten. Jeder Workflow hat:
+Push8 Website-Guide mit **6 Core Workflows** für KI-Agenten. Jeder Workflow hat:
 - ✅ **Quick Checklist** (1 Seite, praktisch)
 - 📖 **Detaildoku** (GUIDES/ Ordner, wenn Fragen)
 
+> **Für komplette Website-Builds:** Ralph Loop verwenden – autonomer Zwei-Agenten-Prozess mit Plan, Validator und MEMORY.md-Konsolidierung. Spart 80–90% Kontext-Tokens gegenüber einem kontinuierlichen Loop. → [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md)
+
 ---
 
-## Die 5 Core Workflows
+## Die 6 Core Workflows
 
 ### 1️⃣ **Navigation & Sections hinzufügen**
 
@@ -102,6 +104,37 @@ Push8 Website-Guide mit **5 Core Workflows** für KI-Agenten. Jeder Workflow hat
 
 ---
 
+### 6️⃣ **Website neu bauen (Rebuild)**
+
+**Was:** User gibt alte Website + Zielgruppe → neue Website soll entstehen
+
+**Schnell – IMMER in dieser Reihenfolge:**
+```
+1. PROJEKT_BRIEF.md öffnen und Phase 0 ausfüllen
+   → Alte Website analysieren (Schwächen, was behalten)
+   → Zielgruppe dokumentieren (Persona, Entscheidungstreiber)
+   → Design-Entscheidungen ableiten (Farbe, CTA, Sektionen)
+   → Nur relevante Guides markieren (nicht alle laden!)
+
+2. Token-Mapping: Analyseergebnisse → CSS Custom Properties
+   → Primärfarbe begründet eintragen
+   → Spacing/Radius aus Design System übernehmen
+
+3. Sektionen-Reihenfolge vorlegen + bestätigen lassen
+   → Kein Code vor Freigabe
+
+4. Erst jetzt: HTML/CSS schreiben
+   → Nur die in Phase 0 markierten Guides aktiv lesen
+```
+
+> ⚠️ **Ohne ausgefüllten Projekt-Brief kein Code.** Generische Guide-Regeln gelten erst nach der projektspezifischen Analyse.
+
+**Siehe:**
+- 📖 [PROJEKT_BRIEF.md](GUIDES/PROJEKT_BRIEF.md)
+- 📖 [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md) – für autonomen Build mit Validator-Agent
+
+---
+
 ### 5️⃣ **Neue Developer onboarden**
 
 **Was:** Neuer Developer kommt ins Projekt
@@ -179,6 +212,8 @@ Fertig! ✅
 | CD-Manual | [Link](CHECKLISTS/cd-manual.checklist.md) | [Link](GUIDES/WORKFLOW_CD_MANUAL.md) |
 | Deployment | [Link](CHECKLISTS/deploy.checklist.md) | [Link](GUIDES/WORKFLOW_DEPLOYMENT.md) |
 | Onboarding | [Link](CHECKLISTS/vibe-coder.checklist.md) | — |
+| Website Rebuild | — | [Link](GUIDES/PROJEKT_BRIEF.md) |
+| Ralph Loop | — | [Link](GUIDES/RALPH_LOOP.md) |
 
 ### Alle Guides
 | Topic | Link |

@@ -6,6 +6,9 @@ Verbindliche Design- und Coding-Regeln für alle Push8-Projekte. Dieser Guide wi
 
 ## Phase 0: Agent-Initialisierung
 
+> **Bei einem Website-Rebuild: Zuerst [PROJEKT_BRIEF.md](./PROJEKT_BRIEF.md) ausfüllen – dann erst diesen Guide lesen.**
+> **Für autonome Builds mit Validator-Agent:** [RALPH_LOOP.md](./RALPH_LOOP.md) – dieser Guide wird dort pro Step gezielt geladen, nicht als Block.
+
 Bevor eine einzige Zeile Code geschrieben wird, klärt der Agent folgende Punkte:
 
 1. **Branche & Referenz:** Nach Branche und konkreten Mitbewerber-Links fragen.
@@ -122,20 +125,20 @@ Feste Seitenverhältnisse für alle Bento-Grid-Elemente:
 
 ### Assets & Performance
 
-- **Format-Pflicht:** WebP für Fotos, SVG für Icons und Logos. Kein PNG/JPG in Production.
-- **Bildkompression:** Agent komprimiert Bilder automatisch, wenn > 500KB. Ziel: max. 200KB für Desktop, max. 100KB für Mobile.
-- **Videokompression:** Videos müssen komprimiert werden, wenn > 5MB. Ziel: max. 2MB für Desktop, max. 1MB für Mobile. Codec: H.264 (MP4), 30fps max.
-- **Responsive Bilder:** Mit `<picture>` + `srcset` arbeiten für verschiedene Bildschirmgrößen.
-- **Touch-Targets:** Mindestgröße 48x48px für alle interaktiven Elemente.
-- **Skeleton Screens:** Vor dem Laden realer Daten immer einen Skeleton-Platzhalter zeigen (siehe Empty States).
-- **Lazy Loading:** `loading="lazy"` auf alle Bilder außer dem LCP-Element (Hero).
+→ Vollständige Regeln in **[WORKFLOW_ASSETS.md](./WORKFLOW_ASSETS.md)**
+
+- Bilder: WebP, max. 200KB Desktop / 100KB Mobile. Kein PNG/JPG in Production.
+- Videos: MP4 H.264, max. 2MB Desktop / 1MB Mobile.
+- `loading="lazy"` auf alle Bilder außer dem LCP-Element.
+- Responsive Bilder: `<picture>` + `srcset` – immer.
 
 ### Barrierefreiheit (A11y)
 
-- **Kontrast:** Mindestens **4.5:1** für Text auf Hintergrund (WCAG AA). Immer prüfen.
-- **Focus-Styles:** Nie `outline: none` ohne eigenen Focus-Stil.
-- **Alt-Texte:** Jedes Bild mit aussagekräftigem `alt`-Attribut.
-- **ARIA-Labels:** Alle Buttons/Links ohne sichtbaren Text bekommen ein `aria-label`.
+- Kontrast: **4.5:1** Minimum (WCAG AA). Kein Deployment ohne Prüfung.
+- `outline: none` ohne eigenen Focus-Stil: verboten.
+- Jedes Bild bekommt ein aussagekräftiges `alt`-Attribut.
+- Alle Buttons/Links ohne sichtbaren Text: `aria-label` Pflicht.
+- Touch-Targets: **48×48px** Minimum für alle interaktiven Elemente.
 
 ---
 
@@ -165,15 +168,21 @@ Empty States sind vollwertige UI-Zustände und werden von Anfang an mitdesigned.
 
 ```css
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--color-neutral-200) 25%,
-    var(--color-neutral-100) 50%,
-    var(--color-neutral-200) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s infinite;
+  background: var(--color-neutral-200);
   border-radius: var(--space-200);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-200) 25%,
+      var(--color-neutral-100) 50%,
+      var(--color-neutral-200) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+  }
 }
 
 @keyframes skeleton-shimmer {
@@ -199,17 +208,88 @@ Empty States sind vollwertige UI-Zustände und werden von Anfang an mitdesigned.
 
 ---
 
+## Phase 5: Quintic Superellipsen
+
+> **Zwischen Rechteck und Kreis: die Superellipse als universelle UI-Form.**
+
+Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **n = 5 (quintic)** entsteht die sogenannte **Squircle** – eine Form, die weicher wirkt als ein Rechteck, aber strukturierter als ein Kreis. Apple nutzt sie seit iOS 7 für alle App-Icons; sie ist heute der Standard für moderne, hochwertige UI-Elemente.
+
+### Wann einsetzen
+
+| Element | Empfehlung |
+|---|---|
+| App-Icons / Feature-Icons | Squircle als Clip-Shape |
+| Prominent platzierte Cards | Superellipse statt hartem `border-radius` |
+| Avatare / Profilbilder | Squircle statt Kreis |
+| Badges, Chips, Tags | Superellipse statt `border-radius: 50%` |
+
+### Design Tokens
+
+```css
+:root {
+  --radius-squircle: 28%;        /* quintic approximation */
+  --radius-squircle-sm: 22%;     /* kleine Elemente (Badges) */
+  --radius-squircle-lg: 32%;     /* große Cards, Hero-Elemente */
+}
+```
+
+### CSS-Implementierung
+
+**Einfache Näherung (für Rechteck-Elemente):**
+
+```css
+.squircle {
+  border-radius: var(--radius-squircle); /* 28% ≈ quintic n=5 */
+}
+```
+
+**Präzise Form via SVG clip-path (für quadratische Icons):**
+
+```css
+.squircle-icon {
+  clip-path: url(#squircle);
+}
+```
+
+```html
+<!-- Einmalig im <body> platzieren -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <clipPath id="squircle" clipPathUnits="objectBoundingBox">
+      <path d="
+        M 0.5,0
+        C 0.78,0 1,0.22 1,0.5
+        C 1,0.78 0.78,1 0.5,1
+        C 0.22,1 0,0.78 0,0.5
+        C 0,0.22 0.22,0 0.5,0 Z
+      "/>
+    </clipPath>
+  </defs>
+</svg>
+```
+
+### Regeln
+
+1. **Kein border-radius: 50% für quadratische UI-Elemente.** Squircle verwenden – Kreise nur für echte kreisförmige Inhalte (Avatare mit Foto).
+2. **Konsistenz erzwingen.** Alle Icons einer Seite nutzen dieselbe Radius-Stufe aus dem Token-System.
+3. **Keine spitzen Ecken neben Squircles.** Rechteckige Elemente im gleichen UI-Bereich bekommen mindestens `--radius-squircle-sm`.
+4. **Skalierungstest:** `border-radius: 28%` skaliert proportional – funktioniert für jede Größe ohne Anpassung.
+
+---
+
 ## Checkliste vor dem Go-Live
 
-- [ ] Alle Abstände aus Token-System, keine Magic Numbers
-- [ ] 3-Column Grid auf Desktop, Single Column auf Mobile getestet
-- [ ] Kontrast 4.5:1 geprüft
-- [ ] Alle Bilder in WebP, SVGs optimiert
-- [ ] Touch-Targets mind. 48px
-- [ ] Skeleton Screens für alle async-geladenen Bereiche
-- [ ] Empty States für alle Listen/Filter-Bereiche
-- [ ] Alt-Texte vollständig
-- [ ] Ankerlinks und Navigation synchron
+**Kein Deploy ohne alle Punkte abgehakt.**
+
+- [ ] Alle Abstände aus Token-System – keine Magic Numbers
+- [ ] 3-Column Grid Desktop + Single Column Mobile getestet
+- [ ] Kontrast 4.5:1 geprüft (Tool: axe oder Lighthouse)
+- [ ] Alle Bilder WebP, alle Icons SVG – kein PNG/JPG
+- [ ] Touch-Targets mind. 48×48px
+- [ ] Skeleton Screens für alle async-Bereiche vorhanden
+- [ ] Empty States für alle Listen/Filter vorhanden
+- [ ] Alt-Texte auf allen Bildern
+- [ ] Ankerlinks und Navigation synchron (IDs stimmen)
 
 ---
 

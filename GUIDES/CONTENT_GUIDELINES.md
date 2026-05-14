@@ -40,12 +40,12 @@ Richtlinien für Website-Copy, Tone of Voice, Meta-Tags & Content-Struktur.
 
 ### Headline 2 (H2)
 - Sub-topics strukturieren
-- Jede Section 1x H2
+- Jede Section 1× H2
 - Keyword-Variation
 
 ### Headline 3+ (H3, H4)
-- Details, nicht missbauchen
-- Logische Hierarchie
+- Details, nicht missbrauchen
+- Logische Hierarchie beibehalten
 
 ---
 
@@ -74,15 +74,6 @@ Richtlinien für Website-Copy, Tone of Voice, Meta-Tags & Content-Struktur.
 
 **Beispiel:**
 > "Erstellen Sie responsive Websites in 24 Stunden ohne Code. Für Agenturen & Freelancer. Jetzt kostenfrei testen!"
-
-### Meta Keywords
-```html
-<meta name="keywords" content="...">
-```
-- Weniger wichtig für Google
-- Aber gutes internes Dokumentation
-- 5-10 relevante Keywords
-- Durch Komma getrennt
 
 ---
 
@@ -173,26 +164,7 @@ Richtlinien für Website-Copy, Tone of Voice, Meta-Tags & Content-Struktur.
 
 ---
 
-## 8. Lokalisierung (Multi-Language)
-
-Wenn Website mehrsprachig:
-
-```html
-<html lang="de">
-<html lang="en">
-```
-
-- Jede Sprache = separate URL (`/de/`, `/en/`)
-- Oder Subdomain (`de.example.com`, `en.example.com`)
-- Hreflang Tags für Google:
-  ```html
-  <link rel="alternate" hreflang="de" href="https://example.com/de/">
-  <link rel="alternate" hreflang="en" href="https://example.com/en/">
-  ```
-
----
-
-## 9. Content Checkliste
+## 8. Content Checkliste
 
 Bevor Content published wird:
 
@@ -208,15 +180,6 @@ Bevor Content published wird:
 - [ ] Tone of Voice konsistent?
 - [ ] Mobile lesbar? (Absätze kurz genug?)
 - [ ] Kontrast ≥ 4.5:1?
-
----
-
-## 10. Tools
-
-- **Keyword Research:** Google Keyword Planner, Ahrefs, SEMrush
-- **Content Optimizer:** Yoast SEO, Clearscope
-- **Grammar Check:** Grammarly, LanguageTool
-- **Readability:** Hemingway Editor, readabilityformulas.com
 
 ---
 

@@ -1,0 +1,26 @@
+# Ralph Loop – Agent-Konfiguration
+# Dokumentation: GUIDES/RALPH_LOOP.md
+
+# ── Implementer ──────────────────────────────────────────────────────────
+# Kapazitätsstarkes Modell – schreibt Code-Dateien via Tools
+IMPLEMENTER_CMD="claude"
+IMPLEMENTER_FLAGS="-p"          # Claude: -p = non-interactive mit Tools
+                                 # Gemini: --prompt  oder leer lassen
+
+# ── Validator ────────────────────────────────────────────────────────────
+# Schnelles Modell – gibt Text auf stdout aus (Script schreibt Dateien)
+VALIDATOR_CMD="claude"
+VALIDATOR_FLAGS="-p"            # Claude: -p
+                                 # Gemini: --prompt  oder leer lassen
+
+# ── Beispiel-Konfigurationen ─────────────────────────────────────────────
+# Nur Gemini:
+# IMPLEMENTER_CMD="gemini" ; IMPLEMENTER_FLAGS="--prompt"
+# VALIDATOR_CMD="gemini"   ; VALIDATOR_FLAGS="--prompt"
+#
+# Gemischt (Claude implementiert, Gemini validiert):
+# IMPLEMENTER_CMD="claude" ; IMPLEMENTER_FLAGS="-p"
+# VALIDATOR_CMD="gemini"   ; VALIDATOR_FLAGS="--prompt"
+
+# ── Loop-Verhalten ───────────────────────────────────────────────────────
+MAX_RETRIES=3
