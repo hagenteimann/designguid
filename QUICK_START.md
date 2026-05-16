@@ -219,6 +219,7 @@ Fertig! ✅
 | Topic | Link |
 |-------|------|
 | Design System | [Link](GUIDES/DESIGN_SYSTEM.md) |
+| Rechtliches (Impressum, Datenschutz, AGB) | [Link](GUIDES/RECHTLICHES.md) |
 | QA Testing & Performance | [Link](GUIDES/QA_TESTING.md) |
 | Development Setup | [Link](GUIDES/DEVELOPMENT_SETUP.md) |
 | Content Guidelines | [Link](GUIDES/CONTENT_GUIDELINES.md) |

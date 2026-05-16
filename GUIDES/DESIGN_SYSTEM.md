@@ -345,6 +345,136 @@ Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **
 
 ---
 
+## Phase 6: Motion, Hero & Global Defaults
+
+### Scrollbar ausblenden (Global Pflicht)
+
+Jede Push8-Website blendet die Scrollbar aus – Scroll-Funktionalität bleibt erhalten.
+
+```css
+html {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+html::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+```
+
+---
+
+### Paragraph-Reveal-Effekt im Hero (Pflicht)
+
+Hero-Text erscheint nicht sofort – jede Zeile/jeder Block gleitet beim Laden von unten herein. Erzeugt Hochwertigkeit und lenkt die Aufmerksamkeit.
+
+```html
+<div class="hero-text">
+  <span class="reveal-line">Websites, die Kunden gewinnen.</span>
+  <span class="reveal-line">Für Handwerker, Berater, Agenturen.</span>
+</div>
+```
+
+```css
+.hero-text {
+  overflow: hidden;
+}
+
+.reveal-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-line {
+    animation: line-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .reveal-line:nth-child(1) { animation-delay: 0.1s; }
+  .reveal-line:nth-child(2) { animation-delay: 0.25s; }
+  .reveal-line:nth-child(3) { animation-delay: 0.4s; }
+}
+
+/* Kein Motion: sofort sichtbar */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes line-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
+
+---
+
+### Parallax + Filter im Hero (Pflicht)
+
+Hero-Hintergrundbild bewegt sich langsamer als der Inhalt. Overlay-Filter erhöht Lesbarkeit und Tiefe. `will-change: transform` aktiviert GPU-Rendering.
+
+```html
+<section id="section-hero" class="hero" data-nav-label="Hero" data-nav-order="1">
+  <div class="hero__bg" id="hero-bg"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <!-- Paragraph-Reveal-Text hier -->
+  </div>
+</section>
+```
+
+```css
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: -20%;           /* Überschuss für Parallax-Bewegung */
+  background-image: url('hero-bg.webp');
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    hsl(from var(--color-primary-500) h s l / 0.6) 0%,
+    hsl(0 0% 0% / 0.3) 100%
+  );
+  backdrop-filter: blur(1px);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding: clamp(var(--space-700), 10vw, var(--space-800));
+  color: white;
+}
+```
+
+```javascript
+@media (prefers-reduced-motion: no-preference) {
+  const heroBg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+  }, { passive: true });
+}
+```
+
+> `100svh` statt `100vh` – vermeidet den iOS-Safari-Bug mit der dynamischen Browser-Toolbar.
+
+---
+
 ## Checkliste vor dem Go-Live
 
 **Kein Deploy ohne alle Punkte abgehakt.**
@@ -362,6 +492,7 @@ Eine Superellipse (Lamé-Kurve) folgt der Formel `|x/a|^n + |y/b|^n = 1`. Bei **
 - [ ] Alle Bilder: Lizenz geprüft (Unsplash/Pexels/Pixabay oder eigen)
 - [ ] Fonts: selbst gehostet (kein Google Fonts CDN)
 - [ ] Keine externen CDN-Requests ohne DSGVO-Prüfung
+- [ ] Impressum + Datenschutz vorhanden und im Footer verlinkt → [RECHTLICHES.md](./RECHTLICHES.md)
 
 ---
 

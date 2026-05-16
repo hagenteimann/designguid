@@ -70,6 +70,8 @@ nav.innerHTML = navLinks
 
 ## Mobile-First Navigation
 
+**Pflicht:** Unter 768px ist der Hamburger-Button immer sichtbar. Kein direktes Anzeigen der Navigationspunkte auf Mobile. Kein anderer Ansatz (Tab-Bar, Dropdown) ohne explizite Freigabe.
+
 ### Desktop (Sticky Horizontal)
 ```css
 nav {
@@ -204,6 +206,52 @@ nav a[data-active="true"] {
 - [ ] Smooth Scroll funktioniert?
 - [ ] Keyboard Navigation (Tab-Order)?
 - [ ] Aria-Labels vorhanden?
+
+---
+
+## Animierter Section-Indikator (Pflicht)
+
+Ein Indikator-Balken gleitet animiert unter den aktiven Navigationspunkt. Zeigt dem Nutzer jederzeit wo er sich auf der Seite befindet.
+
+```css
+nav {
+  position: relative;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-primary-300);
+  border-radius: 2px;
+  transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+```
+
+```javascript
+const indicator = document.createElement('div');
+indicator.className = 'nav-indicator';
+nav.appendChild(indicator);
+
+function moveIndicator(link) {
+  if (!link) return;
+  indicator.style.left  = `${link.offsetLeft}px`;
+  indicator.style.width = `${link.offsetWidth}px`;
+}
+
+// Initial auf erstem aktiven Link
+moveIndicator(nav.querySelector('a'));
+
+// Bei Scroll-Update aktiven Link ermitteln
+window.addEventListener('scroll', () => {
+  const activeLink = nav.querySelector('a[data-active="true"]');
+  moveIndicator(activeLink);
+}, { passive: true });
+```
+
+> Auf Mobile (Hamburger-Menü) den Indikator ausblenden: `.nav-indicator { display: none; }` im Mobile-Breakpoint.
 
 ---
 
