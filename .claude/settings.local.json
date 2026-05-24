@@ -11,7 +11,17 @@
       "Bash(mv KONTAKTFORMULAR.md GUIDES/)",
       "Bash(mv SEO.md GUIDES/)",
       "Bash(mv SECURITY.md GUIDES/)",
-      "Bash(ls -1 *.md)"
+      "Bash(ls -1 *.md)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "WebSearch",
+      "Read(//c/Users/Hagen/.claude/plugins/**)",
+      "Read(//c/Users/Hagen/.claude/**)",
+      "Bash(claude plugin:*)",
+      "Bash(npx --yes skills@latest --help)",
+      "Bash(npx:*)",
+      "Read(//tmp/kz-motion/skills/**)",
+      "Bash(cp -r /tmp/kz-motion/skills/design-motion-principles ~/.agents/skills/)",
+      "Bash(cp:*)"
     ]
   }
 }

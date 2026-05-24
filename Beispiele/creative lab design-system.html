@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>creativelab.de | CD Manual & Style Guide</title>
+    <meta name="description" content="Official Corporate Design Manual for creativelab.de. Documenting foundations, components, and brand standards.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styleguide.css">
+</head>
+<body class="styleguide light-theme">
+
+    <nav class="sg-nav">
+        <div class="sg-nav-logo">
+            <img src="image/icons/nav/nav/logo-icon.svg" alt="" style="height: 20px;">
+            creativelab
+        </div>
+        <div class="sg-nav-links">
+            <a href="#vision" class="sg-nav-link">Vision</a>
+            <a href="#logo" class="sg-nav-link">Logo</a>
+            <a href="#foundations" class="sg-nav-link">Foundations</a>
+            <a href="#colors" class="sg-nav-link">Colors</a>
+            <a href="#light-mode" class="sg-nav-link">Light Mode</a>
+            <a href="#typography" class="sg-nav-link">Typography</a>
+            <a href="#components" class="sg-nav-link">Components</a>
+            <a href="#motion" class="sg-nav-link">Motion</a>
+            <a href="#icons" class="sg-nav-link">Icons</a>
+            <a href="#voice-tone" class="sg-nav-link">Voice & Tone</a>
+            <a href="#assets" class="sg-nav-link">Assets</a>
+            <a href="#touch-ux" class="sg-nav-link">Touch & UX</a>
+            <a href="#scannability" class="sg-nav-link">Scannability</a>
+            <a href="#2026-updates" class="sg-nav-link">2026 Updates</a>
+        </div>
+    </nav>
+
+    <main class="sg-content">
+        <header class="sg-header">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <h1>creativelab.de</h1>
+                <p>Corporate Design Manual v1.3.0 — Design Systems & Brand Standards (4pt Grid)</p>
+            </div>
+            <div style="font-size: var(--fs-xs); color: var(--clr-neutral-600); text-align: right;">
+                LETZTES UPDATE: 30. APRIL 2026<br>
+                STATUS: FINAL
+            </div>
+        </div>
+    </header>
+
+    <!-- 00 BRAND VISION -->
+    <section class="sg-section" id="vision">
+        <h2>00 Brand Vision</h2>
+        <div class="glass-card">
+            <h3 style="font-family: var(--font-accent); color: var(--clr-neutral-0); margin-bottom: var(--space-2);">Premium Content. Ohne Overhead.</h3>
+            <p style="color: var(--clr-neutral-300); max-width: 800px;">creativelab.de steht für High-End Videografie und Content-Strategie im Fashion- und Lifestyle-Segment. Unsere visuelle Sprache ist minimalistisch, präzise und wertig. Dieses Manual definiert die Regeln, um diese Ästhetik über alle Touchpoints hinweg konsistent zu halten.</p>
+        </div>
+    </section>
+
+    <!-- 01 LOGO -->
+    <section class="sg-section" id="logo">
+        <h2>01 Logo & Branding</h2>
+        <div class="sg-subsection">
+            <h3>Das Kern-Logo</h3>
+            <p>Unser Logo ist das zentrale Identitätsmerkmal. Es sollte immer mit ausreichend Weißraum (Clear Space) platziert werden.</p>
+            
+            <div class="demo-row" style="margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-8);">
+                <div class="demo-item" style="width: 100%;">
+                    <span class="demo-label">Negativ (Standard) — Full Background</span>
+                    <div style="background: var(--clr-neutral-1000); padding: var(--space-16) var(--space-8); border-radius: var(--radius-md); border: 1px solid var(--clr-neutral-900); display: flex; justify-content: center; align-items: center; width: 100%;">
+                        <img src="image/LOGO_C.svg" alt="creativelab logo" style="height: 80px;">
+                    </div>
+                </div>
+                <div class="demo-item" style="width: 100%;">
+                    <span class="demo-label">Positiv — Light Background</span>
+                    <div style="background: var(--clr-neutral-0); padding: var(--space-12) var(--space-8); border-radius: var(--radius-md); border: 1px solid var(--clr-neutral-200); display: flex; justify-content: center; align-items: center; width: 100%;">
+                        <img src="image/LOGO_C.svg" alt="creativelab logo" style="height: 80px; filter: invert(1);">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="spec-container" style="margin-top: var(--space-6);">
+                <div class="spec-item"><span class="spec-key">Minimale Breite</span><span class="spec-val">24px (Digital) / 10mm (Print)</span></div>
+                <div class="spec-item"><span class="spec-key">Clear Space</span><span class="spec-val">Mindestens 50% der Logo-Breite rundherum</span></div>
+                <div class="spec-item"><span class="spec-key">Farbvariante</span><span class="spec-val">Ausschließlich Weiß oder Schwarz (Invertiert)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 FOUNDATIONS -->
+    <section class="sg-section" id="foundations">
+        <h2>02 Foundations</h2>
+        <div class="sg-subsection">
+            <h3>Grid System — 4pt Tokens, 8pt Layout Base</h3>
+            <p>Entscheidung: 4pt-Tokens sind ein Superset von 8pt (bewährt bei Linear, Vercel, Radix). <strong>Layout-Abstände nutzen immer 8pt-Vielfache</strong> (--space-2, --space-4, --space-8…). --space-1 und --space-3 sind ausschließlich für Micro-Details (Iconpadding, Borders, enge Typografie).</p>
+            <div class="grid-demo" style="margin-top: var(--space-4);">
+                <div class="grid-item" style="height: var(--space-1);"><span class="grid-label">--space-1 · Micro only</span><span class="grid-label">4px</span></div>
+                <div class="grid-item" style="height: var(--space-2);"><span class="grid-label">--space-2 · Layout ✓</span><span class="grid-label">8px</span></div>
+                <div class="grid-item" style="height: var(--space-3);"><span class="grid-label">--space-3 · Micro only</span><span class="grid-label">12px</span></div>
+                <div class="grid-item" style="height: var(--space-4);"><span class="grid-label">--space-4 · Layout ✓</span><span class="grid-label">16px</span></div>
+                <div class="grid-item" style="height: var(--space-6);"><span class="grid-label">--space-6 · Layout ✓</span><span class="grid-label">24px</span></div>
+                <div class="grid-item" style="height: var(--space-8);"><span class="grid-label">--space-8 · Layout ✓</span><span class="grid-label">32px</span></div>
+                <div class="grid-item" style="height: var(--space-12);"><span class="grid-label">--space-12 · Layout ✓</span><span class="grid-label">48px</span></div>
+                <div class="grid-item" style="height: var(--space-16);"><span class="grid-label">--space-16 · Layout ✓</span><span class="grid-label">64px</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Fluid Spacing (clamp)</h3>
+            <p>Section-Level-Abstände skalieren stufenlos ohne Media Queries. Niemals feste px-Werte für Section-Padding verwenden.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--sp-section</span><span class="spec-val">clamp(80px, 10vw, 140px) — Section padding top/bottom</span></div>
+                <div class="spec-item"><span class="spec-key">--sp-inner</span><span class="spec-val">clamp(24px, 5vw, 56px) — Inner component padding</span></div>
+                <div class="spec-item"><span class="spec-key">--sp-page</span><span class="spec-val">clamp(24px, 6vw, 100px) — Horizontal page gutter</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 COLORS -->
+    <section class="sg-section" id="colors">
+        <h2>03 Color Palette</h2>
+        <div class="sg-subsection">
+            <h3>G-Scale — UI Chrome & Grayscale</h3>
+            <p>Primäre Grau-Ramp der Website. Genutzt für Nav-States, Overlines, Borders, Icon-Tints. <strong>Website ist Source of Truth.</strong></p>
+            <div class="color-grid" style="margin-top: var(--space-4);">
+                <div class="color-swatch"><div class="color-preview" style="background:#ffffff;"></div><div class="color-info"><span class="color-name">--g0</span><span class="color-hex">#ffffff</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#f0f0f0;"></div><div class="color-info"><span class="color-name">--g100</span><span class="color-hex">#f0f0f0</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#e0e0e0;"></div><div class="color-info"><span class="color-name">--g200</span><span class="color-hex">#e0e0e0</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#cccccc;"></div><div class="color-info"><span class="color-name">--g300</span><span class="color-hex">#cccccc</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#b0b0b0;"></div><div class="color-info"><span class="color-name">--g400</span><span class="color-hex">#b0b0b0</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#999999;"></div><div class="color-info"><span class="color-name">--g500</span><span class="color-hex">#999999</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#808080;"></div><div class="color-info"><span class="color-name">--g600</span><span class="color-hex">#808080</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#666666;"></div><div class="color-info"><span class="color-name">--g700</span><span class="color-hex">#666666</span></div></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>N-Scale — Text & Content</h3>
+            <p>Text-Farbabstufungen. Invertieren sich im Light Mode automatisch via CSS-Override.</p>
+            <div class="color-grid" style="margin-top: var(--space-4);">
+                <div class="color-swatch"><div class="color-preview" style="background:#f5f5f5;"></div><div class="color-info"><span class="color-name">--n100</span><span class="color-hex">#f5f5f5 · primary text</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#a8a8a8;"></div><div class="color-info"><span class="color-name">--n300</span><span class="color-hex">#a8a8a8 · secondary</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#8a8a8a;"></div><div class="color-info"><span class="color-name">--n400</span><span class="color-hex">#8a8a8a · muted</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#5a5a5a;"></div><div class="color-info"><span class="color-name">--n500</span><span class="color-hex">#5a5a5a · disabled</span></div></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>S-Scale — Dark Surfaces & Backgrounds</h3>
+            <div class="color-grid" style="margin-top: var(--space-4);">
+                <div class="color-swatch"><div class="color-preview" style="background:#0c0c0c; border: 1px solid #333;"></div><div class="color-info"><span class="color-name">--bg</span><span class="color-hex">#0c0c0c · page base</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#2a2a2a;"></div><div class="color-info"><span class="color-name">--s0</span><span class="color-hex">#2a2a2a</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#222222;"></div><div class="color-info"><span class="color-name">--s100</span><span class="color-hex">#222222</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#1c1c1c;"></div><div class="color-info"><span class="color-name">--s200</span><span class="color-hex">#1c1c1c</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#141414;"></div><div class="color-info"><span class="color-name">--s300</span><span class="color-hex">#141414</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#111111;"></div><div class="color-info"><span class="color-name">--s400</span><span class="color-hex">#111111</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background:#000000; border: 1px solid #333;"></div><div class="color-info"><span class="color-name">--s700</span><span class="color-hex">#000000 · pure black</span></div></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Tier 2 — Semantic Aliases</h3>
+            <p>Semantische Schicht auf den Produktions-Tokens. In Komponenten diese Namen nutzen, nie direkte g/n/s-Tokens.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--color-bg-base</span><span class="spec-val">→ --bg (#0c0c0c) · Haupt-Hintergrund</span></div>
+                <div class="spec-item"><span class="spec-key">--color-bg-surface</span><span class="spec-val">→ --s100 (#222) · Cards, Panels</span></div>
+                <div class="spec-item"><span class="spec-key">--color-bg-elevated</span><span class="spec-val">→ --s0 (#2a2a2a) · Dropdowns, Tooltips</span></div>
+                <div class="spec-item"><span class="spec-key">--color-text-primary</span><span class="spec-val">→ --n100 (#f5f5f5) · Haupttext</span></div>
+                <div class="spec-item"><span class="spec-key">--color-text-secondary</span><span class="spec-val">→ --n400 (#8a8a8a) · Supporting text</span></div>
+                <div class="spec-item"><span class="spec-key">--color-text-muted</span><span class="spec-val">→ --n500 (#5a5a5a) · Labels, Captions</span></div>
+                <div class="spec-item"><span class="spec-key">--color-border-subtle</span><span class="spec-val">→ rgba(255,255,255,.07) · Glass-Borders</span></div>
+                <div class="spec-item"><span class="spec-key">--glow</span><span class="spec-val">0 0 10.2px 0 rgba(255,255,255,.15) · Standard Glow</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Feedback Colors</h3>
+            <div class="color-grid" style="margin-top: var(--space-4);">
+                <div class="color-swatch"><div class="color-preview" style="background: var(--clr-success-500);"></div><div class="color-info"><span class="color-name">Success</span><span class="color-hex">#10b981</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background: var(--clr-warning-500);"></div><div class="color-info"><span class="color-name">Warning</span><span class="color-hex">#f59e0b</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background: var(--clr-error-500);"></div><div class="color-info"><span class="color-name">Error</span><span class="color-hex">#f43f5e</span></div></div>
+                <div class="color-swatch"><div class="color-preview" style="background: var(--clr-info-500);"></div><div class="color-info"><span class="color-name">Info</span><span class="color-hex">#3b82f6</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 LIGHT MODE -->
+    <section class="sg-section" id="light-mode">
+        <h2>04 Light Mode Accessibility</h2>
+        <div class="sg-subsection">
+            <h3>Mixed Mode Strategy</h3>
+            <p>Um eine "Premium Cinematic" Ästhetik zu wahren, bleiben Schlüssel-Sektionen (Hero, Services, Pricing, Footer) auch im Light Mode **vollständig dunkel**.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Default Theme</span><span class="spec-val">Light Mode (Positiv)</span></div>
+                <div class="spec-item"><span class="spec-key">Dark Sections</span><span class="spec-val">Hero, Services, Pricing, Footer</span></div>
+                <div class="spec-item"><span class="spec-key">Light Sections</span><span class="spec-val">About, Portfolio, Use-Cases, Contact</span></div>
+            </div>
+        </div>
+        
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Readability Rules</h3>
+            <p>Um die Lesbarkeit im Light Mode zu gewährleisten, müssen adaptive Tokens verwendet werden, außer in "Dark Sections".</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Inversion</span><span class="spec-val">Nav & Buttons invertieren nur außerhalb von Dark Sections</span></div>
+                <div class="spec-item"><span class="spec-key">Inputs</span><span class="spec-val">Light Background (#f9f9f9) + Border (#eeeeee)</span></div>
+                <div class="spec-item"><span class="spec-key">Contrast</span><span class="spec-val">Mindestens 4.5:1 (WCAG AA)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 TYPOGRAPHY -->
+    <section class="sg-section" id="typography">
+        <h2>05 Typography</h2>
+        <div class="sg-subsection">
+            <h3>Brand Fonts — max. 2 (Blueprint-Regel)</h3>
+            <div class="spec-container">
+                <div class="type-preview">
+                    <p class="spec-key">Accent / Alumni Sans SC — Headlines, Nav, Cards</p>
+                    <h1 style="font-family: var(--font-accent); font-size: var(--fs-4xl); text-transform: uppercase;">ALUMNI SANS SC</h1>
+                    <p style="font-size: var(--fs-xs); color: var(--clr-neutral-500);">Gewichte: 400 (Display/Shimmer) · 700 (Bold Subhead)</p>
+                </div>
+                <div class="type-preview" style="margin-top: var(--space-6);">
+                    <p class="spec-key">Primary / Inter — Body, UI, Labels</p>
+                    <h1 style="font-family: var(--font-primary); font-size: var(--fs-4xl);">Inter</h1>
+                    <p style="font-size: var(--fs-xs); color: var(--clr-neutral-500);">Gewichte: 400 (body) · 500 (UI) · 600 (labels) · 700 (headings)</p>
+                </div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Fluid Type Scale (Website — Source of Truth)</h3>
+            <p>Alle Hero- und Heading-Größen nutzen <code>clamp()</code> — keine fixed breakpoints.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Hero Line 1</span><span class="spec-val">clamp(36px, 7.5vw, 105px) · Alumni Sans SC · weight 400 · shimmer gradient</span></div>
+                <div class="spec-item"><span class="spec-key">Hero Line 2</span><span class="spec-val">clamp(24px, 5vw, 70px) · Alumni Sans SC · weight 700 · --g300</span></div>
+                <div class="spec-item"><span class="spec-key">Hero Line 3</span><span class="spec-val">clamp(16px, 3.2vw, 44px) · Alumni Sans SC · weight 400 · --g400</span></div>
+                <div class="spec-item"><span class="spec-key">.sec-heading</span><span class="spec-val">clamp(26px, 3.2vw, 38px) · Inter · weight 700 · letter-spacing -0.025em</span></div>
+                <div class="spec-item"><span class="spec-key">.stat-num</span><span class="spec-val">clamp(36px, 4vw, 52px) · Inter · weight 700</span></div>
+                <div class="spec-item"><span class="spec-key">Body / UI</span><span class="spec-val">13px fixed · Inter · weight 400–500</span></div>
+                <div class="spec-item"><span class="spec-key">Labels / Overline</span><span class="spec-val">11px fixed · weight 600 · letter-spacing 3.5px</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Shimmer — Signature Effect</h3>
+            <h2 class="exp-shimmer" style="font-family: var(--font-accent); font-size: var(--fs-3xl);">PREMIUM CONTENT</h2>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Gradient</span><span class="spec-val">linear-gradient(90deg, --g600 0%, --g0 35%, --g400 50%, --g0 65%, --g600 100%)</span></div>
+                <div class="spec-item"><span class="spec-key">Animation</span><span class="spec-val">background-size: 200% · shimmer 5s linear infinite</span></div>
+                <div class="spec-item"><span class="spec-key">Einsatz</span><span class="spec-val">Nur Hero Line 1 und experimentelle Akzente — nie für Fließtext</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 06 COMPONENTS -->
+    <section class="sg-section" id="components">
+        <h2>06 Components</h2>
+
+        <div class="sg-subsection">
+            <h3>Buttons</h3>
+            <div class="demo-row">
+                <button class="btn btn-primary">Projekt starten</button>
+                <button class="btn btn-ghost">Arbeiten ansehen</button>
+                <button class="btn btn-outline">Portfolio</button>
+                <a class="btn-glow" href="#">get in touch</a>
+            </div>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">.btn-primary</span><span class="spec-val">bg: --n100 · text: --bg · hover: box-shadow glow · min-height: 48px</span></div>
+                <div class="spec-item"><span class="spec-key">.btn-ghost</span><span class="spec-val">bg: --s100 · border: --s300 · hover: --s200 + translateY(-2px)</span></div>
+                <div class="spec-item"><span class="spec-key">.btn-outline</span><span class="spec-val">transparent · border: --n400 · hover: border --n100 + bg --s100</span></div>
+                <div class="spec-item"><span class="spec-key">.btn-glow</span><span class="spec-val">Pill-Form · bg: rgba(255,255,255,.06) · hover: glow box-shadow · Für sekundäre CTAs</span></div>
+                <div class="spec-item"><span class="spec-key">Transition</span><span class="spec-val">var(--duration-micro) var(--ease) — alle Button-States</span></div>
+            </div>
+        </div>
+
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Glass & Card Premium</h3>
+            <div class="demo-row" style="gap: var(--space-6);">
+                <div class="glass-card" style="width: 300px;">
+                    <h4 style="font-family: var(--font-accent); margin-bottom: var(--space-2);">.glass-card</h4>
+                    <p style="font-size: var(--fs-sm); color: var(--clr-neutral-400);">Nav-Links, leichte Glasflächen.</p>
+                </div>
+            </div>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">.glass</span><span class="spec-val">bg rgba(255,255,255,.05) · blur(16px) saturate(160%) · border rgba(255,255,255,.08) · radius --r-md</span></div>
+                <div class="spec-item"><span class="spec-key">.card-premium</span><span class="spec-val">blur(16px) saturate(180%) · gradient refraction 135° · shadow 0 8px 32px rgba(0,0,0,.25) + inset highlight · hover: translateY(-6px)</span></div>
+                <div class="spec-item"><span class="spec-key">.card-premium.pro</span><span class="spec-val">border-color rgba(255,255,255,.16) — für hervorgehobene Karten (z.B. Growth-Plan)</span></div>
+                <div class="spec-item"><span class="spec-key">Transition</span><span class="spec-val">var(--duration-component) var(--ease)</span></div>
+            </div>
+        </div>
+
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Reveal Animation</h3>
+            <p>Scroll-getriggerte Einblend-Animation für alle Sektionsinhalte. Nutzt <code>animation-timeline: view()</code> (progressive enhancement) mit JS-Fallback.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">.reveal</span><span class="spec-val">opacity: 0 — wartet auf Viewport-Entry</span></div>
+                <div class="spec-item"><span class="spec-key">.reveal.in</span><span class="spec-val">revealIn 0.6s ease forwards — scale(0.95) → scale(1) + fade</span></div>
+                <div class="spec-item"><span class="spec-key">.d1 – .d4</span><span class="spec-val">Staggered delays: 80ms / 160ms / 240ms / 320ms</span></div>
+                <div class="spec-item"><span class="spec-key">Reduced Motion</span><span class="spec-val">@media prefers-reduced-motion → animation: none; opacity: 1</span></div>
+            </div>
+        </div>
+
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Badge & Overline</h3>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">.badge</span><span class="spec-val">11px · uppercase · letter-spacing 1px · pill-radius · padding 4px 10px</span></div>
+                <div class="spec-item"><span class="spec-key">.uc-badge</span><span class="spec-val">border rgba(255,255,255,.12) · transparent bg · hover: border + text --n100</span></div>
+                <div class="spec-item"><span class="spec-key">.overline</span><span class="spec-val">11px · weight 600 · letter-spacing 3.5px · color --g400 · uppercase</span></div>
+                <div class="spec-item"><span class="spec-key">.overline.neutral</span><span class="spec-val">color --n400 · no uppercase — für Fließtext-Kontexte</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 MOTION -->
+    <section class="sg-section" id="motion">
+        <h2>07 Motion & Interaction</h2>
+        <div class="sg-subsection">
+            <h3>Duration Tiers</h3>
+            <p>Entscheidung: Blueprint (200–300ms für Micro) hat Recht. Alte Angabe (300–600ms) war zu langsam für Feedback-Loops. Drei Tiers per Material Design + Apple HIG.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--duration-micro · 150ms</span><span class="spec-val">Hover, Click-Feedback, Icon-Swap</span></div>
+                <div class="spec-item"><span class="spec-key">--duration-component · 250ms</span><span class="spec-val">Dropdowns, Tooltips, State-Changes, Button-Press</span></div>
+                <div class="spec-item"><span class="spec-key">--duration-page · 450ms</span><span class="spec-val">Modals, Drawer, Page-Transitions, Hero-Reveal</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Easing Curves</h3>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--ease-standard</span><span class="spec-val">cubic-bezier(0.4, 0, 0.2, 1) — Standard für Hover & State</span></div>
+                <div class="spec-item"><span class="spec-key">--ease-enter</span><span class="spec-val">cubic-bezier(0.0, 0, 0.2, 1) — Decelerate: Elemente erscheinen</span></div>
+                <div class="spec-item"><span class="spec-key">--ease-exit</span><span class="spec-val">cubic-bezier(0.4, 0, 1, 1) — Accelerate: Elemente verschwinden</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Skeleton Screens</h3>
+            <p>Für alle asynchron geladenen Inhalte (Bilder, Listings, Daten) Skeleton Screens statt Spinner verwenden. Skeleton verhindert Layout-Shift und signalisiert Struktur.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Animation</span><span class="spec-val">Shimmer-Gradient, 1.5s infinite, ease-in-out</span></div>
+                <div class="spec-item"><span class="spec-key">Farbe</span><span class="spec-val">Hintergrund: neutral-800 → neutral-700 (Shimmer)</span></div>
+                <div class="spec-item"><span class="spec-key">Radius</span><span class="spec-val">Gleicher Radius wie finales Element</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 08 ICONOGRAPHY -->
+    <section class="sg-section" id="icons">
+        <h2>08 Iconography</h2>
+        <div class="sg-subsection">
+            <p>Line Art, 1.5pt - 2pt Stroke.</p>
+            <div class="demo-row" style="margin-top: var(--space-4);">
+                <div style="background: var(--clr-neutral-900); padding: var(--space-4); border-radius: var(--radius-sm); display: flex; gap: var(--space-6);">
+                    <img src="image/icons/check-square.svg" alt="icon" style="width: 24px; filter: brightness(2);">
+                    <img src="image/icons/nav/nav/logo-icon.svg" alt="icon" style="width: 24px; filter: brightness(2);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 09 BRAND VOICE -->
+    <section class="sg-section" id="voice-tone">
+        <h2>09 Brand Voice</h2>
+        <p>Unsere Kommunikation ist direkt, selbstbewusst und fokussiert auf Ergebnisse.</p>
+    </section>
+
+    <!-- 10 ASSETS -->
+    <section class="sg-section" id="assets">
+        <h2>10 Assets & Performance</h2>
+        <div class="sg-subsection">
+            <h3>Bildformate</h3>
+            <p>Konsequente Nutzung moderner Formate — kein JPG/PNG ohne Konvertierung.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Fotos / Renders</span><span class="spec-val">WebP. Auto-Convert bei Implementierung. Fallback: JPG.</span></div>
+                <div class="spec-item"><span class="spec-key">Icons / Logos</span><span class="spec-val">SVG. Inline wenn animiert, external wenn statisch.</span></div>
+                <div class="spec-item"><span class="spec-key">Aspect Ratio</span><span class="spec-val">Immer feste Ratios (object-fit: cover). Niemals frei skalieren — verhindert CLS.</span></div>
+                <div class="spec-item"><span class="spec-key">Ratios</span><span class="spec-val">Bento: 1:1, 16:9, 4:5 — je nach Slot-Typ</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Scrim-Regel</h3>
+            <p>Text-Overlays auf Bildern immer mit sanftem Verlauf absichern. Niemals Text direkt auf Bild ohne Scrim.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Gradient</span><span class="spec-val">linear-gradient(to top, rgba(0,0,0,0.40) 0%, transparent 60%)</span></div>
+                <div class="spec-item"><span class="spec-key">Max Opacity</span><span class="spec-val">40% Black — darüber wird der Scrim dominant</span></div>
+                <div class="spec-item"><span class="spec-key">Kontrast-Check</span><span class="spec-val">WCAG 4.5:1 auch mit Scrim verifizieren</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11 TOUCH & UX -->
+    <section class="sg-section" id="touch-ux">
+        <h2>11 Touch & UX</h2>
+        <div class="sg-subsection">
+            <h3>Touch Targets</h3>
+            <p>Mobile-First. Alle klickbaren Elemente müssen die Mindestgröße einhalten — auch wenn das Element visuell kleiner ist (Padding als Buffer nutzen).</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--touch-min</span><span class="spec-val">48 × 48px — WCAG 2.5.5 + Material Design Standard</span></div>
+                <div class="spec-item"><span class="spec-key">Visuell klein</span><span class="spec-val">min-height: var(--touch-min) + padding ausgleichen</span></div>
+                <div class="spec-item"><span class="spec-key">Gap zwischen Targets</span><span class="spec-val">Mindestens 8px (--space-2)</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Safe Areas (Mobile)</h3>
+            <p>CTAs und interaktive Elemente niemals in der Notch-Zone oder unter der Home-Bar platzieren.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Bottom CTA</span><span class="spec-val">padding-bottom: max(var(--space-6), env(safe-area-inset-bottom))</span></div>
+                <div class="spec-item"><span class="spec-key">Top Nav</span><span class="spec-val">padding-top: max(var(--space-4), env(safe-area-inset-top))</span></div>
+                <div class="spec-item"><span class="spec-key">Viewport-Höhe</span><span class="spec-val">dvh (dynamic viewport height) statt vh für mobile Browser</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13 SCANNABILITY -->
+    <section class="sg-section" id="scannability">
+        <h2>13 Agent Scannability</h2>
+        <p>Optimiert für AI-Agenten: Verwende --space-[1-20] und --clr-neutral-[0-1000].</p>
+    </section>
+
+    <!-- 14 NAVIGATION LOGIC -->
+    <section class="sg-section" id="navigation-logic">
+        <h2>14 Dynamic Navigation</h2>
+        <div class="sg-subsection">
+            <p>Die Navbar adaptiert ihren Zustand basierend auf der Scroll-Position und dem Hintergrund.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Hero-State</span><span class="spec-val">Vollständig transparent, weiße Elemente</span></div>
+                <div class="spec-item"><span class="spec-key">Scrolled-State</span><span class="spec-val">Solides Weiß (#fff), dunkle Elemente</span></div>
+                <div class="spec-item"><span class="spec-key">Link Plate</span><span class="spec-val">Zentrales Glass-Element bleibt als Anker bestehen</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15 2026 DESIGN UPDATES -->
+    <section class="sg-section" id="2026-updates">
+        <h2>15 2026 Design Updates</h2>
+        <div class="sg-subsection">
+            <h3>4pt-Grid System</h3>
+            <p>Für feine Details wie Icons, Micro-Interactions und enge Typografie nutzen wir ab 2026 das 4pt-Grid. Die spacing tokens wurden entsprechend angepasst.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">--space-1</span><span class="spec-val">4px</span></div>
+                <div class="spec-item"><span class="spec-key">--space-2</span><span class="spec-val">8px</span></div>
+                <div class="spec-item"><span class="spec-key">--space-3</span><span class="spec-val">12px</span></div>
+                <div class="spec-item"><span class="spec-key">--space-4</span><span class="spec-val">16px</span></div>
+                <div class="spec-item"><span class="spec-key">--space-6</span><span class="spec-val">24px</span></div>
+                <div class="spec-item"><span class="spec-key">--space-8</span><span class="spec-val">32px</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Bento Grid (Portfolio)</h3>
+            <p>Das Portfolio nutzt ein Bento-Layout mit einem Hero-Slot (2×2) und drei regulären Slots.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Hero Slot</span><span class="spec-val">grid-column: span 2; grid-row: span 2;</span></div>
+                <div class="spec-item"><span class="spec-key">Regular Slot</span><span class="spec-val">aspect-ratio: 4/5</span></div>
+                <div class="spec-item"><span class="spec-key">Hero Slot on Tablet+</span><span class="spec-val">aspect-ratio: 1/1</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Liquid Glass Effect</h3>
+            <p>Cards und Glass-Elemente nutzen nun erweiterte Filter für realistische Lichtbrechung.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Blur</span><span class="spec-val">16px</span></div>
+                <div class="spec-item"><span class="spec-key">Saturation</span><span class="spec-val">180%</span></div>
+                <div class="spec-item"><span class="spec-key">Refraction</span><span class="spec-val">linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 50%, rgba(255,255,255,.02) 100%)</span></div>
+                <div class="spec-item"><span class="spec-key">Shadow</span><span class="spec-val">0 8px 32px rgba(0,0,0,.25), inset 0 1px 1px rgba(255,255,255,.08)</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Hero Parallax</h3>
+            <p>Subtiler Parallax-Effekt im Hero für immersive Scroll-Erfahrung.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">Overlay</span><span class="spec-val">30% scroll speed</span></div>
+                <div class="spec-item"><span class="spec-key">Content</span><span class="spec-val">15% scroll speed + opacity fade</span></div>
+            </div>
+        </div>
+        <div class="sg-subsection" style="margin-top: var(--space-8);">
+            <h3>Micro-Interactions</h3>
+            <p>Prediktive Hover-States mit Box-Shadow für frühes visuelles Feedback.</p>
+            <div class="spec-container" style="margin-top: var(--space-4);">
+                <div class="spec-item"><span class="spec-key">.btn-glow:hover</span><span class="spec-val">box-shadow: 0 8px 24px rgba(255,255,255,.08)</span></div>
+                <div class="spec-item"><span class="spec-key">.btn-primary:hover</span><span class="spec-val">box-shadow: 0 8px 24px rgba(255,255,255,.15)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="margin-top: var(--space-12); padding: var(--space-8) 0; border-top: 1px solid var(--clr-neutral-800); text-align: center; font-size: var(--fs-xs); color: var(--clr-neutral-500); letter-spacing: 0.1em; text-transform: uppercase;">
+        &copy; 2025 creativelab.de | ALL RIGHTS RESERVED
+    </footer>
+
+    </main>
+
+    <script>
+        // Intersection Observer for Active Navigation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.3
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.sg-nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.sg-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Click to Copy Hex Codes
+        document.querySelectorAll('.color-swatch').forEach(swatch => {
+            swatch.style.cursor = 'pointer';
+            swatch.addEventListener('click', () => {
+                const hex = swatch.querySelector('.color-hex').textContent;
+                navigator.clipboard.writeText(hex).then(() => {
+                    const originalName = swatch.querySelector('.color-name').textContent;
+                    swatch.querySelector('.color-name').textContent = 'Kopiert!';
+                    swatch.querySelector('.color-name').style.color = 'var(--clr-success-500)';
+                    setTimeout(() => {
+                        swatch.querySelector('.color-name').textContent = originalName;
+                        swatch.querySelector('.color-name').style.color = '';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
