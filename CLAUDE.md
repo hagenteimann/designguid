@@ -85,3 +85,4 @@ Wenn ein Rebuild oder Neubau gestartet wird:
 | Ralph Loop | `GUIDES/RALPH_LOOP.md` |
 | Beispiel-HTML | `Beispiele/` |
 | Skills & Plugins | `SKILLS/README.md` |
+| Tech Stack & Animationen | `GUIDES/TECHSTACK.md` |
