@@ -84,3 +84,4 @@ Wenn ein Rebuild oder Neubau gestartet wird:
 | Rechtliches | `GUIDES/RECHTLICHES.md` |
 | Ralph Loop | `GUIDES/RALPH_LOOP.md` |
 | Beispiel-HTML | `Beispiele/` |
+| Skills & Plugins | `SKILLS/README.md` |
