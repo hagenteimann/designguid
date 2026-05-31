@@ -84,6 +84,9 @@ curl -s https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.X.X/dist/umd/supaba
 
 <!-- Das Formular -->
 <form id="genie-contact-form" novalidate>
+  <!-- novalidate deaktiviert Browser-Validierung – JS-Validierung im submit-Handler ist Pflicht.
+       Ohne JS: Formular kann leer abgeschickt werden. Für maximale Robustheit
+       novalidate weglassen und required-Attribute als nativen Fallback behalten. -->
   <!-- Honeypot (versteckt für Menschen, sichtbar für Bots) -->
   <div style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
     <input type="text" name="hp_field" id="hp_field" tabindex="-1" autocomplete="off">

@@ -446,11 +446,16 @@ Hero-Hintergrundbild bewegt sich langsamer als der Inhalt. Overlay-Filter erhöh
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    hsl(from var(--color-primary-500) h s l / 0.6) 0%,
-    hsl(0 0% 0% / 0.3) 100%
-  );
+  /* Fallback für ältere Browser */
+  background: linear-gradient(135deg, rgba(0, 0, 80, 0.55) 0%, rgba(0, 0, 0, 0.3) 100%);
+  /* Modern (Chrome 119+, Safari 16.4+, Firefox 128+): Markenfarbe aus Token */
+  @supports (background: hsl(from red h s l)) {
+    background: linear-gradient(
+      135deg,
+      hsl(from var(--color-primary-500) h s l / 0.6) 0%,
+      hsl(0 0% 0% / 0.3) 100%
+    );
+  }
   backdrop-filter: blur(1px);
 }
 
@@ -463,7 +468,8 @@ Hero-Hintergrundbild bewegt sich langsamer als der Inhalt. Overlay-Filter erhöh
 ```
 
 ```javascript
-@media (prefers-reduced-motion: no-preference) {
+// prefers-reduced-motion in JS via matchMedia prüfen – nicht @media (das ist CSS-Syntax)
+if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
   const heroBg = document.getElementById('hero-bg');
   window.addEventListener('scroll', () => {
     heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;

@@ -85,8 +85,9 @@ Ziehe public/* → Remote
 ### 3. Git Commit + Push (wenn Git vorhanden)
 
 ```bash
-# 1. Alle Changes staging (außer .env, .gitignore beachtet)
-git add -A
+# 1. Geänderte Dateien gezielt stagen – NICHT git add -A
+# (git add -A kann .env und andere Secrets einschließen wenn .gitignore unvollständig)
+git add public/ src/ *.html *.css *.js
 
 # 2. Commit mit Version-Info
 git commit -m "Deploy: Version 1.2.0 – Features X, Y, Bug fixes Z"
