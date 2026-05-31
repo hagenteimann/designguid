@@ -2,6 +2,12 @@
 
 Diese Richtlinien beschreiben die aktuellen Sicherheitsstandards für die Entwicklung und den Betrieb von Webanwendungen im Jahr 2026.
 
+> **TL;DR**
+> - HTTPS + HSTS + TLS 1.3: Basis, keine Ausnahme
+> - CSP mit `default-src 'none'` + `frame-ancestors 'none'` (ersetzt X-Frame-Options)
+> - Externe Scripts: SRI-Hash Pflicht oder lokal hosten
+> - Formulare: Input-Sanitization serverseitig + CSRF-Token + SameSite Cookies
+
 ## 1. Transport Layer Security (HTTPS & HSTS)
 Verschlüsselung ist die absolute Basis für jede professionelle Website.
 - **HSTS (HTTP Strict Transport Security):** Erzwingt HTTPS-Verbindungen und verhindert Downgrade-Attacken.

@@ -2,6 +2,12 @@
 
 **Kritisch vor jedem Deploy!**
 
+> **TL;DR**
+> - Lighthouse: Performance ≥ 90, Accessibility ≥ 90, SEO ≥ 90
+> - Core Web Vitals: LCP < 2.5s, INP < 200ms (nicht FID!), CLS < 0.1
+> - A11y-Fehler blockieren den Deploy – kein Ausnahme
+> - `./check.sh` läuft automatisiert vor dem manuellen Check
+
 ---
 
 ## Übersicht

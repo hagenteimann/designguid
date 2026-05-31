@@ -2,6 +2,12 @@
 
 Dieser Guide erklärt, wie externe Website-Kontaktformulare an das **Genie CRM** angebunden werden, sodass Anfragen direkt im **Inbound-Tab** landen.
 
+> **TL;DR**
+> - Supabase SDK lokal hosten (kein CDN → DSGVO)
+> - org_id + SUPABASE_URL + SUPABASE_ANON_KEY aus Genie-Einstellungen
+> - Honeypot-Feld + aria-live Status-Div (kein alert())
+> - Formular in Datenschutzerklärung erwähnen
+
 ---
 
 ## Voraussetzungen

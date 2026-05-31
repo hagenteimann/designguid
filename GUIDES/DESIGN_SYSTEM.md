@@ -2,6 +2,13 @@
 
 Verbindliche Design- und Coding-Regeln für alle Push8-Projekte. Dieser Guide wird von KI-Agenten vor dem ersten Code-Schritt gelesen und befolgt.
 
+> **TL;DR**
+> - Alle Werte aus Token-System – keine Magic Numbers
+> - Mobile-First: Single Column → 3-Column Grid
+> - Icons: Inline SVG, MIT-Lizenz – nie CDN
+> - Fonts: selbst hosten – kein Google Fonts CDN
+> - Kein Deploy ohne Go-Live-Checkliste + `./check.sh`
+
 ---
 
 ## Phase 0: Agent-Initialisierung

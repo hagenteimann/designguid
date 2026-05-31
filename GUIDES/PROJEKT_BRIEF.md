@@ -3,6 +3,12 @@
 Dieser Guide regelt den Prozess, wenn eine bestehende Website neu gebaut werden soll.
 **Der Agent füllt diesen Brief aus, bevor er einen einzigen Guide liest oder Code schreibt.**
 
+> **TL;DR**
+> - Phase 0 zuerst: alte Website analysieren → Zielgruppe ableiten → Entscheidungen dokumentieren
+> - Danach: Token-Mapping, Sektionen bestätigen lassen, dann erst Code
+> - Projekt schlägt Generic-Guide – Zielgruppe entscheidet, nicht das Template
+> - Anschließend PLAN.md aus `TEMPLATES/` auswählen und anpassen
+
 ---
 
 ## Warum dieser Brief zuerst?

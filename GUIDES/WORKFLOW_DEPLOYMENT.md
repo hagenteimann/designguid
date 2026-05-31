@@ -2,6 +2,12 @@
 
 **Konsolidiert aus: ORDNERSTRUKTUR.md**
 
+> **TL;DR**
+> - Nur `public/` deployen – `.env`, `*.md`, `src/` niemals hochladen
+> - `git add` mit spezifischen Pfaden – kein `git add -A`
+> - Nach Deploy: Git-Tag + CHANGELOG.md aktualisieren
+> - `./check.sh` vor jedem Deploy ausführen
+
 ---
 
 ## Übersicht

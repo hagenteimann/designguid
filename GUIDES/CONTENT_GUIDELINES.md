@@ -1,5 +1,11 @@
 # Content Guidelines: Copy, Tone of Voice & SEO-Text
 
+> **TL;DR**
+> - Aktiv schreiben, Nutzen kommunizieren – keine Feature-Listen
+> - 1× H1 pro Seite, Sätze max 20 Wörter, Absätze max 3 Sätze
+> - CTA immer mit Verb + Benefit ("Jetzt kostenlos testen →")
+> - Alt-Texte: beschreibend, max 125 Zeichen, kein "Bild von..."
+
 ---
 
 ## Übersicht

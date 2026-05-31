@@ -2,6 +2,12 @@
 
 Diese Dokumentation beschreibt die kritischen SEO-Faktoren für das Jahr 2026, mit Fokus auf Generative Suche (AI), Benutzererfahrung und technische Exzellenz.
 
+> **TL;DR**
+> - JSON-LD Schema (Organization/ProfessionalService) + Canonical Tag: Pflicht
+> - 1× H1 pro Seite, Hauptkeyword in H1 + Title Tag + ersten 100 Wörtern
+> - INP < 200ms, Mobile-First – Barrierefreiheit ist Rankingfaktor
+> - Sitemap.xml + robots.txt vor Go-Live
+
 ## 1. Generative Search Optimization (GEO/ASO)
 Die klassische Suche wurde größtenteils durch KI-generierte Antworten (SGE - Search Generative Experience) abgelöst.
 - **Answer Engine Optimization (AEO):** Inhalte müssen so strukturiert sein, dass sie von KI-Modellen (Google Gemini, OpenAI Search) leicht extrahiert und als Zitat verwendet werden können.

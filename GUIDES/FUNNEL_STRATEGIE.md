@@ -2,6 +2,12 @@
 
 Dieser Guide definiert die Seitenstruktur, Conversion-Logik und CTA-Hierarchie für Push8-Website-Projekte. Jede Seite folgt einer klaren Funnel-Logik: Aufmerksamkeit → Interesse → Überzeugung → Conversion.
 
+> **TL;DR**
+> - Reihenfolge: Hero → Social Proof → Leistungen → Case Study → Prozess → FAQ → CTA → Footer
+> - Immer nur 1 primärer CTA – nie mehrere gleichwertige Buttons
+> - Social Proof direkt nach Hero – Pflicht
+> - CTA-Texte: aktiv + Benefit + optional Dringlichkeit ("Jetzt kostenlos beraten lassen")
+
 ---
 
 ## Phase 0: Competitive Funnel Research

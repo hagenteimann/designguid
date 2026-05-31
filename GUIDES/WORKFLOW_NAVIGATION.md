@@ -2,6 +2,12 @@
 
 **Konsolidiert aus: NAVIGATION.md**
 
+> **TL;DR**
+> - Hamburger unter 768px: Pflicht – kein anderer Ansatz ohne Freigabe
+> - Sections = IDs + data-nav-Attribute → Navigation auto-generiert
+> - Scroll-Listener immer mit `{ passive: true }`
+> - Animierter Indikator auf Desktop, auf Mobile ausblenden
+
 ---
 
 ## Übersicht

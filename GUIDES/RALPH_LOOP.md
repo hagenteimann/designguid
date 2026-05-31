@@ -2,6 +2,12 @@
 
 Der Ralph Loop ist ein zwei-Agenten-System für vollständige Website-Builds. Ein Agent implementiert, ein zweiter validiert – beide starten pro Phase frisch und halten den Kontext minimal.
 
+> **TL;DR**
+> - Implementer (Sonnet-Klasse) schreibt Code + DONE_NOTES → Validator (Haiku-Klasse) prüft binär
+> - Script: `./ralph.sh` | Config: `.ralph-config` | Funktioniert mit Claude + Gemini
+> - PLAN.md vor dem Start pflicht – Templates in `TEMPLATES/`
+> - Am Ende: MEMORY.md für nächste Session (spart 80–90% Kontext-Tokens)
+
 Benannt nach Geoffrey Huntley's Technik (2025/2026), viral in Vibe-Coding-Kreisen.
 
 ---

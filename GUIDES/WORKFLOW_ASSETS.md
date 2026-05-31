@@ -2,6 +2,12 @@
 
 **Konsolidiert aus: ASSETS.md**
 
+> **TL;DR**
+> - Bilder: WebP, max 200KB Desktop / 100KB Mobile – kein PNG/JPG
+> - Videos: MP4 H.264, max 2MB – kein `loading="lazy"` auf `<video>`
+> - Icons: Inline SVG, MIT-Lizenz (Heroicons/Lucide/Phosphor/Tabler)
+> - Fonts: WOFF2, selbst hosten – kein Google Fonts CDN
+
 ---
 
 ## Übersicht

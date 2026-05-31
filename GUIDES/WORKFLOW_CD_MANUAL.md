@@ -2,6 +2,12 @@
 
 **Konsolidiert aus: CD_MANUAL_WORKFLOW.md**
 
+> **TL;DR**
+> - Jede Design-Entscheidung dokumentieren: Was, Warum, Wann
+> - Im Ralph Loop: Implementer updated CD-Manual automatisch pro Step
+> - Versionen speichern in `cd-manual/versions/`
+> - CD-Manual ist Pflicht bei jedem Deploy-Step
+
 ---
 
 ## Übersicht

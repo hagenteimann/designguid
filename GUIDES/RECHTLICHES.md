@@ -2,6 +2,12 @@
 
 Jede Push8-Website bekommt drei Pflicht-Seiten. Kein Deploy ohne alle drei.
 
+> **TL;DR**
+> - Impressum (§5 TMG) + Datenschutz (DSGVO): immer, bei jeder Website
+> - AGB: nur wenn Vertragsabschluss auf der Seite stattfindet
+> - Jeder externe Dienst (Supabase, Fonts, CDN) muss in der Datenschutzerklärung stehen
+> - Footer-Links: Impressum | Datenschutz – max 2 Klicks erreichbar
+
 ---
 
 ## Pflicht-Seiten Übersicht
