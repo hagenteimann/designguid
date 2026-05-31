@@ -66,47 +66,87 @@ Sprache / Ton der Ansprache: [ ] Sachlich  [ ] Emotional  [ ] Premium  [ ] Locke
 Größter Einwand vor dem Kauf/Kontakt:
 ```
 
-### 0.3 – Design-Entscheidungen ableiten
+### 0.3 – Design-Persona-Matrix
 
-Aus 0.1 und 0.2 werden konkrete Entscheidungen abgeleitet – **nicht** aus dem Design System:
+Aus 0.1 und 0.2 wird eine **Design-Persona-Matrix** abgeleitet. Jede Abweichung vom Push8-Standard braucht eine Begründung. Ohne Begründung gilt der Standard.
 
 ```
-ABGELEITETE DESIGN-ENTSCHEIDUNGEN
+DESIGN-PERSONA MATRIX
 ─────────────────────────────────────────────
-Primärfarbe (begründet):
-  Farbe: #______
-  Grund:
+Projekt-Typ:
+  [ ] local-service   (Handwerker, Dienstleister, lokale Geschäfte)
+  [ ] portfolio       (Freelancer, Kreative, Agenturen)
+  [ ] ecommerce       (Online-Shops, Produkt-Websites)
+  [ ] saas            (Software-Produkte, Apps, Tools)
+  [ ] corporate       (Unternehmen, B2B, Konzerne)
 
-Ton / Bildsprache:
+TON
+  Push8-Standard:     Klar, authentisch, aktiv
+  Dieses Projekt:     ________________________________
+  Override-Grund:     ________________________________  ← leer = Standard
 
-Above-the-Fold-Ziel (was muss sofort sichtbar sein):
+PRIMÄRFARBE
+  Push8-Standard:     Aus Projekt-Kontext (HSL-Skala)
+  Dieses Projekt:     #______
+  Override-Grund:     ________________________________  ← leer = Standard
 
-Primärer CTA (Text + Ziel):
+TYPOGRAFIE
+  Push8-Standard:     Inter, selbst gehosted
+  Dieses Projekt:     ________________________________
+  Override-Grund:     ________________________________  ← leer = Standard beibehalten
 
-Wichtigste Vertrauenselemente:
+MOTION / ANIMATION
+  Push8-Standard:     Paragraph-Reveal + Parallax-Hero
+  Dieses Projekt:     [ ] Standard  [ ] Subtil (20px statt 60px)  [ ] Deaktiviert
+  Override-Grund:     ________________________________  ← leer = Standard
 
-Sektionen-Reihenfolge (Entwurf):
+SQUIRCLES
+  Push8-Standard:     border-radius: 28% (quintic)
+  Dieses Projekt:     [ ] Standard  [ ] Klassisch (px-Radien)
+  Override-Grund:     ________________________________  ← leer = Standard
+
+INFORMATIONSDICHTE
+  Push8-Standard:     Sparse (viel Whitespace, < 3 Infos pro Viewport)
+  Dieses Projekt:     [ ] Sparse  [ ] Medium  [ ] Dense
+  Override-Grund:     ________________________________  ← leer = Standard
+
+ABOVE-THE-FOLD-ZIEL
+  Was muss in den ersten 3 Sekunden sichtbar sein:
+  ________________________________
+
+PRIMÄRER CTA
+  Text:               ________________________________
+  Ziel (URL/Aktion):  ________________________________
+
+VERTRAUENSELEMENTE
+  Wichtigste (max 3): 1. ____  2. ____  3. ____
+
+SEKTIONEN-REIHENFOLGE
   1. Hero
   2.
   3.
   4.
   5.
+  6.
 ```
 
-### 0.4 – Relevante Guides festlegen
+**Regel:** Schicht 1 (Accessibility, Security, Legal) ist nie überschreibbar. Schicht 2 (Push8-Defaults) kann mit Begründung überschrieben werden. Schicht 3 (Persona-Matrix) ist projektspezifisch.
 
-Erst jetzt entscheidet der Agent, welche Guides geladen werden:
+### 0.4 – Guides automatisch auswählen
+
+Projekt-Typ aus 0.3 → Bundle aus `guides-index.json` `project-types` laden. Dann ergänzen:
 
 ```
 GUIDES FÜR DIESES PROJEKT
 ─────────────────────────────────────────────
-[x] DESIGN_SYSTEM.md        – immer
-[ ] FUNNEL_STRATEGIE.md     – wenn Conversion-Ziel klar
+Bundle (Projekt-Typ):   _______________ (aus guides-index.json)
+Enthält automatisch:    _______________
+
+Zusätzlich laden:
 [ ] CONTENT_GUIDELINES.md   – wenn Texte miterstellt werden
-[ ] SEO.md                  – wenn SEO relevant
-[ ] ACCESSIBILITY_TESTING.md – wenn A11y-Anforderung besteht
-[ ] WORKFLOW_NAVIGATION.md  – wenn mehr als 3 Sektionen
-[ ] Sonstige: ___
+[ ] WORKFLOW_ASSETS.md      – wenn Video/Bild-Optimierung nötig
+[ ] ACCESSIBILITY_TESTING.md – bei erhöhter A11y-Anforderung
+[ ] Sonstiges: ___
 ```
 
 **Alle anderen Guides werden nicht geladen** – sie stehen bei Bedarf zur Verfügung, belasten aber nicht den Kontext.

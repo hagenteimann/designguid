@@ -6,7 +6,7 @@ Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Web
 
 1. **Kein Code ohne Brief.** Bei jedem Rebuild zuerst `GUIDES/PROJEKT_BRIEF.md` ausfüllen.
 2. **Nie alle Guides laden.** Nur die relevanten – Orientierung via `guides-index.json`.
-3. **Kein Magic Number.** Alle Abstände, Farben, Radien aus `GUIDES/DESIGN_SYSTEM.md` Token-System.
+3. **Kein Magic Number.** Alle Abstände, Farben, Radien aus `GUIDES/design-tokens-mini.md` (immer geladen). Details → `GUIDES/DESIGN_SYSTEM.md`.
 4. **Kein Deploy ohne Checkliste.** Go-Live-Checkliste in `GUIDES/DESIGN_SYSTEM.md` – alle Punkte abgehakt. Dann `./check.sh` ausführen.
 5. **Kein Asset ohne Lizenz.** Erlaubte Quellen in `GUIDES/DESIGN_SYSTEM.md` Abschnitt „Erlaubte Quellen".
 
@@ -16,7 +16,8 @@ Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Web
 |---|---|
 | Website neu bauen / Rebuild | `GUIDES/PROJEKT_BRIEF.md` |
 | Autonomer Build (Ralph Loop) | `GUIDES/RALPH_LOOP.md` |
-| Design Tokens, Layout, Farben, Icons | `GUIDES/DESIGN_SYSTEM.md` |
+| Token-Werte schnell nachschlagen | `GUIDES/design-tokens-mini.md` |
+| Design Tokens, Layout, Farben, Icons (Details) | `GUIDES/DESIGN_SYSTEM.md` |
 | Navigation, Hamburger, Indikator | `GUIDES/WORKFLOW_NAVIGATION.md` |
 | Bilder / Videos / Assets | `GUIDES/WORKFLOW_ASSETS.md` |
 | Deployment + Git | `GUIDES/WORKFLOW_DEPLOYMENT.md` |

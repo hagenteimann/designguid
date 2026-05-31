@@ -63,12 +63,18 @@ Basis: PROJEKT_BRIEF.md (ausgefüllt)
 ### Step 1 – Hero Section
 Task: Hero mit H1, CTA-Button, Trust-Signal bauen
 
+Guides (nur diese Sektionen laden):
+- design-tokens-mini.md – Token-Referenz
+- DESIGN_SYSTEM.md § Phase 6 – Motion & Hero Patterns
+- FUNNEL_STRATEGIE.md § Hero – CTA-Logik
+
 Done wenn:
 - [ ] <section id="section-hero" data-nav-label="Hero"> vorhanden
 - [ ] H1 enthält Primär-Keyword aus Brief
 - [ ] Button mit class="btn btn--primary" + korrektem CTA-Text
 - [ ] Trust-Signal direkt unter CTA (Text oder Icon)
 - [ ] Mobile: Single Column, Desktop: 2-spaltig
+- [ ] prefers-reduced-motion Guard für Parallax vorhanden
 
 Dokumentieren:
 - CD-Manual: Primärfarbe + CTA-Text als Entscheidung eintragen
@@ -77,6 +83,7 @@ Dokumentieren:
 Validator-Check:
 - grep -r "section-hero" index.html → vorhanden?
 - grep -r "btn--primary" → vorhanden?
+- grep "prefers-reduced-motion" → vorhanden?
 - Lighthouse Mobile Score ≥ 90?
 
 ---
@@ -84,12 +91,17 @@ Validator-Check:
 ### Step 2 – Navigation
 Task: Sticky Nav mit Auto-Generation aus Section-IDs
 
+Guides (nur diese Sektionen laden):
+- design-tokens-mini.md – Token-Referenz
+- WORKFLOW_NAVIGATION.md § Hamburger + Indicator
+
 Done wenn:
 - [ ] nav[data-open] vorhanden
 - [ ] Hamburger-Button mit aria-label
 - [ ] Alle Sections in data-nav-visible="true" erscheinen in Nav
 - [ ] Scroll-Listener mit { passive: true }
 - [ ] smooth scroll in prefers-reduced-motion guard
+- [ ] Animierter Indicator mit cubic-bezier Transition
 
 Dokumentieren:
 - CD-Manual: Breakpoint (768px) + Nav-Typ als Entscheidung
@@ -97,6 +109,7 @@ Dokumentieren:
 Validator-Check:
 - grep "passive: true" js/navigation.js → vorhanden?
 - grep "prefers-reduced-motion" css/style.css → vorhanden?
+- grep "cubic-bezier" css/style.css → vorhanden?
 
 ---
 

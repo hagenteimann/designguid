@@ -1,7 +1,85 @@
 {
-  "version": "1.0",
-  "always-load": ["GUIDES/DESIGN_SYSTEM.md"],
+  "version": "1.1",
+  "always-load": ["GUIDES/design-tokens-mini.md"],
   "never-load-all": true,
+
+  "project-types": {
+    "local-service": {
+      "description": "Handwerker, Dienstleister, lokale Geschäfte",
+      "guides": [
+        "GUIDES/FUNNEL_STRATEGIE.md",
+        "GUIDES/RECHTLICHES.md",
+        "GUIDES/KONTAKTFORMULAR.md",
+        "GUIDES/SEO.md"
+      ],
+      "persona-defaults": {
+        "ton": "Direkt, bodenständig – kein Startup-Slang",
+        "motion": "Subtil – Zielgruppe tech-skeptisch",
+        "squircles": "Standard",
+        "informationsdichte": "Medium"
+      }
+    },
+    "portfolio": {
+      "description": "Freelancer, Kreative, Agenturen",
+      "guides": [
+        "GUIDES/WORKFLOW_ASSETS.md",
+        "GUIDES/CONTENT_GUIDELINES.md",
+        "GUIDES/FUNNEL_STRATEGIE.md"
+      ],
+      "persona-defaults": {
+        "ton": "Kreativ, persönlich, authentisch",
+        "motion": "Standard – Showcase braucht visuelle Energie",
+        "squircles": "Standard",
+        "informationsdichte": "Sparse"
+      }
+    },
+    "ecommerce": {
+      "description": "Online-Shops, Produkt-Websites",
+      "guides": [
+        "GUIDES/FUNNEL_STRATEGIE.md",
+        "GUIDES/SEO.md",
+        "GUIDES/SECURITY.md",
+        "GUIDES/RECHTLICHES.md"
+      ],
+      "persona-defaults": {
+        "ton": "Überzeugend, nutzenorientiert, vertrauensbildend",
+        "motion": "Subtil – Ablenkung vom Kauf vermeiden",
+        "squircles": "Standard",
+        "informationsdichte": "Dense – viele Produkte/Infos erwartet"
+      }
+    },
+    "saas": {
+      "description": "Software-Produkte, Apps, Tools",
+      "guides": [
+        "GUIDES/FUNNEL_STRATEGIE.md",
+        "GUIDES/CONTENT_GUIDELINES.md",
+        "GUIDES/SEO.md",
+        "GUIDES/SECURITY.md"
+      ],
+      "persona-defaults": {
+        "ton": "Klar, lösungsorientiert, technisch präzise",
+        "motion": "Standard – Tech-Zielgruppe erwartet moderne UI",
+        "squircles": "Standard",
+        "informationsdichte": "Sparse – Clarity > Vollständigkeit"
+      }
+    },
+    "corporate": {
+      "description": "Unternehmen, B2B, Konzerne",
+      "guides": [
+        "GUIDES/RECHTLICHES.md",
+        "GUIDES/SECURITY.md",
+        "GUIDES/CONTENT_GUIDELINES.md",
+        "GUIDES/SEO.md"
+      ],
+      "persona-defaults": {
+        "ton": "Sachlich, professionell, vertrauenswürdig",
+        "motion": "Minimal – Seriosität > Animation",
+        "squircles": "Klassisch – konservatives Umfeld",
+        "informationsdichte": "Medium"
+      }
+    }
+  },
+
   "tasks": {
     "rebuild":          "GUIDES/PROJEKT_BRIEF.md",
     "ralph-loop":       "GUIDES/RALPH_LOOP.md",
@@ -38,12 +116,6 @@
     "copy":             "GUIDES/CONTENT_GUIDELINES.md",
     "tone":             "GUIDES/CONTENT_GUIDELINES.md",
     "cd-manual":        "GUIDES/WORKFLOW_CD_MANUAL.md",
-    "design-decisions": "GUIDES/WORKFLOW_CD_MANUAL.md",
-    "analytics":        "GUIDES/ANALYTICS.md",
-    "monitoring":       "GUIDES/MONITORING.md",
-    "browser-support":  "GUIDES/BROWSER_SUPPORT.md",
-    "error-handling":   "GUIDES/ERROR_HANDLING.md",
-    "api":              "GUIDES/API_INTEGRATION.md",
-    "build":            "GUIDES/BUILD_PROCESS.md"
+    "design-decisions": "GUIDES/WORKFLOW_CD_MANUAL.md"
   }
 }
