@@ -90,7 +90,7 @@ Push8 Website-Guide mit **6 Core Workflows** für KI-Agenten. Jeder Workflow hat
 2. Upload public/ zu Hosting (rsync/FTP)
 3. Prüfe: .env, *.md NICHT dabei?
 4. Wenn Git Repository vorhanden:
-   - git add -A
+   - git add public/ css/ js/ (explizit, nie git add -A)
    - git commit "Deploy: Version 1.2.0 – Features X"
    - git push origin main
    - git tag -a v1.2.0

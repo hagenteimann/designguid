@@ -155,47 +155,47 @@ MAX_RETRIES=3
 ### Agent A – Implementer
 
 ```
-Liest:   PLAN.md → aktueller Step + VALIDATION.md (wenn Retry)
-Schreibt: Code + CD-Manual Update + DONE_NOTES.md (3 Zeilen max)
+Liest:   PLAN.md → aktueller Step (inkl. letztem Validation-Block wenn Retry)
+Schreibt: Code + CD-Manual Update + Done-Block direkt in PLAN.md
 Stoppt:  Nach jedem Step – kein kontinuierlicher Loop
-Guides:  Nur die im jeweiligen Step angegebenen laden
+Guides:  Nur die im jeweiligen Step angegebenen Sektionen laden
 ```
 
 ### Agent B – Validator
 
 ```
-Liest:   PLAN.md Step N + git diff HEAD~1 + DONE_NOTES.md
-Schreibt: VALIDATION.md (✅ bestanden / ❌ Fehler + Grund)
+Liest:   PLAN.md Step N + git diff HEAD~1
+Schreibt: Validation-Block direkt in PLAN.md unter dem Step
 Stoppt:  Sofort nach Verdict – nie die ganze Codebase lesen
 ```
 
----
-
-## DONE_NOTES.md Format (Implementer schreibt nach jedem Step)
-
-```markdown
-## Step [N] – [Name] – [Datum]
-Gebaut: [1 Satz was konkret erstellt wurde]
-Entscheidung: [1 Satz zu abweichenden Entscheidungen, sonst "wie geplant"]
-CD-Manual: [aktualisiert / nicht nötig]
-```
-
-Maximal 3 Zeilen. Kein langer Bericht.
+Beide schreiben in **eine Datei (PLAN.md)**. Keine separaten DONE_NOTES.md oder VALIDATION.md.
 
 ---
 
-## VALIDATION.md Format (Validator schreibt nach jedem Check)
+## PLAN.md – Step-Abschluss-Format
+
+Nach jedem Step erweitert der Agent den Step um zwei Blöcke:
 
 ```markdown
-## Validation Step [N] – [Datum]
-Ergebnis: ✅ BESTANDEN / ❌ FEHLER
+### Step 1 – Hero Section
+Task: ...
+Guides: ...
+Done wenn:
+- [ ] ...
 
-Fehler (wenn ❌):
-- [Konkreter Fehler aus Done-Kriterien]
-- [Was fehlt oder falsch ist]
+<!-- Implementer füllt aus: -->
+Done:
+Gebaut: Hero mit H1 + CTA + Trust-Signal
+Entscheidung: Primärfarbe #2D6A4F statt Standard (Begründung: Natur-Branche)
+CD-Manual: aktualisiert
 
-Retry [1/2/3]:
+<!-- Validator füllt aus: -->
+Validation: ✅ BESTANDEN / ❌ FEHLER [Retry 1/3]
+Fehler: (wenn ❌) – konkret, aus Done-Kriterien
 ```
+
+Kein separates File. Der gesamte Build-Verlauf steht in PLAN.md – eine Datei lesen reicht.
 
 ---
 

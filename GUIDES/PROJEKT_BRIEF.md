@@ -66,71 +66,33 @@ Sprache / Ton der Ansprache: [ ] Sachlich  [ ] Emotional  [ ] Premium  [ ] Locke
 Größter Einwand vor dem Kauf/Kontakt:
 ```
 
-### 0.3 – Design-Persona-Matrix
+### 0.3 – Design-Entscheidungen ableiten
 
-Aus 0.1 und 0.2 wird eine **Design-Persona-Matrix** abgeleitet. Jede Abweichung vom Push8-Standard braucht eine Begründung. Ohne Begründung gilt der Standard.
+Drei Felder – mehr nicht. Alles andere ergibt sich aus dem Projekt-Typ-Bundle oder ist Push8-Standard.
 
 ```
-DESIGN-PERSONA MATRIX
+DESIGN-ENTSCHEIDUNGEN
 ─────────────────────────────────────────────
 Projekt-Typ:
-  [ ] local-service   (Handwerker, Dienstleister, lokale Geschäfte)
-  [ ] portfolio       (Freelancer, Kreative, Agenturen)
-  [ ] ecommerce       (Online-Shops, Produkt-Websites)
-  [ ] saas            (Software-Produkte, Apps, Tools)
-  [ ] corporate       (Unternehmen, B2B, Konzerne)
+  [ ] local-service   [ ] portfolio   [ ] ecommerce   [ ] saas   [ ] corporate
 
-TON
-  Push8-Standard:     Klar, authentisch, aktiv
-  Dieses Projekt:     ________________________________
-  Override-Grund:     ________________________________  ← leer = Standard
+TON (leer = "Klar, authentisch, aktiv"):
+  ________________________________  Grund: ________________________________
 
-PRIMÄRFARBE
-  Push8-Standard:     Aus Projekt-Kontext (HSL-Skala)
-  Dieses Projekt:     #______
-  Override-Grund:     ________________________________  ← leer = Standard
+PRIMÄRFARBE (leer = aus Kontext ableiten):
+  #______  Grund: ________________________________
 
-TYPOGRAFIE
-  Push8-Standard:     Inter, selbst gehosted
-  Dieses Projekt:     ________________________________
-  Override-Grund:     ________________________________  ← leer = Standard beibehalten
+MOTION (leer = Standard):
+  [ ] Standard (Parallax + Reveal)  [ ] Subtil (kein Parallax)  [ ] Keine
 
-MOTION / ANIMATION
-  Push8-Standard:     Paragraph-Reveal + Parallax-Hero
-  Dieses Projekt:     [ ] Standard  [ ] Subtil (20px statt 60px)  [ ] Deaktiviert
-  Override-Grund:     ________________________________  ← leer = Standard
+ABOVE-THE-FOLD-ZIEL:   ________________________________
+PRIMÄRER CTA:          ________________________________  →  ________________________________
+VERTRAUENSELEMENTE:    1. ________  2. ________  3. ________
 
-SQUIRCLES
-  Push8-Standard:     border-radius: 28% (quintic)
-  Dieses Projekt:     [ ] Standard  [ ] Klassisch (px-Radien)
-  Override-Grund:     ________________________________  ← leer = Standard
-
-INFORMATIONSDICHTE
-  Push8-Standard:     Sparse (viel Whitespace, < 3 Infos pro Viewport)
-  Dieses Projekt:     [ ] Sparse  [ ] Medium  [ ] Dense
-  Override-Grund:     ________________________________  ← leer = Standard
-
-ABOVE-THE-FOLD-ZIEL
-  Was muss in den ersten 3 Sekunden sichtbar sein:
-  ________________________________
-
-PRIMÄRER CTA
-  Text:               ________________________________
-  Ziel (URL/Aktion):  ________________________________
-
-VERTRAUENSELEMENTE
-  Wichtigste (max 3): 1. ____  2. ____  3. ____
-
-SEKTIONEN-REIHENFOLGE
-  1. Hero
-  2.
-  3.
-  4.
-  5.
-  6.
+SEKTIONEN:  1. Hero  2.________  3.________  4.________  5.________
 ```
 
-**Regel:** Schicht 1 (Accessibility, Security, Legal) ist nie überschreibbar. Schicht 2 (Push8-Defaults) kann mit Begründung überschrieben werden. Schicht 3 (Persona-Matrix) ist projektspezifisch.
+**Regel:** Accessibility / Security / Legal nie überschreibbar. Alles andere mit Begründung änderbar.
 
 ### 0.4 – Guides automatisch auswählen
 

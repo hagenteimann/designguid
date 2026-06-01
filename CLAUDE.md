@@ -2,6 +2,9 @@
 
 Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Website-Projekte.
 
+> Token-Referenz (immer geladen): @GUIDES/design-tokens-mini.md
+> Für andere Agenten (Gemini, Codex, Cursor): @AGENTS.md
+
 ## 5 harte Regeln
 
 1. **Kein Code ohne Brief.** Bei jedem Rebuild zuerst `GUIDES/PROJEKT_BRIEF.md` ausfüllen.

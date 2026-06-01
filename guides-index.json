@@ -6,77 +6,23 @@
   "project-types": {
     "local-service": {
       "description": "Handwerker, Dienstleister, lokale Geschäfte",
-      "guides": [
-        "GUIDES/FUNNEL_STRATEGIE.md",
-        "GUIDES/RECHTLICHES.md",
-        "GUIDES/KONTAKTFORMULAR.md",
-        "GUIDES/SEO.md"
-      ],
-      "persona-defaults": {
-        "ton": "Direkt, bodenständig – kein Startup-Slang",
-        "motion": "Subtil – Zielgruppe tech-skeptisch",
-        "squircles": "Standard",
-        "informationsdichte": "Medium"
-      }
+      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/RECHTLICHES.md", "GUIDES/KONTAKTFORMULAR.md", "GUIDES/SEO.md"]
     },
     "portfolio": {
       "description": "Freelancer, Kreative, Agenturen",
-      "guides": [
-        "GUIDES/WORKFLOW_ASSETS.md",
-        "GUIDES/CONTENT_GUIDELINES.md",
-        "GUIDES/FUNNEL_STRATEGIE.md"
-      ],
-      "persona-defaults": {
-        "ton": "Kreativ, persönlich, authentisch",
-        "motion": "Standard – Showcase braucht visuelle Energie",
-        "squircles": "Standard",
-        "informationsdichte": "Sparse"
-      }
+      "guides": ["GUIDES/WORKFLOW_ASSETS.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/FUNNEL_STRATEGIE.md"]
     },
     "ecommerce": {
       "description": "Online-Shops, Produkt-Websites",
-      "guides": [
-        "GUIDES/FUNNEL_STRATEGIE.md",
-        "GUIDES/SEO.md",
-        "GUIDES/SECURITY.md",
-        "GUIDES/RECHTLICHES.md"
-      ],
-      "persona-defaults": {
-        "ton": "Überzeugend, nutzenorientiert, vertrauensbildend",
-        "motion": "Subtil – Ablenkung vom Kauf vermeiden",
-        "squircles": "Standard",
-        "informationsdichte": "Dense – viele Produkte/Infos erwartet"
-      }
+      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/SEO.md", "GUIDES/SECURITY.md", "GUIDES/RECHTLICHES.md"]
     },
     "saas": {
       "description": "Software-Produkte, Apps, Tools",
-      "guides": [
-        "GUIDES/FUNNEL_STRATEGIE.md",
-        "GUIDES/CONTENT_GUIDELINES.md",
-        "GUIDES/SEO.md",
-        "GUIDES/SECURITY.md"
-      ],
-      "persona-defaults": {
-        "ton": "Klar, lösungsorientiert, technisch präzise",
-        "motion": "Standard – Tech-Zielgruppe erwartet moderne UI",
-        "squircles": "Standard",
-        "informationsdichte": "Sparse – Clarity > Vollständigkeit"
-      }
+      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/SEO.md", "GUIDES/SECURITY.md"]
     },
     "corporate": {
       "description": "Unternehmen, B2B, Konzerne",
-      "guides": [
-        "GUIDES/RECHTLICHES.md",
-        "GUIDES/SECURITY.md",
-        "GUIDES/CONTENT_GUIDELINES.md",
-        "GUIDES/SEO.md"
-      ],
-      "persona-defaults": {
-        "ton": "Sachlich, professionell, vertrauenswürdig",
-        "motion": "Minimal – Seriosität > Animation",
-        "squircles": "Klassisch – konservatives Umfeld",
-        "informationsdichte": "Medium"
-      }
+      "guides": ["GUIDES/RECHTLICHES.md", "GUIDES/SECURITY.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/SEO.md"]
     }
   },
 
