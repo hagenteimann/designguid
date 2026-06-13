@@ -7,41 +7,67 @@
 
 ## Working Directory – CRITICAL
 
-- **`Projekt/`** → This is where all work happens. Create all new files, pages, and components here exclusively.
-- **`Beispiele/`** → Read only. Reference and template source. Never edit or overwrite.
+- **`Projekt/`** → All work happens here. Create all new files exclusively here.
+- **`Beispiele/`** → Read only. Template and reference source. Never edit or overwrite.
 
-> If the user references a file from `Beispiele/` as a template → read it, then create the new file in `Projekt/`.
+> If the user references a file from `Beispiele/` as a template → read it, create the new file in `Projekt/`.
+
+---
 
 ## 5 Hard Rules
 
-1. **No code without brief.** For every rebuild, fill out `GUIDES/PROJEKT_BRIEF.md` first.
-2. **Never load all guides.** Use `guides-index.json` to load only what's relevant.
-3. **No magic numbers.** All spacing, colors, radii from `GUIDES/design-tokens-mini.md` (always load this).
+1. **No code without brief.** For website rebuilds, fill out `GUIDES/KERN/PROJEKT_BRIEF.md` first.
+2. **Never load all guides.** Use `guides-index.json` to find the right file.
+3. **No magic numbers.** All spacing, colors, radii from `GUIDES/KERN/design-tokens-mini.md` (always load).
 4. **No deploy without checklist.** Run `./check.sh` before every deploy.
-5. **No asset without license.** Allowed sources in `GUIDES/DESIGN_SYSTEM.md` → "Erlaubte Quellen".
+5. **No asset without license.** Allowed sources in `GUIDES/KERN/DESIGN_SYSTEM.md` → "Erlaubte Quellen".
+
+---
+
+## Choose your track
+
+| What does the user want? | Track | Start here |
+|---|---|---|
+| Build a Design System / CD-Manual HTML | `designsystem` | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
+| Build a website / landing page / rebuild | `website` | `GUIDES/KERN/PROJEKT_BRIEF.md` |
+
+→ Then use `guides-index.json` for the exact guide path.
 
 ---
 
 ## Task → File
 
+### KERN (always relevant)
+
 | Task | Read first |
 |---|---|
-| Website rebuild | `GUIDES/PROJEKT_BRIEF.md` |
-| Autonomous build (Ralph Loop) | `GUIDES/RALPH_LOOP.md` |
-| Token values (quick lookup) | `GUIDES/design-tokens-mini.md` |
-| Design tokens, layout, colors (full) | `GUIDES/DESIGN_SYSTEM.md` |
-| Navigation, hamburger, indicator | `GUIDES/WORKFLOW_NAVIGATION.md` |
-| Images / videos / assets | `GUIDES/WORKFLOW_ASSETS.md` |
-| Deploy + Git | `GUIDES/WORKFLOW_DEPLOYMENT.md` |
-| Legal (Impressum, Datenschutz, AGB) | `GUIDES/RECHTLICHES.md` |
-| Contact form → Genie CRM | `GUIDES/KONTAKTFORMULAR.md` |
-| Funnel / CTA logic | `GUIDES/FUNNEL_STRATEGIE.md` |
-| SEO | `GUIDES/SEO.md` |
-| Security / CSP | `GUIDES/SECURITY.md` |
-| QA before deploy | `GUIDES/QA_TESTING.md` |
-| Copy / Tone of Voice | `GUIDES/CONTENT_GUIDELINES.md` |
-| Document design decisions | `GUIDES/WORKFLOW_CD_MANUAL.md` |
-| Build CD-Manual HTML (standard) | `GUIDES/DESIGNSYSTEM_STANDARD.md` |
+| Build Design System HTML | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
+| Token values (quick) | `GUIDES/KERN/design-tokens-mini.md` |
+| Design tokens, layout, colors (full) | `GUIDES/KERN/DESIGN_SYSTEM.md` |
+| Website rebuild | `GUIDES/KERN/PROJEKT_BRIEF.md` |
+| Binding rules | `GUIDES/KERN/RULES.md` |
+| HTML/CSS coding conventions | `GUIDES/KERN/STYLE.md` |
+
+### WEBSITE (for website projects)
+
+| Task | Read first |
+|---|---|
+| Autonomous build (Ralph Loop) | `GUIDES/WEBSITE/RALPH_LOOP.md` |
+| Navigation, hamburger, indicator | `GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md` |
+| Images / videos / assets | `GUIDES/WEBSITE/WORKFLOW_ASSETS.md` |
+| Deploy + Git | `GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md` |
+| Document design decisions | `GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md` |
+| Legal (Impressum, Datenschutz, AGB) | `GUIDES/WEBSITE/RECHTLICHES.md` |
+| Contact form → Genie CRM | `GUIDES/WEBSITE/KONTAKTFORMULAR.md` |
+| Funnel / CTA logic | `GUIDES/WEBSITE/FUNNEL_STRATEGIE.md` |
+| SEO | `GUIDES/WEBSITE/SEO.md` |
+| Security / CSP | `GUIDES/WEBSITE/SECURITY.md` |
+| QA before deploy | `GUIDES/WEBSITE/QA_TESTING.md` |
+| Copy / Tone of Voice | `GUIDES/WEBSITE/CONTENT_GUIDELINES.md` |
+
+### EXTENDED (only when needed)
+
+Analytics, Monitoring, API, Browser support → `GUIDES/EXTENDED/`
 
 ---
 
@@ -62,4 +88,4 @@
 
 ---
 
-*Push8 Web Agency – Stand Mai 2026*
+*Push8 Web Agency – Stand Juni 2026*

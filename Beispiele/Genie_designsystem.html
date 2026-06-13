@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GENIE Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       GENIE CRM — DESIGN SYSTEM DOCUMENTATION
+       Based on Senior Brand Designer Best Practices
+       Version: 1.0 | 26.04.2026
+       ============================================================ */
+
+    :root {
+      /* ─── SURFACE SYSTEM ─────────────────────────────────────
+         Quantitative luminance steps (ΔL ≈ 4-6 per step)
+         Every layer reads clearly without harsh contrast jumps.
+         ──────────────────────────────────────────────────────── */
+      
+      /* Surface Levels */
+      --surface-0: #171717;  /* 9% L - Deepest background */
+      --surface-1: #202020;  /* 13% L - Sidebar, panels */
+      --surface-2: #272727;  /* 16% L - Main canvas */
+      --surface-3: #303030;  /* 20% L - Cards / elevated tiles */
+      --surface-4: #3A3A3A;  /* 24% L - Hover / input bg */
+      --surface-5: #424242;  /* 27% L - Borders, dividers */
+      --surface-6: #3A3A3A66; /* 22% L / 40% opacity - Subtle border */
+      
+      /* Text Scale */
+      --text-primary: #E2E2E2;   /* Near white, warm tint */
+      --text-secondary: #9C9C9C; /* Muted body */
+      --text-placeholder: #5C5C5C;/* Disabled / placeholder */
+      
+      /* Accent Colors */
+      --accent: #BE4040;        /* Primary CTA - Red */
+      --accent-hover: #A83636;  /* Hover state */
+      --accent-dim: #BE404018;   /* Tinted bg for active rows */
+      --teal: #3D6E72;          /* Border/tag only */
+      --teal-dim: #3D6E7215;    /* Subtle tinted bg */
+      --teal-text: #6A9EA3;     /* Small caps labels ≥11px */
+      --success-bg: #2A5C3A;    /* Success state bg */
+      --success-text: #4CAF72;  /* Success icon/badge text */
+      
+      /* Legacy Aliases */
+      --brand: #BE4040;
+      --brand-light: #C94A4A;
+      --brand-dark: #A83636;
+      
+      /* Typography Fonts */
+      --font-sans: 'Mulish', system-ui, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      
+      /* Spacing Scale (4px Grid) */
+      --space-1: 0.25rem;  /* 4px */
+      --space-2: 0.5rem;   /* 8px */
+      --space-3: 0.75rem;  /* 12px */
+      --space-4: 1rem;     /* 16px */
+      --space-5: 1.5rem;   /* 24px */
+      --space-6: 2rem;     /* 32px */
+      --space-7: 3rem;     /* 48px */
+      
+      /* Typography Scale */
+      --text-xs: 0.625rem;  /* 10px */
+      --text-sm: 0.75rem;   /* 12px */
+      --text-base: 0.875rem; /* 14px */
+      --text-lg: 1rem;      /* 16px */
+      --text-xl: 1.25rem;   /* 20px */
+      --text-2xl: 1.5rem;  /* 24px */
+      --text-3xl: 1.875rem; /* 30px */
+      --text-4xl: 2.25rem; /* 36px */
+      
+      /* Border Radius */
+      --radius-xs: 2px;
+      --radius-sm: 4px;
+      --radius-lg: 12px;
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    body {
+      font-family: var(--font-sans);
+      background: var(--surface-2);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── LAYOUT ───────────────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-6);
+    }
+    
+    .grid {
+      display: grid;
+      gap: var(--space-5);
+    }
+    
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ─── HEADER ────────────────────────────────────────────────────── */
+    header {
+      background: var(--surface-1);
+      border-bottom: 1px solid var(--surface-5);
+      padding: var(--space-5) var(--space-6);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    header h1 {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+    }
+    
+    header p {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-top: var(--space-1);
+    }
+
+    /* ─── SECTION ───────────────────────────────────────────────────── */
+    section {
+      padding: var(--space-7) 0;
+      border-bottom: 1px solid var(--surface-5);
+    }
+    
+    section:last-child { border-bottom: none; }
+    
+    h2 {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    
+    h3 {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--teal-text);
+      margin-bottom: var(--space-4);
+    }
+    
+    .lead {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      max-width: 65ch;
+      margin-bottom: var(--space-5);
+    }
+
+    /* ─── COLOR SWATCHES ─────────────────────────────────────────────── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-4);
+    }
+    
+    .color-swatch {
+      background: var(--surface-3);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--surface-5);
+    }
+    
+    .color-preview {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .color-info {
+      padding: var(--space-3);
+      border-top: 1px solid var(--surface-5);
+    }
+    
+    .color-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+    }
+    
+    .color-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-placeholder);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── SURFACE SHOWCASE ──────────────────────────────────────────── */
+    .surface-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .surface-layer {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      border-radius: var(--radius-sm);
+    }
+    
+    .surface-indicator {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-xs);
+      flex-shrink: 0;
+    }
+    
+    .surface-info {
+      flex: 1;
+    }
+    
+    .surface-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+    
+    .surface-usage {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      margin-top: var(--space-1);
+    }
+    
+    .surface-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-placeholder);
+    }
+
+    /* ─── TYPOGRAPHY SHOWCASE ───────────────────────────────────────── */
+    .type-scale {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--surface-5);
+    }
+    
+    .type-meta {
+      width: 120px;
+      flex-shrink: 0;
+    }
+    
+    .type-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      color: var(--teal-text);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .type-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-placeholder);
+      margin-top: var(--space-1);
+    }
+    
+    .type-sample {
+      flex: 1;
+    }
+
+    /* Font Families */
+    .font-sans-sample { font-family: var(--font-sans); }
+    .font-mono-sample { font-family: var(--font-mono); }
+
+    /* ─── COMPONENT CARDS ────────────────────────────────────────────── */
+    .logo-dark {
+      filter: none;
+    }
+    
+    .logo-light {
+      filter: brightness(0) invert(1);
+    }
+    
+    /* ─── LOGO SHOWCASE ────────────────────────────────────────────── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    
+    .logo-card {
+      background: var(--surface-3);
+      border: 1px solid var(--surface-5);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    
+    .logo-preview {
+      background: var(--surface-1);
+      padding: var(--space-5);
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logo-preview img {
+      max-width: 100%;
+      height: auto;
+      max-height: 80px;
+    }
+    
+    .logo-info {
+      padding: var(--space-3);
+      border-top: 1px solid var(--surface-5);
+    }
+    
+    .logo-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+    }
+    
+    .logo-use {
+      font-size: 10px;
+      color: var(--text-placeholder);
+    }
+
+    /* ─── COMPONENT CARDS ────────────────────────────────────────────── */
+    .component-card {
+      background: var(--surface-3);
+      border: 1px solid var(--surface-5);
+      border-radius: var(--radius-sm);
+      padding: var(--space-5);
+    }
+    
+    .component-label {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+
+    /* ─── BUTTONS ────────────────────────────────────────────────────── */
+    .btn {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: var(--radius-xs);
+      padding: 0 var(--space-5);
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .btn-primary {
+      background-color: var(--accent);
+      color: #fff;
+    }
+    
+    .btn-primary:hover { background-color: var(--accent-hover); }
+    .btn-primary:active { transform: scale(0.97); }
+    
+    .btn-secondary {
+      background-color: var(--surface-4);
+      color: var(--text-secondary);
+      border: 1px solid var(--surface-5);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--surface-5);
+      color: var(--text-primary);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--surface-5);
+    }
+    
+    .btn-ghost:hover {
+      background: var(--surface-4);
+      color: var(--text-primary);
+    }
+
+    /* ─── INPUTS ───────────────────────────────────────────────────── */
+    .input {
+      width: 100%;
+      background-color: var(--surface-4);
+      border: 1px solid var(--surface-5);
+      border-radius: var(--radius-xs);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      padding: var(--space-3) var(--space-4);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    
+    .input::placeholder { color: var(--text-placeholder); }
+    
+    .input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-dim);
+    }
+
+    /* ─── BADGE / TAG ──────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-xs);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .badge-accent {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    
+    .badge-teal {
+      background: var(--teal-dim);
+      color: var(--teal-text);
+    }
+    
+    .badge-success {
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    /* ─── DIVIDER ───────────────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--surface-5);
+      margin: var(--space-5) 0;
+    }
+
+    /* ─── CODE BLOCK ────────────────────────────────────────────────── */
+    .code-block {
+      background: var(--surface-1);
+      border: 1px solid var(--surface-5);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      overflow-x: auto;
+      margin: var(--space-4) 0;
+    }
+    
+    .code-block code {
+      color: var(--teal-text);
+    }
+
+    /* ─── ANIMATIONS ────────────────────────────────────────────────── */
+    .animation-demo {
+      display: flex;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+    
+    .animation-item {
+      width: 120px;
+      text-align: center;
+    }
+    
+    .scanner-bar {
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      border-radius: var(--radius-xs);
+      animation: scanner-sweep 2.5s ease-in-out infinite;
+      opacity: 0.7;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background: var(--surface-4);
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      animation: progress-indeterminate 1.5s infinite linear;
+    }
+    
+    @keyframes scanner-sweep {
+      0%, 100% { opacity: 0; transform: scaleX(0.5); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+    
+    @keyframes progress-indeterminate {
+      0% { transform: translateX(-100%) scaleX(0.2); }
+      50% { transform: translateX(0%) scaleX(0.5); }
+      100% { transform: translateX(100%) scaleX(0.2); }
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────── */
+    footer {
+      background: var(--surface-1);
+      border-top: 1px solid var(--surface-5);
+      padding: var(--space-5) var(--space-6);
+      text-align: center;
+    }
+    
+    footer p {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-placeholder);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── UTILITY ──────────────────────────────────────────────────── */
+    .text-center { text-align: center; }
+    .mt-6 { margin-top: var(--space-6); }
+    .mb-4 { margin-bottom: var(--space-4); }
+  </style>
+</head>
+<body>
+
+  <!-- ─── HEADER ───────────────────────────────────────────────────── -->
+  <header>
+    <div class="container">
+      <h1>GENIE Design System</h1>
+      <p>Version 1.0 — 26. April 2026</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ─── INTRODUCTION ──────────────────────────────────────────── -->
+    <section>
+      <h2>Willkommen</h2>
+      <p class="lead">
+        Das GENIE Design System ist ein modulares, barrierefreies Design-Framework 
+        für das GENIE CRM. Es basiert auf Senior Brand Designer Best Practices mit 
+        Fokus auf konsistente visuelle Sprache, optimale Lesbarkeit und 
+       刮目相看 User Experience.
+      </p>
+      <div class="component-card">
+        <span class="component-label">Design Principles</span>
+        <div class="grid grid-3">
+          <div>
+            <h3 style="margin-bottom: var(--space-2)">Konsistenz</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+              Einheitliche visuelle Sprache über alle Components und Views hinweg.
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: var(--space-2)">Lesbarkeit</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+              Quantitative Luminanz-Stufen mit ΔL ≈ 4-6 für klare Abstufungen.
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: var(--space-2)">Zugänglichkeit</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+              44px Touch-Targets und kontrastreiche Farbpalette für beste UX.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── COLOR PALETTE ───────────────────────────────────────────── -->
+    <section>
+      <h2>Farbpalette</h2>
+      <p class="lead">
+        Ein nuanciertes Dark Surface System mit präzise kalibrierten Luminanzstufen. 
+        Jede Farbe hat einen definierten Zweck und konsistente Einsatzbereiche.
+      </p>
+      
+      <h3>Primary Accent</h3>
+      <div class="color-grid mb-4">
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--accent);"></div>
+          <div class="color-info">
+            <div class="color-name">Accent</div>
+            <div class="color-value">#BE4040</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--accent-hover);"></div>
+          <div class="color-info">
+            <div class="color-name">Accent Hover</div>
+            <div class="color-value">#A83636</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--accent-dim);"></div>
+          <div class="color-info">
+            <div class="color-name">Accent Dim</div>
+            <div class="color-value">#BE404018</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Surface Neutrals</h3>
+      <div class="color-grid mb-4">
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-0);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 0</div>
+            <div class="color-value">#171717 · Deepest BG</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-1);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 1</div>
+            <div class="color-value">#202020 · Sidebar</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-2);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 2</div>
+            <div class="color-value">#272727 · Canvas</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-3);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 3</div>
+            <div class="color-value">#303030 · Cards</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-4);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 4</div>
+            <div class="color-value">#3A3A3A · Hover</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-5);"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 5</div>
+            <div class="color-value">#424242 · Borders</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Text Scale</h3>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-3);">
+            <span style="color: var(--text-primary); font-size: 14px; font-weight: 700;">Aa</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-value">#E2E2E2</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-3);">
+            <span style="color: var(--text-secondary); font-size: 14px; font-weight: 700;">Aa</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Secondary</div>
+            <div class="color-value">#9C9C9C</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-preview" style="background: var(--surface-3);">
+            <span style="color: var(--text-placeholder); font-size: 14px; font-weight: 700;">Aa</span>
+          </div>
+          <div class="color-info">
+            <div class="color-name">Placeholder</div>
+            <div class="color-value">#5C5C5C</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SURFACE SYSTEM ──────────────────────────────────────────── -->
+    <section>
+      <h2>Surface System</h2>
+      <p class="lead">
+        Das Surface System verwendet quantitative Luminanzstufen (ΔL ≈ 4-6 pro Stufe) 
+        für klare visuelle Hierarchien ohne harte Kontrastsprünge.
+      </p>
+      
+      <div class="surface-showcase">
+        <div class="surface-layer" style="background: var(--surface-0);">
+          <div class="surface-indicator" style="background: var(--surface-0); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 0 — Deepest Background</div>
+            <div class="surface-usage">Haupt-Hintergrund,最深 Ebene</div>
+          </div>
+          <div class="surface-value">#171717</div>
+        </div>
+        
+        <div class="surface-layer" style="background: var(--surface-1);">
+          <div class="surface-indicator" style="background: var(--surface-1); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 1 — Sidebar & Panels</div>
+            <div class="surface-usage">Navigation, seitliche Panels</div>
+          </div>
+          <div class="surface-value">#202020</div>
+        </div>
+        
+        <div class="surface-layer" style="background: var(--surface-2);">
+          <div class="surface-indicator" style="background: var(--surface-2); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 2 — Main Canvas</div>
+            <div class="surface-usage">Hauptarbeitsfläche, Content-Bereich</div>
+          </div>
+          <div class="surface-value">#272727</div>
+        </div>
+        
+        <div class="surface-layer" style="background: var(--surface-3);">
+          <div class="surface-indicator" style="background: var(--surface-3); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 3 — Cards & Elevated Tiles</div>
+            <div class="surface-usage">Karten, elevated Components</div>
+          </div>
+          <div class="surface-value">#303030</div>
+        </div>
+        
+        <div class="surface-layer" style="background: var(--surface-4);">
+          <div class="surface-indicator" style="background: var(--surface-4); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 4 — Hover & Input BG</div>
+            <div class="surface-usage">Hover-States, Input-Felder</div>
+          </div>
+          <div class="surface-value">#3A3A3A</div>
+        </div>
+        
+        <div class="surface-layer" style="background: var(--surface-5);">
+          <div class="surface-indicator" style="background: var(--surface-5); border: 1px solid var(--surface-5);"></div>
+          <div class="surface-info">
+            <div class="surface-name">Surface 5 — Borders & Dividers</div>
+            <div class="surface-usage">Trennlinien, Rahmen</div>
+          </div>
+          <div class="surface-value">#424242</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── TYPOGRAPHY ──────────────────────────────────────────────── -->
+    <section>
+      <h2>Typografie</h2>
+      <p class="lead">
+        Zwei sorgfältig ausgewählte Schriftfamilien: Mulish für UI-Text und 
+        IBM Plex Mono für technische Elemente und Labels.
+      </p>
+      
+      <div class="grid grid-2">
+        <div class="component-card">
+          <span class="component-label">Font Families</span>
+          <div class="type-scale">
+            <div class="type-row">
+              <div class="type-meta">
+                <div class="type-name">Sans</div>
+                <div class="type-value">Mulish</div>
+              </div>
+              <div class="type-sample font-sans-sample" style="font-size: var(--text-xl);">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                abcdefghijklmnopqrstuvwxyz<br>
+                0123456789
+              </div>
+            </div>
+            <div class="type-row">
+              <div class="type-meta">
+                <div class="type-name">Mono</div>
+                <div class="type-value">IBM Plex Mono</div>
+              </div>
+              <div class="type-sample font-mono-sample" style="font-size: var(--text-xl);">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                abcdefghijklmnopqrstuvwxyz<br>
+                0123456789
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="component-card">
+          <span class="component-label">Type Scale</span>
+          <div class="type-scale">
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">4xl</div>
+                <div class="type-value">36px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-4xl); font-weight: 900; font-style: italic;">
+                Display
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">3xl</div>
+                <div class="type-value">30px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-3xl); font-weight: 800; font-style: italic;">
+                Heading
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">2xl</div>
+                <div class="type-value">24px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-2xl); font-weight: 800;">
+                Section
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">xl</div>
+                <div class="type-value">20px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-xl); font-weight: 600;">
+                Subsection
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">base</div>
+                <div class="type-value">14px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-base);">
+                Body text for reading content
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">sm</div>
+                <div class="type-value">12px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-sm);">
+                Supporting information
+              </div>
+            </div>
+            <div class="type-row" style="border: none;">
+              <div class="type-meta">
+                <div class="type-name">xs</div>
+                <div class="type-value">10px</div>
+              </div>
+              <div class="type-sample" style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
+                Labels & Tags
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── LOGO & BRAND IDENTITY ───────────────────────────────────── -->
+    <section>
+      <h2>Logo & Brand Identity</h2>
+      <p class="lead">
+        Das GENIE Logo ist das zentrale Element der Markenidentität. Es kommuniziert 
+        Innovation, Effizienz und Zuverlässigkeit. Folgende Varianten stehen zur 
+        Verfügung — jeweils optimiert für unterschiedliche Use Cases.
+      </p>
+      
+      <h3>Primäre Logo-Varianten</h3>
+      <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-4);">
+        <strong style="color: var(--text-primary);">Regel:</strong> Auf grauen oder schwarzen Hintergründen → <strong style="color: var(--text-primary);">White.svg</strong> (Weiß-Rot). 
+        Auf weißen oder hellen Hintergründen → <strong style="color: var(--text-primary);">Dark.svg</strong> (Schwarz-Rot). 
+        Das Rot (#BD2A2E) bleibt in beiden Varianten identisch.
+      </p>
+      
+      <!-- Primary Logo Variants with Embedded SVGs -->
+      <div class="grid grid-2" style="margin-bottom: var(--space-6);">
+        <!-- Dark Background with White Logo (White.svg) -->
+        <div class="component-card">
+          <span class="component-label">Auf Dunkel — White.svg</span>
+          <div style="background: var(--surface-1); padding: var(--space-5); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+            <svg width="280" height="222" viewBox="0 0 419 333" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+              <g clip-path="url(#clip0_white)">
+                <path d="M59.13 292.53C56.17 292.95 53.2 293.16 50.24 293.16C46.14 293.16 42.61 292.81 39.67 292.11C36.72 291.41 34.46 290.42 32.88 289.14C31.3 287.86 30.51 286.38 30.51 284.69C30.51 282.75 31.11 280.98 32.3 279.38C33.5 277.77 35.23 276.38 37.49 275.21C39.75 274.04 42.47 273.13 45.63 272.49C48.79 271.85 52.34 271.53 56.27 271.53C60.54 271.53 64.3 271.87 67.55 272.55C70.8 273.23 73.87 274.48 76.78 276.29L98.44 268.2C94.25 265.4 88.76 263.29 81.97 261.87C75.18 260.45 67.08 259.74 57.68 259.74C49.14 259.74 41.34 260.37 34.29 261.62C27.24 262.88 21.15 264.66 16.03 266.97C10.9 269.28 6.95 272.02 4.17 275.19C1.39 278.36 0.0100021 281.84 0.0100021 285.63C0.0100021 289.42 1.91 292.83 5.71 295.73C9.51 298.63 14.87 300.9 21.79 302.53C28.71 304.16 36.78 304.97 46.01 304.97C53.1 304.97 59.77 304.53 66 303.64C72.24 302.75 77.7 301.49 82.4 299.84L90.09 281.18H63.82L59.13 292.54V292.53Z" fill="white"/>
+                <path d="M179.8 271.71L184.42 260.71H111.5L93.55 303.97H168.14L172.76 292.97H127.77L130.14 287.29H168.14L172.5 276.78H134.51L136.61 271.71H179.8Z" fill="white"/>
+                <path d="M256.7 260.71L248.37 280.84L222.61 260.71H197.74L179.8 303.97H209.28L217.6 283.85L243.37 303.97H268.23L286.17 260.71H256.7Z" fill="white"/>
+                <path d="M282.84 303.97L300.78 260.71H331.03L313.09 303.97H282.84Z" fill="white"/>
+                <path d="M413.94 271.71L418.56 260.71H345.63L327.69 303.97H402.28L406.89 292.97H361.91L364.28 287.29H402.28L406.64 276.78H368.65L370.75 271.71H413.94Z" fill="white"/>
+                <path d="M89.98 0V211.01C89.98 225 101.32 236.34 115.31 236.34H205.02L145.91 162.96C138.35 153.58 139.83 139.85 149.21 132.3L236.34 62.11C243.95 55.98 242.37 43.96 233.43 40.01L142.93 0H89.98Z" fill="#BD2A2E"/>
+                <path d="M300.97 0H142.94L250.98 39.74C260.79 43.35 263.67 55.83 256.44 63.37L189.67 133.04C183.27 139.72 184.19 150.51 191.63 156.01L300.29 236.34H326.33V25.36C326.32 11.35 314.97 0 300.97 0Z" fill="#BD2A2E"/>
+                <path d="M4.98 332.83C4.3 332.83 3.63 332.75 2.98 332.58C2.33 332.41 1.74 332.19 1.23 331.9C0.720002 331.61 0.310002 331.3 0.0100021 330.95L0.550002 330.16C0.850002 330.5 1.23 330.8 1.71 331.07C2.19 331.34 2.72 331.55 3.3 331.69C3.88 331.84 4.47 331.91 5.06 331.91C5.93 331.91 6.71 331.79 7.39 331.55C8.07 331.31 8.59 330.96 8.97 330.49C9.35 330.03 9.53 329.46 9.53 328.79C9.53 328.29 9.39 327.89 9.12 327.58C8.84 327.27 8.49 327.02 8.05 326.81C7.61 326.6 7.13 326.44 6.6 326.3C6.07 326.16 5.54 326 5.01 325.83C4.48 325.65 4 325.44 3.56 325.19C3.12 324.94 2.77 324.62 2.49 324.21C2.21 323.8 2.08 323.3 2.08 322.68C2.08 321.79 2.32 321.04 2.8 320.42C3.28 319.8 3.92 319.33 4.74 319C5.56 318.67 6.49 318.51 7.54 318.51C8.35 318.51 9.12 318.61 9.88 318.82C10.64 319.03 11.27 319.33 11.79 319.74L11.31 320.59C10.81 320.21 10.24 319.92 9.58 319.72C8.92 319.52 8.23 319.42 7.5 319.42C6.64 319.42 5.88 319.54 5.21 319.79C4.54 320.04 4.03 320.4 3.66 320.87C3.29 321.34 3.11 321.91 3.11 322.58C3.11 323.08 3.24 323.48 3.51 323.8C3.78 324.12 4.13 324.38 4.57 324.59C5.01 324.8 5.49 324.98 6.03 325.12C6.57 325.27 7.1 325.43 7.62 325.59C8.14 325.76 8.63 325.97 9.07 326.21C9.51 326.45 9.87 326.78 10.15 327.17C10.42 327.56 10.56 328.06 10.56 328.66C10.56 329.56 10.32 330.32 9.83 330.94C9.34 331.56 8.67 332.02 7.84 332.34C7 332.66 6.05 332.81 4.99 332.81L4.98 332.83Z" fill="white"/>
+                <path d="M30.02 322.13C30.97 322.13 31.74 322.31 32.33 322.68C32.91 323.05 33.31 323.57 33.53 324.25C33.75 324.93 33.76 325.72 33.57 326.64L32.34 332.72H31.33L32.56 326.64C32.77 325.53 32.66 324.65 32.21 324C31.76 323.36 30.96 323.03 29.82 323.03C28.68 323.03 27.74 323.34 26.96 323.97C26.18 324.59 25.66 325.52 25.41 326.76L24.2 332.72H23.19L24.42 326.64C24.63 325.53 24.52 324.65 24.07 324C23.62 323.35 22.82 323.03 21.68 323.03C20.54 323.03 19.56 323.37 18.78 324.04C18 324.71 17.48 325.7 17.21 327L16.06 332.72H15.05L17.14 322.2H18.13L17.53 325.24L17.27 324.98C17.77 323.99 18.42 323.26 19.22 322.8C20.03 322.34 20.93 322.12 21.94 322.12C22.69 322.12 23.33 322.25 23.86 322.5C24.39 322.76 24.8 323.12 25.08 323.59C25.36 324.06 25.52 324.62 25.54 325.28L25.04 325.16C25.55 324.14 26.24 323.38 27.09 322.87C27.95 322.37 28.92 322.11 30.01 322.11L30.02 322.13Z" fill="white"/>
+                <path d="M42.93 332.81C42.03 332.81 41.24 332.64 40.55 332.29C39.86 331.94 39.33 331.44 38.96 330.78C38.58 330.12 38.4 329.34 38.4 328.44C38.4 327.54 38.54 326.69 38.83 325.92C39.12 325.15 39.53 324.49 40.07 323.93C40.61 323.37 41.24 322.93 41.96 322.61C42.69 322.3 43.48 322.14 44.34 322.14C45.27 322.14 46.05 322.3 46.7 322.63C47.34 322.96 47.84 323.44 48.18 324.06C48.52 324.68 48.69 325.44 48.69 326.33C48.7 327.58 48.47 328.69 48 329.67C47.52 330.65 46.85 331.42 45.98 331.98C45.11 332.54 44.1 332.82 42.93 332.82V332.81ZM43.13 331.9C44.08 331.9 44.93 331.67 45.67 331.22C46.41 330.76 46.99 330.13 47.42 329.32C47.85 328.51 48.06 327.59 48.06 326.57C48.06 325.44 47.73 324.57 47.08 323.96C46.43 323.35 45.51 323.04 44.33 323.04C43.39 323.04 42.55 323.27 41.8 323.73C41.05 324.19 40.47 324.83 40.04 325.63C39.61 326.44 39.4 327.35 39.4 328.37C39.4 329.48 39.73 330.35 40.38 330.97C41.03 331.59 41.95 331.9 43.13 331.9ZM46.96 332.73L47.6 329.45L48.18 327.62L48.32 325.69L49.01 322.22H50.02L47.92 332.74H46.95L46.96 332.73Z" fill="white"/>
+                <path d="M54.23 332.73L56.33 322.21H57.32L56.67 325.37L56.55 325.01C57.01 324.06 57.62 323.34 58.4 322.85C59.18 322.37 60.16 322.12 61.34 322.12L61.16 323.11C61.11 323.11 61.05 323.11 61 323.1C60.95 323.1 60.89 323.09 60.84 323.09C59.66 323.09 58.68 323.44 57.91 324.15C57.14 324.86 56.61 325.91 56.33 327.32L55.24 332.72H54.23V332.73Z" fill="white"/>
+                <path d="M64.75 323.08L64.91 322.21H71.21L71.05 323.08H64.75ZM67.67 332.81C67.09 332.81 66.6 332.69 66.21 332.45C65.81 332.21 65.54 331.86 65.39 331.4C65.24 330.94 65.23 330.4 65.35 329.77L67.32 319.92H68.33L66.38 329.69C66.23 330.43 66.28 330.99 66.53 331.37C66.78 331.75 67.24 331.94 67.91 331.94C68.23 331.94 68.54 331.89 68.83 331.79C69.12 331.69 69.38 331.55 69.63 331.36L69.93 332.1C69.61 332.36 69.25 332.54 68.85 332.64C68.45 332.75 68.06 332.8 67.67 332.8V332.81Z" fill="white"/>
+                <path d="M86.2 332.73L82.71 318.63H83.8L87.08 332.09H86.48L95.2 318.63H96.33L87.2 332.73H86.19H86.2Z" fill="white"/>
+                <path d="M101.35 332.81C100.37 332.81 99.52 332.63 98.79 332.28C98.06 331.92 97.51 331.42 97.13 330.76C96.75 330.1 96.56 329.32 96.56 328.4C96.56 327.2 96.81 326.14 97.32 325.2C97.82 324.26 98.51 323.51 99.37 322.96C100.24 322.41 101.21 322.13 102.3 322.13C103.23 322.13 104.02 322.3 104.68 322.65C105.34 323 105.85 323.5 106.22 324.15C106.59 324.8 106.77 325.59 106.77 326.52C106.77 326.72 106.76 326.92 106.73 327.12C106.7 327.32 106.68 327.51 106.65 327.68H97.32L97.46 326.89H106.16L105.76 327.23C105.91 326.3 105.85 325.53 105.58 324.9C105.31 324.28 104.89 323.8 104.32 323.47C103.75 323.14 103.07 322.98 102.28 322.98C101.37 322.98 100.55 323.21 99.83 323.67C99.11 324.13 98.55 324.77 98.15 325.56C97.75 326.35 97.55 327.28 97.55 328.33C97.55 329.47 97.88 330.35 98.54 330.96C99.2 331.57 100.16 331.88 101.44 331.88C102.19 331.88 102.88 331.76 103.51 331.51C104.13 331.26 104.65 330.92 105.05 330.47L105.51 331.18C105.05 331.68 104.46 332.07 103.73 332.36C103 332.65 102.21 332.79 101.36 332.79L101.35 332.81Z" fill="white"/>
+                <path d="M110.84 332.73L112.94 322.21H113.93L113.28 325.37L113.16 325.01C113.62 324.06 114.23 323.34 115.01 322.85C115.79 322.37 116.77 322.12 117.95 322.12L117.77 323.11C117.72 323.11 117.66 323.11 117.61 323.1C117.56 323.1 117.5 323.09 117.45 323.09C116.27 323.09 115.29 323.44 114.52 324.15C113.75 324.86 113.22 325.91 112.94 327.32L111.85 332.72H110.84V332.73Z" fill="white"/>
+                <path d="M120.67 332.73L123.65 317.78H124.66L121.68 332.73H120.67ZM122.06 329.81L122.24 328.56L130.4 322.21H131.87L126.23 326.58L125.67 327.02L122.06 329.8V329.81ZM128.97 332.73L125.48 326.97L126.19 326.24L130.14 332.73H128.97Z" fill="white"/>
+                <path d="M138.4 332.81C137.5 332.81 136.71 332.64 136.02 332.29C135.33 331.94 134.8 331.44 134.43 330.78C134.05 330.12 133.87 329.34 133.87 328.44C133.87 327.54 134.01 326.69 134.3 325.92C134.59 325.15 135 324.49 135.54 323.93C136.08 323.37 136.71 322.93 137.43 322.61C138.16 322.3 138.95 322.14 139.81 322.14C140.74 322.14 141.52 322.3 142.17 322.63C142.81 322.96 143.31 323.44 143.65 324.06C143.99 324.68 144.16 325.44 144.16 326.33C144.17 327.58 143.94 328.69 143.47 329.67C142.99 330.65 142.32 331.42 141.45 331.98C140.58 332.54 139.57 332.82 138.4 332.82V332.81ZM138.6 331.9C139.55 331.9 140.4 331.67 141.14 331.22C141.88 330.76 142.46 330.13 142.89 329.32C143.32 328.51 143.53 327.59 143.53 326.57C143.53 325.44 143.2 324.57 142.55 323.96C141.9 323.35 140.98 323.04 139.8 323.04C138.86 323.04 138.02 323.27 137.27 323.73C136.52 324.19 135.94 324.83 135.51 325.63C135.08 326.44 134.87 327.35 134.87 328.37C134.87 329.48 135.2 330.35 135.85 330.97C136.5 331.59 137.42 331.9 138.6 331.9ZM142.43 332.73L143.07 329.45L143.65 327.62L143.79 325.69L144.48 322.22H145.49L143.39 332.74H142.42L142.43 332.73Z" fill="white"/>
+                <path d="M154.05 332.81C153.12 332.81 152.36 332.63 151.76 332.26C151.16 331.89 150.76 331.37 150.54 330.69C150.33 330.01 150.3 329.22 150.48 328.3L151.69 322.22H152.7L151.49 328.3C151.27 329.41 151.4 330.29 151.86 330.94C152.32 331.58 153.14 331.91 154.31 331.91C155.48 331.91 156.5 331.58 157.3 330.91C158.1 330.24 158.63 329.25 158.88 327.94L160.03 322.22H161.04L158.94 332.74H157.95L158.55 329.7L158.81 329.96C158.31 330.95 157.65 331.68 156.83 332.14C156.01 332.6 155.07 332.82 154.04 332.82L154.05 332.81Z" fill="white"/>
+                <path d="M165.46 323.08L165.62 322.21H171.93L171.77 323.08H165.46ZM165.48 332.73L167.9 320.62C168.09 319.67 168.47 318.94 169.04 318.44C169.61 317.94 170.35 317.69 171.27 317.69C171.69 317.69 172.08 317.75 172.44 317.87C172.8 317.99 173.09 318.17 173.31 318.39L172.83 319.12C172.44 318.74 171.92 318.56 171.26 318.56C170.6 318.56 170.08 318.73 169.7 319.08C169.32 319.43 169.05 319.99 168.88 320.75L168.54 322.44L168.46 322.88L166.51 332.71H165.5L165.48 332.73Z" fill="white"/>
+                <path d="M178.39 332.81C177.41 332.81 176.56 332.63 175.83 332.28C175.1 331.93 174.55 331.42 174.17 330.76C173.79 330.1 173.6 329.32 173.6 328.4C173.6 327.2 173.85 326.14 174.36 325.2C174.86 324.26 175.55 323.51 176.42 322.96C177.29 322.41 178.26 322.13 179.35 322.13C180.28 322.13 181.07 322.3 181.73 322.65C182.39 323 182.9 323.5 183.27 324.15C183.64 324.8 183.82 325.59 183.82 326.52C183.82 326.72 183.81 326.92 183.78 327.12C183.75 327.32 183.73 327.51 183.7 327.68H174.37L174.51 326.89H183.21L182.81 327.23C182.96 326.3 182.9 325.53 182.63 324.9C182.36 324.28 181.94 323.8 181.37 323.47C180.8 323.14 180.12 322.98 179.32 322.98C178.41 322.98 177.59 323.21 176.87 323.67C176.15 324.13 175.59 324.77 175.19 325.56C174.79 326.35 174.59 327.28 174.59 328.33C174.59 329.47 174.92 330.35 175.58 330.96C176.24 331.57 177.21 331.88 178.48 331.88C179.23 331.88 179.92 331.76 180.54 331.51C181.16 331.26 181.68 330.92 182.08 330.47L182.54 331.18C182.08 331.68 181.49 332.07 180.76 332.36C180.03 332.65 179.24 332.79 178.39 332.79V332.81Z" fill="white"/>
+                <path d="M194.91 322.13C195.86 322.13 196.64 322.31 197.24 322.68C197.84 323.05 198.25 323.57 198.47 324.25C198.69 324.93 198.71 325.72 198.52 326.64L197.31 332.72H196.3L197.51 326.64C197.74 325.53 197.61 324.65 197.14 324C196.67 323.35 195.83 323.03 194.65 323.03C193.47 323.03 192.45 323.36 191.65 324.03C190.85 324.7 190.31 325.69 190.04 327L188.89 332.72H187.88L189.97 322.2H190.96L190.36 325.24L190.1 324.98C190.6 323.99 191.26 323.26 192.09 322.8C192.92 322.34 193.86 322.12 194.91 322.12V322.13Z" fill="white"/>
+                <path d="M210.89 327.77L211.07 326.86H216.25L216.07 327.77H210.89Z" fill="white"/>
+                <path d="M233.71 332.83C232.49 332.83 231.48 332.58 230.68 332.09C229.88 331.6 229.33 330.9 229.03 329.99C228.73 329.08 228.7 328 228.94 326.74L230.55 318.62H231.6L229.97 326.72C229.63 328.39 229.81 329.66 230.48 330.55C231.16 331.44 232.26 331.88 233.79 331.88C235.32 331.88 236.44 331.46 237.34 330.62C238.24 329.78 238.86 328.48 239.21 326.72L240.82 318.62H241.85L240.22 326.78C239.82 328.82 239.07 330.34 237.97 331.33C236.88 332.32 235.46 332.82 233.71 332.82V332.83Z" fill="white"/>
+                <path d="M260.28 322.13C261.23 322.13 262 322.31 262.59 322.68C263.17 323.05 263.57 323.57 263.79 324.25C264 324.93 264.02 325.72 263.83 326.64L262.6 332.72H261.59L262.82 326.64C263.04 325.53 262.92 324.65 262.47 324C262.02 323.35 261.22 323.03 260.08 323.03C258.94 323.03 258 323.34 257.22 323.97C256.44 324.59 255.92 325.52 255.67 326.76L254.46 332.72H253.45L254.68 326.64C254.89 325.53 254.78 324.65 254.33 324C253.88 323.36 253.08 323.03 251.94 323.03C250.8 323.03 249.82 323.37 249.04 324.04C248.26 324.71 247.74 325.7 247.47 327L246.32 332.72H245.31L247.41 322.2H248.4L247.79 325.24L247.53 324.98C248.03 323.99 248.68 323.26 249.48 322.8C250.29 322.34 251.19 322.12 252.2 322.12C252.95 322.12 253.59 322.25 254.12 322.5C254.65 322.76 255.06 323.12 255.34 323.59C255.62 324.06 255.78 324.62 255.8 325.28L255.3 325.16C255.81 324.14 256.5 323.38 257.36 322.87C258.22 322.37 259.19 322.11 260.28 322.11V322.13Z" fill="white"/>
+                <path d="M271.71 332.81C270.88 332.81 270.09 332.69 269.34 332.44C268.59 332.19 268.02 331.87 267.62 331.48L268.16 330.69C268.55 331.07 269.07 331.36 269.72 331.59C270.37 331.81 271.06 331.92 271.79 331.92C272.88 331.92 273.72 331.73 274.32 331.34C274.92 330.95 275.22 330.42 275.22 329.75C275.22 329.29 275.08 328.95 274.79 328.72C274.5 328.49 274.12 328.32 273.66 328.2C273.2 328.08 272.71 327.96 272.19 327.86C271.67 327.76 271.18 327.62 270.72 327.46C270.26 327.3 269.88 327.05 269.59 326.71C269.3 326.37 269.16 325.91 269.16 325.32C269.16 324.67 269.34 324.11 269.7 323.64C270.06 323.17 270.57 322.79 271.23 322.53C271.89 322.27 272.66 322.14 273.55 322.14C274.21 322.14 274.86 322.23 275.49 322.41C276.13 322.59 276.63 322.84 277.01 323.17L276.55 323.96C276.15 323.65 275.67 323.42 275.13 323.26C274.59 323.11 274.03 323.03 273.47 323.03C272.44 323.03 271.62 323.23 271.03 323.63C270.44 324.03 270.14 324.56 270.14 325.22C270.14 325.68 270.29 326.03 270.58 326.27C270.87 326.51 271.25 326.69 271.71 326.81C272.17 326.93 272.66 327.04 273.18 327.14C273.7 327.24 274.2 327.38 274.66 327.54C275.12 327.71 275.5 327.95 275.79 328.28C276.08 328.61 276.22 329.06 276.22 329.65C276.22 330.31 276.03 330.88 275.66 331.35C275.28 331.83 274.76 332.19 274.09 332.44C273.42 332.69 272.63 332.81 271.71 332.81Z" fill="white"/>
+                <path d="M284.9 332.81C284 332.81 283.21 332.64 282.52 332.29C281.83 331.94 281.3 331.44 280.93 330.78C280.55 330.12 280.37 329.34 280.37 328.44C280.37 327.54 280.51 326.69 280.8 325.92C281.09 325.15 281.5 324.49 282.04 323.93C282.58 323.37 283.21 322.93 283.93 322.61C284.66 322.3 285.45 322.14 286.31 322.14C287.24 322.14 288.02 322.3 288.67 322.63C289.31 322.96 289.81 323.44 290.15 324.06C290.49 324.68 290.66 325.44 290.66 326.33C290.67 327.58 290.44 328.69 289.97 329.67C289.49 330.65 288.82 331.42 287.95 331.98C287.08 332.54 286.07 332.82 284.9 332.82V332.81ZM285.1 331.9C286.05 331.9 286.9 331.67 287.64 331.22C288.38 330.76 288.96 330.13 289.39 329.32C289.82 328.51 290.03 327.59 290.03 326.57C290.03 325.44 289.7 324.57 289.05 323.96C288.4 323.35 287.48 323.04 286.3 323.04C285.36 323.04 284.52 323.27 283.77 323.73C283.02 324.19 282.44 324.83 282.01 325.63C281.58 326.44 281.37 327.35 281.37 328.37C281.37 329.48 281.7 330.35 282.35 330.97C283 331.59 283.92 331.9 285.1 331.9ZM288.93 332.73L289.57 329.45L290.15 327.62L290.29 325.69L290.98 322.22H291.99L289.89 332.74H288.92L288.93 332.73Z" fill="white"/>
+                <path d="M296.4 323.08L296.56 322.21H302.87L302.71 323.08H296.4ZM299.33 332.81C298.75 332.81 298.27 332.69 297.87 332.45C297.47 332.21 297.2 331.86 297.05 331.4C296.9 330.94 296.89 330.4 297.01 329.77L298.98 319.92H299.99L298.04 329.69C297.89 330.43 297.94 330.99 298.19 331.37C298.44 331.75 298.9 331.94 299.57 331.94C299.89 331.94 300.2 331.89 300.49 331.79C300.78 331.69 301.04 331.55 301.29 331.36L301.59 332.1C301.27 332.36 300.91 332.54 300.51 332.64C300.11 332.74 299.72 332.8 299.33 332.8V332.81Z" fill="white"/>
+                <path d="M305.07 332.73L305.21 332.05L314.18 322.74L314.48 323.08H307.13L307.29 322.21H315.43L315.29 322.89L306.3 332.2L305.98 331.86H313.62L313.44 332.73H305.08H305.07Z" fill="white"/>
+                <path d="M340.74 322.13C341.69 322.13 342.46 322.31 343.05 322.68C343.63 323.05 344.03 323.57 344.25 324.25C344.47 324.93 344.48 325.72 344.29 326.64L343.06 332.72H342.05L343.28 326.64C343.49 325.53 343.38 324.65 342.93 324C342.48 323.36 341.68 323.03 340.54 323.03C339.4 323.03 338.46 323.34 337.68 323.97C336.9 324.59 336.38 325.52 336.13 326.76L334.92 332.72H333.91L335.14 326.64C335.35 325.53 335.24 324.65 334.79 324C334.34 323.35 333.54 323.03 332.4 323.03C331.26 323.03 330.28 323.37 329.5 324.04C328.72 324.71 328.2 325.7 327.93 327L326.78 332.72H325.77L327.86 322.2H328.85L328.25 325.24L327.99 324.98C328.49 323.99 329.14 323.26 329.94 322.8C330.75 322.34 331.65 322.12 332.66 322.12C333.41 322.12 334.05 322.25 334.58 322.5C335.11 322.76 335.52 323.12 335.8 323.59C336.08 324.06 336.24 324.62 336.26 325.28L335.76 325.16C336.27 324.14 336.96 323.38 337.81 322.87C338.67 322.37 339.64 322.11 340.73 322.11L340.74 322.13Z" fill="white"/>
+                <path d="M353.66 332.81C352.76 332.81 351.97 332.64 351.28 332.29C350.59 331.94 350.06 331.44 349.69 330.78C349.31 330.12 349.13 329.34 349.13 328.44C349.13 327.54 349.27 326.69 349.56 325.92C349.85 325.15 350.26 324.49 350.8 323.93C351.34 323.37 351.97 322.93 352.69 322.61C353.42 322.3 354.21 322.14 355.07 322.14C356 322.14 356.78 322.3 357.43 322.63C358.08 322.96 358.57 323.44 358.91 324.06C359.25 324.68 359.42 325.44 359.42 326.33C359.43 327.58 359.2 328.69 358.72 329.67C358.24 330.65 357.57 331.42 356.71 331.98C355.84 332.54 354.83 332.82 353.66 332.82V332.81ZM353.86 331.9C354.81 331.9 355.66 331.67 356.4 331.22C357.14 330.76 357.72 330.13 358.15 329.32C358.58 328.51 358.79 327.59 358.79 326.57C358.79 325.44 358.46 324.57 357.81 323.96C357.16 323.35 356.24 323.04 355.06 323.04C354.12 323.04 353.28 323.27 352.53 323.73C351.79 324.19 351.2 324.83 350.77 325.63C350.34 326.44 350.13 327.35 350.13 328.37C350.13 329.48 350.46 330.35 351.11 330.97C351.76 331.59 352.68 331.9 353.86 331.9ZM357.69 332.73L358.33 329.45L358.91 327.62L359.05 325.69L359.73 322.22H360.74L358.65 332.74H357.68L357.69 332.73Z" fill="white"/>
+                <path d="M369.53 332.81C368.56 332.81 367.72 332.63 367.01 332.28C366.3 331.93 365.75 331.42 365.37 330.76C364.99 330.1 364.8 329.33 364.8 328.44C364.8 327.22 365.06 326.13 365.58 325.19C366.1 324.24 366.81 323.5 367.73 322.95C368.64 322.41 369.68 322.13 370.85 322.13C371.79 322.13 372.6 322.29 373.28 322.62C373.96 322.95 374.48 323.44 374.84 324.1L374.01 324.6C373.69 324.06 373.26 323.67 372.72 323.41C372.18 323.16 371.54 323.03 370.79 323.03C369.82 323.03 368.97 323.26 368.22 323.72C367.48 324.18 366.89 324.82 366.46 325.62C366.03 326.43 365.82 327.34 365.82 328.36C365.82 329.47 366.15 330.34 366.81 330.96C367.47 331.58 368.41 331.89 369.63 331.89C370.33 331.89 370.98 331.76 371.59 331.5C372.2 331.24 372.71 330.86 373.11 330.36L373.82 330.92C373.36 331.51 372.75 331.97 372 332.3C371.24 332.63 370.43 332.79 369.55 332.79L369.53 332.81Z" fill="white"/>
+                <path d="M385.07 322.13C386.02 322.13 386.8 322.31 387.4 322.68C388 323.05 388.41 323.57 388.63 324.25C388.85 324.93 388.87 325.72 388.68 326.64L387.47 332.72H386.46L387.67 326.64C387.9 325.53 387.77 324.65 387.3 324C386.82 323.36 385.99 323.03 384.81 323.03C383.63 323.03 382.61 323.36 381.81 324.03C381.01 324.7 380.47 325.69 380.2 327L379.05 332.72H378.04L381.02 317.77H382.03L380.54 325.24L380.26 324.98C380.76 323.99 381.42 323.26 382.25 322.8C383.08 322.34 384.02 322.12 385.07 322.12V322.13Z" fill="white"/>
+                <path d="M398.3 332.81C397.32 332.81 396.47 332.63 395.74 332.28C395.01 331.92 394.46 331.42 394.08 330.76C393.7 330.1 393.51 329.32 393.51 328.4C393.51 327.2 393.76 326.14 394.27 325.2C394.77 324.26 395.46 323.51 396.32 322.96C397.19 322.41 398.16 322.13 399.25 322.13C400.18 322.13 400.97 322.3 401.63 322.65C402.29 323 402.8 323.5 403.17 324.15C403.54 324.8 403.72 325.59 403.72 326.52C403.72 326.72 403.71 326.92 403.68 327.12C403.65 327.32 403.63 327.51 403.6 327.68H394.27L394.41 326.89H403.11L402.71 327.23C402.86 326.3 402.8 325.53 402.53 324.9C402.26 324.28 401.84 323.8 401.27 323.47C400.7 323.14 400.02 322.98 399.23 322.98C398.32 322.98 397.5 323.21 396.78 323.67C396.06 324.13 395.5 324.77 395.1 325.56C394.7 326.35 394.5 327.28 394.5 328.33C394.5 329.47 394.83 330.35 395.49 330.96C396.15 331.57 397.11 331.88 398.39 331.88C399.14 331.88 399.83 331.76 400.46 331.51C401.08 331.26 401.6 330.92 402 330.47L402.46 331.18C402 331.68 401.41 332.07 400.68 332.36C399.95 332.65 399.16 332.79 398.31 332.79L398.3 332.81Z" fill="white"/>
+                <path d="M414.82 322.13C415.77 322.13 416.55 322.31 417.15 322.68C417.75 323.05 418.16 323.57 418.38 324.25C418.6 324.93 418.62 325.72 418.43 326.64L417.22 332.72H416.21L417.42 326.64C417.65 325.53 417.52 324.65 417.05 324C416.57 323.36 415.74 323.03 414.56 323.03C413.38 323.03 412.36 323.36 411.56 324.03C410.76 324.7 410.22 325.69 409.95 327L408.8 332.72H407.79L409.89 322.2H410.88L410.27 325.24L410.01 324.98C410.51 323.99 411.17 323.26 412 322.8C412.83 322.34 413.77 322.12 414.82 322.12V322.13Z" fill="white"/>
+              </g>
+              <defs>
+                <clipPath id="clip0">
+                  <rect width="418.56" height="332.83" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Light Background with Dark Logo (Dark.svg) -->
+        <div class="component-card">
+          <span class="component-label">Auf Hell — Dark.svg</span>
+          <div style="background: #F5F5F5; padding: var(--space-5); display: flex; align-items: center; justify-content: center; min-height: 140px;">
+            <svg width="280" height="222" viewBox="0 0 419 333" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+              <g clip-path="url(#clip0_black)">
+                <path d="M59.13 292.53C56.17 292.95 53.2 293.16 50.24 293.16C46.14 293.16 42.61 292.81 39.67 292.11C36.72 291.41 34.46 290.42 32.88 289.14C31.3 287.86 30.51 286.38 30.51 284.69C30.51 282.75 31.11 280.98 32.3 279.38C33.5 277.77 35.23 276.38 37.49 275.21C39.75 274.04 42.47 273.13 45.63 272.49C48.79 271.85 52.34 271.53 56.27 271.53C60.54 271.53 64.3 271.87 67.55 272.55C70.8 273.23 73.87 274.48 76.78 276.29L98.44 268.2C94.25 265.4 88.76 263.29 81.97 261.87C75.18 260.45 67.08 259.74 57.68 259.74C49.14 259.74 41.34 260.37 34.29 261.62C27.24 262.88 21.15 264.66 16.03 266.97C10.9 269.28 6.95 272.02 4.17 275.19C1.39 278.36 0.0100021 281.84 0.0100021 285.63C0.0100021 289.42 1.91 292.83 5.71 295.73C9.51 298.63 14.87 300.9 21.79 302.53C28.71 304.16 36.78 304.97 46.01 304.97C53.1 304.97 59.77 304.53 66 303.64C72.24 302.75 77.7 301.49 82.4 299.84L90.09 281.18H63.82L59.13 292.54V292.53Z" fill="black"/>
+                <path d="M179.8 271.71L184.42 260.71H111.5L93.55 303.97H168.14L172.76 292.97H127.77L130.14 287.29H168.14L172.5 276.78H134.51L136.61 271.71H179.8Z" fill="black"/>
+                <path d="M256.7 260.71L248.37 280.84L222.61 260.71H197.74L179.8 303.97H209.28L217.6 283.85L243.37 303.97H268.23L286.17 260.71H256.7Z" fill="black"/>
+                <path d="M282.84 303.97L300.78 260.71H331.03L313.09 303.97H282.84Z" fill="black"/>
+                <path d="M413.94 271.71L418.56 260.71H345.63L327.69 303.97H402.28L406.89 292.97H361.91L364.28 287.29H402.28L406.64 276.78H368.65L370.75 271.71H413.94Z" fill="black"/>
+                <path d="M89.98 0V211.01C89.98 225 101.32 236.34 115.31 236.34H205.02L145.91 162.96C138.35 153.58 139.83 139.85 149.21 132.3L236.34 62.11C243.95 55.98 242.37 43.96 233.43 40.01L142.93 0H89.98Z" fill="#BD2A2E"/>
+                <path d="M300.97 0H142.94L250.98 39.74C260.79 43.35 263.67 55.83 256.44 63.37L189.67 133.04C183.27 139.72 184.19 150.51 191.63 156.01L300.29 236.34H326.33V25.36C326.32 11.35 314.97 0 300.97 0Z" fill="#BD2A2E"/>
+                <path d="M4.98 332.83C4.3 332.83 3.63 332.75 2.98 332.58C2.33 332.41 1.74 332.19 1.23 331.9C0.720002 331.61 0.310002 331.3 0.0100021 330.95L0.550002 330.16C0.850002 330.5 1.23 330.8 1.71 331.07C2.19 331.34 2.72 331.55 3.3 331.69C3.88 331.84 4.47 331.91 5.06 331.91C5.93 331.91 6.71 331.79 7.39 331.55C8.07 331.31 8.59 330.96 8.97 330.49C9.35 330.03 9.53 329.46 9.53 328.79C9.53 328.29 9.39 327.89 9.12 327.58C8.84 327.27 8.49 327.02 8.05 326.81C7.61 326.6 7.13 326.44 6.6 326.3C6.07 326.16 5.54 326 5.01 325.83C4.48 325.65 4 325.44 3.56 325.19C3.12 324.94 2.77 324.62 2.49 324.21C2.21 323.8 2.08 323.3 2.08 322.68C2.08 321.79 2.32 321.04 2.8 320.42C3.28 319.8 3.92 319.33 4.74 319C5.56 318.67 6.49 318.51 7.54 318.51C8.35 318.51 9.12 318.61 9.88 318.82C10.64 319.03 11.27 319.33 11.79 319.74L11.31 320.59C10.81 320.21 10.24 319.92 9.58 319.72C8.92 319.52 8.23 319.42 7.5 319.42C6.64 319.42 5.88 319.54 5.21 319.79C4.54 320.04 4.03 320.4 3.66 320.87C3.29 321.34 3.11 321.91 3.11 322.58C3.11 323.08 3.24 323.48 3.51 323.8C3.78 324.12 4.13 324.38 4.57 324.59C5.01 324.8 5.49 324.98 6.03 325.12C6.57 325.27 7.1 325.43 7.62 325.59C8.14 325.76 8.63 325.97 9.07 326.21C9.51 326.45 9.87 326.78 10.15 327.17C10.42 327.56 10.56 328.06 10.56 328.66C10.56 329.56 10.32 330.32 9.83 330.94C9.34 331.56 8.67 332.02 7.84 332.34C7 332.66 6.05 332.81 4.99 332.81L4.98 332.83Z" fill="black"/>
+                <path d="M30.02 322.13C30.97 322.13 31.74 322.31 32.33 322.68C32.91 323.05 33.31 323.57 33.53 324.25C33.75 324.93 33.76 325.72 33.57 326.64L32.34 332.72H31.33L32.56 326.64C32.77 325.53 32.66 324.65 32.21 324C31.76 323.36 30.96 323.03 29.82 323.03C28.68 323.03 27.74 323.34 26.96 323.97C26.18 324.59 25.66 325.52 25.41 326.76L24.2 332.72H23.19L24.42 326.64C24.63 325.53 24.52 324.65 24.07 324C23.62 323.35 22.82 323.03 21.68 323.03C20.54 323.03 19.56 323.37 18.78 324.04C18 324.71 17.48 325.7 17.21 327L16.06 332.72H15.05L17.14 322.2H18.13L17.53 325.24L17.27 324.98C17.77 323.99 18.42 323.26 19.22 322.8C20.03 322.34 20.93 322.12 21.94 322.12C22.69 322.12 23.33 322.25 23.86 322.5C24.39 322.76 24.8 323.12 25.08 323.59C25.36 324.06 25.52 324.62 25.54 325.28L25.04 325.16C25.55 324.14 26.24 323.38 27.09 322.87C27.95 322.37 28.92 322.11 30.01 322.11L30.02 322.13Z" fill="black"/>
+                <path d="M42.93 332.81C42.03 332.81 41.24 332.64 40.55 332.29C39.86 331.94 39.33 331.44 38.96 330.78C38.58 330.12 38.4 329.34 38.4 328.44C38.4 327.54 38.54 326.69 38.83 325.92C39.12 325.15 39.53 324.49 40.07 323.93C40.61 323.37 41.24 322.93 41.96 322.61C42.69 322.3 43.48 322.14 44.34 322.14C45.27 322.14 46.05 322.3 46.7 322.63C47.34 322.96 47.84 323.44 48.18 324.06C48.52 324.68 48.69 325.44 48.69 326.33C48.7 327.58 48.47 328.69 48 329.67C47.52 330.65 46.85 331.42 45.98 331.98C45.11 332.54 44.1 332.82 42.93 332.82V332.81ZM43.13 331.9C44.08 331.9 44.93 331.67 45.67 331.22C46.41 330.76 46.99 330.13 47.42 329.32C47.85 328.51 48.06 327.59 48.06 326.57C48.06 325.44 47.73 324.57 47.08 323.96C46.43 323.35 45.51 323.04 44.33 323.04C43.39 323.04 42.55 323.27 41.8 323.73C41.05 324.19 40.47 324.83 40.04 325.63C39.61 326.44 39.4 327.35 39.4 328.37C39.4 329.48 39.73 330.35 40.38 330.97C41.03 331.59 41.95 331.9 43.13 331.9ZM46.96 332.73L47.6 329.45L48.18 327.62L48.32 325.69L49.01 322.22H50.02L47.92 332.74H46.95L46.96 332.73Z" fill="black"/>
+                <path d="M54.23 332.73L56.33 322.21H57.32L56.67 325.37L56.55 325.01C57.01 324.06 57.62 323.34 58.4 322.85C59.18 322.37 60.16 322.12 61.34 322.12L61.16 323.11C61.11 323.11 61.05 323.11 61 323.1C60.95 323.1 60.89 323.09 60.84 323.09C59.66 323.09 58.68 323.44 57.91 324.15C57.14 324.86 56.61 325.91 56.33 327.32L55.24 332.72H54.23V332.73Z" fill="black"/>
+                <path d="M64.75 323.08L64.91 322.21H71.21L71.05 323.08H64.75ZM67.67 332.81C67.09 332.81 66.6 332.69 66.21 332.45C65.81 332.21 65.54 331.86 65.39 331.4C65.24 330.94 65.23 330.4 65.35 329.77L67.32 319.92H68.33L66.38 329.69C66.23 330.43 66.28 330.99 66.53 331.37C66.78 331.75 67.24 331.94 67.91 331.94C68.23 331.94 68.54 331.89 68.83 331.79C69.12 331.69 69.38 331.55 69.63 331.36L69.93 332.1C69.61 332.36 69.25 332.54 68.85 332.64C68.45 332.75 68.06 332.8 67.67 332.8V332.81Z" fill="black"/>
+                <path d="M86.2 332.73L82.71 318.63H83.8L87.08 332.09H86.48L95.2 318.63H96.33L87.2 332.73H86.19H86.2Z" fill="black"/>
+                <path d="M101.35 332.81C100.37 332.81 99.52 332.63 98.79 332.28C98.06 331.92 97.51 331.42 97.13 330.76C96.75 330.1 96.56 329.32 96.56 328.4C96.56 327.2 96.81 326.14 97.32 325.2C97.82 324.26 98.51 323.51 99.37 322.96C100.24 322.41 101.21 322.13 102.3 322.13C103.23 322.13 104.02 322.3 104.68 322.65C105.34 323 105.85 323.5 106.22 324.15C106.59 324.8 106.77 325.59 106.77 326.52C106.77 326.72 106.76 326.92 106.73 327.12C106.7 327.32 106.68 327.51 106.65 327.68H97.32L97.46 326.89H106.16L105.76 327.23C105.91 326.3 105.85 325.53 105.58 324.9C105.31 324.28 104.89 323.8 104.32 323.47C103.75 323.14 103.07 322.98 102.28 322.98C101.37 322.98 100.55 323.21 99.83 323.67C99.11 324.13 98.55 324.77 98.15 325.56C97.75 326.35 97.55 327.28 97.55 328.33C97.55 329.47 97.88 330.35 98.54 330.96C99.2 331.57 100.16 331.88 101.44 331.88C102.19 331.88 102.88 331.76 103.51 331.51C104.13 331.26 104.65 330.92 105.05 330.47L105.51 331.18C105.05 331.68 104.46 332.07 103.73 332.36C103 332.65 102.21 332.79 101.36 332.79L101.35 332.81Z" fill="black"/>
+                <path d="M110.84 332.73L112.94 322.21H113.93L113.28 325.37L113.16 325.01C113.62 324.06 114.23 323.34 115.01 322.85C115.79 322.37 116.77 322.12 117.95 322.12L117.77 323.11C117.72 323.11 117.66 323.11 117.61 323.1C117.56 323.1 117.5 323.09 117.45 323.09C116.27 323.09 115.29 323.44 114.52 324.15C113.75 324.86 113.22 325.91 112.94 327.32L111.85 332.72H110.84V332.73Z" fill="black"/>
+                <path d="M120.67 332.73L123.65 317.78H124.66L121.68 332.73H120.67ZM122.06 329.81L122.24 328.56L130.4 322.21H131.87L126.23 326.58L125.67 327.02L122.06 329.8V329.81ZM128.97 332.73L125.48 326.97L126.19 326.24L130.14 332.73H128.97Z" fill="black"/>
+                <path d="M138.4 332.81C137.5 332.81 136.71 332.64 136.02 332.29C135.33 331.94 134.8 331.44 134.43 330.78C134.05 330.12 133.87 329.34 133.87 328.44C133.87 327.54 134.01 326.69 134.3 325.92C134.59 325.15 135 324.49 135.54 323.93C136.08 323.37 136.71 322.93 137.43 322.61C138.16 322.3 138.95 322.14 139.81 322.14C140.74 322.14 141.52 322.3 142.17 322.63C142.81 322.96 143.31 323.44 143.65 324.06C143.99 324.68 144.16 325.44 144.16 326.33C144.17 327.58 143.94 328.69 143.47 329.67C142.99 330.65 142.32 331.42 141.45 331.98C140.58 332.54 139.57 332.82 138.4 332.82V332.81ZM138.6 331.9C139.55 331.9 140.4 331.67 141.14 331.22C141.88 330.76 142.46 330.13 142.89 329.32C143.32 328.51 143.53 327.59 143.53 326.57C143.53 325.44 143.2 324.57 142.55 323.96C141.9 323.35 140.98 323.04 139.8 323.04C138.86 323.04 138.02 323.27 137.27 323.73C136.52 324.19 135.94 324.83 135.51 325.63C135.08 326.44 134.87 327.35 134.87 328.37C134.87 329.48 135.2 330.35 135.85 330.97C136.5 331.59 137.42 331.9 138.6 331.9ZM142.43 332.73L143.07 329.45L143.65 327.62L143.79 325.69L144.48 322.22H145.49L143.39 332.74H142.42L142.43 332.73Z" fill="black"/>
+                <path d="M154.05 332.81C153.12 332.81 152.36 332.63 151.76 332.26C151.16 331.89 150.76 331.37 150.54 330.69C150.33 330.01 150.3 329.22 150.48 328.3L151.69 322.22H152.7L151.49 328.3C151.27 329.41 151.4 330.29 151.86 330.94C152.32 331.58 153.14 331.91 154.31 331.91C155.48 331.91 156.5 331.58 157.3 330.91C158.1 330.24 158.63 329.25 158.88 327.94L160.03 322.22H161.04L158.94 332.74H157.95L158.55 329.7L158.81 329.96C158.31 330.95 157.65 331.68 156.83 332.14C156.01 332.6 155.07 332.82 154.04 332.82L154.05 332.81Z" fill="black"/>
+                <path d="M165.46 323.08L165.62 322.21H171.93L171.77 323.08H165.46ZM165.48 332.73L167.9 320.62C168.09 319.67 168.47 318.94 169.04 318.44C169.61 317.94 170.35 317.69 171.27 317.69C171.69 317.69 172.08 317.75 172.44 317.87C172.8 317.99 173.09 318.17 173.31 318.39L172.83 319.12C172.44 318.74 171.92 318.56 171.26 318.56C170.6 318.56 170.08 318.73 169.7 319.08C169.32 319.43 169.05 319.99 168.88 320.75L168.54 322.44L168.46 322.88L166.51 332.71H165.5L165.48 332.73Z" fill="black"/>
+                <path d="M178.39 332.81C177.41 332.81 176.56 332.63 175.83 332.28C175.1 331.93 174.55 331.42 174.17 330.76C173.79 330.1 173.6 329.32 173.6 328.4C173.6 327.2 173.85 326.14 174.36 325.2C174.86 324.26 175.55 323.51 176.42 322.96C177.29 322.41 178.26 322.13 179.35 322.13C180.28 322.13 181.07 322.3 181.73 322.65C182.39 323 182.9 323.5 183.27 324.15C183.64 324.8 183.82 325.59 183.82 326.52C183.82 326.72 183.81 326.92 183.78 327.12C183.75 327.32 183.73 327.51 183.7 327.68H174.37L174.51 326.89H183.21L182.81 327.23C182.96 326.3 182.9 325.53 182.63 324.9C182.36 324.28 181.94 323.8 181.37 323.47C180.8 323.14 180.12 322.98 179.32 322.98C178.41 322.98 177.59 323.21 176.87 323.67C176.15 324.13 175.59 324.77 175.19 325.56C174.79 326.35 174.59 327.28 174.59 328.33C174.59 329.47 174.92 330.35 175.58 330.96C176.24 331.57 177.21 331.88 178.48 331.88C179.23 331.88 179.92 331.76 180.54 331.51C181.16 331.26 181.68 330.92 182.08 330.47L182.54 331.18C182.08 331.68 181.49 332.07 180.76 332.36C180.03 332.65 179.24 332.79 178.39 332.79V332.81Z" fill="black"/>
+                <path d="M194.91 322.13C195.86 322.13 196.64 322.31 197.24 322.68C197.84 323.05 198.25 323.57 198.47 324.25C198.69 324.93 198.71 325.72 198.52 326.64L197.31 332.72H196.3L197.51 326.64C197.74 325.53 197.61 324.65 197.14 324C196.67 323.35 195.83 323.03 194.65 323.03C193.47 323.03 192.45 323.36 191.65 324.03C190.85 324.7 190.31 325.69 190.04 327L188.89 332.72H187.88L189.97 322.2H190.96L190.36 325.24L190.1 324.98C190.6 323.99 191.26 323.26 192.09 322.8C192.92 322.34 193.86 322.12 194.91 322.12V322.13Z" fill="black"/>
+                <path d="M210.89 327.77L211.07 326.86H216.25L216.07 327.77H210.89Z" fill="black"/>
+                <path d="M233.71 332.83C232.49 332.83 231.48 332.58 230.68 332.09C229.88 331.6 229.33 330.9 229.03 329.99C228.73 329.08 228.7 328 228.94 326.74L230.55 318.62H231.6L229.97 326.72C229.63 328.39 229.81 329.66 230.48 330.55C231.16 331.44 232.26 331.88 233.79 331.88C235.32 331.88 236.44 331.46 237.34 330.62C238.24 329.78 238.86 328.48 239.21 326.72L240.82 318.62H241.85L240.22 326.78C239.82 328.82 239.07 330.34 237.97 331.33C236.88 332.32 235.46 332.82 233.71 332.82V332.83Z" fill="black"/>
+                <path d="M260.28 322.13C261.23 322.13 262 322.31 262.59 322.68C263.17 323.05 263.57 323.57 263.79 324.25C264 324.93 264.02 325.72 263.83 326.64L262.6 332.72H261.59L262.82 326.64C263.04 325.53 262.92 324.65 262.47 324C262.02 323.35 261.22 323.03 260.08 323.03C258.94 323.03 258 323.34 257.22 323.97C256.44 324.59 255.92 325.52 255.67 326.76L254.46 332.72H253.45L254.68 326.64C254.89 325.53 254.78 324.65 254.33 324C253.88 323.36 253.08 323.03 251.94 323.03C250.8 323.03 249.82 323.37 249.04 324.04C248.26 324.71 247.74 325.7 247.47 327L246.32 332.72H245.31L247.41 322.2H248.4L247.79 325.24L247.53 324.98C248.03 323.99 248.68 323.26 249.48 322.8C250.29 322.34 251.19 322.12 252.2 322.12C252.95 322.12 253.59 322.25 254.12 322.5C254.65 322.76 255.06 323.12 255.34 323.59C255.62 324.06 255.78 324.62 255.8 325.28L255.3 325.16C255.81 324.14 256.5 323.38 257.36 322.87C258.22 322.37 259.19 322.11 260.28 322.11V322.13Z" fill="black"/>
+                <path d="M271.71 332.81C270.88 332.81 270.09 332.69 269.34 332.44C268.59 332.19 268.02 331.87 267.62 331.48L268.16 330.69C268.55 331.07 269.07 331.36 269.72 331.59C270.37 331.81 271.06 331.92 271.79 331.92C272.88 331.92 273.72 331.73 274.32 331.34C274.92 330.95 275.22 330.42 275.22 329.75C275.22 329.29 275.08 328.95 274.79 328.72C274.5 328.49 274.12 328.32 273.66 328.2C273.2 328.08 272.71 327.96 272.19 327.86C271.67 327.76 271.18 327.62 270.72 327.46C270.26 327.3 269.88 327.05 269.59 326.71C269.3 326.37 269.16 325.91 269.16 325.32C269.16 324.67 269.34 324.11 269.7 323.64C270.06 323.17 270.57 322.79 271.23 322.53C271.89 322.27 272.66 322.14 273.55 322.14C274.21 322.14 274.86 322.23 275.49 322.41C276.13 322.59 276.63 322.84 277.01 323.17L276.55 323.96C276.15 323.65 275.67 323.42 275.13 323.26C274.59 323.11 274.03 323.03 273.47 323.03C272.44 323.03 271.62 323.23 271.03 323.63C270.44 324.03 270.14 324.56 270.14 325.22C270.14 325.68 270.29 326.03 270.58 326.27C270.87 326.51 271.25 326.69 271.71 326.81C272.17 326.93 272.66 327.04 273.18 327.14C273.7 327.24 274.2 327.38 274.66 327.54C275.12 327.71 275.5 327.95 275.79 328.28C276.08 328.61 276.22 329.06 276.22 329.65C276.22 330.31 276.03 330.88 275.66 331.35C275.28 331.83 274.76 332.19 274.09 332.44C273.42 332.69 272.63 332.81 271.71 332.81Z" fill="black"/>
+                <path d="M284.9 332.81C284 332.81 283.21 332.64 282.52 332.29C281.83 331.94 281.3 331.44 280.93 330.78C280.55 330.12 280.37 329.34 280.37 328.44C280.37 327.54 280.51 326.69 280.8 325.92C281.09 325.15 281.5 324.49 282.04 323.93C282.58 323.37 283.21 322.93 283.93 322.61C284.66 322.3 285.45 322.14 286.31 322.14C287.24 322.14 288.02 322.3 288.67 322.63C289.31 322.96 289.81 323.44 290.15 324.06C290.49 324.68 290.66 325.44 290.66 326.33C290.67 327.58 290.44 328.69 289.97 329.67C289.49 330.65 288.82 331.42 287.95 331.98C287.08 332.54 286.07 332.82 284.9 332.82V332.81ZM285.1 331.9C286.05 331.9 286.9 331.67 287.64 331.22C288.38 330.76 288.96 330.13 289.39 329.32C289.82 328.51 290.03 327.59 290.03 326.57C290.03 325.44 289.7 324.57 289.05 323.96C288.4 323.35 287.48 323.04 286.3 323.04C285.36 323.04 284.52 323.27 283.77 323.73C283.02 324.19 282.44 324.83 282.01 325.63C281.58 326.44 281.37 327.35 281.37 328.37C281.37 329.48 281.7 330.35 282.35 330.97C283 331.59 283.92 331.9 285.1 331.9ZM288.93 332.73L289.57 329.45L290.15 327.62L290.29 325.69L290.98 322.22H291.99L289.89 332.74H288.92L288.93 332.73Z" fill="black"/>
+                <path d="M296.4 323.08L296.56 322.21H302.87L302.71 323.08H296.4ZM299.33 332.81C298.75 332.81 298.27 332.69 297.87 332.45C297.47 332.21 297.2 331.86 297.05 331.4C296.9 330.94 296.89 330.4 297.01 329.77L298.98 319.92H299.99L298.04 329.69C297.89 330.43 297.94 330.99 298.19 331.37C298.44 331.75 298.9 331.94 299.57 331.94C299.89 331.94 300.2 331.89 300.49 331.79C300.78 331.69 301.04 331.55 301.29 331.36L301.59 332.1C301.27 332.36 300.91 332.54 300.51 332.64C300.11 332.74 299.72 332.8 299.33 332.8V332.81Z" fill="black"/>
+                <path d="M305.07 332.73L305.21 332.05L314.18 322.74L314.48 323.08H307.13L307.29 322.21H315.43L315.29 322.89L306.3 332.2L305.98 331.86H313.62L313.44 332.73H305.08H305.07Z" fill="black"/>
+                <path d="M340.74 322.13C341.69 322.13 342.46 322.31 343.05 322.68C343.63 323.05 344.03 323.57 344.25 324.25C344.47 324.93 344.48 325.72 344.29 326.64L343.06 332.72H342.05L343.28 326.64C343.49 325.53 343.38 324.65 342.93 324C342.48 323.36 341.68 323.03 340.54 323.03C339.4 323.03 338.46 323.34 337.68 323.97C336.9 324.59 336.38 325.52 336.13 326.76L334.92 332.72H333.91L335.14 326.64C335.35 325.53 335.24 324.65 334.79 324C334.34 323.35 333.54 323.03 332.4 323.03C331.26 323.03 330.28 323.37 329.5 324.04C328.72 324.71 328.2 325.7 327.93 327L326.78 332.72H325.77L327.86 322.2H328.85L328.25 325.24L327.99 324.98C328.49 323.99 329.14 323.26 329.94 322.8C330.75 322.34 331.65 322.12 332.66 322.12C333.41 322.12 334.05 322.25 334.58 322.5C335.11 322.76 335.52 323.12 335.8 323.59C336.08 324.06 336.24 324.62 336.26 325.28L335.76 325.16C336.27 324.14 336.96 323.38 337.81 322.87C338.67 322.37 339.64 322.11 340.73 322.11L340.74 322.13Z" fill="black"/>
+                <path d="M353.66 332.81C352.76 332.81 351.97 332.64 351.28 332.29C350.59 331.94 350.06 331.44 349.69 330.78C349.31 330.12 349.13 329.34 349.13 328.44C349.13 327.54 349.27 326.69 349.56 325.92C349.85 325.15 350.26 324.49 350.8 323.93C351.34 323.37 351.97 322.93 352.69 322.61C353.42 322.3 354.21 322.14 355.07 322.14C356 322.14 356.78 322.3 357.43 322.63C358.08 322.96 358.57 323.44 358.91 324.06C359.25 324.68 359.42 325.44 359.42 326.33C359.43 327.58 359.2 328.69 358.72 329.67C358.24 330.65 357.57 331.42 356.71 331.98C355.84 332.54 354.83 332.82 353.66 332.82V332.81ZM353.86 331.9C354.81 331.9 355.66 331.67 356.4 331.22C357.14 330.76 357.72 330.13 358.15 329.32C358.58 328.51 358.79 327.59 358.79 326.57C358.79 325.44 358.46 324.57 357.81 323.96C357.16 323.35 356.24 323.04 355.06 323.04C354.12 323.04 353.28 323.27 352.53 323.73C351.79 324.19 351.2 324.83 350.77 325.63C350.34 326.44 350.13 327.35 350.13 328.37C350.13 329.48 350.46 330.35 351.11 330.97C351.76 331.59 352.68 331.9 353.86 331.9ZM357.69 332.73L358.33 329.45L358.91 327.62L359.05 325.69L359.73 322.22H360.74L358.65 332.74H357.68L357.69 332.73Z" fill="black"/>
+                <path d="M369.53 332.81C368.56 332.81 367.72 332.63 367.01 332.28C366.3 331.93 365.75 331.42 365.37 330.76C364.99 330.1 364.8 329.33 364.8 328.44C364.8 327.22 365.06 326.13 365.58 325.19C366.1 324.24 366.81 323.5 367.73 322.95C368.64 322.41 369.68 322.13 370.85 322.13C371.79 322.13 372.6 322.29 373.28 322.62C373.96 322.95 374.48 323.44 374.84 324.1L374.01 324.6C373.69 324.06 373.26 323.67 372.72 323.41C372.18 323.16 371.54 323.03 370.79 323.03C369.82 323.03 368.97 323.26 368.22 323.72C367.48 324.18 366.89 324.82 366.46 325.62C366.03 326.43 365.82 327.34 365.82 328.36C365.82 329.47 366.15 330.34 366.81 330.96C367.47 331.58 368.41 331.89 369.63 331.89C370.33 331.89 370.98 331.76 371.59 331.5C372.2 331.24 372.71 330.86 373.11 330.36L373.82 330.92C373.36 331.51 372.75 331.97 372 332.3C371.24 332.63 370.43 332.79 369.55 332.79L369.53 332.81Z" fill="black"/>
+                <path d="M385.07 322.13C386.02 322.13 386.8 322.31 387.4 322.68C388 323.05 388.41 323.57 388.63 324.25C388.85 324.93 388.87 325.72 388.68 326.64L387.47 332.72H386.46L387.67 326.64C387.9 325.53 387.77 324.65 387.3 324C386.82 323.36 385.99 323.03 384.81 323.03C383.63 323.03 382.61 323.36 381.81 324.03C381.01 324.7 380.47 325.69 380.2 327L379.05 332.72H378.04L381.02 317.77H382.03L380.54 325.24L380.26 324.98C380.76 323.99 381.42 323.26 382.25 322.8C383.08 322.34 384.02 322.12 385.07 322.12V322.13Z" fill="black"/>
+                <path d="M398.3 332.81C397.32 332.81 396.47 332.63 395.74 332.28C395.01 331.92 394.46 331.42 394.08 330.76C393.7 330.1 393.51 329.32 393.51 328.4C393.51 327.2 393.76 326.14 394.27 325.2C394.77 324.26 395.46 323.51 396.32 322.96C397.19 322.41 398.16 322.13 399.25 322.13C400.18 322.13 400.97 322.3 401.63 322.65C402.29 323 402.8 323.5 403.17 324.15C403.54 324.8 403.72 325.59 403.72 326.52C403.72 326.72 403.71 326.92 403.68 327.12C403.65 327.32 403.63 327.51 403.6 327.68H394.27L394.41 326.89H403.11L402.71 327.23C402.86 326.3 402.8 325.53 402.53 324.9C402.26 324.28 401.84 323.8 401.27 323.47C400.7 323.14 400.02 322.98 399.23 322.98C398.32 322.98 397.5 323.21 396.78 323.67C396.06 324.13 395.5 324.77 395.1 325.56C394.7 326.35 394.5 327.28 394.5 328.33C394.5 329.47 394.83 330.35 395.49 330.96C396.15 331.57 397.11 331.88 398.39 331.88C399.14 331.88 399.83 331.76 400.46 331.51C401.08 331.26 401.6 330.92 402 330.47L402.46 331.18C402 331.68 401.41 332.07 400.68 332.36C399.95 332.65 399.16 332.79 398.31 332.79L398.3 332.81Z" fill="black"/>
+                <path d="M414.82 322.13C415.77 322.13 416.55 322.31 417.15 322.68C417.75 323.05 418.16 323.57 418.38 324.25C418.6 324.93 418.62 325.72 418.43 326.64L417.22 332.72H416.21L417.42 326.64C417.65 325.53 417.52 324.65 417.05 324C416.57 323.36 415.74 323.03 414.56 323.03C413.38 323.03 412.36 323.36 411.56 324.03C410.76 324.7 410.22 325.69 409.95 327L408.8 332.72H407.79L409.89 322.2H410.88L410.27 325.24L410.01 324.98C410.51 323.99 411.17 323.26 412 322.8C412.83 322.34 413.77 322.12 414.82 322.12V322.13Z" fill="black"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_black">
+                  <rect width="418.56" height="332.83" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    <!-- ─── COMPONENTS ──────────────────────────────────────────────── -->
+    <section>
+      <h2>Components</h2>
+      <p class="lead">
+        Standardisierte UI-Components mit konsistentem Verhalten, 
+        44px Touch-Targets und klar definierten States.
+      </p>
+      
+      <div class="grid grid-2">
+        <!-- Buttons -->
+        <div class="component-card">
+          <span class="component-label">Buttons</span>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <button class="btn btn-primary">Primary CTA</button>
+            <button class="btn btn-secondary">Secondary Action</button>
+            <button class="btn btn-ghost">Ghost Button</button>
+          </div>
+        </div>
+        
+        <!-- Inputs -->
+        <div class="component-card">
+          <span class="component-label">Input Fields</span>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <input type="text" class="input" placeholder="Default Input" />
+            <input type="text" class="input" value="Filled Input" />
+            <input type="text" class="input" placeholder="Disabled Input" disabled />
+          </div>
+        </div>
+        
+        <!-- Badges -->
+        <div class="component-card">
+          <span class="component-label">Badges & Tags</span>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <span class="badge badge-accent">Accent Badge</span>
+            <span class="badge badge-teal">Teal Tag</span>
+            <span class="badge badge-success">Success</span>
+          </div>
+        </div>
+        
+        <!-- Cards -->
+        <div class="component-card">
+          <span class="component-label">Card Component</span>
+          <div style="background: var(--surface-3); border: 1px solid var(--surface-5); border-radius: var(--radius-sm); padding: var(--space-4);">
+            <h3 style="font-family: var(--font-mono); font-weight: 700; font-size: var(--text-sm); margin-bottom: var(--space-2);">Card Title</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+              Card content goes here with secondary text styling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ANIMATIONS ──────────────────────────────────────────────── -->
+    <section>
+      <h2>Animationen</h2>
+      <p class="lead">
+        Subtile, funktionale Animationen die Feedback geben ohne abzulenken.
+      </p>
+      
+      <div class="component-card">
+        <span class="component-label">Motion Examples</span>
+        <div class="animation-demo">
+          <div class="animation-item">
+            <div style="height: 60px; background: var(--surface-4); border-radius: var(--radius-xs); margin-bottom: var(--space-2); display: flex; align-items: center; justify-content: center;">
+              <div class="scanner-bar" style="width: 80%;"></div>
+            </div>
+            <span style="font-size: var(--text-xs); color: var(--text-secondary);">Scanner Sweep</span>
+          </div>
+          <div class="animation-item">
+            <div style="height: 60px; background: var(--surface-4); border-radius: var(--radius-xs); margin-bottom: var(--space-2); display: flex; align-items: center; justify-content: center; padding: var(--space-2);">
+              <div class="progress-bar" style="width: 100%;">
+                <div class="progress-fill" style="width: 50%;"></div>
+              </div>
+            </div>
+            <span style="font-size: var(--text-xs); color: var(--text-secondary);">Progress Bar</span>
+          </div>
+          <div class="animation-item">
+            <div style="height: 60px; background: var(--surface-4); border-radius: var(--radius-xs); margin-bottom: var(--space-2); display: flex; align-items: center; justify-content: center;">
+              <button class="btn btn-primary" style="transform: scale(0.95);">Click</button>
+            </div>
+            <span style="font-size: var(--text-xs); color: var(--text-secondary);">Button Press</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-block mt-6">
+        <strong>CSS Custom Properties für Animationen:</strong><br><br>
+        <code>--animation-scanner: scanner-sweep 2.5s ease-in-out infinite;</code><br>
+        <code>--animation-progress: progress-indeterminate 1.5s infinite linear;</code>
+      </div>
+    </section>
+
+    <!-- ─── SPACING ─────────────────────────────────────────────────── -->
+    <section>
+      <h2>Spacing</h2>
+      <p class="lead">
+        Ein konsistentes 4px-Grid-System für einheitliche Abstände.
+      </p>
+      
+      <div class="component-card">
+        <span class="component-label">Spacing Scale</span>
+        <div style="display: flex; gap: var(--space-4); align-items: flex-end; flex-wrap: wrap;">
+          <div style="text-align: center;">
+            <div style="width: var(--space-1); height: var(--space-1); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">4px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-2); height: var(--space-2); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">8px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-3); height: var(--space-3); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">12px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-4); height: var(--space-4); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">16px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-5); height: var(--space-5); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">24px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-6); height: var(--space-6); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">32px</span>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: var(--space-7); height: var(--space-7); background: var(--accent); border-radius: 1px;"></div>
+            <span style="font-size: 10px; color: var(--text-placeholder); margin-top: 4px; display: block;">48px</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-block mt-6">
+        <strong>CSS Variables:</strong><br><br>
+        <code>--space-1: 0.25rem;  /* 4px */</code><br>
+        <code>--space-2: 0.5rem;   /* 8px */</code><br>
+        <code>--space-3: 0.75rem;  /* 12px */</code><br>
+        <code>--space-4: 1rem;     /* 16px */</code><br>
+        <code>--space-5: 1.5rem;    /* 24px */</code><br>
+        <code>--space-6: 2rem;     /* 32px */</code><br>
+        <code>--space-7: 3rem;      /* 48px */</code>
+      </div>
+    </section>
+
+    <!-- ─── USAGE GUIDELINES ────────────────────────────────────────── -->
+    <section>
+      <h2>Verwendungsrichtlinien</h2>
+      <p class="lead">
+        Best Practices für die konsistente Anwendung des Design Systems.
+      </p>
+      
+      <div class="grid grid-2">
+        <div class="component-card">
+          <span class="component-label">Do's</span>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-3);">
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--success-text);">✓</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Verwende Surface-Stufen in aufsteigender Reihenfolge für Hierarchie</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--success-text);">✓</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Setze Accent-Farbe sparsam für CTAs und aktive States ein</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--success-text);">✓</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Halte Touch-Targets bei mindestens 44px</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--success-text);">✓</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Nutze Mono-Font für Labels, Tags und technische Info</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="component-card">
+          <span class="component-label">Don'ts</span>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-3);">
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--accent);">✕</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Verwende Surface 0 für Cards (zu wenig Kontrast)</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--accent);">✕</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Nutze Teal als Textfarbe auf Dark Backgrounds</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--accent);">✕</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Überschreibe Border-Radius (nur xs, sm, lg erlaubt)</span>
+            </li>
+            <li style="display: flex; gap: var(--space-2); align-items: flex-start;">
+              <span style="color: var(--accent);">✕</span>
+              <span style="font-size: var(--text-sm); color: var(--text-secondary);">Mische Font-Sizes außerhalb der definierten Skala</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+  <footer>
+    <p>GENIE Design System — Built with ♥ for CRM Excellence</p>
+  </footer>
+
+</body>
+</html>

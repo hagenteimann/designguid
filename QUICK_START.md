@@ -1,252 +1,94 @@
-# 🚀 Quick Start für Agenten
+# Quick Start für Agenten
 
-**Lesen Sie diese Datei zuerst (5 Min).**
+**Schritt 1: Track wählen**
 
----
+| Was soll gebaut werden? | Track | Startpunkt |
+|---|---|---|
+| Interaktives Design System / CD-Manual HTML | `designsystem` | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
+| Website / Landing Page / Rebuild | `website` | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 
-## Was ist das?
+**Schritt 2: Nur die nötigen Guides laden** → `guides-index.json` nutzen, nie alle Guides auf einmal.
 
-Push8 Website-Guide mit **6 Core Workflows** für KI-Agenten. Jeder Workflow hat:
-- ✅ **Quick Checklist** (1 Seite, praktisch)
-- 📖 **Detaildoku** (GUIDES/ Ordner, wenn Fragen)
-
-> **Für komplette Website-Builds:** Ralph Loop verwenden – autonomer Zwei-Agenten-Prozess mit Plan, Validator und MEMORY.md-Konsolidierung. Spart 80–90% Kontext-Tokens gegenüber einem kontinuierlichen Loop. → [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md)
-
----
-
-## Die 6 Core Workflows
-
-### 1️⃣ **Navigation & Sections hinzufügen**
-
-**Was:** User sagt "Neue Section: Testimonials"
-
-**Schnell:**
-```
-1. Frage: ID? (section-testimonials)
-2. Frage: Label? (Testimonials)
-3. Frage: Position? (z.B. 4)
-4. Baue Section mit <section id="section-xyz" data-nav-label="...">
-5. Navigation regenerieren automatisch
-6. Mobile Hamburger testen
-7. CD-Manual updaten?
-```
-
-**Siehe:**
-- 📋 [Checklist](CHECKLISTS/navigation.checklist.md)
-- 📖 [Detaildoku](GUIDES/WORKFLOW_NAVIGATION.md)
+**Schritt 3: Token-Mini immer griffbereit** → `GUIDES/KERN/design-tokens-mini.md` (wird auto-geladen)
 
 ---
 
-### 2️⃣ **Bilder & Videos komprimieren**
+## Track A: Design System HTML
 
-**Was:** User uploaded 25MB Video oder 5MB Bild
+Ziel: Eine offline-fähige, interaktive HTML-Datei die per Doppelklick lokal läuft.
 
-**Schnell:**
 ```
-1. Prüfe Größe:
-   - Bilder: max 200KB (Desktop), 100KB (Mobile)
-   - Videos: max 2MB (Desktop), 1MB (Mobile)
-2. Zu groß? → Komprimieren:
-   - Bilder: WebP mit Sharp/ImageMagick
-   - Videos: MP4 H.264 mit FFmpeg
-3. Responsive Versionen generieren
-4. Ins HTML mit <picture> oder <video>
-5. CD-Manual updaten?
+1. GUIDES/KERN/DESIGNSYSTEM_STANDARD.md lesen  ← Aufbau + alle Regeln
+2. Kundendaten klären: Farben, Fonts, Logo
+3. Projekt/[Kunde]_designsystem.html anlegen
+4. Sektionen 01–09 aufbauen (Reihenfolge fix)
+5. Fonts als base64 einbetten (kein CDN!)
+6. Alle Motion-Demos lokal testen (Doppelklick)
 ```
 
-**Siehe:**
-- 📋 [Checklist](CHECKLISTS/assets.checklist.md)
-- 📖 [Detaildoku](GUIDES/WORKFLOW_ASSETS.md)
+Guides für diesen Track:
+- `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` – Aufbau, Regeln, Checkliste
+- `GUIDES/KERN/DESIGN_SYSTEM.md` – Tokens, Details, Komponenten
+- `GUIDES/KERN/design-tokens-mini.md` – Schnellreferenz
+- `GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md` – Design-Entscheidungen dokumentieren
 
 ---
 
-### 3️⃣ **Design-Entscheidungen dokumentieren**
+## Track B: Website / Rebuild
 
-**Was:** User trifft Design-Entscheidung ("Primary Color = #FF6B35")
+Ziel: Fertige Push8-Website deployed auf Webspace.
 
-**Schnell:**
 ```
-1. Ist das im CD-Manual bereits dokumentiert?
-2. Nein? → Frage: "Soll ich das neu dokumentieren?"
-3. User bestätigt
-4. CD-Manual aktualisieren (interaktive HTML)
-5. Zeitstempel + Kontext hinzufügen
-6. User benachrichtigen: ✅ CD-Manual aktualisiert
+1. GUIDES/KERN/PROJEKT_BRIEF.md ausfüllen  ← Pflicht vor erstem Code
+2. guides-index.json → project-type wählen → relevante Guides laden
+3. Token-Mapping: Primärfarbe, Fonts, Radius eintragen
+4. Sektionen-Reihenfolge vorlegen + bestätigen
+5. HTML/CSS schreiben (nur markierte Guides aktiv)
+6. ./check.sh vor Deploy
 ```
 
-**Siehe:**
-- 📋 [Checklist](CHECKLISTS/cd-manual.checklist.md)
-- 📖 [Detaildoku](GUIDES/WORKFLOW_CD_MANUAL.md)
+Guides für diesen Track:
+- `GUIDES/KERN/PROJEKT_BRIEF.md` – Phase 0 Analyse
+- `GUIDES/WEBSITE/FUNNEL_STRATEGIE.md` – Seitenstruktur + CTAs
+- `GUIDES/WEBSITE/RECHTLICHES.md` – Impressum, Datenschutz, AGB
+- `GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md` – Navigation + Sections
+- `GUIDES/WEBSITE/WORKFLOW_ASSETS.md` – Bilder, Videos
+- `GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md` – Deploy + Git
+- `GUIDES/WEBSITE/SEO.md`, `SECURITY.md`, `QA_TESTING.md` – bei Bedarf
 
 ---
 
-### 4️⃣ **Zu Webspace deployen + Git pushen**
-
-**Was:** User sagt "Deploy zu example.com"
-
-**Schnell:**
-```
-1. Prüfe Deployment-Credentials vorhanden?
-2. Upload public/ zu Hosting (rsync/FTP)
-3. Prüfe: .env, *.md NICHT dabei?
-4. Wenn Git Repository vorhanden:
-   - git add public/ css/ js/ (explizit, nie git add -A)
-   - git commit "Deploy: Version 1.2.0 – Features X"
-   - git push origin main
-   - git tag -a v1.2.0
-   - CHANGELOG.md updaten
-5. User benachrichtigen mit Links
-```
-
-**Siehe:**
-- 📋 [Checklist](CHECKLISTS/deploy.checklist.md)
-- 📖 [Detaildoku](GUIDES/WORKFLOW_DEPLOYMENT.md)
-
----
-
-### 6️⃣ **Website neu bauen (Rebuild)**
-
-**Was:** User gibt alte Website + Zielgruppe → neue Website soll entstehen
-
-**Schnell – IMMER in dieser Reihenfolge:**
-```
-1. PROJEKT_BRIEF.md öffnen und Phase 0 ausfüllen
-   → Alte Website analysieren (Schwächen, was behalten)
-   → Zielgruppe dokumentieren (Persona, Entscheidungstreiber)
-   → Design-Entscheidungen ableiten (Farbe, CTA, Sektionen)
-   → Nur relevante Guides markieren (nicht alle laden!)
-
-2. Token-Mapping: Analyseergebnisse → CSS Custom Properties
-   → Primärfarbe begründet eintragen
-   → Spacing/Radius aus Design System übernehmen
-
-3. Sektionen-Reihenfolge vorlegen + bestätigen lassen
-   → Kein Code vor Freigabe
-
-4. Erst jetzt: HTML/CSS schreiben
-   → Nur die in Phase 0 markierten Guides aktiv lesen
-```
-
-> ⚠️ **Ohne ausgefüllten Projekt-Brief kein Code.** Generische Guide-Regeln gelten erst nach der projektspezifischen Analyse.
-
-**Siehe:**
-- 📖 [PROJEKT_BRIEF.md](GUIDES/PROJEKT_BRIEF.md)
-- 📖 [RALPH_LOOP.md](GUIDES/RALPH_LOOP.md) – für autonomen Build mit Validator-Agent
-
----
-
-### 5️⃣ **Neue Developer onboarden**
-
-**Was:** Neuer Developer kommt ins Projekt
-
-**Schnell:**
-```
-1. README.md → Orientierung
-2. QUICK_START.md → Was sind die 5 Workflows?
-3. GUIDES/ → Detailliertes Wissen
-4. cd-manual/index.html → Design kennenlernen
-5. git log → Historien verstehen
-```
-
-**Siehe:**
-- 📋 [Checklist](CHECKLISTS/vibe-coder.checklist.md)
-
----
-
-## 📁 Ordnerstruktur verstehen
+## Wiedereinstieg in ein laufendes Projekt
 
 ```
-Push8 Website Guide/
-├── README.md                  ← Projekt-Info
-├── QUICK_START.md             ← Sie sind hier!
-├── GUIDES/
-│   ├── DESIGN_SYSTEM.md       (Tokens, Colors, Layouts)
-│   ├── WORKFLOW_DEPLOYMENT.md (Deploy + Git)
-│   ├── WORKFLOW_NAVIGATION.md (Sections + Navigation)
-│   ├── WORKFLOW_ASSETS.md     (Bilder/Videos)
-│   ├── WORKFLOW_CD_MANUAL.md  (Design-Entscheidungen)
-│   ├── SEO.md, SECURITY.md, FUNNEL_STRATEGIE.md, etc.
-├── CHECKLISTS/
-│   ├── deploy.checklist.md
-│   ├── navigation.checklist.md
-│   ├── assets.checklist.md
-│   ├── cd-manual.checklist.md
-│   └── vibe-coder.checklist.md
-├── cd-manual/                 (Design Manual - interaktive HTML)
-└── docs/                      (Alle Guides waren hier, jetzt in GUIDES/)
+1. MEMORY.md lesen (falls vorhanden)  ← komprimierter Kontext
+2. PLAN.md prüfen (falls vorhanden)   ← offene Steps
+3. Nur die in MEMORY.md genannten Guides laden
 ```
 
 ---
 
-## 🎯 Typisches Szenario
+## Automation
 
-**User:** "Neue Section 'Testimonials' + optimize Hero-Video + Deploy"
-
-**Agent:**
-```
-1. Navigation Workflow
-   → Liest CHECKLISTS/navigation.checklist.md
-   → Erstellt Section mit ID + Data-Attributes
-
-2. Assets Workflow
-   → Liest CHECKLISTS/assets.checklist.md
-   → Komprimiert Video mit FFmpeg zu 1.8MB
-
-3. Deployment Workflow
-   → Liest CHECKLISTS/deploy.checklist.md
-   → Upload public/ zu Hosting
-   → git add, commit, push, tag
-
-Fertig! ✅
+```bash
+./check.sh   # Pre-deploy: DSGVO, Assets, A11y, Rechtliches
+./ralph.sh   # Ralph Loop (autonomer Build mit Validator-Agent)
 ```
 
 ---
 
-## 🔗 Quick Links
+## Ordner auf einen Blick
 
-### Core Workflows
-| Workflow | Checklist | Details |
-|----------|-----------|---------|
-| Navigation | [Link](CHECKLISTS/navigation.checklist.md) | [Link](GUIDES/WORKFLOW_NAVIGATION.md) |
-| Assets | [Link](CHECKLISTS/assets.checklist.md) | [Link](GUIDES/WORKFLOW_ASSETS.md) |
-| CD-Manual | [Link](CHECKLISTS/cd-manual.checklist.md) | [Link](GUIDES/WORKFLOW_CD_MANUAL.md) |
-| Deployment | [Link](CHECKLISTS/deploy.checklist.md) | [Link](GUIDES/WORKFLOW_DEPLOYMENT.md) |
-| Onboarding | [Link](CHECKLISTS/vibe-coder.checklist.md) | — |
-| Website Rebuild | — | [Link](GUIDES/PROJEKT_BRIEF.md) |
-| Ralph Loop | — | [Link](GUIDES/RALPH_LOOP.md) |
-
-### Alle Guides
-| Topic | Link |
-|-------|------|
-| Design System | [Link](GUIDES/DESIGN_SYSTEM.md) |
-| Rechtliches (Impressum, Datenschutz, AGB) | [Link](GUIDES/RECHTLICHES.md) |
-| QA Testing & Performance | [Link](GUIDES/QA_TESTING.md) |
-| Development Setup | [Link](GUIDES/DEVELOPMENT_SETUP.md) |
-| Content Guidelines | [Link](GUIDES/CONTENT_GUIDELINES.md) |
-| Browser Support | [Link](GUIDES/BROWSER_SUPPORT.md) |
-| Error Handling | [Link](GUIDES/ERROR_HANDLING.md) |
-| API Integration | [Link](GUIDES/API_INTEGRATION.md) |
-| Analytics & Tracking | [Link](GUIDES/ANALYTICS.md) |
-| Monitoring & Uptime | [Link](GUIDES/MONITORING.md) |
-| Accessibility Testing | [Link](GUIDES/ACCESSIBILITY_TESTING.md) |
-| Build Process | [Link](GUIDES/BUILD_PROCESS.md) |
-| SEO | [Link](GUIDES/SEO.md) |
-| Security | [Link](GUIDES/SECURITY.md) |
-| Funnel Strategie | [Link](GUIDES/FUNNEL_STRATEGIE.md) |
-| Kontaktformular | [Link](GUIDES/KONTAKTFORMULAR.md) |
+| Ordner | Inhalt | Wann laden |
+|---|---|---|
+| `GUIDES/KERN/` | Tokens, Design System, Regeln | Immer |
+| `GUIDES/WEBSITE/` | Funnel, SEO, Deploy, Legal... | Bei Website-Projekten |
+| `GUIDES/EXTENDED/` | Analytics, API, Browser... | Nur bei Bedarf |
+| `CHECKLISTS/` | 1-Seiter für schnelle Checks | Als Gedächtnisstütze |
+| `TEMPLATES/` | Plan-Vorlagen | Bei neuem Projekt-Plan |
+| `Beispiele/` | Fertige Design System HTML | Nur lesen – nie bearbeiten |
+| `Projekt/` | Neue Projektdateien | Hier wird gearbeitet |
 
 ---
 
-## ⚡ TL;DR – Die wichtigsten Regeln
-
-1. **Sections = IDs** → Automatisch in Navigation
-2. **Assets komprimieren** → Bilder <200KB, Videos <2MB
-3. **Design dokumentieren** → Ins CD-Manual, wenn neu
-4. **Deploy = Webspace + Git** → Immer beide, wenn Git vorhanden
-5. **Ordnerstruktur respektieren** → `public/` deployed, alles andere nicht
-
----
-
-**Bereit zu starten? → Wählen Sie einen Workflow oben! 🚀**
-
-*Push8 Website Guide – Stand Mai 2026*
+*Push8 Web Agency – Stand Juni 2026*

@@ -1,67 +1,104 @@
 {
-  "version": "1.1",
-  "always-load": ["GUIDES/design-tokens-mini.md"],
+  "version": "2.0",
+  "description": "Push8 Guide Router – immer zuerst lesen um den richtigen Guide zu finden",
+
+  "tracks": {
+    "designsystem": {
+      "description": "Interaktives CD-Manual / Design System HTML bauen",
+      "start": "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+      "guides": [
+        "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+        "GUIDES/KERN/DESIGN_SYSTEM.md",
+        "GUIDES/KERN/design-tokens-mini.md",
+        "GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md"
+      ]
+    },
+    "website": {
+      "description": "Push8 Website / Landing Page / Rebuild",
+      "start": "GUIDES/KERN/PROJEKT_BRIEF.md",
+      "guides": [
+        "GUIDES/KERN/PROJEKT_BRIEF.md",
+        "GUIDES/KERN/DESIGN_SYSTEM.md",
+        "GUIDES/KERN/design-tokens-mini.md",
+        "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
+        "GUIDES/WEBSITE/RECHTLICHES.md"
+      ]
+    }
+  },
+
+  "always-load": ["GUIDES/KERN/design-tokens-mini.md"],
   "never-load-all": true,
 
   "project-types": {
     "local-service": {
       "description": "Handwerker, Dienstleister, lokale Geschäfte",
-      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/RECHTLICHES.md", "GUIDES/KONTAKTFORMULAR.md", "GUIDES/SEO.md"]
+      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/RECHTLICHES.md", "GUIDES/WEBSITE/KONTAKTFORMULAR.md", "GUIDES/WEBSITE/SEO.md"]
     },
     "portfolio": {
       "description": "Freelancer, Kreative, Agenturen",
-      "guides": ["GUIDES/WORKFLOW_ASSETS.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/FUNNEL_STRATEGIE.md"]
+      "guides": ["GUIDES/WEBSITE/WORKFLOW_ASSETS.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md"]
     },
     "ecommerce": {
       "description": "Online-Shops, Produkt-Websites",
-      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/SEO.md", "GUIDES/SECURITY.md", "GUIDES/RECHTLICHES.md"]
+      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/SEO.md", "GUIDES/WEBSITE/SECURITY.md", "GUIDES/WEBSITE/RECHTLICHES.md"]
     },
     "saas": {
       "description": "Software-Produkte, Apps, Tools",
-      "guides": ["GUIDES/FUNNEL_STRATEGIE.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/SEO.md", "GUIDES/SECURITY.md"]
+      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/SEO.md", "GUIDES/WEBSITE/SECURITY.md"]
     },
     "corporate": {
       "description": "Unternehmen, B2B, Konzerne",
-      "guides": ["GUIDES/RECHTLICHES.md", "GUIDES/SECURITY.md", "GUIDES/CONTENT_GUIDELINES.md", "GUIDES/SEO.md"]
+      "guides": ["GUIDES/WEBSITE/RECHTLICHES.md", "GUIDES/WEBSITE/SECURITY.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/SEO.md"]
     }
   },
 
   "tasks": {
-    "rebuild":          "GUIDES/PROJEKT_BRIEF.md",
-    "ralph-loop":       "GUIDES/RALPH_LOOP.md",
-    "design-tokens":    "GUIDES/DESIGN_SYSTEM.md",
-    "colors":           "GUIDES/DESIGN_SYSTEM.md",
-    "layout":           "GUIDES/DESIGN_SYSTEM.md",
-    "icons":            "GUIDES/DESIGN_SYSTEM.md",
-    "fonts":            "GUIDES/DESIGN_SYSTEM.md",
-    "navigation":       "GUIDES/WORKFLOW_NAVIGATION.md",
-    "hamburger":        "GUIDES/WORKFLOW_NAVIGATION.md",
-    "sections":         "GUIDES/WORKFLOW_NAVIGATION.md",
-    "images":           "GUIDES/WORKFLOW_ASSETS.md",
-    "videos":           "GUIDES/WORKFLOW_ASSETS.md",
-    "assets":           "GUIDES/WORKFLOW_ASSETS.md",
-    "deploy":           "GUIDES/WORKFLOW_DEPLOYMENT.md",
-    "git":              "GUIDES/WORKFLOW_DEPLOYMENT.md",
-    "legal":            "GUIDES/RECHTLICHES.md",
-    "impressum":        "GUIDES/RECHTLICHES.md",
-    "datenschutz":      "GUIDES/RECHTLICHES.md",
-    "agb":              "GUIDES/RECHTLICHES.md",
-    "cookies":          "GUIDES/RECHTLICHES.md",
-    "contact-form":     "GUIDES/KONTAKTFORMULAR.md",
-    "genie-crm":        "GUIDES/KONTAKTFORMULAR.md",
-    "funnel":           "GUIDES/FUNNEL_STRATEGIE.md",
-    "cta":              "GUIDES/FUNNEL_STRATEGIE.md",
-    "conversion":       "GUIDES/FUNNEL_STRATEGIE.md",
-    "seo":              "GUIDES/SEO.md",
-    "security":         "GUIDES/SECURITY.md",
-    "csp":              "GUIDES/SECURITY.md",
-    "qa":               "GUIDES/QA_TESTING.md",
-    "lighthouse":       "GUIDES/QA_TESTING.md",
-    "accessibility":    "GUIDES/ACCESSIBILITY_TESTING.md",
-    "content":          "GUIDES/CONTENT_GUIDELINES.md",
-    "copy":             "GUIDES/CONTENT_GUIDELINES.md",
-    "tone":             "GUIDES/CONTENT_GUIDELINES.md",
-    "cd-manual":        "GUIDES/WORKFLOW_CD_MANUAL.md",
-    "design-decisions": "GUIDES/WORKFLOW_CD_MANUAL.md"
+    "designsystem-html":   "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+    "cd-manual":           "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+    "design-decisions":    "GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md",
+    "rebuild":             "GUIDES/KERN/PROJEKT_BRIEF.md",
+    "ralph-loop":          "GUIDES/WEBSITE/RALPH_LOOP.md",
+    "design-tokens":       "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "colors":              "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "layout":              "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "icons":               "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "fonts":               "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "spacing":             "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "typography":          "GUIDES/KERN/DESIGN_SYSTEM.md",
+    "motion":              "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+    "animation":           "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+    "navigation":          "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
+    "hamburger":           "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
+    "sections":            "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
+    "images":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
+    "videos":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
+    "assets":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
+    "deploy":              "GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md",
+    "git":                 "GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md",
+    "legal":               "GUIDES/WEBSITE/RECHTLICHES.md",
+    "impressum":           "GUIDES/WEBSITE/RECHTLICHES.md",
+    "datenschutz":         "GUIDES/WEBSITE/RECHTLICHES.md",
+    "agb":                 "GUIDES/WEBSITE/RECHTLICHES.md",
+    "cookies":             "GUIDES/WEBSITE/RECHTLICHES.md",
+    "contact-form":        "GUIDES/WEBSITE/KONTAKTFORMULAR.md",
+    "genie-crm":           "GUIDES/WEBSITE/KONTAKTFORMULAR.md",
+    "funnel":              "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
+    "cta":                 "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
+    "conversion":          "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
+    "seo":                 "GUIDES/WEBSITE/SEO.md",
+    "security":            "GUIDES/WEBSITE/SECURITY.md",
+    "csp":                 "GUIDES/WEBSITE/SECURITY.md",
+    "qa":                  "GUIDES/WEBSITE/QA_TESTING.md",
+    "content":             "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
+    "copy":                "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
+    "tone":                "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
+    "analytics":           "GUIDES/EXTENDED/ANALYTICS.md",
+    "monitoring":          "GUIDES/EXTENDED/MONITORING.md",
+    "api":                 "GUIDES/EXTENDED/API_INTEGRATION.md",
+    "errors":              "GUIDES/EXTENDED/ERROR_HANDLING.md",
+    "build":               "GUIDES/EXTENDED/BUILD_PROCESS.md",
+    "setup":               "GUIDES/EXTENDED/DEVELOPMENT_SETUP.md",
+    "browser":             "GUIDES/EXTENDED/BROWSER_SUPPORT.md",
+    "accessibility":       "GUIDES/EXTENDED/ACCESSIBILITY_TESTING.md"
   }
 }
