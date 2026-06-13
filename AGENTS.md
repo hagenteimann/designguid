@@ -11,6 +11,7 @@
 - **`Beispiele/`** → Read only. Template and reference source. Never edit or overwrite.
 
 > If the user references a file from `Beispiele/` as a template → read it, create the new file in `Projekt/`.
+> Building a new design system? → Use `Beispiele/Arche_designsystem.html` as structural reference first, then the other `Beispiele/` for inspiration.
 
 ---
 

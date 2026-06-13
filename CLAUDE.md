@@ -11,6 +11,7 @@ Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Web
 - **`Beispiele/`** → Nur lesen. Vorlagen und Referenz. Niemals bearbeiten.
 
 > Datei aus `Beispiele/` als Vorlage → lesen, neue Datei in `Projekt/` anlegen.
+> Neues Design System bauen? → `Beispiele/Arche_designsystem.html` als Struktur-Referenz, dann weitere `Beispiele/` für Inspiration.
 
 ## 5 harte Regeln
 
