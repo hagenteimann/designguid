@@ -39,6 +39,7 @@ Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Web
 | QA vor Deploy | `GUIDES/QA_TESTING.md` |
 | Texte / Copy / Tone of Voice | `GUIDES/CONTENT_GUIDELINES.md` |
 | Design-Entscheidungen dokumentieren | `GUIDES/WORKFLOW_CD_MANUAL.md` |
+| CD-Manual HTML aufbauen (Standard) | `GUIDES/DESIGNSYSTEM_STANDARD.md` |
 
 ## Automatisierung
 

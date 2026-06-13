@@ -41,6 +41,7 @@
 | QA before deploy | `GUIDES/QA_TESTING.md` |
 | Copy / Tone of Voice | `GUIDES/CONTENT_GUIDELINES.md` |
 | Document design decisions | `GUIDES/WORKFLOW_CD_MANUAL.md` |
+| Build CD-Manual HTML (standard) | `GUIDES/DESIGNSYSTEM_STANDARD.md` |
 
 ---
 
