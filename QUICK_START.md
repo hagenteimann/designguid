@@ -20,7 +20,7 @@ Ziel: Eine offline-fähige, interaktive HTML-Datei die per Doppelklick lokal lä
 ```
 1. GUIDES/KERN/DESIGNSYSTEM_STANDARD.md lesen  ← Aufbau + alle Regeln
 2. Kundendaten klären: Farben, Fonts, Logo
-3. Projekt/[Kunde]_designsystem.html anlegen
+3. Projekt/[Kunde]_designsystem.html anlegen (Struktur: Beispiele/Arche_designsystem.html)
 4. Sektionen 01–09 aufbauen (Reihenfolge fix)
 5. Fonts als base64 einbetten (kein CDN!)
 6. Alle Motion-Demos lokal testen (Doppelklick)

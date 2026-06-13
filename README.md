@@ -20,6 +20,7 @@ designguid/
 ├── TEMPLATES/         ← Plan-Vorlagen (Landing Page, Portfolio...)
 ├── SKILLS/            ← Skill-Dokumentation
 ├── Beispiele/         ← Fertige Design System HTML (READ ONLY)
+│                            Arche_designsystem.html = Blueprint / Referenz
 ├── Projekt/           ← Arbeitsordner für neue Projekte
 │
 ├── guides-index.json  ← Aufgabe → Datei Router

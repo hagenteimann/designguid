@@ -2,6 +2,8 @@
 
 > Dieser Guide definiert den verbindlichen Standard für alle Push8 CD-Manual HTML-Dateien.
 > Arche ist der Referenz-Blueprint. Alle zukünftigen Kunden-Design-Systeme folgen dieser Struktur.
+>
+> **Referenz-Implementierung (immer zuerst öffnen):** `Beispiele/Arche_designsystem.html`
 
 ---
 
