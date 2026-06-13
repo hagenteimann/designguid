@@ -5,6 +5,13 @@
 
 ---
 
+## Working Directory – CRITICAL
+
+- **`Projekt/`** → This is where all work happens. Create all new files, pages, and components here exclusively.
+- **`Beispiele/`** → Read only. Reference and template source. Never edit or overwrite.
+
+> If the user references a file from `Beispiele/` as a template → read it, then create the new file in `Projekt/`.
+
 ## 5 Hard Rules
 
 1. **No code without brief.** For every rebuild, fill out `GUIDES/PROJEKT_BRIEF.md` first.
