@@ -21,7 +21,8 @@
       "Bash(npx:*)",
       "Read(//tmp/kz-motion/skills/**)",
       "Bash(cp -r /tmp/kz-motion/skills/design-motion-principles ~/.agents/skills/)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(cd:*)"
     ]
   }
 }
