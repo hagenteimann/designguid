@@ -900,18 +900,19 @@
     .skeleton-line {
       height: 12px;
       border-radius: 4px;
-      background: var(--color-neutral-200);
+      background: linear-gradient(
+        90deg,
+        var(--color-neutral-200) 25%,
+        var(--color-neutral-100) 50%,
+        var(--color-neutral-200) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
     }
-    @media (prefers-reduced-motion: no-preference) {
+    @media (prefers-reduced-motion: reduce) {
       .skeleton-line {
-        background: linear-gradient(
-          90deg,
-          var(--color-neutral-200) 25%,
-          var(--color-neutral-100) 50%,
-          var(--color-neutral-200) 75%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
+        background: var(--color-neutral-200);
+        animation: none;
       }
     }
 
