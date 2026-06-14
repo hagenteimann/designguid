@@ -116,6 +116,143 @@ Alle auf Google Fonts verfuegbar → via google-webfonts-helper self-hosten.
 }
 ```
 
+### Scroll-Reveal – Standard-Pattern (Pflicht für alle Website-Projekte)
+
+Jedes Content-Element (Cards, Text-Blöcke, Bilder, Abschnitte) bekommt beim Eintreten in den Viewport einen smooth Einflug-Effekt. Das ist **Push8-Standard** – kein statisches Erscheinen ohne Animation.
+
+#### CSS
+
+```css
+/* Basis-State: unsichtbar + leicht nach unten versetzt */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Sichtbar-State: wird per JS gesetzt */
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger für Cards in einem Grid: jede Card etwas später */
+[data-reveal]:nth-child(1) { transition-delay: 0ms; }
+[data-reveal]:nth-child(2) { transition-delay: 80ms; }
+[data-reveal]:nth-child(3) { transition-delay: 160ms; }
+[data-reveal]:nth-child(4) { transition-delay: 240ms; }
+[data-reveal]:nth-child(5) { transition-delay: 320ms; }
+[data-reveal]:nth-child(6) { transition-delay: 400ms; }
+
+/* prefers-reduced-motion: Animation komplett deaktivieren */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+```
+
+#### JavaScript (IntersectionObserver – kein scroll-Event)
+
+```js
+// Scroll-Reveal via IntersectionObserver
+// Alle Elemente mit data-reveal Attribut werden beobachtet
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Einmal animiert → nicht mehr beobachten
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.12,       // 12% des Elements muss sichtbar sein
+    rootMargin: '0px 0px -40px 0px', // Etwas früher triggern
+  }
+);
+
+document.querySelectorAll('[data-reveal]').forEach((el) => {
+  revealObserver.observe(el);
+});
+```
+
+#### HTML-Verwendung
+
+```html
+<!-- Einzelnes Element -->
+<h2 data-reveal>Unsere Leistungen</h2>
+<p data-reveal>Beschreibungstext der smooth einfliest.</p>
+
+<!-- Cards mit Stagger – alle im selben Container -->
+<div class="card-grid">
+  <article class="card" data-reveal>...</article>
+  <article class="card" data-reveal>...</article>
+  <article class="card" data-reveal>...</article>
+</div>
+
+<!-- Sektionen als Ganzes -->
+<section data-reveal>
+  <!-- gesamter Inhalt fliest als Block ein -->
+</section>
+```
+
+#### Varianten
+
+```css
+/* Von links einfliegen (z.B. für Sidebar-Elemente) */
+[data-reveal="left"] {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition:
+    opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Von rechts einfliegen */
+[data-reveal="right"] {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Skalierung (für Hero-Elemente, Bilder) */
+[data-reveal="scale"] {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity  0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Alle Varianten: gleicher sichtbarer Zielstate */
+[data-reveal="left"].is-visible,
+[data-reveal="right"].is-visible,
+[data-reveal="scale"].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="left"],
+  [data-reveal="right"],
+  [data-reveal="scale"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+```
+
+---
+
 ### Clip-Path Reveal
 
 ```css
@@ -222,4 +359,4 @@ Basis-Farbwinkel + 30° Abstand = immer harmonisch.
 
 ---
 
-*Push8 Awesome Design Guide – Stand Mai 2026*
+*Push8 Awesome Design Guide – Stand Juni 2026*

@@ -1,5 +1,9 @@
 # Push8 – Skills & Plugins Referenz
 
+> **Hinweis:** Die Dateien `IMPECCABLE.md`, `MOTION.md` und `TASTE.md` in diesem Ordner sind manuelle Zusammenfassungen und können veraltet sein.
+> **Source of Truth sind die global installierten Skills** unter `~/.claude/skills/` (bzw. `~/.agents/skills/`).
+> Bei Widersprüchen gelten die installierten Skills.
+
 Dieser Ordner dokumentiert alle Skills und Plugins, die Push8-Agenten installieren und verwenden sollen.
 
 ---

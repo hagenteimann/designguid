@@ -1,5 +1,8 @@
 # Push8 Design System – Agent Instructions
 
+> **Sync-Hinweis:** Diese Datei (CLAUDE.md) und AGENTS.md sind inhaltlich identisch – eine für Claude, eine für andere Agenten.
+> Bei Änderungen **immer beide Dateien aktualisieren**.
+
 Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Website-Projekte und interaktive Design-System-HTML-Dateien.
 
 > Token-Referenz (immer geladen): @GUIDES/KERN/design-tokens-mini.md
@@ -42,6 +45,9 @@ Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Web
 | Website neu bauen / Rebuild | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 | Verbindliche Regeln | `GUIDES/KERN/RULES.md` |
 | HTML/CSS Coding Conventions | `GUIDES/KERN/STYLE.md` |
+| Push8 Markenidentität / Voice & Tone | `GUIDES/KERN/IDENTITY.md` |
+| Agenten-Kontext, Stack, Kundenprojekte | `GUIDES/KERN/CONTEXT.md` |
+| Motion, Scroll-Reveal, Font-Kombinationen | `GUIDES/WEBSITE/AWESOME_DESIGN.md` |
 
 ### WEBSITE (bei Website-Projekten)
 

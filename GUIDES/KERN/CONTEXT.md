@@ -61,13 +61,13 @@ Dieses Repository ist der **zentrale Wissens-Hub** für alle Push8-Webprojekte. 
 
 | Datei | Inhalt |
 |---|---|
-| `GUIDES/DESIGN_SYSTEM.md` | Layout, Tokens, Farben, Components |
-| `GUIDES/IDENTITY.md` | Push8-Markenidentität |
-| `GUIDES/STYLE.md` | Code-Stil-Konventionen |
-| `GUIDES/RULES.md` | Verbindliche Agenten-Regeln |
-| `GUIDES/AWESOME_DESIGN.md` | Design-Referenzen und Inspirationen |
-| `GUIDES/PROJEKT_BRIEF.md` | Template fuer Projektbriefing |
-| `GUIDES/RALPH_LOOP.md` | Autonomer Zwei-Agenten-Build-Prozess |
+| `GUIDES/KERN/DESIGN_SYSTEM.md` | Layout, Tokens, Farben, Components |
+| `GUIDES/KERN/IDENTITY.md` | Push8-Markenidentität |
+| `GUIDES/KERN/STYLE.md` | Code-Stil-Konventionen |
+| `GUIDES/KERN/RULES.md` | Verbindliche Agenten-Regeln |
+| `GUIDES/WEBSITE/AWESOME_DESIGN.md` | Design-Referenzen und Inspirationen |
+| `GUIDES/KERN/PROJEKT_BRIEF.md` | Template fuer Projektbriefing |
+| `GUIDES/WEBSITE/RALPH_LOOP.md` | Autonomer Zwei-Agenten-Build-Prozess |
 | `CHECKLISTS/` | Schnell-Referenzen pro Workflow |
 | `Beispiele/` | Fertige Design-System-Beispiele (HTML) |
 
@@ -97,4 +97,4 @@ Bilder:         WebP, <200KB Desktop
 
 ---
 
-*Push8 Agent Context – Stand Mai 2026*
+*Push8 Agent Context – Stand Juni 2026*

@@ -22,7 +22,9 @@
       "Read(//tmp/kz-motion/skills/**)",
       "Bash(cp -r /tmp/kz-motion/skills/design-motion-principles ~/.agents/skills/)",
       "Bash(cp:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(mv GUIDES/WEBSITE/IDENTITY.md GUIDES/KERN/IDENTITY.md)",
+      "Bash(mv GUIDES/WEBSITE/CONTEXT.md GUIDES/KERN/CONTEXT.md)"
     ]
   }
 }

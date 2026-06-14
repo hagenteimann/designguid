@@ -2,6 +2,9 @@
 
 > Universal entry point for all AI coding agents (Gemini, Codex, Cursor, Windsurf, etc.)
 > Claude Code users: CLAUDE.md is also auto-loaded with the same rules.
+>
+> **Sync note:** This file (AGENTS.md) and CLAUDE.md are intentionally identical in content.
+> When making changes, **always update both files**.
 
 ---
 
@@ -48,6 +51,9 @@
 | Website rebuild | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 | Binding rules | `GUIDES/KERN/RULES.md` |
 | HTML/CSS coding conventions | `GUIDES/KERN/STYLE.md` |
+| Push8 brand identity / Voice & Tone | `GUIDES/KERN/IDENTITY.md` |
+| Agent context, stack, client types | `GUIDES/KERN/CONTEXT.md` |
+| Motion, scroll-reveal, font combinations | `GUIDES/WEBSITE/AWESOME_DESIGN.md` |
 
 ### WEBSITE (for website projects)
 

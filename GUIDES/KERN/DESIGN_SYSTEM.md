@@ -62,22 +62,12 @@ Bevor eine einzige Zeile Code geschrieben wird, klärt der Agent folgende Punkte
 
 ## Phase 3: Design Tokens & Specs
 
+> **Single Source of Truth für alle Token-Werte:** `GUIDES/KERN/design-tokens-mini.md`
+> CSS-Custom-Properties für Spacing, Farben, Radien, Typografie und Breakpoints sind ausschließlich dort definiert. Hier nur Kontext, Anwendungsregeln und Muster.
+
 ### Spacing – 8pt Grid
 
-Alle Abstände basieren auf einem 8pt-Raster. Verwende CSS-Custom-Properties:
-
-```css
-:root {
-  --space-100:  4px;
-  --space-200:  8px;
-  --space-300: 16px;
-  --space-400: 24px;
-  --space-500: 32px;
-  --space-600: 48px;
-  --space-700: 64px;
-  --space-800: 96px;
-}
-```
+Alle Abstände basieren auf einem 8pt-Raster. Token-Werte → `design-tokens-mini.md`.
 
 Fluid Spacing mit `clamp()`:
 ```css
@@ -88,33 +78,11 @@ Fluid Spacing mit `clamp()`:
 
 ### Farbskala – 25% Steps
 
-Skala 0–700, wobei **300 = Base** (Markenfarbe). Jede Stufe ist 25% heller oder dunkler:
-
-```css
-:root {
-  /* Beispiel Primärfarbe */
-  --color-primary-100: hsl(220, 80%, 95%);
-  --color-primary-200: hsl(220, 80%, 85%);
-  --color-primary-300: hsl(220, 80%, 60%); /* BASE */
-  --color-primary-400: hsl(220, 80%, 45%);
-  --color-primary-500: hsl(220, 80%, 30%);
-  --color-primary-600: hsl(220, 80%, 20%);
-  --color-primary-700: hsl(220, 80%, 10%);
-
-  /* Neutral */
-  --color-neutral-100: hsl(0, 0%, 97%);
-  --color-neutral-200: hsl(0, 0%, 90%);
-  --color-neutral-300: hsl(0, 0%, 70%);
-  --color-neutral-400: hsl(0, 0%, 50%);
-  --color-neutral-500: hsl(0, 0%, 30%);
-  --color-neutral-600: hsl(0, 0%, 15%);
-  --color-neutral-700: hsl(0, 0%, 5%);
-}
-```
+Skala 100–700, wobei **300 = Base** (Markenfarbe des Kunden, wird in `PROJEKT_BRIEF.md` festgelegt). Jede Stufe ist 15–25% heller oder dunkler. Token-Werte → `design-tokens-mini.md`.
 
 ### Bento-Box Ratios
 
-Feste Seitenverhältnisse für alle Bento-Grid-Elemente:
+Feste Seitenverhältnisse für alle Bento-Grid-Elemente. Token-Werte → `design-tokens-mini.md`.
 
 | Format | Ratio | Verwendung |
 |---|---|---|
@@ -122,13 +90,6 @@ Feste Seitenverhältnisse für alle Bento-Grid-Elemente:
 | Widescreen | 16:9 | Videos, Hero-Media, große Feature-Kacheln |
 | Portrait | 4:5 | Mobile-Hero, Social-Content-Kacheln |
 | Landscape | 3:2 | Blog-Vorschau, Projekt-Thumbnails |
-
-```css
-.bento-square   { aspect-ratio: 1 / 1; }
-.bento-wide     { aspect-ratio: 16 / 9; }
-.bento-portrait { aspect-ratio: 4 / 5; }
-.bento-card     { aspect-ratio: 3 / 2; }
-```
 
 ### Assets & Performance
 
