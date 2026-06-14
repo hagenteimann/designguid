@@ -705,9 +705,41 @@ if (window.matchMedia(
         <tr><td>07</td><td>Voice &amp; Copy</td><td>Ton, Dos/Don'ts, Beispieltexte</td></tr>
         <tr><td>08</td><td>Motion &amp; Animation</td><td>Alle 8 Animationen als Live-Demo</td></tr>
         <tr><td>09</td><td>Assets &amp; Meta</td><td>Font-Hosting, Favicon, OG-Image Specs</td></tr>
+        <tr><td>09b</td><td><strong>Bildsprache &amp; Foto-Empfehlungen</strong></td><td><span class="tag tag-green">Pflicht</span> wenn bestehende Website übergeben wurde</td></tr>
       </table>
     </div>
     <div>
+      <h3>Interaktive Pflicht-Features</h3>
+      <div class="box" style="margin-bottom:8px;">
+        <strong>Logo – SVG-Download (1 Klick)</strong>
+        Jede Logo-Variante bekommt einen Download-Button. Klick → SVG-Datei. Kein Rechtsklick nötig.
+        <pre style="margin-top:6px;">function downloadSVG(id, filename) {
+  const svg = document.getElementById(id);
+  const blob = new Blob([svg.outerHTML],
+    { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  a.click(); URL.revokeObjectURL(url);
+}</pre>
+      </div>
+      <div class="box">
+        <strong>Farbe – Hex in Zwischenablage (1 Klick)</strong>
+        Jeder Farb-Swatch hat einen Copy-Button. Klick → Hex-Wert in Clipboard. 1,5 Sek. „Kopiert!"-Feedback.
+        <pre style="margin-top:6px;">function copyColor(btn, value) {
+  navigator.clipboard.writeText(value)
+    .then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Kopiert!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+}</pre>
+      </div>
+
       <h3>Single-File Prinzip (kritisch)</h3>
       <div class="box">
         <strong>Das CD-Manual = 1 HTML-Datei, offline funktionsfähig</strong>
@@ -736,6 +768,65 @@ if (window.matchMedia(
        ABC...==') format('woff2');
 }</pre>
     </div>
+  </div>
+</div>
+
+
+<!-- 08b BILDSPRACHE -->
+<div class="section">
+  <div class="section-label">08b · Bildsprache &amp; Foto-Empfehlungen</div>
+  <h2><span class="num">★</span>Sektion 09b – bei Website-Rebuild Pflicht</h2>
+
+  <div class="box" style="margin-bottom:12px;">
+    <strong>Trigger: Agent erhält eine bestehende Website als Referenz</strong>
+    Sobald eine alte Website-URL oder ein Screenshot übergeben wird, analysiert der Agent Branche, Farbwelt und Tonalität – und dokumentiert im Design System konkrete Bildmotive. Keine generischen Stock-Beschreibungen.
+  </div>
+
+  <div class="cols-3">
+    <div>
+      <h3>1 · Produktmotive</h3>
+      <p>Wie sollen Produkte oder Leistungen fotografiert werden?</p>
+      <ul>
+        <li>Perspektive (Vogelperspektive, Eye-Level, Detail)</li>
+        <li>Hintergrund (freigestellt, Farbe aus Palette, Textur)</li>
+        <li>Lichtstimmung (seitliches Licht, diffus, dramatisch)</li>
+        <li>Styling (roh/authentisch vs. clean/minimalist)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>2 · Unternehmensmotive</h3>
+      <p>Team, Räume, Prozesse – keine Stock-Klischees.</p>
+      <ul>
+        <li>Team bei echter Arbeit – kein Lächeln in Kamera</li>
+        <li>Räumlichkeiten im echten Zustand</li>
+        <li>Behind-the-Scenes, Prozesse, Handwerk</li>
+        <li>Explizit benennen was <em>nicht</em> passt</li>
+      </ul>
+    </div>
+    <div>
+      <h3>3 · Farbwelt &amp; Mood</h3>
+      <p>Welche Lichtstimmungen passen zur Primärfarbe?</p>
+      <ul>
+        <li>Warmton / Kaltton / Neutral festlegen</li>
+        <li>Kontrast-Level (flach, mittel, dramatisch)</li>
+        <li>Verbotene Stile (HDR, blaue Filterstiche, Whitebox)</li>
+        <li>5–8 Unsplash/Pexels-Suchbegriffe ausgeben</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:12px;">Was der Agent bei Übergabe einer alten Website analysiert</h3>
+  <table>
+    <tr><th>Analyse</th><th>Ableitung</th></tr>
+    <tr><td>Branche / Kategorie</td><td>Grundtonalität der Bildsprache (rau vs. clean vs. seriös)</td></tr>
+    <tr><td>Primärfarbe der Marke</td><td>Passende Lichtstimmung (warm, kalt, neutral)</td></tr>
+    <tr><td>Zielgruppe</td><td>Authentizitätsgrad (Handwerk → echt, roh / SaaS → clean, hell)</td></tr>
+    <tr><td>Bestehende Bildsprache</td><td>Was beibehalten, was verbessert werden soll</td></tr>
+  </table>
+
+  <div class="box" style="margin-top:10px;">
+    <strong>Anti-Motive immer explizit benennen</strong>
+    Nicht nur was <em>gut</em> passt – sondern auch was ausdrücklich <em>nicht</em> passt. Beispiel: „Keine lachenden Business-Menschen mit Laptop im Café", „Keine blauen Farbstiche", „Kein HDR".
   </div>
 </div>
 
@@ -873,6 +964,9 @@ if (window.matchMedia(
         <li>☐ Motion-Demos laufen offline</li>
         <li>☐ Datei per Doppelklick öffenbar (getestet!)</li>
         <li>☐ Kein externen Link in der HTML-Datei</li>
+        <li>☐ <strong>Jede Logo-Variante: SVG-Download-Button vorhanden</strong></li>
+        <li>☐ <strong>Jeder Farb-Swatch: Clipboard-Copy-Button vorhanden</strong></li>
+        <li>☐ <strong>Bei Website-Rebuild: Sektion 09b Bildsprache vorhanden</strong> (Produkt-, Unternehmens- und Farbwelt-Motive)</li>
       </ul>
     </div>
   </div>

@@ -373,6 +373,186 @@ Jede Animation muss mit `prefers-reduced-motion` absicherbar sein:
 
 ---
 
+## Sektion 09b // Bildsprache & Foto-Empfehlungen (bei Website-Rebuild)
+
+> Diese Sektion ist **Pflicht**, wenn dem Agenten eine bestehende Website als Vorlage/Referenz übergeben wurde.
+> Ohne bestehende Website: optional, aber empfohlen.
+
+### Was hier dokumentiert wird
+
+Der Agent analysiert die bestehende Website (Branche, Farbwelt, Tonalität) und schlägt im Design System konkrete **Bildmotive** vor – keine generischen Stock-Beschreibungen, sondern gezielte Empfehlungen passend zur Marke.
+
+### 3 Pflicht-Kategorien
+
+| Kategorie | Was beschrieben wird |
+|---|---|
+| **Produktmotive** | Wie Produkte/Leistungen fotografiert werden sollen (Perspektive, Licht, Hintergrund, Styling) |
+| **Unternehmensmotive** | Team, Räumlichkeiten, Prozesse, Behind-the-Scenes – authentisch, keine Stock-Klischees |
+| **Farbwelt & Mood** | Welche Farbtöne, Lichtstimmungen, Kontraste zu der Markenfarbe passen |
+
+### Aufbau im CD-Manual HTML
+
+```html
+<!-- 09b // BILDSPRACHE -->
+<section id="bildsprache" class="ds-section">
+  <div class="panel-label">09b // Bildsprache & Foto-Empfehlungen</div>
+
+  <!-- Produktmotive -->
+  <div class="ds-image-category">
+    <h3>Produktmotive</h3>
+    <p>Freigestellt auf [Farbton aus Palette], Licht von rechts oben, ...</p>
+    <!-- Mood-Swatch: Farb-Rechtecke die die erlaubten Bild-Farbtöne zeigen -->
+    <div class="ds-mood-swatches">
+      <div style="background: #c8a97e;">Warm Sand</div>
+      <div style="background: #2d4a3e;">Dunkelgrün</div>
+    </div>
+  </div>
+
+  <!-- Unternehmensmotive -->
+  <div class="ds-image-category">
+    <h3>Unternehmensmotive</h3>
+    <ul>
+      <li>Team bei der Arbeit – natürlich, kein gestelltes Lächeln</li>
+      <li>Werkstatt / Büro in echtem Zustand, nicht aufgeräumt</li>
+    </ul>
+  </div>
+
+  <!-- Farbwelt & Mood -->
+  <div class="ds-image-category">
+    <h3>Farbwelt & Mood</h3>
+    <p>Fotos sollen [warm/kühl/neutral] wirken. Keine [blauen Filterstiche / Überbelichtung].</p>
+    <p>Erlaubte Kontrast-Level: [z.B. mittlerer Kontrast, keine HDR-Übertreibung].</p>
+  </div>
+
+</section>
+```
+
+### Was der Agent analysiert und dokumentiert
+
+Wenn eine bestehende Website-URL oder Screenshot übergeben wird:
+
+1. **Branche extrahieren** → leitet passende Bildsprache ab (z.B. Handwerk → authentisch, rau; Kanzlei → ruhig, seriös)
+2. **Primärfarbe der Marke** → benennt Lichtstimmungen die dazu passen (Warmton / Kaltton / Neutral)
+3. **Anti-Motive benennen** → explizit schreiben was NICHT passt (z.B. „keine lachenden Business-Stock-Menschen")
+4. **Suchbegriffe für Unsplash/Pexels** → 5–8 konkrete Suchbegriffe die zu Branche + Farbwelt passen
+
+### Beispiel-Output (Handwerksbetrieb, Primärfarbe: warmes Ocker)
+
+```
+Produktmotive:
+– Werkzeug auf natürlichem Holzuntergrund, Licht von der Seite (goldene Stunde)
+– Hände bei der Arbeit – Nahaufnahme, scharfe Textur
+– Fertiges Produkt auf dunklem Hintergrund (kontrastreich)
+
+Unternehmensmotive:
+– Werkstatt in echtem Zustand, kein Räumen vor dem Foto
+– Meister erklärt etwas – Blick auf Objekt, nicht in Kamera
+– Kein Stockfoto-Lächeln in die Kamera
+
+Farbwelt:
+– Warme Töne (Ocker, Braun, Rost) – passend zu --color-primary-300
+– Licht: warm, golden, nicht kalt-blau
+– Kontrast: mittel – keine HDR, keine flachen Whitebox-Fotos
+– Verboten: blaue Farbstiche, weiße Hintergründe, generische Business-Fotos
+
+Unsplash-Suchbegriffe: "craftsman workshop", "woodworking hands", "artisan tools",
+"warm light workshop", "handmade leather", "golden hour craftsmanship"
+```
+
+---
+
+## Interaktive Pflicht-Features
+
+Diese Features sind in **jeder** Design System HTML Pflicht – kein optionaler Nice-to-have.
+
+### 01 // Logo – SVG-Download mit einem Klick
+
+Jede Logo-Variante (Primary, Secondary, Monochrom, Favicon) bekommt einen Download-Button.
+Ein Klick → SVG-Datei wird direkt heruntergeladen. Kein Rechtsklick, kein Kopieren.
+
+```html
+<!-- Logo-Download Button Pattern -->
+<button class="ds-download-btn" onclick="downloadSVG('logo-primary', 'kundenname-logo-primary.svg')">
+  SVG herunterladen
+</button>
+
+<svg id="logo-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80">
+  <!-- Logo-Pfade -->
+</svg>
+```
+
+```js
+// Inline im <script>-Tag (kein CDN)
+function downloadSVG(id, filename) {
+  const svg = document.getElementById(id);
+  const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+```
+
+**Regel:** Jede Logo-Variante hat eine eigene `id` und einen eigenen Download-Button mit aussagekräftigem Dateinamen (`kundenname-logo-primary.svg`, `kundenname-logo-mono.svg` usw.).
+
+---
+
+### 02 // Farben – Hex-Wert in Zwischenablage kopieren
+
+Jeder Farb-Swatch (alle 7 Stufen Primary + alle 7 Stufen Neutral + Semantisch) hat einen Kopier-Button.
+Ein Klick → Hex-Wert landet in der Zwischenablage. Visuelles Feedback (z.B. „Kopiert!" für 1,5 Sek.).
+
+```html
+<!-- Farb-Swatch mit Copy-Button Pattern -->
+<div class="ds-color-swatch" style="background: #1a6bff;">
+  <button class="ds-copy-btn" onclick="copyColor(this, '#1a6bff')" aria-label="Farbe kopieren">
+    #1a6bff
+  </button>
+</div>
+```
+
+```js
+// Inline im <script>-Tag
+function copyColor(btn, value) {
+  navigator.clipboard.writeText(value).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Kopiert!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+```
+
+```css
+/* Copy-Button Styling */
+.ds-copy-btn {
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: hsl(0 0% 0% / 0.3);
+  color: #fff;
+  border: none;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+.ds-copy-btn:hover { background: hsl(0 0% 0% / 0.5); }
+.ds-copy-btn.copied { background: hsl(140 60% 35%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-copy-btn { transition: none; }
+}
+```
+
+**Regel:** Der kopierte Wert ist immer der **Hex-Wert** (nicht der Token-Name, nicht HSL). Grund: Designer und Entwickler brauchen Hex für Handoff-Tools (Figma, Sketch, Zeplin).
+
+---
+
 ## Checkliste vor Übergabe (CD-Manual)
 
 - [ ] Alle 9 Pflicht-Sektionen vorhanden
@@ -384,6 +564,8 @@ Jede Animation muss mit `prefers-reduced-motion` absicherbar sein:
 - [ ] prefers-reduced-motion berücksichtigt
 - [ ] Datei per Doppelklick im Browser öffenbar (getestet!)
 - [ ] Kein `<link>`, kein `<script src="...">` zu externen Quellen
+- [ ] **Jede Logo-Variante hat SVG-Download-Button** (1 Klick → .svg Datei)
+- [ ] **Jeder Farb-Swatch hat Clipboard-Copy-Button** (1 Klick → Hex in Zwischenablage)
 
 ---
 
