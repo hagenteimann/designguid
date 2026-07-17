@@ -68,7 +68,7 @@ Größter Einwand vor dem Kauf/Kontakt:
 
 ### 0.3 – Design-Entscheidungen ableiten
 
-Drei Felder – mehr nicht. Alles andere ergibt sich aus dem Projekt-Typ-Bundle oder ist Push8-Standard.
+Drei Felder – mehr nicht. Alles andere ergibt sich aus dem Projekt-Typ-Bundle oder ist Standard.
 
 ```
 DESIGN-ENTSCHEIDUNGEN
@@ -105,9 +105,9 @@ Bundle (Projekt-Typ):   _______________ (aus guides-index.json)
 Enthält automatisch:    _______________
 
 Zusätzlich laden:
-[ ] CONTENT_GUIDELINES.md   – wenn Texte miterstellt werden
-[ ] WORKFLOW_ASSETS.md      – wenn Video/Bild-Optimierung nötig
-[ ] ACCESSIBILITY_TESTING.md – bei erhöhter A11y-Anforderung
+[ ] tone_of_voice.md        – wenn Texte miterstellt werden
+[ ] components.md           – wenn Video/Bild-Optimierung nötig
+[ ] qa_testing.md           – bei erhöhter A11y-Anforderung
 [ ] Sonstiges: ___
 ```
 
@@ -159,24 +159,22 @@ Bestätigung abwarten bevor mit Coding begonnen wird.
 1. **Brief vor Code.** Kein HTML ohne ausgefüllte Phase 0.
 2. **Projekt schlägt Guide.** Wenn die Zielgruppe sachliche Ansprache braucht, gilt das – auch wenn ein Generic-Template etwas anderes zeigt.
 3. **Minimal-Guides.** Nur die in 0.4 markierten Guides werden aktiv gelesen.
-4. **Token-Mapping dokumentieren.** Jede Farbentscheidung braucht eine Begründung aus 0.1 oder 0.2.
+4. **Token-Mapping dokumentieren.** Jede Farbentscheidung braucht eine Begründung aus 0.1 or 0.2.
 5. **Sektionen bestätigen lassen.** Reihenfolge vor dem Coding freigeben lassen.
 6. **Keine parallelen Entscheidungen.** Entweder altes Design weiterverwenden oder neu ableiten – nicht beides gleichzeitig.
 
 ---
 
----
+## Verbindung zur Automation
 
-## Verbindung zum Ralph Loop
-
-Dieser Brief ist die Pflichtbasis für jeden Ralph Loop Build. Nach Phase 2 (Sektionen bestätigt) wird aus dem Brief direkt der **PLAN.md** generiert:
+Dieser Brief ist die Pflichtbasis für jeden automatisierten Build. Nach Phase 2 (Sektionen bestätigt) wird aus dem Brief direkt der **PLAN.md** generiert:
 
 - Jede Section aus 0.3 → ein Step im PLAN.md
 - Token-Mapping aus Phase 1 → Step 1 im PLAN.md
 - Relevante Guides aus 0.4 → werden pro Step geladen, nicht alle auf einmal
 
-→ Wie PLAN.md strukturiert sein muss: **[RALPH_LOOP.md](./RALPH_LOOP.md)**
+→ Wie PLAN.md strukturiert sein muss: **[automation.md](../03_EXECUTION/technical/automation.md)**
 
 ---
 
-*Push8 Website Guide – Stand Mai 2026*
+*Website Guide – Stand Mai 2026*

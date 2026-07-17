@@ -1,6 +1,6 @@
-# Code Style Guide – Push8
+# Code Style Guide
 
-Verbindliche Code-Konventionen fuer alle Push8-Projekte. KI-Agenten halten sich daran ohne Ausnahme.
+Verbindliche Code-Konventionen für Webprojekte. KI-Agenten halten sich daran ohne Ausnahme.
 
 ---
 
@@ -207,4 +207,4 @@ Format: `type: kurze Beschreibung (Imperativ, Deutsch)`
 
 ---
 
-*Push8 Code Style Guide – Stand Mai 2026*
+*Code Style Guide – Stand Mai 2026*

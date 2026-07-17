@@ -1,29 +1,46 @@
 {
-  "version": "2.0",
-  "description": "Push8 Guide Router – immer zuerst lesen um den richtigen Guide zu finden",
+  "version": "3.0",
+  "description": "Brand & Web Strategy-to-Execution Router",
 
   "tracks": {
     "designsystem": {
-      "description": "Interaktives CD-Manual / Design System HTML bauen",
-      "start": "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
+      "description": "Create Design System / CD-Manual HTML",
+      "start": "GUIDES/02_CONCEPT/design_concept.md",
       "guides": [
-        "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
-        "GUIDES/KERN/DESIGN_SYSTEM.md",
-        "GUIDES/KERN/design-tokens-mini.md",
-        "GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md"
+        "GUIDES/02_CONCEPT/design_concept.md",
+        "GUIDES/03_EXECUTION/colors.md",
+        "GUIDES/03_EXECUTION/typography.md",
+        "GUIDES/03_EXECUTION/components.md",
+        "GUIDES/03_EXECUTION/layouting.md",
+        "GUIDES/KERN/design-tokens-mini.md"
       ]
     },
     "website": {
-      "description": "Push8 Website / Landing Page / Rebuild",
+      "description": "Website / Landing Page Rebuild Framework",
       "start": "GUIDES/KERN/PROJEKT_BRIEF.md",
       "guides": [
         "GUIDES/KERN/PROJEKT_BRIEF.md",
-        "GUIDES/KERN/DESIGN_SYSTEM.md",
-        "GUIDES/KERN/design-tokens-mini.md",
-        "GUIDES/KERN/IDENTITY.md",
-        "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-        "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
-        "GUIDES/WEBSITE/RECHTLICHES.md"
+        "GUIDES/01_STRATEGY/customer.md",
+        "GUIDES/01_STRATEGY/shareholder.md",
+        "GUIDES/01_STRATEGY/stakeholder.md",
+        "GUIDES/01_STRATEGY/product_service.md",
+        "GUIDES/01_STRATEGY/hr.md",
+        "GUIDES/02_CONCEPT/design_concept.md",
+        "GUIDES/03_EXECUTION/logo.md",
+        "GUIDES/03_EXECUTION/typography.md",
+        "GUIDES/03_EXECUTION/colors.md",
+        "GUIDES/03_EXECUTION/components.md",
+        "GUIDES/03_EXECUTION/layouting.md",
+        "GUIDES/03_EXECUTION/ai_prompts.md",
+        "GUIDES/03_EXECUTION/tone_of_voice.md",
+        "GUIDES/03_EXECUTION/motion_interaction.md",
+        "GUIDES/03_EXECUTION/technical/seo.md",
+        "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/security.md",
+        "GUIDES/03_EXECUTION/technical/qa_testing.md",
+        "GUIDES/03_EXECUTION/technical/deployment.md",
+        "GUIDES/03_EXECUTION/technical/forms.md",
+        "GUIDES/03_EXECUTION/technical/automation.md"
       ]
     }
   },
@@ -33,81 +50,100 @@
 
   "project-types": {
     "local-service": {
-      "description": "Handwerker, Dienstleister, lokale Geschäfte",
-      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/RECHTLICHES.md", "GUIDES/WEBSITE/KONTAKTFORMULAR.md", "GUIDES/WEBSITE/SEO.md"]
+      "description": "Local services, craftsmen, consultants",
+      "guides": [
+        "GUIDES/01_STRATEGY/customer.md",
+        "GUIDES/03_EXECUTION/technical/seo.md",
+        "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/forms.md"
+      ]
     },
     "portfolio": {
-      "description": "Freelancer, Kreative, Agenturen",
-      "guides": ["GUIDES/WEBSITE/WORKFLOW_ASSETS.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md"]
+      "description": "Freelancers, creatives, agencies",
+      "guides": [
+        "GUIDES/01_STRATEGY/customer.md",
+        "GUIDES/01_STRATEGY/product_service.md",
+        "GUIDES/03_EXECUTION/ai_prompts.md",
+        "GUIDES/03_EXECUTION/tone_of_voice.md"
+      ]
     },
     "ecommerce": {
-      "description": "Online-Shops, Produkt-Websites",
-      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/SEO.md", "GUIDES/WEBSITE/SECURITY.md", "GUIDES/WEBSITE/RECHTLICHES.md"]
+      "description": "Online stores, product websites",
+      "guides": [
+        "GUIDES/01_STRATEGY/customer.md",
+        "GUIDES/03_EXECUTION/technical/seo.md",
+        "GUIDES/03_EXECUTION/technical/security.md",
+        "GUIDES/03_EXECUTION/technical/legal.md"
+      ]
     },
     "saas": {
-      "description": "Software-Produkte, Apps, Tools",
-      "guides": ["GUIDES/WEBSITE/FUNNEL_STRATEGIE.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/SEO.md", "GUIDES/WEBSITE/SECURITY.md"]
+      "description": "Software products, SaaS, mobile apps",
+      "guides": [
+        "GUIDES/01_STRATEGY/customer.md",
+        "GUIDES/03_EXECUTION/technical/seo.md",
+        "GUIDES/03_EXECUTION/technical/security.md",
+        "GUIDES/03_EXECUTION/tone_of_voice.md"
+      ]
     },
     "corporate": {
-      "description": "Unternehmen, B2B, Konzerne",
-      "guides": ["GUIDES/WEBSITE/RECHTLICHES.md", "GUIDES/WEBSITE/SECURITY.md", "GUIDES/WEBSITE/CONTENT_GUIDELINES.md", "GUIDES/WEBSITE/SEO.md"]
+      "description": "Corporate websites, B2B entities",
+      "guides": [
+        "GUIDES/01_STRATEGY/shareholder.md",
+        "GUIDES/01_STRATEGY/stakeholder.md",
+        "GUIDES/01_STRATEGY/hr.md",
+        "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/security.md",
+        "GUIDES/03_EXECUTION/tone_of_voice.md"
+      ]
     }
   },
 
   "tasks": {
-    "designsystem-html":   "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
-    "cd-manual":           "GUIDES/KERN/DESIGNSYSTEM_STANDARD.md",
-    "design-decisions":    "GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md",
+    "designsystem-html":   "GUIDES/02_CONCEPT/design_concept.md",
+    "cd-manual":           "GUIDES/02_CONCEPT/design_concept.md",
+    "design-decisions":    "GUIDES/03_EXECUTION/layouting.md",
     "rebuild":             "GUIDES/KERN/PROJEKT_BRIEF.md",
-    "ralph-loop":          "GUIDES/WEBSITE/RALPH_LOOP.md",
-    "design-tokens":       "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "colors":              "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "layout":              "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "icons":               "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "fonts":               "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "spacing":             "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "typography":          "GUIDES/KERN/DESIGN_SYSTEM.md",
-    "motion":              "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-    "animation":           "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-    "scroll-reveal":       "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-    "font-combinations":   "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-    "design-references":   "GUIDES/WEBSITE/AWESOME_DESIGN.md",
-    "navigation":          "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
-    "hamburger":           "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
-    "sections":            "GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md",
-    "images":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
-    "videos":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
-    "assets":              "GUIDES/WEBSITE/WORKFLOW_ASSETS.md",
-    "deploy":              "GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md",
-    "git":                 "GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md",
-    "legal":               "GUIDES/WEBSITE/RECHTLICHES.md",
-    "impressum":           "GUIDES/WEBSITE/RECHTLICHES.md",
-    "datenschutz":         "GUIDES/WEBSITE/RECHTLICHES.md",
-    "agb":                 "GUIDES/WEBSITE/RECHTLICHES.md",
-    "cookies":             "GUIDES/WEBSITE/RECHTLICHES.md",
-    "contact-form":        "GUIDES/WEBSITE/KONTAKTFORMULAR.md",
-    "genie-crm":           "GUIDES/WEBSITE/KONTAKTFORMULAR.md",
-    "funnel":              "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
-    "cta":                 "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
-    "conversion":          "GUIDES/WEBSITE/FUNNEL_STRATEGIE.md",
-    "seo":                 "GUIDES/WEBSITE/SEO.md",
-    "security":            "GUIDES/WEBSITE/SECURITY.md",
-    "csp":                 "GUIDES/WEBSITE/SECURITY.md",
-    "qa":                  "GUIDES/WEBSITE/QA_TESTING.md",
-    "content":             "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
-    "copy":                "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
-    "tone":                "GUIDES/WEBSITE/CONTENT_GUIDELINES.md",
-    "identity":            "GUIDES/KERN/IDENTITY.md",
-    "brand":               "GUIDES/KERN/IDENTITY.md",
-    "voice":               "GUIDES/KERN/IDENTITY.md",
-    "context":             "GUIDES/KERN/CONTEXT.md",
-    "analytics":           "GUIDES/EXTENDED/ANALYTICS.md",
-    "monitoring":          "GUIDES/EXTENDED/MONITORING.md",
-    "api":                 "GUIDES/EXTENDED/API_INTEGRATION.md",
-    "errors":              "GUIDES/EXTENDED/ERROR_HANDLING.md",
-    "build":               "GUIDES/EXTENDED/BUILD_PROCESS.md",
-    "setup":               "GUIDES/EXTENDED/DEVELOPMENT_SETUP.md",
-    "browser":             "GUIDES/EXTENDED/BROWSER_SUPPORT.md",
-    "accessibility":       "GUIDES/EXTENDED/ACCESSIBILITY_TESTING.md"
+    "ralph-loop":          "GUIDES/03_EXECUTION/technical/automation.md",
+    "design-tokens":       "GUIDES/03_EXECUTION/colors.md",
+    "colors":              "GUIDES/03_EXECUTION/colors.md",
+    "layout":              "GUIDES/03_EXECUTION/layouting.md",
+    "icons":               "GUIDES/03_EXECUTION/components.md",
+    "fonts":               "GUIDES/03_EXECUTION/typography.md",
+    "spacing":             "GUIDES/03_EXECUTION/colors.md",
+    "typography":          "GUIDES/03_EXECUTION/typography.md",
+    "motion":              "GUIDES/03_EXECUTION/motion_interaction.md",
+    "animation":           "GUIDES/03_EXECUTION/motion_interaction.md",
+    "scroll-reveal":       "GUIDES/03_EXECUTION/motion_interaction.md",
+    "font-combinations":   "GUIDES/03_EXECUTION/typography.md",
+    "design-references":   "GUIDES/03_EXECUTION/layouting.md",
+    "navigation":          "GUIDES/03_EXECUTION/layouting.md",
+    "hamburger":           "GUIDES/03_EXECUTION/layouting.md",
+    "sections":            "GUIDES/03_EXECUTION/layouting.md",
+    "images":              "GUIDES/03_EXECUTION/components.md",
+    "videos":              "GUIDES/03_EXECUTION/components.md",
+    "assets":              "GUIDES/03_EXECUTION/components.md",
+    "deploy":              "GUIDES/03_EXECUTION/technical/deployment.md",
+    "git":                 "GUIDES/03_EXECUTION/technical/deployment.md",
+    "legal":               "GUIDES/03_EXECUTION/technical/legal.md",
+    "impressum":           "GUIDES/03_EXECUTION/technical/legal.md",
+    "datenschutz":         "GUIDES/03_EXECUTION/technical/legal.md",
+    "agb":                 "GUIDES/03_EXECUTION/technical/legal.md",
+    "cookies":             "GUIDES/03_EXECUTION/technical/legal.md",
+    "contact-form":        "GUIDES/03_EXECUTION/technical/forms.md",
+    "genie-crm":           "GUIDES/03_EXECUTION/technical/forms.md",
+    "funnel":              "GUIDES/01_STRATEGY/customer.md",
+    "cta":                 "GUIDES/01_STRATEGY/customer.md",
+    "conversion":          "GUIDES/01_STRATEGY/customer.md",
+    "seo":                 "GUIDES/03_EXECUTION/technical/seo.md",
+    "security":            "GUIDES/03_EXECUTION/technical/security.md",
+    "csp":                 "GUIDES/03_EXECUTION/technical/security.md",
+    "qa":                  "GUIDES/03_EXECUTION/technical/qa_testing.md",
+    "content":             "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "copy":                "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "tone":                "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "identity":            "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "brand":               "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "voice":               "GUIDES/03_EXECUTION/tone_of_voice.md",
+    "context":             "GUIDES/KERN/CONTEXT.md"
   }
 }

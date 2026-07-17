@@ -1,6 +1,6 @@
-# Verbindliche Agenten-Regeln – Push8
+# Verbindliche Agenten-Regeln
 
-Diese Regeln gelten fuer alle KI-Agenten die mit Push8-Projekten arbeiten. Keine Ausnahmen ohne explizite Freigabe durch den User.
+Diese Regeln gelten für alle KI-Agenten, die in diesem Projekt arbeiten. Keine Ausnahmen ohne explizite Freigabe durch den User.
 
 ---
 
@@ -148,4 +148,4 @@ Wenn etwas schieflaeuft:
 
 ---
 
-*Push8 Agent Rules – Stand Mai 2026*
+*Agent Rules – Stand Mai 2026*

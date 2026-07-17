@@ -1,85 +1,110 @@
-# Push8 Design System – Agent Instructions
+# Brand & Web Strategy-to-Execution Framework – Agent Instructions
 
-> **Sync-Hinweis:** Diese Datei (CLAUDE.md) und AGENTS.md sind inhaltlich identisch – eine für Claude, eine für andere Agenten.
-> Bei Änderungen **immer beide Dateien aktualisieren**.
+> Universal entry point for all AI coding agents (Gemini, Claude, Codex, Cursor, Windsurf, etc.)
+> Claude Code users: CLAUDE.md is also auto-loaded with the same rules.
+>
+> **Sync note:** This file (AGENTS.md) and CLAUDE.md are intentionally identical in content.
+> When making changes, **always update both files**.
 
-Dieses Repository enthält verbindliche Design- und Coding-Regeln für Push8-Website-Projekte und interaktive Design-System-HTML-Dateien.
+---
 
-> Token-Referenz (immer geladen): @GUIDES/KERN/design-tokens-mini.md
-> Für andere Agenten (Gemini, Codex, Cursor): @AGENTS.md
+## Working Directory – CRITICAL
 
-## Arbeitsverzeichnis – KRITISCH
+- **`Projekt/`** → All work happens here. Create all new files exclusively here.
+- **`Beispiele/`** → Read only reference. Never edit or overwrite. (Note: Cleaned/empty by default).
 
-- **`Projekt/`** → Hier wird gearbeitet. Alle neuen Dateien werden ausschließlich hier angelegt.
-- **`Beispiele/`** → Nur lesen. Vorlagen und Referenz. Niemals bearbeiten.
+---
 
-> Datei aus `Beispiele/` als Vorlage → lesen, neue Datei in `Projekt/` anlegen.
-> Neues Design System bauen? → `Beispiele/Arche_designsystem.html` als Struktur-Referenz, dann weitere `Beispiele/` für Inspiration.
+## 5 Hard Rules
 
-## 5 harte Regeln
+1. **No code without brief.** For website rebuilds, fill out `GUIDES/KERN/PROJEKT_BRIEF.md` first.
+2. **Never load all guides.** Use `guides-index.json` to find the right file.
+3. **No magic numbers.** All spacing, colors, radii from `GUIDES/KERN/design-tokens-mini.md` (always load).
+4. **No deploy without checklist.** Run `./check.sh` before every deploy.
+5. **No asset without license.** Allowed sources in `GUIDES/03_EXECUTION/components.md` → "Allowed Asset Sources".
 
-1. **Kein Code ohne Brief.** Bei jedem Website-Rebuild zuerst `GUIDES/KERN/PROJEKT_BRIEF.md` ausfüllen.
-2. **Nie alle Guides laden.** Nur die relevanten – Orientierung via `guides-index.json`.
-3. **Kein Magic Number.** Alle Abstände, Farben, Radien aus `GUIDES/KERN/design-tokens-mini.md`. Details → `GUIDES/KERN/DESIGN_SYSTEM.md`.
-4. **Kein Deploy ohne Checkliste.** Go-Live-Checkliste in `GUIDES/KERN/DESIGN_SYSTEM.md` – alle Punkte abgehakt. Dann `./check.sh` ausführen.
-5. **Kein Asset ohne Lizenz.** Erlaubte Quellen in `GUIDES/KERN/DESIGN_SYSTEM.md` → „Erlaubte Quellen".
+---
 
-## Track wählen
+## Choose your track
 
-| Was will der User? | Track | Startpunkt |
+| What does the user want? | Track | Start here |
 |---|---|---|
-| Design System / CD-Manual HTML bauen | `designsystem` | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
-| Website / Landing Page / Rebuild | `website` | `GUIDES/KERN/PROJEKT_BRIEF.md` |
+| Build a Design System / CD-Manual HTML | `designsystem` | `GUIDES/02_CONCEPT/design_concept.md` |
+| Build a website / landing page / rebuild | `website` | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 
-→ Dann `guides-index.json` für den genauen Guide-Pfad nutzen.
+→ Then use `guides-index.json` for the exact guide path.
 
-## Aufgabe → Datei
+---
 
-### KERN (immer relevant)
+## Task → File
 
-| Aufgabe | Lies zuerst |
+### KERN (always relevant)
+
+| Task | Read first |
 |---|---|
-| Design System HTML aufbauen | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
-| Token-Werte schnell nachschlagen | `GUIDES/KERN/design-tokens-mini.md` |
-| Design Tokens, Layout, Farben, Icons (Details) | `GUIDES/KERN/DESIGN_SYSTEM.md` |
-| Website neu bauen / Rebuild | `GUIDES/KERN/PROJEKT_BRIEF.md` |
-| Verbindliche Regeln | `GUIDES/KERN/RULES.md` |
-| HTML/CSS Coding Conventions | `GUIDES/KERN/STYLE.md` |
-| Push8 Markenidentität / Voice & Tone | `GUIDES/KERN/IDENTITY.md` |
-| Agenten-Kontext, Stack, Kundenprojekte | `GUIDES/KERN/CONTEXT.md` |
-| Motion, Scroll-Reveal, Font-Kombinationen | `GUIDES/WEBSITE/AWESOME_DESIGN.md` |
+| Token values (quick) | `GUIDES/KERN/design-tokens-mini.md` |
+| Binding rules | `GUIDES/KERN/RULES.md` |
+| HTML/CSS coding conventions | `GUIDES/KERN/STYLE.md` |
+| Agent context, stack, client types | `GUIDES/KERN/CONTEXT.md` |
 
-### WEBSITE (bei Website-Projekten)
+### 01_STRATEGY (Inputs)
 
-| Aufgabe | Lies zuerst |
+| Task | Read first |
 |---|---|
-| Autonomer Build (Ralph Loop) | `GUIDES/WEBSITE/RALPH_LOOP.md` |
-| Navigation, Hamburger, Indikator | `GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md` |
-| Bilder / Videos / Assets | `GUIDES/WEBSITE/WORKFLOW_ASSETS.md` |
-| Deployment + Git | `GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md` |
-| Design-Entscheidungen dokumentieren | `GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md` |
-| CD-Manual HTML aufbauen (Standard) | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
-| Impressum / Datenschutz / AGB | `GUIDES/WEBSITE/RECHTLICHES.md` |
-| Kontaktformular → Genie CRM | `GUIDES/WEBSITE/KONTAKTFORMULAR.md` |
-| Funnel-Struktur / CTA-Logik | `GUIDES/WEBSITE/FUNNEL_STRATEGIE.md` |
-| SEO | `GUIDES/WEBSITE/SEO.md` |
-| Security / CSP | `GUIDES/WEBSITE/SECURITY.md` |
-| QA vor Deploy | `GUIDES/WEBSITE/QA_TESTING.md` |
-| Texte / Copy / Tone of Voice | `GUIDES/WEBSITE/CONTENT_GUIDELINES.md` |
+| Customer analysis, Funnel & Journey | `GUIDES/01_STRATEGY/customer.md` |
+| Shareholder strategy | `GUIDES/01_STRATEGY/shareholder.md` |
+| Stakeholder strategy | `GUIDES/01_STRATEGY/stakeholder.md` |
+| Product & competitor analysis | `GUIDES/01_STRATEGY/product_service.md` |
+| HR recruitment & demand mapping | `GUIDES/01_STRATEGY/hr.md` |
 
-### EXTENDED (nur bei Bedarf)
+### 02_CONCEPT (Synthesis)
 
-Analytics, Monitoring, API, Browser-Support → `GUIDES/EXTENDED/`
+| Task | Read first |
+|---|---|
+| Design Concept (Form follows Function) | `GUIDES/02_CONCEPT/design_concept.md` |
 
-## Automatisierung
+### 03_EXECUTION (Deliverables)
+
+| Task | Read first |
+|---|---|
+| Logo, geometry & reduction | `GUIDES/03_EXECUTION/logo.md` |
+| Typography, scales & self-hosting | `GUIDES/03_EXECUTION/typography.md` |
+| Colors & Design Tokens | `GUIDES/03_EXECUTION/colors.md` |
+| Components, asset budgets & licensing | `GUIDES/03_EXECUTION/components.md` |
+| Layouting, grids & information flow | `GUIDES/03_EXECUTION/layouting.md` |
+| AI Image prompt engineering | `GUIDES/03_EXECUTION/ai_prompts.md` |
+| Tone of voice, address & antagonists | `GUIDES/03_EXECUTION/tone_of_voice.md` |
+| Motion, scroll-reveal & transitions | `GUIDES/03_EXECUTION/motion_interaction.md` |
+
+### TECHNICAL (Security, SEO, Legal)
+
+| Task | Read first |
+|---|---|
+| SEO, GEO & Schema.org JSON-LD | `GUIDES/03_EXECUTION/technical/seo.md` |
+| GDPR, Legal Notice & Privacy Policy | `GUIDES/03_EXECUTION/technical/legal.md` |
+| CSP, Security Headers & sanitization | `GUIDES/03_EXECUTION/technical/security.md` |
+| QA, Testing, contrast & Lighthouse | `GUIDES/03_EXECUTION/technical/qa_testing.md` |
+| Deployment & Git conventions | `GUIDES/03_EXECUTION/technical/deployment.md` |
+| Form submit & Spam protection | `GUIDES/03_EXECUTION/technical/forms.md` |
+| Automation & agent loops | `GUIDES/03_EXECUTION/technical/automation.md` |
+
+---
+
+## Re-entering a project
+
+1. Read `MEMORY.md` (if exists) – compressed context from last session
+2. Check `PLAN.md` (if exists) – open steps
+3. Load only the guides listed in MEMORY.md
+
+---
+
+## Automation
 
 ```bash
-./check.sh        # Pre-deploy Checks (DSGVO, Assets, A11y, Rechtliches)
-./ralph.sh        # Ralph Loop starten (.ralph-config anpassen)
+./check.sh    # Pre-deploy checks (DSGVO, assets, a11y, legal)
+./ralph.sh    # Start Ralph Loop (configure .ralph-config first)
 ```
 
-## Wiedereinstieg in ein Projekt
+---
 
-1. `MEMORY.md` lesen (falls vorhanden) – komprimierter Kontext der letzten Session
-2. `PLAN.md` prüfen (falls vorhanden) – offene Steps
-3. Nur die in MEMORY.md genannten Guides laden
+*Brand & Web Framework – Stand Juni 2026*

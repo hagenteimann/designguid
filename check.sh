@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Pre-Deploy Check – automatisierte Go-Live-Checkliste
-# Basiert auf GUIDES/DESIGN_SYSTEM.md Checkliste
+# Basiert auf GUIDES/03_EXECUTION/components.md Checkliste
 
 set -uo pipefail
 
@@ -15,7 +15,7 @@ fail()  { echo -e "${RED}❌${NC} $1"; ERRORS=$((ERRORS+1)); }
 warn()  { echo -e "${YELLOW}⚠️${NC}  $1"; WARNINGS=$((WARNINGS+1)); }
 
 echo ""
-echo "Push8 Pre-Deploy Check – $TARGET"
+echo "Brand & Web Pre-Deploy Check – $TARGET"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # ── Assets ────────────────────────────────────────────────────────────────

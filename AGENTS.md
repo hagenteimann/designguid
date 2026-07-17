@@ -1,6 +1,6 @@
-# Push8 Design System – Agent Instructions
+# Brand & Web Strategy-to-Execution Framework – Agent Instructions
 
-> Universal entry point for all AI coding agents (Gemini, Codex, Cursor, Windsurf, etc.)
+> Universal entry point for all AI coding agents (Gemini, Claude, Codex, Cursor, Windsurf, etc.)
 > Claude Code users: CLAUDE.md is also auto-loaded with the same rules.
 >
 > **Sync note:** This file (AGENTS.md) and CLAUDE.md are intentionally identical in content.
@@ -11,10 +11,7 @@
 ## Working Directory – CRITICAL
 
 - **`Projekt/`** → All work happens here. Create all new files exclusively here.
-- **`Beispiele/`** → Read only. Template and reference source. Never edit or overwrite.
-
-> If the user references a file from `Beispiele/` as a template → read it, create the new file in `Projekt/`.
-> Building a new design system? → Use `Beispiele/Arche_designsystem.html` as structural reference first, then the other `Beispiele/` for inspiration.
+- **`Beispiele/`** → Read only reference. Never edit or overwrite. (Note: Cleaned/empty by default).
 
 ---
 
@@ -24,7 +21,7 @@
 2. **Never load all guides.** Use `guides-index.json` to find the right file.
 3. **No magic numbers.** All spacing, colors, radii from `GUIDES/KERN/design-tokens-mini.md` (always load).
 4. **No deploy without checklist.** Run `./check.sh` before every deploy.
-5. **No asset without license.** Allowed sources in `GUIDES/KERN/DESIGN_SYSTEM.md` → "Erlaubte Quellen".
+5. **No asset without license.** Allowed sources in `GUIDES/03_EXECUTION/components.md` → "Allowed Asset Sources".
 
 ---
 
@@ -32,7 +29,7 @@
 
 | What does the user want? | Track | Start here |
 |---|---|---|
-| Build a Design System / CD-Manual HTML | `designsystem` | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
+| Build a Design System / CD-Manual HTML | `designsystem` | `GUIDES/02_CONCEPT/design_concept.md` |
 | Build a website / landing page / rebuild | `website` | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 
 → Then use `guides-index.json` for the exact guide path.
@@ -45,36 +42,51 @@
 
 | Task | Read first |
 |---|---|
-| Build Design System HTML | `GUIDES/KERN/DESIGNSYSTEM_STANDARD.md` |
 | Token values (quick) | `GUIDES/KERN/design-tokens-mini.md` |
-| Design tokens, layout, colors (full) | `GUIDES/KERN/DESIGN_SYSTEM.md` |
-| Website rebuild | `GUIDES/KERN/PROJEKT_BRIEF.md` |
 | Binding rules | `GUIDES/KERN/RULES.md` |
 | HTML/CSS coding conventions | `GUIDES/KERN/STYLE.md` |
-| Push8 brand identity / Voice & Tone | `GUIDES/KERN/IDENTITY.md` |
 | Agent context, stack, client types | `GUIDES/KERN/CONTEXT.md` |
-| Motion, scroll-reveal, font combinations | `GUIDES/WEBSITE/AWESOME_DESIGN.md` |
 
-### WEBSITE (for website projects)
+### 01_STRATEGY (Inputs)
 
 | Task | Read first |
 |---|---|
-| Autonomous build (Ralph Loop) | `GUIDES/WEBSITE/RALPH_LOOP.md` |
-| Navigation, hamburger, indicator | `GUIDES/WEBSITE/WORKFLOW_NAVIGATION.md` |
-| Images / videos / assets | `GUIDES/WEBSITE/WORKFLOW_ASSETS.md` |
-| Deploy + Git | `GUIDES/WEBSITE/WORKFLOW_DEPLOYMENT.md` |
-| Document design decisions | `GUIDES/WEBSITE/WORKFLOW_CD_MANUAL.md` |
-| Legal (Impressum, Datenschutz, AGB) | `GUIDES/WEBSITE/RECHTLICHES.md` |
-| Contact form → Genie CRM | `GUIDES/WEBSITE/KONTAKTFORMULAR.md` |
-| Funnel / CTA logic | `GUIDES/WEBSITE/FUNNEL_STRATEGIE.md` |
-| SEO | `GUIDES/WEBSITE/SEO.md` |
-| Security / CSP | `GUIDES/WEBSITE/SECURITY.md` |
-| QA before deploy | `GUIDES/WEBSITE/QA_TESTING.md` |
-| Copy / Tone of Voice | `GUIDES/WEBSITE/CONTENT_GUIDELINES.md` |
+| Customer analysis, Funnel & Journey | `GUIDES/01_STRATEGY/customer.md` |
+| Shareholder strategy | `GUIDES/01_STRATEGY/shareholder.md` |
+| Stakeholder strategy | `GUIDES/01_STRATEGY/stakeholder.md` |
+| Product & competitor analysis | `GUIDES/01_STRATEGY/product_service.md` |
+| HR recruitment & demand mapping | `GUIDES/01_STRATEGY/hr.md` |
 
-### EXTENDED (only when needed)
+### 02_CONCEPT (Synthesis)
 
-Analytics, Monitoring, API, Browser support → `GUIDES/EXTENDED/`
+| Task | Read first |
+|---|---|
+| Design Concept (Form follows Function) | `GUIDES/02_CONCEPT/design_concept.md` |
+
+### 03_EXECUTION (Deliverables)
+
+| Task | Read first |
+|---|---|
+| Logo, geometry & reduction | `GUIDES/03_EXECUTION/logo.md` |
+| Typography, scales & self-hosting | `GUIDES/03_EXECUTION/typography.md` |
+| Colors & Design Tokens | `GUIDES/03_EXECUTION/colors.md` |
+| Components, asset budgets & licensing | `GUIDES/03_EXECUTION/components.md` |
+| Layouting, grids & information flow | `GUIDES/03_EXECUTION/layouting.md` |
+| AI Image prompt engineering | `GUIDES/03_EXECUTION/ai_prompts.md` |
+| Tone of voice, address & antagonists | `GUIDES/03_EXECUTION/tone_of_voice.md` |
+| Motion, scroll-reveal & transitions | `GUIDES/03_EXECUTION/motion_interaction.md` |
+
+### TECHNICAL (Security, SEO, Legal)
+
+| Task | Read first |
+|---|---|
+| SEO, GEO & Schema.org JSON-LD | `GUIDES/03_EXECUTION/technical/seo.md` |
+| GDPR, Legal Notice & Privacy Policy | `GUIDES/03_EXECUTION/technical/legal.md` |
+| CSP, Security Headers & sanitization | `GUIDES/03_EXECUTION/technical/security.md` |
+| QA, Testing, contrast & Lighthouse | `GUIDES/03_EXECUTION/technical/qa_testing.md` |
+| Deployment & Git conventions | `GUIDES/03_EXECUTION/technical/deployment.md` |
+| Form submit & Spam protection | `GUIDES/03_EXECUTION/technical/forms.md` |
+| Automation & agent loops | `GUIDES/03_EXECUTION/technical/automation.md` |
 
 ---
 
@@ -95,4 +107,4 @@ Analytics, Monitoring, API, Browser support → `GUIDES/EXTENDED/`
 
 ---
 
-*Push8 Web Agency – Stand Juni 2026*
+*Brand & Web Framework – Stand Juni 2026*
