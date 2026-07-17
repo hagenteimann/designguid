@@ -45,10 +45,16 @@ This guide defines layout patterns, full-width design principles, responsive mob
 
 ---
 
-## 3. Information Flow Optimization
-* **Logical Reading Order:** Design in vertical zones (Z-pattern or F-pattern reading) matching the user funnel.
-* **Navigation Anchoring:** Tag every page section with an ID and sync it with the page's navigation links.
-* **Visual Hierarchy:** Guide the eye from larger titles (`h1`/`h2`) down to small details. Never make two adjacent elements have the same size and weight unless they are peers in a grid.
+## 3. Lesefluss & Visuelle Hierarchie (Reading Flow)
+Structure content using proven cognitive and mathematical patterns to guide the eye naturally:
+- **Z- & F-Lesemuster:** 
+  - **Z-Muster:** Use for visual landing pages. The eye travels: Left-to-Right (Header/Nav) $\rightarrow$ Diagonal Down-Left $\rightarrow$ Right (CTA/Hero Action). Place the primary CTA at the terminals of the Z.
+  - **F-Muster:** Use for text-heavy pages (documentation, blogs). Place the most critical information in the first two paragraphs and along the left margin.
+- **Der Goldene Schnitt (Golden Ratio):**
+  - **Spalten-Proportionen (Asymmetrie):** For split-screen layouts or content-sidebar grids, use the golden ratio approximation of **$62\% \mathbin{/} 38\%$** (CSS `grid-template-columns: 1.618fr 1fr;`) instead of symmetric $50\% \mathbin{/} 50\%$ splits. This creates organic balance and tension.
+  - **Text- & Raum-Proportionen:** Apply the golden multiplier ($1.618$) to determine font size steps or spatial relationships to guarantee mathematical harmony.
+- **Weißraum (Negative Space):** White space is a functional layout element, not empty space. Use large section padding (e.g., `padding: var(--space-section) 0;`) to prevent cognitive overload and clearly isolate distinct thoughts.
+- **Visual Anchor Points:** Guide the eye from large display titles (`h1`/`h2`) down to small details. Never place two adjacent elements of the same visual weight unless they are peers in a grid.
 
 ---
 
