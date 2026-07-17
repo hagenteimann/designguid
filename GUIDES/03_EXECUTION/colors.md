@@ -39,3 +39,10 @@ Use calculated HSL offsets to maintain harmony across secondary and accent color
 ## 3. Contrast Requirements (WCAG)
 * **Minimum contrast ratio:** **4.5:1** (WCAG AA) for standard text.
 * Check contrast programmatically for all background/foreground combinations using tools like Lighthouse or Axe prior to deployment.
+
+---
+
+## 4. Color as a Distinctive Brand Asset (DBA)
+Color is one of the most powerful Distinctive Brand Assets (DBAs):
+- **Chrominence & Consistency:** Ensure the primary brand hue (`--color-primary-300`) is prominent and consistent across all pages. Do not let agents introduce arbitrary auxiliary colors (such as default framework blues/indigos or random gradients) that dilute the brand identity.
+- **Accented Micro-interactions:** Limit color shifts on interactive states (e.g., hover, focus) to the pre-calculated HSL scale steps (e.g., transitioning from `300` to `400`).

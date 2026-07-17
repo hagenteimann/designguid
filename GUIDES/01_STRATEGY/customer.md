@@ -105,3 +105,21 @@ The website acts as a critical interface for the long-term customer relationship
    - *Website Touchpoint:* Automatic warnings via user activity logging. Offering specialized support access or custom retention/win-back banners.
 6. **Auflösung (Termination / Win-back):**
    - *Website Touchpoint:* Frictionless cancellation flows combined with feedback surveys (exit interviews) and direct reactivation offers.
+
+---
+
+## 7. Mentale & Physische Verfügbarkeit (Byron Sharp)
+Brand growth is driven by maximizing the brand's mental and physical availability:
+
+### Mentale Verfügbarkeit (Mental Availability)
+Ensure the brand is easily recalled by the consumer in a purchasing situation:
+- **Category Entry Points (CEPs):** Identify the situational triggers (the "why" and "when") that lead users to search for the service. Examples:
+  - *Symptom/Trigger:* "Leaking pipe under the sink" (CEP) $\rightarrow$ The plumber's site must show emergency support immediately.
+  - *Symptom/Trigger:* "Need video for an Instagram launch next week" (CEP) $\rightarrow$ The video agency's site must show fast turnaround capabilities and direct contact paths.
+  - Structure the website's copy and headlines to directly match these situational triggers (CEPs) instead of using abstract corporate jargon.
+- **Distinctive Brand Assets (DBAs):** Consistently use and protect sensory anchors (logos, specific colors, characteristic fonts) across the entire user experience. Never let arbitrary design changes dilute these assets.
+
+### Physische Verfügbarkeit (Physical Availability)
+Ensure the brand is as easy to find and buy as possible on the web:
+- **Web Presence:** The site must load instantly (LCP < 2.5s) on mobile networks. Slow load times make the brand "physically unavailable" to the user.
+- **Low-Friction Access:** Eliminate all cognitive and technical barriers. Use clear call-to-actions, short contact forms, direct click-to-chat links (WhatsApp/phone), and fully responsive navigation.

@@ -24,3 +24,10 @@ Refine the logo down to its bare essentials:
 - **Simplicity:** Remove unnecessary lines, shadows, or secondary marks.
 - **Silhouette Test:** The logo must remain recognizable even as a solid black or solid white silhouette.
 - **Technical Export:** SVG only, optimized, inlineable, with zero absolute pixel constraints inside the markup where possible.
+
+---
+
+## 4. Distinctive Brand Assets (DBA)
+The logo is the primary Distinctive Brand Asset (DBA) of the company:
+- **Visual Consistency:** Keep the logo mark unchanged across all touchpoints (header, footer, favicons, loading screens).
+- **Embedded Representation:** When staging preloader animations or scroll indicators, use abstract components of the logo's geometry to reinforce memory anchors.

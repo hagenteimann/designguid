@@ -63,3 +63,10 @@ Always use responsive scales via `clamp()` to interpolate sizes smoothly between
   font-display: swap;
 }
 ```
+
+---
+
+## 5. Typography as a Distinctive Brand Asset (DBA)
+The pairing of display and body fonts serves as a primary visual signature of the brand:
+- **Consistent Hierarchy:** Do not let agents substitute custom display fonts with generic system fallbacks or default web fonts. If the brand has a bold, charakterstarker display font, protect it across all titles.
+- **Font Availability:** Preload the main variable font files (e.g., in `.woff2` format) to ensure zero visual layout shift (CLS) during page loading.
