@@ -64,3 +64,30 @@ Always show skeleton screens during loading rather than white flashes. Example s
   100% { background-position: -200% 0; }
 }
 ```
+
+---
+
+## 5. Squircles & Continuous Curvature (G2 Continuity)
+Traditional CSS `border-radius` creates a G1-continuous curve (a circular arc meeting a straight line). This causes a sudden jump in curvature, which looks visually sharp and cheap. To match premium aesthetics (Apple's hardware/software design language), implement **G2-continuous curvature (Squircles or Superellipses)**, where the transition is completely organic and smooth.
+
+### Implementation Methods:
+1. **Figma Export (Recommended for Icons & Custom Badges):**
+   - Design components in Figma using **Corner Smoothing** (set to 60%–100% for iOS-like squircle curves).
+   - Export the shapes directly as SVGs to preserve the exact bezier curvature.
+2. **CSS Percentage Approximation (For Standard Containers & Cards):**
+   - For fluid containers, use percentage-based radii instead of absolute pixels to approximate the superellipse curve:
+     ```css
+     .card {
+       border-radius: var(--radius-squircle); /* 28% */
+     }
+     .badge {
+       border-radius: var(--radius-squircle-sm); /* 20% */
+     }
+     ```
+3. **SVG Clip-Path (For Exact Lamé/Superellipse Curves):**
+   - Use inline SVG clip-paths to mask HTML containers mathematically:
+     ```css
+     .premium-wrapper {
+       clip-path: url(#squircle-mask);
+     }
+     ```

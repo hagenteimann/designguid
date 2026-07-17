@@ -1,6 +1,6 @@
 # Design Tokens – Kurzreferenz
 
-> Nur Token-Werte. Keine Erklärungen. Für Details → GUIDES/DESIGN_SYSTEM.md
+> Nur Token-Werte. Keine Erklärungen. Für Details → GUIDES/03_EXECUTION/
 
 ---
 
@@ -97,4 +97,4 @@
 
 ---
 
-*Für Muster, Komponenten, Motion, Go-Live-Checkliste → GUIDES/DESIGN_SYSTEM.md*
+*Für Muster, Komponenten, Motion, Go-Live-Checkliste → GUIDES/03_EXECUTION/
