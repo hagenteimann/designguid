@@ -2,6 +2,8 @@
 
 This guide defines the requirements for standard legal pages, GDPR compliance, and cookie consent mechanisms.
 
+> **Technical implementation** (valid opt-in consent, self-hosting, blocking-by-default, click-to-load embeds, privacy-first analytics, DPF transfers): → `dsgvo_best_practices.md`
+
 ---
 
 ## 1. Required Legal Pages

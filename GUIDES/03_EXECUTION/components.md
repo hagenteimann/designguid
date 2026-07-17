@@ -24,8 +24,8 @@ This guide defines coding standards for reusable components, performance limits 
 
 ## 3. Allowed Asset Sources
 * **Icons:** Must be **Inline SVGs** under open-source licenses (MIT, Apache, ISC).
-  - Allowed: Lucide, Heroicons, Phosphor Icons, Tabler Icons, Bootstrap Icons.
-  - Strictly Forbidden: CDNs (FontAwesome CDN, Google Material Icons CDN) due to DSGVO IP-leaks.
+  - Allowed: Lucide, Heroicons, Phosphor Icons, Tabler Icons, Bootstrap Icons — copied in as inline SVG markup.
+  - **Hard rule – no external icons, any host:** loading icons from *any* external source is strictly forbidden — icon CDNs (FontAwesome, Material Icons, Iconify, Boxicons, Remixicon …) and icon-fonts alike, due to GDPR IP-leaks. Enforced by `./check.sh` (blocks deploy).
 * **Images:** Must have checked licensing.
   - Allowed: Unsplash, Pexels, Pixabay, Undraw.
   - Forbidden: Adobe Stock, Shutterstock, Getty without active licenses.
@@ -91,3 +91,19 @@ Traditional CSS `border-radius` creates a G1-continuous curve (a circular arc me
        clip-path: url(#squircle-mask);
      }
      ```
+
+---
+
+## 6. Interaction State Matrix
+Every interactive element must design its **full** state set — never leave states to the browser default:
+`default` · `hover` · `focus-visible` · `active` · `disabled` · `loading` · `error` · (`selected`).
+- **`:focus-visible`** for keyboard focus (visible ring, ≥ 2px, contrast ≥ 3:1); never `outline: none` without a replacement.
+- **`@media (hover: hover)`** — only apply hover effects on devices that actually hover (don't confuse touch).
+- **`:has()`** enables parent-level state without JS.
+- Drive states via data attributes/tokens (`[data-state="loading"]`) for consistency across buttons, inputs, cards.
+
+## 7. Depth & Elevation System
+- **One consistent light source** (usually top) — all shadows follow it.
+- **Elevation tokens** (`--elevation-1…5`): higher = closer, defined by a **layered, slightly tinted** shadow (not a single neutral drop-shadow) *and* surface contrast.
+- **Dark-mode elevation via surface lightness** (higher layers get lighter), not heavier shadows.
+- **Glass/blur** (`backdrop-filter`) only as a deliberate layer, sparingly, with a fallback. `z-index` is a documented system, not random `9999`.

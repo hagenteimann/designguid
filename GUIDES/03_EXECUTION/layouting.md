@@ -63,3 +63,20 @@ To support recurring customer engagement (the episodic lifecycle), structure lay
 - **Seasonal Touchpoint Slots:** Dedicated visual blocks for annual reports, seasonal trade fair/event calendars, or dynamic campaigns.
 - **Actionable Routines:** Layout structures for recurring seminar schedules, advisory workshops, or customer newsletter signups.
 - **Dynamic Content Modules:** Use flexible grid modules (e.g., Bento boxes) that can be easily updated to show current notices or regulatory changes without breaking the page's structural hierarchy.
+
+---
+
+## 5. State of the Art 2026 (Intrinsic & Fluid Layout)
+Move beyond fixed viewport breakpoints toward context-aware, fluid layouts:
+- **Container Queries (`@container`):** components respond to *their own container's* width, not the global viewport — true, reusable components that work in any slot.
+- **Subgrid:** nested grids align cleanly to the parent track lines (`grid-template-columns: subgrid`) for consistent rhythm across cards/rows.
+- **Fluid sizing:** `min()` / `max()` / `clamp()` for widths, gaps and type; `aspect-ratio` instead of padding hacks.
+- **Logical properties by default** (`margin-inline`, `padding-block`, `inset`) for i18n/RTL robustness.
+- **`:has()`** enables content-driven layout decisions (e.g. a card with a media child lays out differently) without JS.
+
+```css
+.card-host { container-type: inline-size; }
+@container (min-width: 30rem) {
+  .card { grid-template-columns: 1fr 2fr; }
+}
+```

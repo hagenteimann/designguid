@@ -83,3 +83,22 @@ document.querySelectorAll('[data-reveal]').forEach((el) => {
   ```
 - [ ] No animations trigger layout shifts (CLS) that hurt performance scores.
 - [ ] Interactive elements (buttons, links) have active press-scaling states (`transform: scale(0.96)`) for immediate physical feedback.
+
+---
+
+## 5. State of the Art 2026 (View Transitions & Scroll-driven)
+Modern, GPU-friendly motion without heavy JS:
+- **View Transitions API:** animate state/route changes so shared elements move *through* the transition instead of hard-cutting (`document.startViewTransition(...)`; cross-document transitions via `@view-transition`). This is the primary tool for premium page-level continuity.
+- **Scroll-driven animations (CSS):** use `animation-timeline: view()` / `scroll()` for reveal and parallax instead of `IntersectionObserver`/scroll listeners where supported — runs off the main thread.
+- **Spring / physics easing** as a brand signature curve, shared as a token.
+- **Always** guard everything behind `prefers-reduced-motion: reduce` — the signature must still work reduced.
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+```

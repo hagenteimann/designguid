@@ -51,8 +51,8 @@ Always use responsive scales via `clamp()` to interpolate sizes smoothly between
 ---
 
 ## 4. Technical Rules (Self-Hosting)
-* **DSGVO Compliance:** Loading fonts via Google Fonts CDN exposes user IPs and is strictly forbidden.
-* **Implementation:** Always download `.woff2` files and define them locally:
+* **Hard rule – no external fonts, any host:** Loading fonts from *any* external source is **strictly forbidden** — not just Google Fonts, but every provider (Typekit, Bunny, cdnfonts …) and any `@font-face` whose `src` points to an absolute/protocol-relative URL. It leaks user IPs (GDPR) and is enforced by `./check.sh` (blocks deploy).
+* **Implementation:** Always download `.woff2` files and define them locally with a relative path:
 
 ```css
 @font-face {
@@ -70,3 +70,18 @@ Always use responsive scales via `clamp()` to interpolate sizes smoothly between
 The pairing of display and body fonts serves as a primary visual signature of the brand:
 - **Consistent Hierarchy:** Do not let agents substitute custom display fonts with generic system fallbacks or default web fonts. If the brand has a bold, charakterstarker display font, protect it across all titles.
 - **Font Availability:** Preload the main variable font files (e.g., in `.woff2` format) to ensure zero visual layout shift (CLS) during page loading.
+
+---
+
+## 6. State of the Art 2026 (Rhythm & Modern Type)
+Separate professional typesetting from amateur sizing:
+- **Variable fonts:** ship one self-hosted `.woff2` with weight and optical-size (`opsz`) axes instead of many static cuts — lighter payload, finer control. Never faux-bold/italic; use real axes/cuts.
+- **Measure 45–75 characters** per line for body copy (`max-width: 65ch`); readability drops sharply beyond that.
+- **Modular scale:** derive sizes from one ratio (e.g. 1.25) rather than arbitrary values (aligns with the golden-ratio rule in `layouting.md`).
+- **`text-wrap: balance`** for headlines (even line lengths), **`text-wrap: pretty`** for body (no orphans/runts).
+- **Logical properties & `lang`** awareness (`margin-inline`, `padding-block`) so type holds up for longer languages and RTL.
+
+```css
+.body-copy { max-width: 65ch; text-wrap: pretty; }
+h1, h2     { text-wrap: balance; }
+```

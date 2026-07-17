@@ -15,13 +15,14 @@
 
 ---
 
-## 5 Hard Rules
+## 6 Hard Rules
 
 1. **No code without brief.** For website rebuilds, fill out `GUIDES/KERN/PROJEKT_BRIEF.md` first.
 2. **Never load all guides.** Use `guides-index.json` to find the right file.
 3. **No magic numbers.** All spacing, colors, radii from `GUIDES/KERN/design-tokens-mini.md` (always load).
-4. **No deploy without checklist.** Run `./check.sh` before every deploy.
-5. **No asset without license.** Allowed sources in `GUIDES/03_EXECUTION/components.md` → "Allowed Asset Sources".
+4. **No external fonts or icons – FORBIDDEN.** Fonts always local WOFF2, icons always inline SVG. No Google Fonts CDN, no font/icon provider, no icon CDN, no external `@font-face src` — any host. `./check.sh` blocks violations. → `GUIDES/03_EXECUTION/typography.md` & `components.md`.
+5. **No deploy without checklist.** Run `./check.sh` before every deploy.
+6. **No asset without license.** Allowed sources in `GUIDES/03_EXECUTION/components.md` → "Allowed Asset Sources".
 
 ---
 
@@ -82,6 +83,7 @@
 |---|---|
 | SEO, GEO & Schema.org JSON-LD | `GUIDES/03_EXECUTION/technical/seo.md` |
 | GDPR, Legal Notice & Privacy Policy | `GUIDES/03_EXECUTION/technical/legal.md` |
+| GDPR technical best practices (consent, self-hosting, embeds) | `GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md` |
 | CSP, Security Headers & sanitization | `GUIDES/03_EXECUTION/technical/security.md` |
 | QA, Testing, contrast & Lighthouse | `GUIDES/03_EXECUTION/technical/qa_testing.md` |
 | Deployment & Git conventions | `GUIDES/03_EXECUTION/technical/deployment.md` |

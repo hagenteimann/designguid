@@ -35,20 +35,31 @@ else
   pass 'Kein loading="lazy" auf Video-Elementen'
 fi
 
-# ── Externe Requests (DSGVO) ───────────────────────────────────────────────
+# ── Externe Fonts & Icons – VERBOTEN (self-host only) ──────────────────────
 
-# Google Fonts CDN
-if grep -rn "fonts.googleapis.com\|fonts.gstatic.com" "$TARGET" --include="*.html" --include="*.css" 2>/dev/null | grep -q .; then
-  fail "Google Fonts CDN gefunden – IP-Übertragung an Google → DSGVO-Verstoß. Lokal hosten."
+# 1. Externe @font-face src (JEDER Host) – der generische Fall: fängt alle
+#    extern geladenen Fonts UND Icon-Fonts ab, egal von welchem CDN.
+if grep -rnE "src:[^;]*url\(['\"]?[[:space:]]*(https?:)?//" "$TARGET" --include="*.html" --include="*.css" 2>/dev/null | grep -q .; then
+  fail "Externes @font-face src gefunden – Fonts extern zu laden ist VERBOTEN. WOFF2 lokal hosten."
+  grep -rnE "src:[^;]*url\(['\"]?[[:space:]]*(https?:)?//" "$TARGET" --include="*.html" --include="*.css" | head -3
 else
-  pass "Keine Google Fonts CDN"
+  pass "Keine extern geladenen @font-face"
 fi
 
-# Externe Icon-CDNs
-if grep -rn "cdnjs.cloudflare.com/ajax/libs/font-awesome\|unpkg.com/lucide\|cdn.jsdelivr.net/npm/lucide\|use.fontawesome.com" "$TARGET" --include="*.html" 2>/dev/null | grep -q .; then
-  fail "Icon-CDN gefunden – Icons immer als Inline SVG oder lokal hosten"
+# 2. Font-Provider (Link/Preconnect/Import) – Google, Typekit, Bunny, cdnfonts …
+if grep -rnE "fonts\.googleapis\.com|fonts\.gstatic\.com|use\.typekit\.net|p\.typekit\.net|fonts\.bunny\.net|fnt\.bunny\.net|fonts\.cdnfonts\.com|cloud\.typography\.com|fast\.fonts\.net|fontlibrary\.org" "$TARGET" --include="*.html" --include="*.css" 2>/dev/null | grep -q .; then
+  fail "Externer Font-Provider gefunden (z. B. Google Fonts) – VERBOTEN. Lokal hosten."
+  grep -rnE "fonts\.googleapis\.com|fonts\.gstatic\.com|use\.typekit\.net|fonts\.bunny\.net|fonts\.cdnfonts\.com" "$TARGET" --include="*.html" --include="*.css" | head -3
 else
-  pass "Keine Icon-CDN Requests"
+  pass "Kein externer Font-Provider"
+fi
+
+# 3. Externe Icon-Quellen (Icon-Fonts, Icon-CDNs, Icon-APIs) – breite Liste
+if grep -rniE "font-?awesome|/lucide|feather-?icons|material-?icons|material\.icons|iconify|api\.iconify|remix-?icon|boxicons|/ionicons|bootstrap-?icons|heroicons[^\"']*cdn|fonts\.googleapis\.com/icon|/tabler-icons|phosphor-?icons" "$TARGET" --include="*.html" --include="*.css" 2>/dev/null | grep -iE "https?:|//|cdn|unpkg|jsdelivr|cdnjs|googleapis" | grep -q .; then
+  fail "Externe Icon-Quelle gefunden – Icons extern zu laden ist VERBOTEN. Inline SVG verwenden."
+  grep -rniE "font-?awesome|iconify|material-?icons|/lucide|/ionicons|boxicons|remix-?icon" "$TARGET" --include="*.html" --include="*.css" | grep -iE "https?:|//|cdn|unpkg|jsdelivr|cdnjs|googleapis" | head -3
+else
+  pass "Keine externen Icon-Quellen (Inline SVG)"
 fi
 
 # Externe Scripts ohne SRI

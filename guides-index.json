@@ -36,6 +36,7 @@
         "GUIDES/03_EXECUTION/motion_interaction.md",
         "GUIDES/03_EXECUTION/technical/seo.md",
         "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
         "GUIDES/03_EXECUTION/technical/security.md",
         "GUIDES/03_EXECUTION/technical/qa_testing.md",
         "GUIDES/03_EXECUTION/technical/deployment.md",
@@ -55,6 +56,7 @@
         "GUIDES/01_STRATEGY/customer.md",
         "GUIDES/03_EXECUTION/technical/seo.md",
         "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
         "GUIDES/03_EXECUTION/technical/forms.md"
       ]
     },
@@ -73,7 +75,8 @@
         "GUIDES/01_STRATEGY/customer.md",
         "GUIDES/03_EXECUTION/technical/seo.md",
         "GUIDES/03_EXECUTION/technical/security.md",
-        "GUIDES/03_EXECUTION/technical/legal.md"
+        "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md"
       ]
     },
     "saas": {
@@ -92,6 +95,7 @@
         "GUIDES/01_STRATEGY/stakeholder.md",
         "GUIDES/01_STRATEGY/hr.md",
         "GUIDES/03_EXECUTION/technical/legal.md",
+        "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
         "GUIDES/03_EXECUTION/technical/security.md",
         "GUIDES/03_EXECUTION/tone_of_voice.md"
       ]
@@ -129,6 +133,10 @@
     "datenschutz":         "GUIDES/03_EXECUTION/technical/legal.md",
     "agb":                 "GUIDES/03_EXECUTION/technical/legal.md",
     "cookies":             "GUIDES/03_EXECUTION/technical/legal.md",
+    "dsgvo":               "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
+    "gdpr":                "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
+    "consent":             "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
+    "privacy":             "GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md",
     "contact-form":        "GUIDES/03_EXECUTION/technical/forms.md",
     "genie-crm":           "GUIDES/03_EXECUTION/technical/forms.md",
     "funnel":              "GUIDES/01_STRATEGY/customer.md",

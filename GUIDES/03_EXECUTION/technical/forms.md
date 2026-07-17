@@ -36,3 +36,17 @@ Forms are the gateway to the Customer Relationship Management (CRM) lifecycle:
 - **Immediate Segmentation:** If the brand serves distinct target groups (e.g., municipal authorities vs. commercial operators), include a low-friction selector (dropdown or radio buttons) in the form to segment the lead instantly.
 - **Dynamic Routing:** Route segmented form submissions to corresponding email templates or CRM pipelines to match the user's specific interests (e.g., sending municipal case studies only to municipalities).
 - **Auto-Onboarding (Socialisation):** On submit, redirect users to a tailored thank-you page that serves initial welcome materials or onboarding resources, initiating the socialization phase instantly.
+
+---
+
+## 5. State of the Art 2026 (Validation & Autofill)
+- **Native constraint validation** + **`:user-invalid` / `:user-valid`:** show errors only *after* the user has interacted (on blur/submit), never red on first render.
+- **Errors at the field**, concrete and solution-oriented, wired via `aria-describedby`; status via `aria-live="polite"`.
+- **Forgiving input:** tolerate formatting (spaces in phone/IBAN) instead of rejecting it.
+- **Autofill & mobile:** correct `autocomplete="…"` tokens, `inputmode`, and input `type`s; support **passkeys** and `autocomplete="one-time-code"` to cut friction.
+- **Newsletter:** double opt-in.
+
+```css
+input:user-invalid { border-color: var(--color-error, #9c4a48); }
+input:user-valid   { border-color: var(--color-success, #546e58); }
+```

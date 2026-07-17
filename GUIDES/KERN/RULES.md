@@ -49,11 +49,11 @@ Lighthouse Performance-Score < 80 = Deploy blockiert.
 
 ### 5. DSGVO ist nicht verhandelbar
 
-Kein CDN-Request ohne Pruefung:
-- Google Fonts CDN: **verboten**
-- Font Awesome CDN: **verboten**
+Externe Fonts und Icons: **grundsaetzlich verboten** – egal welcher Host.
+- Jeder externe Font (Google Fonts, Typekit, Bunny, cdnfonts, externes `@font-face src` …): **verboten** → Fonts immer lokal als WOFF2.
+- Jede externe Icon-Quelle (Font Awesome, Lucide/Feather/Material/Iconify/Boxicons-CDN, Icon-Fonts …): **verboten** → Icons immer Inline-SVG.
 - Google Analytics ohne Consent: **verboten**
-- Inline SVG statt CDN-Icons: **Pflicht**
+- `./check.sh` blockiert externe Font-/Icon-Requests automatisch (kein Deploy).
 
 ---
 
