@@ -1,10 +1,10 @@
-# Push8 – Skills & Plugins Referenz
+# Skills & Plugins Referenz
 
 > **Hinweis:** Die Dateien `IMPECCABLE.md`, `MOTION.md` und `TASTE.md` in diesem Ordner sind manuelle Zusammenfassungen und können veraltet sein.
 > **Source of Truth sind die global installierten Skills** unter `~/.claude/skills/` (bzw. `~/.agents/skills/`).
 > Bei Widersprüchen gelten die installierten Skills.
 
-Dieser Ordner dokumentiert alle Skills und Plugins, die Push8-Agenten installieren und verwenden sollen.
+Dieser Ordner dokumentiert alle Skills und Plugins, die Agenten in diesem Projekt installieren und verwenden können.
 
 ---
 
@@ -51,7 +51,7 @@ Skills landen in `~/.agents/skills/` und werden automatisch nach `~/.claude/skil
 
 ---
 
-## Design-Skills (Pflicht bei Push8)
+## Design-Skills (Empfohlener Standard)
 
 ### 1. impeccable – UI-Polish & Audit
 
@@ -190,7 +190,7 @@ Diese Skills sind in Claude Code integriert und werden via `Skill`-Tool geladen:
 
 ## Vollständige Erst-Installation
 
-Für einen neuen Push8-Arbeitsplatz alle Skills auf einmal installieren:
+Für ein neues Arbeits-Setup alle Skills auf einmal installieren:
 
 ```bash
 # 1. Plugins

@@ -46,7 +46,7 @@ KOMPONENTEN:
 
 ---
 
-## Stattdessen: Push8-Richtung
+## Stattdessen: Hochwertige Ästhetik
 
 ### Typografie
 ```css
