@@ -103,7 +103,7 @@ async function processPayment() {
 
 ---
 
-## CRM Integration (Genie)
+## CRM Integration
 
 Siehe: `KONTAKTFORMULAR.md`
 
@@ -199,4 +199,4 @@ app.post('/webhooks/stripe', (req, res) => {
 
 ---
 
-*API Integration – Push8 Web Agency – Stand Mai 2026*
+*API Integration – Stand Mai 2026*

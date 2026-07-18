@@ -295,4 +295,4 @@ NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
 ---
 
-*Build Process & Bundling – Push8 Web Agency – Stand Mai 2026*
+*Build Process & Bundling – Stand Mai 2026*

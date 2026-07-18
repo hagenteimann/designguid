@@ -220,4 +220,4 @@ Nach jedem Error:
 
 ---
 
-*Error Handling & Recovery – Push8 Web Agency – Stand Mai 2026*
+*Error Handling & Recovery – Stand Mai 2026*

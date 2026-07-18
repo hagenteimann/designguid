@@ -292,4 +292,4 @@ npm run build  # Siehe Fehlermeldungen
 
 ---
 
-*Development Setup – Push8 Web Agency – Stand Mai 2026*
+*Development Setup – Stand Mai 2026*

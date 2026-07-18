@@ -1,6 +1,6 @@
-# Push8 – Tech Stack & Skalierbarkeit
+# Tech Stack & Skalierbarkeit
 
-Verbindliche Stack-Entscheidungen fuer Push8-Webprojekte. Basiert auf Performance, DSGVO, Wartbarkeit und Agentur-Skalierung.
+Verbindliche Stack-Entscheidungen fuer Webprojekte. Basiert auf Performance, DSGVO, Wartbarkeit und Agentur-Skalierung.
 
 ---
 
@@ -111,7 +111,7 @@ Astro Landing Page:        0 KB JS (reines HTML/CSS)
 | SplitText | Club (99$/Jahr) | Text-Animationen Zeile/Buchstabe |
 | Draggable | Free | Drag-Interaktionen |
 
-### Pflicht-Animationen bei Push8
+### Pflicht-Animationen
 
 **Hero-Animation (jede Seite):**
 - Paragraph-Reveal: Ueberschrift + Text kommen nacheinander von unten
@@ -176,7 +176,7 @@ gsap.from(".reveal", {
 **2. Projekt-Skalierung** – Kunde will aus 1-Pager eine 10-Seiten-Site
 **3. Traffic-Skalierung** – Kunde wird viral
 
-### Agentur-Skalierung (fuer Push8 am relevantesten)
+### Agentur-Skalierung
 
 ```
 Astro + eigenes Component-System + Sanity CMS
@@ -184,7 +184,7 @@ Astro + eigenes Component-System + Sanity CMS
 
 - Einmal sauberes Astro-Komponenten-Set bauen (Hero, CTA, Cards, Nav, Footer)
 - Fuer jeden Kunden nur Tokens + Inhalte austauschen
-- Sanity als headless CMS → Kunde pflegt selbst, Push8 baut schneller
+- Sanity als headless CMS → Kunde pflegt selbst, die Agentur baut schneller
 
 **Die echten Skalierungs-Hebel:**
 
@@ -193,7 +193,7 @@ Astro + eigenes Component-System + Sanity CMS
 | Token-System | Jedes Projekt nutzt dieselbe Struktur, nur andere Werte |
 | Komponenten-Bibliothek | Hero, Nav, CTA einmal gebaut – 20x wiederverwendet |
 | Klarer Brief-Prozess | Weniger Nacharbeit, schnellere Abnahme |
-| CMS-Strategie | Kunde pflegt selbst → Push8 spart Support-Zeit |
+| CMS-Strategie | Kunde pflegt selbst → die Agentur spart Support-Zeit |
 
 Nicht das Framework skaliert. Das System skaliert.
 
@@ -216,7 +216,7 @@ Kein Server noetig. Vercel/Netlify Edge-CDN reicht.
 
 ---
 
-## Roadmap Push8-Stack
+## Roadmap Stack
 
 ```
 Kurzfristig (0–2 Jahre):
@@ -226,7 +226,7 @@ Kurzfristig (0–2 Jahre):
 Mittelfristig (2–4 Jahre):
   Astro-Component-Library + Sanity CMS
   → Kunde kann selbst editieren
-  → Push8 baut schneller weil Komponenten fertig sind
+  → die Agentur baut schneller weil Komponenten fertig sind
 
 Langfristig (4+ Jahre):
   SvelteKit wenn Web-App-Features gefragt sind
@@ -252,4 +252,4 @@ Hosting:      Vercel / Netlify / Hetzner VPS
 
 ---
 
-*Push8 TechStack Guide – Stand Mai 2026*
+*TechStack Guide – Stand Mai 2026*

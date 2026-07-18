@@ -121,4 +121,4 @@ transform: rotate(45deg);
 
 ---
 
-*Browser Support – Push8 Web Agency – Stand Mai 2026*
+*Browser Support – Stand Mai 2026*

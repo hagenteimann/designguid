@@ -214,4 +214,4 @@ Notification: Email
 
 ---
 
-*Analytics & Tracking – Push8 Web Agency – Stand Mai 2026*
+*Analytics & Tracking – Stand Mai 2026*

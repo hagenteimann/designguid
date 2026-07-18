@@ -1,9 +1,8 @@
-﻿# MASTER GUIDE - Brand & Web Strategy-to-Execution Framework
+# MASTER GUIDE - Brand & Web Strategy-to-Execution Framework
 This file contains the complete generic guidelines and code standards compiled from the repository guides. Use this file as a master prompt context for any AI coding assistant.
 
-
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\01_STRATEGY\customer.md
+FILE: GUIDES/01_STRATEGY/customer.md
 ================================================================================
 
 # Strategy: Customer (CX, CJ, TP & Funnel)
@@ -59,7 +58,7 @@ Every web page must act as a structured guide leading the user through the funne
 * **Goal:** Address objections and explain the working relationship.
 * **Must-Haves:**
   - Case Studies: Problem $\rightarrow$ Solution $\rightarrow$ Quantified Result.
-  - Visual process roadmap showing 3â€“5 simple steps of collaboration.
+  - Visual process roadmap showing 3–5 simple steps of collaboration.
 
 ### Step 5: Conversion (Final Call to Action)
 * **Goal:** Close the deal with zero distraction.
@@ -109,17 +108,17 @@ The website acts as a critical interface for the long-term customer relationship
    - *Website Touchpoint:* Customer portal areas, regular updates, newsletters, and cross-selling product matrices.
 4. **Reife (Maturity / Retention):**
    - *Website Touchpoint:* Premium customer benefits, user-specific dashboards, and community portals.
-5. **GefÃ¤hrdung (Churn Risk / Churn prevention):**
+5. **Gefährdung (Churn Risk / Churn prevention):**
    - *Website Touchpoint:* Automatic warnings via user activity logging. Offering specialized support access or custom retention/win-back banners.
-6. **AuflÃ¶sung (Termination / Win-back):**
+6. **Auflösung (Termination / Win-back):**
    - *Website Touchpoint:* Frictionless cancellation flows combined with feedback surveys (exit interviews) and direct reactivation offers.
 
 ---
 
-## 7. Mentale & Physische VerfÃ¼gbarkeit (Byron Sharp)
+## 7. Mentale & Physische Verfügbarkeit (Byron Sharp)
 Brand growth is driven by maximizing the brand's mental and physical availability:
 
-### Mentale VerfÃ¼gbarkeit (Mental Availability)
+### Mentale Verfügbarkeit (Mental Availability)
 Ensure the brand is easily recalled by the consumer in a purchasing situation:
 - **Category Entry Points (CEPs):** Identify the situational triggers (the "why" and "when") that lead users to search for the service. Examples:
   - *Symptom/Trigger:* "Leaking pipe under the sink" (CEP) $\rightarrow$ The plumber's site must show emergency support immediately.
@@ -127,14 +126,14 @@ Ensure the brand is easily recalled by the consumer in a purchasing situation:
   - Structure the website's copy and headlines to directly match these situational triggers (CEPs) instead of using abstract corporate jargon.
 - **Distinctive Brand Assets (DBAs):** Consistently use and protect sensory anchors (logos, specific colors, characteristic fonts) across the entire user experience. Never let arbitrary design changes dilute these assets.
 
-### Physische VerfÃ¼gbarkeit (Physical Availability)
+### Physische Verfügbarkeit (Physical Availability)
 Ensure the brand is as easy to find and buy as possible on the web:
 - **Web Presence:** The site must load instantly (LCP < 2.5s) on mobile networks. Slow load times make the brand "physically unavailable" to the user.
 - **Low-Friction Access:** Eliminate all cognitive and technical barriers. Use clear call-to-actions, short contact forms, direct click-to-chat links (WhatsApp/phone), and fully responsive navigation.
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\01_STRATEGY\hr.md
+FILE: GUIDES/01_STRATEGY/hr.md
 ================================================================================
 
 # Strategy: HR (Demand & Incentives)
@@ -167,7 +166,7 @@ Employer branding is not just outward-facing; it must align with internal cultur
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\01_STRATEGY\product_service.md
+FILE: GUIDES/01_STRATEGY/product_service.md
 ================================================================================
 
 # Strategy: Service & Product (Competitors & Differentiation)
@@ -177,7 +176,7 @@ This guide defines the methodology for analyzing competitors and establishing un
 ---
 
 ## 1. Competitor Analysis
-Before designing a product/service showcase, analyze 3â€“5 direct competitors:
+Before designing a product/service showcase, analyze 3–5 direct competitors:
 - **Feature Matrix:** What do they offer? What is missing?
 - **Pricing & Packaging:** How do they structure their prices (flat rate, modular, subscriptions)?
 - **Visual Stance:** What color schemes, typography, and image motifs do they use?
@@ -195,8 +194,8 @@ Define the unique value proposition (UVP) and how it is visually communicated:
 
 ## 3. SWOT-Analyse & Wettbewerbs-Matrix
 Evaluate the positioning using a SWOT matrix during the research phase:
-- **Strengths (StÃ¤rken):** Internal capabilities that deliver superior value (e.g., custom technology, fast lead time). Map these directly to the Hero section and primary benefits.
-- **Weaknesses (SchwÃ¤chen):** Internal gaps to be compensated for visually (e.g., lesser-known brand). Mitigate via heavy social proof (logos, certificates, testimonials).
+- **Strengths (Stärken):** Internal capabilities that deliver superior value (e.g., custom technology, fast lead time). Map these directly to the Hero section and primary benefits.
+- **Weaknesses (Schwächen):** Internal gaps to be compensated for visually (e.g., lesser-known brand). Mitigate via heavy social proof (logos, certificates, testimonials).
 - **Opportunities (Chancen):** External market gaps not addressed by competitors (e.g., competitors have poor mobile sites or lack transparent pricing).
 - **Threats (Risiken):** External threats to counter (e.g., price wars). Counter by emphasizing craftsmanship, custom quality, and comprehensive warranties.
 
@@ -212,7 +211,7 @@ How prices are structured and communicated determines trust and cognitive load:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\01_STRATEGY\shareholder.md
+FILE: GUIDES/01_STRATEGY/shareholder.md
 ================================================================================
 
 # Strategy: Shareholder (Communication & Distribution)
@@ -240,7 +239,7 @@ How updates and strategic information are delivered to shareholders:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\01_STRATEGY\stakeholder.md
+FILE: GUIDES/01_STRATEGY/stakeholder.md
 ================================================================================
 
 # Strategy: Stakeholder (Communication & Distribution)
@@ -266,7 +265,7 @@ Stakeholders include everyone affected by or interested in the brand:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\02_CONCEPT\design_concept.md
+FILE: GUIDES/02_CONCEPT/design_concept.md
 ================================================================================
 
 # Synthesis: Design Concept
@@ -291,7 +290,7 @@ To create a unified Design Concept:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\ai_prompts.md
+FILE: GUIDES/03_EXECUTION/ai_prompts.md
 ================================================================================
 
 # Deliverables: AI Image Prompts
@@ -340,7 +339,7 @@ To keep images clean and authentic, avoid or exclude:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\colors.md
+FILE: GUIDES/03_EXECUTION/colors.md
 ================================================================================
 
 # Deliverables: Colors & Design Tokens
@@ -353,7 +352,7 @@ This guide defines the color system, token structure, and HSL scale distribution
 Color scales are defined quantitatively using HSL values, ensuring that steps are mathematically proportional. 
 
 ### Primary Scale (300 = Base)
-The base brand color is assigned to token `300`. Light and dark steps are scaled by modifying the HSL lightness (L) value in steps of roughly 10%â€“15%:
+The base brand color is assigned to token `300`. Light and dark steps are scaled by modifying the HSL lightness (L) value in steps of roughly 10%–15%:
 * `--color-primary-100`: `hsl(var(--hue), var(--sat), 95%)`  - Light background
 * `--color-primary-200`: `hsl(var(--hue), var(--sat), 85%)`  - Borders, soft highlights
 * **`--color-primary-300` (Base):** `hsl(var(--hue), var(--sat), 60%)` - Brand primary color
@@ -392,9 +391,26 @@ Color is one of the most powerful Distinctive Brand Assets (DBAs):
 - **Chrominence & Consistency:** Ensure the primary brand hue (`--color-primary-300`) is prominent and consistent across all pages. Do not let agents introduce arbitrary auxiliary colors (such as default framework blues/indigos or random gradients) that dilute the brand identity.
 - **Accented Micro-interactions:** Limit color shifts on interactive states (e.g., hover, focus) to the pre-calculated HSL scale steps (e.g., transitioning from `300` to `400`).
 
+---
+
+## 5. State of the Art 2026 (OKLCH, P3, APCA)
+Prefer modern color engineering over legacy HSL where support allows:
+- **OKLCH / OKLab working space:** perceptually uniform — equal lightness steps *look* equal, avoiding the washed-out mid-tones HSL produces. Define scales in `oklch(L C H)` for even, predictable ramps.
+- **Wide-gamut P3:** richer, more accurate color on modern displays; always keep an sRGB fallback.
+- **Modern CSS color:** derive scales and themes from few base values via `color-mix()`, relative color syntax, and `light-dark()` (auto light/dark theming).
+- **APCA contrast (WCAG 3 draft):** for perceptually accurate legibility beyond the flat 4.5:1 of WCAG 2 — especially for large/thin type and dark mode. Keep 4.5:1 (WCAG AA) as the hard minimum, use APCA to fine-tune.
+
+```css
+:root {
+  /* even, perceptual ramp */
+  --color-primary-300: oklch(0.62 0.17 264);
+  --color-primary-400: oklch(0.52 0.17 264);
+}
+```
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\components.md
+FILE: GUIDES/03_EXECUTION/components.md
 ================================================================================
 
 # Deliverables: Components & Assets
@@ -423,8 +439,8 @@ This guide defines coding standards for reusable components, performance limits 
 
 ## 3. Allowed Asset Sources
 * **Icons:** Must be **Inline SVGs** under open-source licenses (MIT, Apache, ISC).
-  - Allowed: Lucide, Heroicons, Phosphor Icons, Tabler Icons, Bootstrap Icons.
-  - Strictly Forbidden: CDNs (FontAwesome CDN, Google Material Icons CDN) due to DSGVO IP-leaks.
+  - Allowed: Lucide, Heroicons, Phosphor Icons, Tabler Icons, Bootstrap Icons — copied in as inline SVG markup.
+  - **Hard rule – no external icons, any host:** loading icons from *any* external source is strictly forbidden — icon CDNs (FontAwesome, Material Icons, Iconify, Boxicons, Remixicon …) and icon-fonts alike, due to GDPR IP-leaks. Enforced by `./check.sh` (blocks deploy).
 * **Images:** Must have checked licensing.
   - Allowed: Unsplash, Pexels, Pixabay, Undraw.
   - Forbidden: Adobe Stock, Shutterstock, Getty without active licenses.
@@ -471,7 +487,7 @@ Traditional CSS `border-radius` creates a G1-continuous curve (a circular arc me
 
 ### Implementation Methods:
 1. **Figma Export (Recommended for Icons & Custom Badges):**
-   - Design components in Figma using **Corner Smoothing** (set to 60%â€“100% for iOS-like squircle curves).
+   - Design components in Figma using **Corner Smoothing** (set to 60%–100% for iOS-like squircle curves).
    - Export the shapes directly as SVGs to preserve the exact bezier curvature.
 2. **CSS Percentage Approximation (For Standard Containers & Cards):**
    - For fluid containers, use percentage-based radii instead of absolute pixels to approximate the superellipse curve:
@@ -483,7 +499,7 @@ Traditional CSS `border-radius` creates a G1-continuous curve (a circular arc me
        border-radius: var(--radius-squircle-sm); /* 20% */
      }
      ```
-3. **SVG Clip-Path (For Exact LamÃ©/Superellipse Curves):**
+3. **SVG Clip-Path (For Exact Lamé/Superellipse Curves):**
    - Use inline SVG clip-paths to mask HTML containers mathematically:
      ```css
      .premium-wrapper {
@@ -491,9 +507,25 @@ Traditional CSS `border-radius` creates a G1-continuous curve (a circular arc me
      }
      ```
 
+---
+
+## 6. Interaction State Matrix
+Every interactive element must design its **full** state set — never leave states to the browser default:
+`default` · `hover` · `focus-visible` · `active` · `disabled` · `loading` · `error` · (`selected`).
+- **`:focus-visible`** for keyboard focus (visible ring, ≥ 2px, contrast ≥ 3:1); never `outline: none` without a replacement.
+- **`@media (hover: hover)`** — only apply hover effects on devices that actually hover (don't confuse touch).
+- **`:has()`** enables parent-level state without JS.
+- Drive states via data attributes/tokens (`[data-state="loading"]`) for consistency across buttons, inputs, cards.
+
+## 7. Depth & Elevation System
+- **One consistent light source** (usually top) — all shadows follow it.
+- **Elevation tokens** (`--elevation-1…5`): higher = closer, defined by a **layered, slightly tinted** shadow (not a single neutral drop-shadow) *and* surface contrast.
+- **Dark-mode elevation via surface lightness** (higher layers get lighter), not heavier shadows.
+- **Glass/blur** (`backdrop-filter`) only as a deliberate layer, sparingly, with a fallback. `z-index` is a documented system, not random `9999`.
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\layouting.md
+FILE: GUIDES/03_EXECUTION/layouting.md
 ================================================================================
 
 # Deliverables: Layouting & Grids
@@ -551,7 +583,7 @@ Structure content using proven cognitive and mathematical patterns to guide the 
 - **Der Goldene Schnitt (Golden Ratio):**
   - **Spalten-Proportionen (Asymmetrie):** For split-screen layouts or content-sidebar grids, use the golden ratio approximation of **$62\% \mathbin{/} 38\%$** (CSS `grid-template-columns: 1.618fr 1fr;`) instead of symmetric $50\% \mathbin{/} 50\%$ splits. This creates organic balance and tension.
   - **Text- & Raum-Proportionen:** Apply the golden multiplier ($1.618$) to determine font size steps or spatial relationships to guarantee mathematical harmony.
-- **WeiÃŸraum (Negative Space):** White space is a functional layout element, not empty space. Use large section padding (e.g., `padding: var(--space-section) 0;`) to prevent cognitive overload and clearly isolate distinct thoughts.
+- **Weißraum (Negative Space):** White space is a functional layout element, not empty space. Use large section padding (e.g., `padding: var(--space-section) 0;`) to prevent cognitive overload and clearly isolate distinct thoughts.
 - **Visual Anchor Points:** Guide the eye from large display titles (`h1`/`h2`) down to small details. Never place two adjacent elements of the same visual weight unless they are peers in a grid.
 
 ---
@@ -562,9 +594,26 @@ To support recurring customer engagement (the episodic lifecycle), structure lay
 - **Actionable Routines:** Layout structures for recurring seminar schedules, advisory workshops, or customer newsletter signups.
 - **Dynamic Content Modules:** Use flexible grid modules (e.g., Bento boxes) that can be easily updated to show current notices or regulatory changes without breaking the page's structural hierarchy.
 
+---
+
+## 5. State of the Art 2026 (Intrinsic & Fluid Layout)
+Move beyond fixed viewport breakpoints toward context-aware, fluid layouts:
+- **Container Queries (`@container`):** components respond to *their own container's* width, not the global viewport — true, reusable components that work in any slot.
+- **Subgrid:** nested grids align cleanly to the parent track lines (`grid-template-columns: subgrid`) for consistent rhythm across cards/rows.
+- **Fluid sizing:** `min()` / `max()` / `clamp()` for widths, gaps and type; `aspect-ratio` instead of padding hacks.
+- **Logical properties by default** (`margin-inline`, `padding-block`, `inset`) for i18n/RTL robustness.
+- **`:has()`** enables content-driven layout decisions (e.g. a card with a media child lays out differently) without JS.
+
+```css
+.card-host { container-type: inline-size; }
+@container (min-width: 30rem) {
+  .card { grid-template-columns: 1fr 2fr; }
+}
+```
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\logo.md
+FILE: GUIDES/03_EXECUTION/logo.md
 ================================================================================
 
 # Deliverables: Logo
@@ -603,7 +652,7 @@ The logo is the primary Distinctive Brand Asset (DBA) of the company:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\motion_interaction.md
+FILE: GUIDES/03_EXECUTION/motion_interaction.md
 ================================================================================
 
 # Deliverables: Motion & Interaction
@@ -616,7 +665,7 @@ This guide defines motion principles, scroll-reveal mechanics, interactive hover
 * **Purpose-Driven:** Movement must guide the eye or provide visual feedback. Never animate purely for decoration.
 * **Organic Easing:** Standard transitions use a custom cubic-bezier curves mimicking physical momentum rather than linear mechanical speed:
   - Default curve: `cubic-bezier(0.22, 1, 0.36, 1)` (organisch / out-quint)
-  - Spring curve: `cubic-bezier(0.34, 1.56, 0.64, 1)` (fÃ¼r Button clicks)
+  - Spring curve: `cubic-bezier(0.34, 1.56, 0.64, 1)` (für Button clicks)
 
 ---
 
@@ -692,9 +741,28 @@ document.querySelectorAll('[data-reveal]').forEach((el) => {
 - [ ] No animations trigger layout shifts (CLS) that hurt performance scores.
 - [ ] Interactive elements (buttons, links) have active press-scaling states (`transform: scale(0.96)`) for immediate physical feedback.
 
+---
+
+## 5. State of the Art 2026 (View Transitions & Scroll-driven)
+Modern, GPU-friendly motion without heavy JS:
+- **View Transitions API:** animate state/route changes so shared elements move *through* the transition instead of hard-cutting (`document.startViewTransition(...)`; cross-document transitions via `@view-transition`). This is the primary tool for premium page-level continuity.
+- **Scroll-driven animations (CSS):** use `animation-timeline: view()` / `scroll()` for reveal and parallax instead of `IntersectionObserver`/scroll listeners where supported — runs off the main thread.
+- **Spring / physics easing** as a brand signature curve, shared as a token.
+- **Always** guard everything behind `prefers-reduced-motion: reduce` — the signature must still work reduced.
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+```
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\tone_of_voice.md
+FILE: GUIDES/03_EXECUTION/tone_of_voice.md
 ================================================================================
 
 # Deliverables: Tone of Voice & Content
@@ -735,7 +803,7 @@ This guide defines the brand's verbal identity, copywriting rules, target addres
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\typography.md
+FILE: GUIDES/03_EXECUTION/typography.md
 ================================================================================
 
 # Deliverables: Typography & Scales
@@ -763,14 +831,14 @@ Always use responsive scales via `clamp()` to interpolate sizes smoothly between
 :root {
   --font-base: 'Inter', system-ui, sans-serif;
   
-  --text-xs:   clamp(0.688rem, 1vw,   0.75rem);   /* 11px â†’ 12px */
-  --text-sm:   clamp(0.813rem, 1.2vw, 0.875rem);  /* 13px â†’ 14px */
-  --text-md:   clamp(0.938rem, 1.5vw, 1rem);      /* 15px â†’ 16px */
-  --text-lg:   clamp(1.063rem, 1.8vw, 1.25rem);   /* 17px â†’ 20px */
-  --text-xl:   clamp(1.188rem, 2.5vw, 1.5rem);    /* 19px â†’ 24px */
-  --text-2xl:  clamp(1.375rem, 3.5vw, 2rem);      /* 22px â†’ 32px */
-  --text-3xl:  clamp(1.625rem, 5vw,   2.5rem);    /* 26px â†’ 40px */
-  --text-4xl:  clamp(2rem,     7vw,   3.5rem);    /* 32px â†’ 56px */
+  --text-xs:   clamp(0.688rem, 1vw,   0.75rem);   /* 11px → 12px */
+  --text-sm:   clamp(0.813rem, 1.2vw, 0.875rem);  /* 13px → 14px */
+  --text-md:   clamp(0.938rem, 1.5vw, 1rem);      /* 15px → 16px */
+  --text-lg:   clamp(1.063rem, 1.8vw, 1.25rem);   /* 17px → 20px */
+  --text-xl:   clamp(1.188rem, 2.5vw, 1.5rem);    /* 19px → 24px */
+  --text-2xl:  clamp(1.375rem, 3.5vw, 2rem);      /* 22px → 32px */
+  --text-3xl:  clamp(1.625rem, 5vw,   2.5rem);    /* 26px → 40px */
+  --text-4xl:  clamp(2rem,     7vw,   3.5rem);    /* 32px → 56px */
 }
 ```
 
@@ -791,8 +859,8 @@ Always use responsive scales via `clamp()` to interpolate sizes smoothly between
 ---
 
 ## 4. Technical Rules (Self-Hosting)
-* **DSGVO Compliance:** Loading fonts via Google Fonts CDN exposes user IPs and is strictly forbidden.
-* **Implementation:** Always download `.woff2` files and define them locally:
+* **Hard rule – no external fonts, any host:** Loading fonts from *any* external source is **strictly forbidden** — not just Google Fonts, but every provider (Typekit, Bunny, cdnfonts …) and any `@font-face` whose `src` points to an absolute/protocol-relative URL. It leaks user IPs (GDPR) and is enforced by `./check.sh` (blocks deploy).
+* **Implementation:** Always download `.woff2` files and define them locally with a relative path:
 
 ```css
 @font-face {
@@ -811,9 +879,24 @@ The pairing of display and body fonts serves as a primary visual signature of th
 - **Consistent Hierarchy:** Do not let agents substitute custom display fonts with generic system fallbacks or default web fonts. If the brand has a bold, charakterstarker display font, protect it across all titles.
 - **Font Availability:** Preload the main variable font files (e.g., in `.woff2` format) to ensure zero visual layout shift (CLS) during page loading.
 
+---
+
+## 6. State of the Art 2026 (Rhythm & Modern Type)
+Separate professional typesetting from amateur sizing:
+- **Variable fonts:** ship one self-hosted `.woff2` with weight and optical-size (`opsz`) axes instead of many static cuts — lighter payload, finer control. Never faux-bold/italic; use real axes/cuts.
+- **Measure 45–75 characters** per line for body copy (`max-width: 65ch`); readability drops sharply beyond that.
+- **Modular scale:** derive sizes from one ratio (e.g. 1.25) rather than arbitrary values (aligns with the golden-ratio rule in `layouting.md`).
+- **`text-wrap: balance`** for headlines (even line lengths), **`text-wrap: pretty`** for body (no orphans/runts).
+- **Logical properties & `lang`** awareness (`margin-inline`, `padding-block`) so type holds up for longer languages and RTL.
+
+```css
+.body-copy { max-width: 65ch; text-wrap: pretty; }
+h1, h2     { text-wrap: balance; }
+```
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\automation.md
+FILE: GUIDES/03_EXECUTION/technical/automation.md
 ================================================================================
 
 # Technical: Automation & Validation Loops
@@ -843,7 +926,7 @@ The repository supports automated developer cycles (e.g. Validator-Agent cycles)
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\deployment.md
+FILE: GUIDES/03_EXECUTION/technical/deployment.md
 ================================================================================
 
 # Technical: Deployment & Git Workflow
@@ -877,7 +960,127 @@ Maintain a clean repository history:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\forms.md
+FILE: GUIDES/03_EXECUTION/technical/dsgvo_best_practices.md
+================================================================================
+
+# Technical: GDPR / DSGVO Best Practices (Implementation)
+
+Complements `legal.md` (required legal pages) with the **technical implementation**: how to *build* a privacy-compliant site. Stand 2026. **Not legal advice** — consult a lawyer for commercial projects.
+
+> **The 10 hard rules**
+> 1. Privacy by Design & Default (Art. 25) — privacy is the preset, not an opt-in.
+> 2. Data minimization — collect only what you truly need.
+> 3. Self-host everything (fonts, icons, scripts) — no third-party request before consent.
+> 4. Consent is opt-in: freely given, granular, revocable, documented — "Reject" as easy as "Accept".
+> 5. TDDDG §25: consent for *any* access to the device (cookies *and* localStorage) unless strictly necessary.
+> 6. Load third-party scripts/embeds only *after* consent (blocking by default).
+> 7. TLS/HTTPS everywhere (Art. 32); anonymize IPs in logs, short retention.
+> 8. DPA (AVV) with every processor; US transfers only via DPF certification or SCCs.
+> 9. Make data-subject rights actionable (access, erasure, portability).
+> 10. Data breach → notify within 72h (Art. 33).
+
+---
+
+## 1. Privacy by Design & Default (Art. 25)
+- Privacy is the **default state**, not something the user must enable.
+- Before any feature ask: *do I really need this data?* If no → don't collect it.
+- No tracking, no third-party, no non-essential cookie without active consent.
+
+## 2. Data Minimization (Art. 5)
+- Contact form: name, email, message only. No mandatory phone "just in case".
+- No hidden fields collecting more than needed.
+- Server logs: only what's needed for operation/security, with a short deletion window.
+
+## 3. Self-host everything (no third-party without consent)
+The most common GDPR breach on websites: external requests that silently send the user's IP to third-party (often US) servers.
+
+| Resource | Correct |
+|---|---|
+| Fonts | **Self-hosted WOFF2** (`@font-face`), never a font CDN — enforced by `check.sh` |
+| Icons | **Inline SVG**, never an icon CDN/icon-font — enforced by `check.sh` |
+| CSS/JS libraries | **bundled locally**, never jsDelivr/unpkg/cdnjs in `<head>` |
+| Analytics | cookieless & EU-hosted (see §7) |
+
+## 4. Getting consent right
+Valid consent under GDPR/TDDDG is **freely given, specific, informed, unambiguous** and must be:
+- **Opt-in** — nothing pre-ticked, no "continued use = consent".
+- **Equally rejectable** — "Essential only" as prominent as "Accept all" (no dark patterns, no greyed-out reject button).
+- **Granular** — separable by purpose (analytics / marketing / embeds).
+- **Revocable anytime** — a persistent "Cookie settings" link in the footer.
+- **Documented** — store timestamp + scope of the consent as proof.
+
+> Note: the basic banner in `legal.md` must be extended to satisfy these — equal-weight buttons, granular toggles, and a revoke link.
+
+## 5. Load third-party only after consent (blocking by default)
+Scripts that send data to third parties must not execute before consent. Pattern: neutralize the script, activate on consent.
+
+```html
+<!-- NOT executed until consent is granted -->
+<script type="text/plain" data-consent="analytics" src="/js/analytics.js"></script>
+```
+
+```js
+function activateConsented(category) {
+  document.querySelectorAll(`script[type="text/plain"][data-consent="${category}"]`)
+    .forEach(old => {
+      const s = document.createElement('script');
+      if (old.src) s.src = old.src; else s.textContent = old.textContent;
+      document.head.appendChild(s);
+    });
+}
+```
+
+## 6. Embeds: click-to-load
+YouTube, Google Maps, Instagram etc. track on load. Use a placeholder; load the real embed on click (after consent).
+- YouTube: use `youtube-nocookie.com` — **and still** consent-gate it.
+- Maps: static placeholder + "Load map" button; or OpenStreetMap (self-hosted tiles, no tracking).
+
+## 7. Analytics — privacy-first
+
+| Option | GDPR status |
+|---|---|
+| **Plausible / Fathom** (EU-hosted, cookieless) | ✅ often without consent |
+| **Matomo self-hosted** (IP anonymization, cookieless mode) | ✅ often without consent |
+| **GA4** | ⚠️ only after consent + Consent Mode v2; US transfer via DPF |
+| Server-log analysis | ✅ if IP anonymized |
+
+- Always anonymize IP (truncate last octet/segment).
+- Respect **Do Not Track / Global Privacy Control (GPC)**.
+
+## 8. Hosting, processing & transfers
+- Prefer **EU/EEA hosting**.
+- **DPA / AVV (Art. 28)** with *every* processor: hosting, CRM, mail, CDN, form backend.
+- **US services** only if the provider is **EU-US Data Privacy Framework (DPF)**-certified, or with Standard Contractual Clauses (SCCs) + a Transfer Impact Assessment.
+- Maintain a record of processing activities (Art. 30).
+
+## 9. Security & data-subject rights
+- **Force TLS/HTTPS** (HSTS), modern security headers (→ `security.md`, CSP).
+- Operationalize **data-subject rights**: access (Art. 15), erasure (Art. 17), portability (Art. 20), objection (Art. 21) — a clear contact path + internal process.
+- **Data breach**: notify the supervisory authority within **72h** (Art. 33); affected users on high risk.
+
+---
+
+## GDPR Go-Live Checklist (technical)
+- [ ] No external requests in the network tab before consent (fonts/icons/scripts self-hosted)
+- [ ] Consent banner: opt-in, granular, "Reject" equal-weight, revoke link in footer
+- [ ] Third-party scripts `type="text/plain"` + consent activation (blocking by default)
+- [ ] Embeds as click-to-load (YouTube-nocookie, Maps placeholder)
+- [ ] Analytics cookieless/EU **or** consent-gated; IP anonymized; GPC/DNT respected
+- [ ] Contact form: TLS, purpose-bound consent checkbox, honeypot, deletion window
+- [ ] TLS/HSTS active, security headers set
+- [ ] All services named in the Privacy Policy (→ `legal.md`)
+- [ ] DPA with all processors; US transfers via DPF/SCC clarified
+- [ ] `./check.sh` GDPR checks green
+
+> Related: `legal.md` (required pages) · `security.md` (CSP/headers) · `forms.md`.
+
+---
+
+*GDPR Best Practices – Stand 2026. Not legal advice; consult a lawyer for commercial projects.*
+
+
+================================================================================
+FILE: GUIDES/03_EXECUTION/technical/forms.md
 ================================================================================
 
 # Technical: Forms & Data Submission
@@ -919,21 +1122,37 @@ Forms are the gateway to the Customer Relationship Management (CRM) lifecycle:
 - **Dynamic Routing:** Route segmented form submissions to corresponding email templates or CRM pipelines to match the user's specific interests (e.g., sending municipal case studies only to municipalities).
 - **Auto-Onboarding (Socialisation):** On submit, redirect users to a tailored thank-you page that serves initial welcome materials or onboarding resources, initiating the socialization phase instantly.
 
+---
+
+## 5. State of the Art 2026 (Validation & Autofill)
+- **Native constraint validation** + **`:user-invalid` / `:user-valid`:** show errors only *after* the user has interacted (on blur/submit), never red on first render.
+- **Errors at the field**, concrete and solution-oriented, wired via `aria-describedby`; status via `aria-live="polite"`.
+- **Forgiving input:** tolerate formatting (spaces in phone/IBAN) instead of rejecting it.
+- **Autofill & mobile:** correct `autocomplete="…"` tokens, `inputmode`, and input `type`s; support **passkeys** and `autocomplete="one-time-code"` to cut friction.
+- **Newsletter:** double opt-in.
+
+```css
+input:user-invalid { border-color: var(--color-error, #9c4a48); }
+input:user-valid   { border-color: var(--color-success, #546e58); }
+```
+
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\legal.md
+FILE: GUIDES/03_EXECUTION/technical/legal.md
 ================================================================================
 
 # Technical: Legal & Compliance (DSGVO)
 
 This guide defines the requirements for standard legal pages, GDPR compliance, and cookie consent mechanisms.
 
+> **Technical implementation** (valid opt-in consent, self-hosting, blocking-by-default, click-to-load embeds, privacy-first analytics, DPF transfers): → `dsgvo_best_practices.md`
+
 ---
 
 ## 1. Required Legal Pages
 Every professional website requires at least two legal pages, accessible within a maximum of 2 clicks from any page:
-- **Impressum (Legal Notice / Contact Information):** Required by German law (Â§5 TMG). Must contain company name, address, contact numbers, email, register numbers (HRB), VAT ID (USt-IdNr), and managing directors.
-- **DatenschutzerklÃ¤rung (Privacy Policy):** Required under GDPR (Art. 13/14). Must specify data controller contact details, processed data categories (e.g., server logs, contact forms), processing purposes, storage durations, and user rights (access, deletion, objection).
+- **Impressum (Legal Notice / Contact Information):** Required by German law (§5 TMG). Must contain company name, address, contact numbers, email, register numbers (HRB), VAT ID (USt-IdNr), and managing directors.
+- **Datenschutzerklärung (Privacy Policy):** Required under GDPR (Art. 13/14). Must specify data controller contact details, processed data categories (e.g., server logs, contact forms), processing purposes, storage durations, and user rights (access, deletion, objection).
 
 ---
 
@@ -977,14 +1196,14 @@ Every professional website requires at least two legal pages, accessible within 
 
 ## 4. Legal Checklist
 - [ ] Legal Notice (Impressum) page exists with complete contact details.
-- [ ] Privacy Policy (DatenschutzerklÃ¤rung) page covers all active services.
+- [ ] Privacy Policy (Datenschutzerklärung) page covers all active services.
 - [ ] Footer contains direct links to Legal Notice and Privacy Policy.
 - [ ] No remote fonts or scripts loaded from external CDNs.
 - [ ] Contact form submission maps to a privacy notice statement.
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\qa_testing.md
+FILE: GUIDES/03_EXECUTION/technical/qa_testing.md
 ================================================================================
 
 # Technical: QA & Testing Checklist
@@ -1024,7 +1243,7 @@ This guide defines the Quality Assurance (QA) workflow and testing criteria befo
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\security.md
+FILE: GUIDES/03_EXECUTION/technical/security.md
 ================================================================================
 
 # Technical: Security Best Practices
@@ -1073,7 +1292,7 @@ Serve these hardening headers to modern browsers:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\03_EXECUTION\technical\seo.md
+FILE: GUIDES/03_EXECUTION/technical/seo.md
 ================================================================================
 
 # Technical: SEO Best Practices
@@ -1122,7 +1341,7 @@ Speed and responsiveness are direct ranking factors:
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ACCESSIBILITY_TESTING.md
+FILE: GUIDES/EXTENDED/ACCESSIBILITY_TESTING.md
 ================================================================================
 
 # Accessibility Testing Checklist (WCAG 2.1 AA)
@@ -1134,16 +1353,16 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ACCESSIBILITY_TE
 ### Browser Extensions
 1. **axe DevTools**
    - Chrome/Firefox Extension
-   - Scannt fÃ¼r a11y Issues
-   - Gibt Severity & Fix-VorschlÃ¤ge
+   - Scannt für a11y Issues
+   - Gibt Severity & Fix-Vorschläge
 
 2. **WAVE**
    - Wave.webaim.org
    - Visuelle a11y Fehler markieren
 
 3. **Lighthouse**
-   - Chrome DevTools â†’ Lighthouse Tab
-   - Accessibility Score â‰¥ 90
+   - Chrome DevTools → Lighthouse Tab
+   - Accessibility Score ≥ 90
 
 ### Automatische Test Tools
 - Axe Accessibility Checker
@@ -1156,7 +1375,7 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ACCESSIBILITY_TE
 
 ### 1. Keyboard Navigation
 - [ ] Alle interactive Elemente mit TAB erreichbar?
-- [ ] Tab-Order logisch (linksâ†’rechts, obenâ†’unten)?
+- [ ] Tab-Order logisch (links→rechts, oben→unten)?
 - [ ] Focus-Indicator sichtbar?
 - [ ] Keine "keyboard trap" (kommt nicht raus)?
 - [ ] Links mit Enter aktivierbar?
@@ -1165,11 +1384,11 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ACCESSIBILITY_TE
 **Test:**
 ```bash
 # Mit nur Tastatur navigieren
-TAB â†’ Alle Buttons/Links erreichen
-Shift+TAB â†’ RÃ¼ckwÃ¤rts navigieren
-Enter â†’ Aktivieren
-Space â†’ Checkboxes, Buttons
-Escape â†’ Modals schlieÃŸen
+TAB → Alle Buttons/Links erreichen
+Shift+TAB → Rückwärts navigieren
+Enter → Aktivieren
+Space → Checkboxes, Buttons
+Escape → Modals schließen
 ```
 
 ### 2. Screen Reader Testing
@@ -1182,7 +1401,7 @@ Escape â†’ Modals schlieÃŸen
 **Test Prozess:**
 1. Screen Reader starten
 2. Website durchnavigieren (ohne sehen!)
-3. Alle Inhalte verstÃ¤ndlich?
+3. Alle Inhalte verständlich?
 4. Links beschreibend? (nicht "klick hier")
 5. Alt-Texte sinnvoll?
 6. Form Labels vorhanden?
@@ -1191,7 +1410,7 @@ Escape â†’ Modals schlieÃŸen
 - [ ] Alle Inhalte werden vorgelesen?
 - [ ] Links sind distinguishable?
 - [ ] Form Labels vorhanden?
-- [ ] Alt-Texte aussagekrÃ¤ftig?
+- [ ] Alt-Texte aussagekräftig?
 - [ ] Headings Struktur OK?
 
 ### 3. Kontrast Check
@@ -1206,19 +1425,19 @@ Erforderlich:
 **Tools:**
 - Color Contrast Analyzer
 - WebAIM Contrast Checker
-- Chrome DevTools (Inspector â†’ Computed Styles)
+- Chrome DevTools (Inspector → Computed Styles)
 
 **Test:**
 ```css
-/* PrÃ¼fe diese Kombinationen: */
-Text Color #333 on Background #fff = 12.6:1 âœ…
-Text Color #666 on Background #fff = 4.5:1 âœ…
-Text Color #999 on Background #fff = 2.9:1 âŒ
+/* Prüfe diese Kombinationen: */
+Text Color #333 on Background #fff = 12.6:1 ✅
+Text Color #666 on Background #fff = 4.5:1 ✅
+Text Color #999 on Background #fff = 2.9:1 ❌
 ```
 
 ### 4. Zoom & Responsive
 
-- [ ] Website 200% zoom-bar? (groÃŸe User)
+- [ ] Website 200% zoom-bar? (große User)
 - [ ] Responsive < 320px? (small phones)
 - [ ] Text wrapping OK bei zoom?
 - [ ] Keine horizontal scroll bei zoom?
@@ -1226,12 +1445,12 @@ Text Color #999 on Background #fff = 2.9:1 âŒ
 **Test:**
 ```
 Browser Zoom: Ctrl+Plus (mehrmals)
-PrÃ¼fe: Text lesbar, Layout OK, nichts Ã¼berlappt
+Prüfe: Text lesbar, Layout OK, nichts überlappt
 ```
 
 ### 5. Color Blindness
 
-- [ ] Info nicht NUR Ã¼ber Farbe? (auch Icon/Text)
+- [ ] Info nicht NUR über Farbe? (auch Icon/Text)
 - [ ] Charts: Kontrast, nicht nur Farbe unterscheidbar
 - [ ] Links nicht nur blau (auch underline, etc.)
 
@@ -1250,48 +1469,48 @@ PrÃ¼fe: Text lesbar, Layout OK, nichts Ã¼berlappt
 
 /* NICHT: */
 :focus {
-  outline: none;  /* âŒ FALSCH! */
+  outline: none;  /* ❌ FALSCH! */
 }
 ```
 
 - [ ] Focus-Indicator mindestens 2px?
-- [ ] Kontrast â‰¥ 3:1 zu Hintergrund?
-- [ ] Deutlich sichtbar, nicht dÃ¼nn?
+- [ ] Kontrast ≥ 3:1 zu Hintergrund?
+- [ ] Deutlich sichtbar, nicht dünn?
 
 ### 7. Forms & Error Messages
 
-- [ ] Labels fÃ¼r alle Inputs?
+- [ ] Labels für alle Inputs?
 - [ ] Error Messages klar?
 - [ ] Error Farbe + Text (nicht nur rot)?
 - [ ] Required Fields markiert?
 - [ ] Placeholder NICHT statt Label?
 
 ```html
-<!-- âœ… Richtig -->
+<!-- ✅ Richtig -->
 <label for="email">Email</label>
 <input id="email" type="email" required>
 
-<!-- âŒ Falsch -->
+<!-- ❌ Falsch -->
 <input placeholder="Email">
 ```
 
 ### 8. Headings Struktur
 
 - [ ] H1 genau 1x pro Seite?
-- [ ] Headings nicht Ã¼bersprungen? (H1 â†’ H2 â†’ H3, nicht H1 â†’ H3)
+- [ ] Headings nicht übersprungen? (H1 → H2 → H3, nicht H1 → H3)
 - [ ] Headings beschreibend?
 
 ```html
-<!-- âœ… Richtig -->
+<!-- ✅ Richtig -->
 <h1>Unsere Services</h1>
   <h2>Web Design</h2>
   <h2>Development</h2>
     <h3>Frontend</h3>
     <h3>Backend</h3>
 
-<!-- âŒ Falsch -->
+<!-- ❌ Falsch -->
 <h1>Title</h1>
-<h3>Subheading</h3> <!-- Ãœbersprungen H2! -->
+<h3>Subheading</h3> <!-- Übersprungen H2! -->
 ```
 
 ### 9. Images & Alt Text
@@ -1302,25 +1521,25 @@ PrÃ¼fe: Text lesbar, Layout OK, nichts Ã¼berlappt
 - [ ] Complex Images: Longdesc oder caption?
 
 ```html
-<!-- âœ… Richtig -->
+<!-- ✅ Richtig -->
 <img src="chart.png" alt="Sales trend 2025: +25% growth">
 
-<!-- âŒ Falsch -->
+<!-- ❌ Falsch -->
 <img src="chart.png" alt="chart">
 ```
 
 ### 10. Links
 
-- [ ] Link Text aussagekrÃ¤ftig? (nicht "click here")
+- [ ] Link Text aussagekräftig? (nicht "click here")
 - [ ] Links unterscheidbar von normal text?
 - [ ] External Links markiert? (Icon oder Text)
 - [ ] Links mit Enter + nicht nur onclick?
 
 ```html
-<!-- âœ… Richtig -->
-<a href="/about">Ãœber uns</a>
+<!-- ✅ Richtig -->
+<a href="/about">Über uns</a>
 
-<!-- âŒ Falsch -->
+<!-- ❌ Falsch -->
 <a href="/about">Klick hier</a>
 ```
 
@@ -1331,7 +1550,7 @@ PrÃ¼fe: Text lesbar, Layout OK, nichts Ã¼berlappt
 | Kriterium | Requirement |
 |-----------|------------|
 | 1.1.1 Text Alternatives | Alt-Texte auf Bildern |
-| 1.4.3 Contrast | 4.5:1 fÃ¼r Normal Text |
+| 1.4.3 Contrast | 4.5:1 für Normal Text |
 | 2.1.1 Keyboard | Alle Features mit Tastatur erreichbar |
 | 2.4.3 Focus Order | Logische Tab-Order |
 | 2.4.7 Focus Visible | Focus-Indicator sichtbar |
@@ -1368,23 +1587,23 @@ jobs:
 
 ## Vor Deploy Checklist
 
-- [ ] Lighthouse Accessibility Score â‰¥ 90
+- [ ] Lighthouse Accessibility Score ≥ 90
 - [ ] axe DevTools: Keine Critical Issues
 - [ ] Keyboard Navigation getestet
-- [ ] Kontrast â‰¥ 4.5:1 Ã¼berall
+- [ ] Kontrast ≥ 4.5:1 überall
 - [ ] Focus-Indicators sichtbar
-- [ ] Alt-Texte vorhanden & aussagekrÃ¤ftig
+- [ ] Alt-Texte vorhanden & aussagekräftig
 - [ ] Heading Struktur OK
 - [ ] Form Labels vorhanden
 - [ ] Screen Reader (NVDA/VoiceOver) getestet
 
 ---
 
-*Accessibility Testing â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Accessibility Testing – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ANALYTICS.md
+FILE: GUIDES/EXTENDED/ANALYTICS.md
 ================================================================================
 
 # Analytics & Tracking (Google Analytics, Events, GDPR)
@@ -1462,7 +1681,7 @@ videoElement.addEventListener('play', () => {
 ### Consent Banner (erforderlich in EU)
 ```html
 <div id="consent-banner">
-  <p>Wir nutzen Cookies fÃ¼r Analytics. <a href="/privacy">Datenschutz</a></p>
+  <p>Wir nutzen Cookies für Analytics. <a href="/privacy">Datenschutz</a></p>
   <button id="consent-accept">Akzeptieren</button>
   <button id="consent-reject">Ablehnen</button>
 </div>
@@ -1486,19 +1705,19 @@ if (localStorage.getItem('consent') === 'accepted') {
 </script>
 ```
 
-### DatenschutzerklÃ¤rung
+### Datenschutzerklärung
 - Welche Daten tracken wir?
 - Warum tracken wir?
 - Wie lange speichern wir?
-- Wie kÃ¶nnen User opt-out?
+- Wie können User opt-out?
 - Link zur Datenschutz-Seite in Footer!
 
 ### Google Analytics Datenschutz Einstellungen
 ```
-Settings â†’ Admin â†’ Data Settings
-âœ… Enable data-driven attribution
-âœ… Create audiences based on analytics data
-âœ… Data retention: 14 months (default)
+Settings → Admin → Data Settings
+✅ Enable data-driven attribution
+✅ Create audiences based on analytics data
+✅ Data retention: 14 months (default)
 ```
 
 ---
@@ -1535,7 +1754,7 @@ gtag('config', 'G-XXXXXXXXXX', {
 
 ### Exclude Own Traffic
 ```
-Settings â†’ Admin â†’ Data Filters
+Settings → Admin → Data Filters
 Create Filter:
 - Filter Type: Exclude
 - Include/Exclude: Exclude
@@ -1551,29 +1770,29 @@ Create Filter:
 - [ ] GA4 installiert & funktioniert?
 - [ ] Consent Banner vorhanden?
 - [ ] Wichtige Events getrackt?
-- [ ] DatenschutzerklÃ¤rung aktuell?
-- [ ] Do-Not-Track unterstÃ¼tzt?
+- [ ] Datenschutzerklärung aktuell?
+- [ ] Do-Not-Track unterstützt?
 - [ ] IPs anonymisiert?
 - [ ] Eigener Traffic ausgeschlossen?
 - [ ] GDPR kompatibel?
 
 **Was NICHT tracken:**
-- âŒ PasswÃ¶rter
-- âŒ Payment Info
-- âŒ Personal Data (ohne Consent)
-- âŒ Sensitive Health Info
+- ❌ Passwörter
+- ❌ Payment Info
+- ❌ Personal Data (ohne Consent)
+- ❌ Sensitive Health Info
 
 ---
 
 ## Analytics Reports
 
 ### Wichtige Metriken
-1. **Users** â€“ Wieviele Besucher?
-2. **Sessions** â€“ Wie viele Sitzungen?
-3. **Bounce Rate** â€“ Wieviele verlassen sofort?
-4. **Pages/Session** â€“ Durchschnitt Seiten pro Besuch
-5. **Avg Duration** â€“ Wie lange bleiben sie?
-6. **Conversions** â€“ Wie viele konvertieren? (CTA Click, Form Submit, etc.)
+1. **Users** – Wieviele Besucher?
+2. **Sessions** – Wie viele Sitzungen?
+3. **Bounce Rate** – Wieviele verlassen sofort?
+4. **Pages/Session** – Durchschnitt Seiten pro Besuch
+5. **Avg Duration** – Wie lange bleiben sie?
+6. **Conversions** – Wie viele konvertieren? (CTA Click, Form Submit, etc.)
 
 ### Conversion Tracking
 ```javascript
@@ -1588,14 +1807,14 @@ gtag('event', 'purchase', {
 
 ## Monitoring & Alerts
 
-**RegelmÃ¤ÃŸig prÃ¼fen:**
+**Regelmäßig prüfen:**
 - [ ] Ist GA4 noch aktiv?
 - [ ] Tracken wir noch Daten?
-- [ ] Keine unerwarteten AusfÃ¤lle?
+- [ ] Keine unerwarteten Ausfälle?
 
 **Alerts setzen:**
 ```
-Analytics â†’ Admin â†’ Custom Alerts
+Analytics → Admin → Custom Alerts
 Alert Name: Traffic Drop Alert
 Condition: Sessions decrease by 50%
 Notification: Email
@@ -1603,18 +1822,18 @@ Notification: Email
 
 ---
 
-*Analytics & Tracking â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Analytics & Tracking – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\API_INTEGRATION.md
+FILE: GUIDES/EXTENDED/API_INTEGRATION.md
 ================================================================================
 
 # API Integration & External Services
 
 ---
 
-## Ãœbersicht
+## Übersicht
 
 Wenn externe APIs/Services integriert werden (Payment, CRM, Analytics, etc.)
 
@@ -1624,22 +1843,22 @@ Wenn externe APIs/Services integriert werden (Payment, CRM, Analytics, etc.)
 
 ### 1. API Keys Sicherheit
 ```javascript
-// âŒ FALSCH
+// ❌ FALSCH
 const API_KEY = "sk_live_xyz123";
 
-// âœ… RICHTIG
+// ✅ RICHTIG
 const API_KEY = process.env.API_KEY;  // Aus .env
 ```
 
 **Regeln:**
 - API Keys NIEMALS im Code hardcoden
 - `.env` Datei nutzen (nicht ins Git!)
-- `.env.example` zeigt nÃ¶tige Keys (ohne Werte)
-- Production Keys â‰  Development Keys
+- `.env.example` zeigt nötige Keys (ohne Werte)
+- Production Keys ≠ Development Keys
 
 ### 2. Rate Limiting
 ```javascript
-// Mit VerzÃ¶gerung arbeiten
+// Mit Verzögerung arbeiten
 async function callAPI(endpoint, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
@@ -1715,7 +1934,7 @@ async function processPayment() {
 
 ---
 
-## CRM Integration (Genie)
+## CRM Integration
 
 Siehe: `KONTAKTFORMULAR.md`
 
@@ -1732,10 +1951,10 @@ Siehe: `ANALYTICS.md`
 **Wenn externe Scripts eingebunden werden:**
 
 ```html
-<!-- âœ… Richtig: Asynchron laden, nicht blocking -->
+<!-- ✅ Richtig: Asynchron laden, nicht blocking -->
 <script async src="https://external.js"></script>
 
-<!-- âŒ Falsch: Blocking, verlangsamt Seitenload -->
+<!-- ❌ Falsch: Blocking, verlangsamt Seitenload -->
 <script src="https://external.js"></script>
 ```
 
@@ -1811,11 +2030,11 @@ app.post('/webhooks/stripe', (req, res) => {
 
 ---
 
-*API Integration â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*API Integration – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\BROWSER_SUPPORT.md
+FILE: GUIDES/EXTENDED/BROWSER_SUPPORT.md
 ================================================================================
 
 # Browser Support & Compatibility
@@ -1826,38 +2045,38 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\BROWSER_SUPPORT.
 
 ### Desktop Browser (Standard Support)
 ```
-Chrome    â‰¥ 90 (current + -1)
-Firefox   â‰¥ 88 (current + -1)
-Safari    â‰¥ 14 (current + -1)
-Edge      â‰¥ 90 (current + -1)
+Chrome    ≥ 90 (current + -1)
+Firefox   ≥ 88 (current + -1)
+Safari    ≥ 14 (current + -1)
+Edge      ≥ 90 (current + -1)
 ```
 
 ### Mobile Browser (Standard Support)
 ```
-Chrome Mobile    â‰¥ 90
-Safari iOS       â‰¥ 14
-Samsung Internet â‰¥ 14
-Firefox Mobile   â‰¥ 88
+Chrome Mobile    ≥ 90
+Safari iOS       ≥ 14
+Samsung Internet ≥ 14
+Firefox Mobile   ≥ 88
 ```
 
 ### Legacy Browser (Kein Support)
 ```
-âŒ Internet Explorer (alle Versionen)
-âŒ Opera < 75
-âŒ Safari < 12
-âŒ Chrome < 90
+❌ Internet Explorer (alle Versionen)
+❌ Opera < 75
+❌ Safari < 12
+❌ Chrome < 90
 ```
 
 ---
 
 ## Polyfills & Fallbacks
 
-### Wenn alte Browser unterstÃ¼tzt werden mÃ¼ssen:
+### Wenn alte Browser unterstützt werden müssen:
 
 ```html
 <!-- CSS Fallbacks -->
 <style>
-  /* Fallback fÃ¼r Grid */
+  /* Fallback für Grid */
   .container { display: flex; }
   @supports (display: grid) {
     .container { display: grid; }
@@ -1869,14 +2088,14 @@ Firefox Mobile   â‰¥ 88
 ```
 
 ### Zu vermeiden (nicht browserkompatibel)
-- âŒ CSS Grid ohne Fallback (fÃ¼r alte Browser)
-- âŒ Flexbox ohne Prefix
-- âŒ ES6+ ohne Transpiler
-- âŒ CSS Variables ohne Fallback
+- ❌ CSS Grid ohne Fallback (für alte Browser)
+- ❌ Flexbox ohne Prefix
+- ❌ ES6+ ohne Transpiler
+- ❌ CSS Variables ohne Fallback
 
 ---
 
-## Testing fÃ¼r KompatibilitÃ¤t
+## Testing für Kompatibilität
 
 **Tools:**
 - BrowserStack (Cloud)
@@ -1889,7 +2108,7 @@ Firefox Mobile   â‰¥ 88
 - [ ] Safari Desktop & Mobile OK?
 - [ ] Edge OK?
 - [ ] Keine JS-Fehler in Console?
-- [ ] Responsive auf allen GerÃ¤ten?
+- [ ] Responsive auf allen Geräten?
 
 ---
 
@@ -1898,22 +2117,22 @@ Firefox Mobile   â‰¥ 88
 **Moderne Browser brauchen kein Prefix mehr:**
 
 ```css
-/* âŒ Nicht nÃ¶tig (2026) */
+/* ❌ Nicht nötig (2026) */
 -webkit-transform: rotate(45deg);
 -moz-transform: rotate(45deg);
 transform: rotate(45deg);
 
-/* âœ… Ausreichend */
+/* ✅ Ausreichend */
 transform: rotate(45deg);
 ```
 
 **Ausnahmen:**
-- Older iOS Safari (â‰¤ 12): `-webkit-` Prefix noch nÃ¶tig
-- Wenn Support fÃ¼r alte Browser: Prefix tools wie Autoprefixer nutzen
+- Older iOS Safari (≤ 12): `-webkit-` Prefix noch nötig
+- Wenn Support für alte Browser: Prefix tools wie Autoprefixer nutzen
 
 ---
 
-## Responsive Design fÃ¼r alle Browser
+## Responsive Design für alle Browser
 
 ```css
 /* Mobile-First (alle Browser) */
@@ -1937,22 +2156,22 @@ transform: rotate(45deg);
 **Im CD-Manual dokumentieren:**
 - Min. Browser Versions
 - Polyfills/Fallbacks
-- Feature-KompatibilitÃ¤t
+- Feature-Kompatibilität
 
 ---
 
-*Browser Support â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Browser Support – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\BUILD_PROCESS.md
+FILE: GUIDES/EXTENDED/BUILD_PROCESS.md
 ================================================================================
 
 # Build Process & Bundling
 
 ---
 
-## Ãœbersicht
+## Übersicht
 
 Wie Quellcode (src/) zu Production-Code (public/) wird.
 
@@ -1961,7 +2180,7 @@ Wie Quellcode (src/) zu Production-Code (public/) wird.
 ## Build Tools
 
 ### Moderne Build Tools (2026)
-1. **Vite** (Modern, Fast) â€“ empfohlen
+1. **Vite** (Modern, Fast) – empfohlen
 2. **Webpack** (Traditionell, Flexibel)
 3. **Parcel** (Zero-Config)
 4. **esbuild** (Super-Schnell)
@@ -1994,31 +2213,31 @@ npm run preview  # Preview des Builds
 ### Development Mode
 ```
 src/
-â”œâ”€â”€ App.tsx      (nicht minified)
-â”œâ”€â”€ styles/
-â””â”€â”€ components/
+├── App.tsx      (nicht minified)
+├── styles/
+└── components/
 
-â†’ http://localhost:5173 (mit Auto-Reload)
+→ http://localhost:5173 (mit Auto-Reload)
 ```
 
 ### Production Build
 ```
-src/ â†’ npm run build â†’ public/
+src/ → npm run build → public/
 dist/
-â”œâ”€â”€ index.html   (minified, Assets verlinkt)
-â”œâ”€â”€ js/
-â”‚   â””â”€â”€ index-ABC123.js  (minified, hash)
-â”œâ”€â”€ css/
-â”‚   â””â”€â”€ style-DEF456.css (minified, hash)
-â””â”€â”€ assets/
-    â””â”€â”€ image.webp
+├── index.html   (minified, Assets verlinkt)
+├── js/
+│   └── index-ABC123.js  (minified, hash)
+├── css/
+│   └── style-DEF456.css (minified, hash)
+└── assets/
+    └── image.webp
 ```
 
 **Was passiert:**
 - JavaScript minified & bundled
 - CSS minified & bundled
 - Assets optimiert & gehashed
-- Source Maps erstellt (fÃ¼r Debugging)
+- Source Maps erstellt (für Debugging)
 
 ---
 
@@ -2038,7 +2257,7 @@ export default {
 ### Tree Shaking (Unbenutzer Code entfernen)
 ```javascript
 // Nur benutzte Funktionen bundeln
-import { usedFunction } from './utils';  // âœ… Wird bundelt
+import { usedFunction } from './utils';  // ✅ Wird bundelt
 // unusedFunction wird entfernt
 ```
 
@@ -2052,7 +2271,7 @@ const modal = await import('./modal.js');  // Separat geladen
 
 ## Bundle Analysis
 
-### Welche Libs grÃ¶ÃŸer sind?
+### Welche Libs größer sind?
 
 ```bash
 npm install webpack-bundle-analyzer --save-dev
@@ -2062,13 +2281,13 @@ npm install webpack-bundle-analyzer --save-dev
 
 **Checkliste:**
 - [ ] Tree Shaking aktiv?
-- [ ] Lazy Loading fÃ¼r groÃŸe Components?
+- [ ] Lazy Loading für große Components?
 - [ ] Polyfills minimal?
 - [ ] Minimale Dependencies?
 - [ ] CSS nicht dupliziert?
 
 **Tools:**
-- Bundlephobia (Lib-GrÃ¶ÃŸe checken)
+- Bundlephobia (Lib-Größe checken)
 - Webpack Bundle Analyzer
 - Lighthouse (Bundle Size Check)
 
@@ -2079,7 +2298,7 @@ npm install webpack-bundle-analyzer --save-dev
 Vor jedem Deploy:
 
 ```bash
-npm run lint      # Code-QualitÃ¤t
+npm run lint      # Code-Qualität
 npm run test      # Unit Tests
 npm run build     # Production Build
 npm run preview   # Test Build lokal
@@ -2129,37 +2348,37 @@ Nach `npm run build`:
 
 ```
 dist/
-â”œâ”€â”€ index.html           (Entry Point)
-â”œâ”€â”€ js/
-â”‚   â”œâ”€â”€ index-HASH.js   (Minified, Hashed)
-â”‚   â””â”€â”€ vendor-HASH.js  (Vendor libs)
-â”œâ”€â”€ css/
-â”‚   â””â”€â”€ style-HASH.css  (Minified, Hashed)
-â””â”€â”€ assets/
-    â”œâ”€â”€ image.webp
-    â”œâ”€â”€ icon.svg
-    â””â”€â”€ fonts/
+├── index.html           (Entry Point)
+├── js/
+│   ├── index-HASH.js   (Minified, Hashed)
+│   └── vendor-HASH.js  (Vendor libs)
+├── css/
+│   └── style-HASH.css  (Minified, Hashed)
+└── assets/
+    ├── image.webp
+    ├── icon.svg
+    └── fonts/
 ```
 
 **Was zu deployen:**
-- âœ… Alles im dist/ Ordner
-- âŒ node_modules/ (nicht deployen!)
-- âŒ src/ (nicht deployen!)
+- ✅ Alles im dist/ Ordner
+- ❌ node_modules/ (nicht deployen!)
+- ❌ src/ (nicht deployen!)
 
 ---
 
 ## Versioning mit Hash
 
 ```
-index-ABC123.js  â† Hash Ã¤ndert sich bei Ã„nderungen
-index-DEF456.js  â† Neue Version
+index-ABC123.js  ← Hash ändert sich bei Änderungen
+index-DEF456.js  ← Neue Version
 
-Browsers kÃ¶nnen alte Version cachen:
-- Wenn Hash gleich â†’ Cache nutzen
-- Wenn Hash unterschiedlich â†’ Neu laden
+Browsers können alte Version cachen:
+- Wenn Hash gleich → Cache nutzen
+- Wenn Hash unterschiedlich → Neu laden
 ```
 
-â†’ ErmÃ¶glicht lange-term caching!
+→ Ermöglicht lange-term caching!
 
 ---
 
@@ -2177,7 +2396,7 @@ Browsers kÃ¶nnen alte Version cachen:
 </IfModule>
 ```
 
-â†’ Single Page Apps funktionieren korrekt
+→ Single Page Apps funktionieren korrekt
 
 ### nginx Config
 ```nginx
@@ -2203,8 +2422,8 @@ Damit Browser alte Versionen cachen:
 </FilesMatch>
 ```
 
-â†’ JS/CSS werden 1 Jahr gecacht (wegen Hash)
-â†’ HTML wird immer neu geladen
+→ JS/CSS werden 1 Jahr gecacht (wegen Hash)
+→ HTML wird immer neu geladen
 
 ---
 
@@ -2213,12 +2432,12 @@ Damit Browser alte Versionen cachen:
 ```bash
 npm run preview   # Testet Production Build lokal
 
-http://localhost:4173  # Preview Ã¶ffnen
+http://localhost:4173  # Preview öffnen
 ```
 
 **Wenn Problem im Production Build aber nicht Dev:**
 - Check Source Maps
-- Chrome DevTools â†’ Sources Tab
+- Chrome DevTools → Sources Tab
 - Suche nach Minified Code
 - Verwende Source Maps zum Debuggen
 
@@ -2239,26 +2458,26 @@ npm install missing-package
 
 ### "Memory limit exceeded"
 ```bash
-# ErhÃ¶he Node Memory
+# Erhöhe Node Memory
 NODE_OPTIONS=--max-old-space-size=4096 npm run build
 ```
 
 ---
 
-*Build Process & Bundling â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Build Process & Bundling – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\DEVELOPMENT_SETUP.md
+FILE: GUIDES/EXTENDED/DEVELOPMENT_SETUP.md
 ================================================================================
 
 # Workflow: Development Environment Setup
 
-**FÃ¼r neue Developer & Agent-Initialization**
+**Für neue Developer & Agent-Initialization**
 
 ---
 
-## Ãœbersicht
+## Übersicht
 
 Wie man eine lokale Entwicklungsumgebung aufbaut & die Website lokal entwickelt.
 
@@ -2268,13 +2487,13 @@ Wie man eine lokale Entwicklungsumgebung aufbaut & die Website lokal entwickelt.
 
 ### Erforderlich
 - Git installiert? (`git --version`)
-- Node.js â‰¥ 18 LTS? (`node --version`)
+- Node.js ≥ 18 LTS? (`node --version`)
 - npm oder yarn? (`npm --version`)
 - Code Editor (VS Code empfohlen)
 
 ### Optional
-- Docker (fÃ¼r komplexere Setups)
-- SSH-Keys fÃ¼r Git (fÃ¼r Remote Push)
+- Docker (für komplexere Setups)
+- SSH-Keys für Git (für Remote Push)
 
 ---
 
@@ -2319,7 +2538,7 @@ cp .env.example .env
 
 **Wichtig:**
 - `.env` NIEMALS ins Git commtten!
-- `.env.example` zeigt nÃ¶tige Variables
+- `.env.example` zeigt nötige Variables
 - `.gitignore` muss `.env` enthalten
 
 ---
@@ -2335,8 +2554,8 @@ yarn dev
 ```
 
 **Erwartet:**
-- Server lÃ¤uft auf `http://localhost:3000` oder Ã¤hnlich
-- Hot Reload aktiv (Ã„nderungen sofort sichtbar)
+- Server läuft auf `http://localhost:3000` oder ähnlich
+- Hot Reload aktiv (Änderungen sofort sichtbar)
 - Error-Messages im Terminal sichtbar
 
 ### Production Build
@@ -2365,16 +2584,16 @@ npm run preview
 
 ```
 website/
-â”œâ”€â”€ public/           â†’ Deployed Files (HTML, CSS, JS, Assets)
-â”œâ”€â”€ src/              â†’ Source Code (nicht deployed)
-â”‚   â”œâ”€â”€ components/
-â”‚   â”œâ”€â”€ styles/
-â”‚   â””â”€â”€ scripts/
-â”œâ”€â”€ .env.example      â†’ Template fÃ¼r .env
-â”œâ”€â”€ .gitignore        â†’ Sagt Git was ignorieren
-â”œâ”€â”€ package.json      â†’ Dependencies & Scripts
-â”œâ”€â”€ .github/          â†’ GitHub Actions (Workflows)
-â””â”€â”€ README.md         â†’ Projekt-Info
+├── public/           → Deployed Files (HTML, CSS, JS, Assets)
+├── src/              → Source Code (nicht deployed)
+│   ├── components/
+│   ├── styles/
+│   └── scripts/
+├── .env.example      → Template für .env
+├── .gitignore        → Sagt Git was ignorieren
+├── package.json      → Dependencies & Scripts
+├── .github/          → GitHub Actions (Workflows)
+└── README.md         → Projekt-Info
 ```
 
 ---
@@ -2390,14 +2609,14 @@ git checkout main
 # Feature Branch erstellen
 git checkout -b feature/my-feature
 
-# Ã„nderungen committen
+# Änderungen committen
 git add .
 git commit -m "Add my feature"
 
 # Push zu Remote
 git push origin feature/my-feature
 
-# â†’ PR erstellen & Merge
+# → PR erstellen & Merge
 ```
 
 ### Commits schreiben
@@ -2413,7 +2632,7 @@ git commit -m "Add: Dark mode toggle
 
 ---
 
-## 8. NPM Scripts Ãœbersicht
+## 8. NPM Scripts Übersicht
 
 Typische Scripts in `package.json`:
 
@@ -2434,7 +2653,7 @@ Typische Scripts in `package.json`:
 ```bash
 npm run dev        # Dev Server starten
 npm run build      # Production bauen
-npm run lint       # Code-Fehler prÃ¼fen
+npm run lint       # Code-Fehler prüfen
 npm run test       # Tests laufen
 npm run format     # Code automatisch formatieren
 ```
@@ -2451,7 +2670,7 @@ Safari: Cmd+Option+I
 Edge: F12 oder Ctrl+Shift+I
 ```
 
-### Terminal Output prÃ¼fen
+### Terminal Output prüfen
 ```bash
 npm run dev
 # Fehler/Warnings erscheinen hier
@@ -2476,12 +2695,12 @@ npm run dev
 
 ---
 
-## 10. HÃ¤ufige Probleme
+## 10. Häufige Probleme
 
 ### "npm: command not found"
 ```bash
 # Node.js nicht installiert
-# LÃ¶sung: https://nodejs.org installieren
+# Lösung: https://nodejs.org installieren
 node --version  # Test
 ```
 
@@ -2508,49 +2727,49 @@ cp .env.example .env
 
 ### "Build fehlgeschlagen"
 ```bash
-# PrÃ¼fe Syntax-Fehler
+# Prüfe Syntax-Fehler
 npm run lint
 npm run build  # Siehe Fehlermeldungen
 ```
 
 ---
 
-## 11. Tipps fÃ¼r Developer
+## 11. Tipps für Developer
 
 - Nutze VS Code Extensions:
-  - **ESLint** â€“ Code-QualitÃ¤t
-  - **Prettier** â€“ Code-Formatierung
-  - **Live Server** â€“ Live-Reload
-  - **Thunder Client** â€“ API Testing
+  - **ESLint** – Code-Qualität
+  - **Prettier** – Code-Formatierung
+  - **Live Server** – Live-Reload
+  - **Thunder Client** – API Testing
 
-- Lese QUICK_START.md regelmÃ¤ÃŸig (Workflows Ã¤ndern sich)
+- Lese QUICK_START.md regelmäßig (Workflows ändern sich)
 - Frag Agent wenn etwas unklar ist
-- Dokumentiere Ã„nderungen ins CD-Manual
+- Dokumentiere Änderungen ins CD-Manual
 - Teste lokal vor Deploy!
 
 ---
 
-## 12. Checklist fÃ¼r Onboarding
+## 12. Checklist für Onboarding
 
 - [ ] Git repo geklont?
 - [ ] Node.js installiert?
 - [ ] `npm install` durchgelaufen?
 - [ ] `.env.example` zu `.env` kopiert?
-- [ ] Dev Server lÃ¤uft (`npm run dev`)?
+- [ ] Dev Server läuft (`npm run dev`)?
 - [ ] `http://localhost:3000` erreichbar?
 - [ ] QUICK_START.md gelesen?
 - [ ] DESIGN_SYSTEM.md gelesen?
-- [ ] cd-manual/index.html geÃ¶ffnet?
-- [ ] Erste kleine Ã„nderung lokal gemacht?
-- [ ] Commit & Push durchgefÃ¼hrt?
+- [ ] cd-manual/index.html geöffnet?
+- [ ] Erste kleine Änderung lokal gemacht?
+- [ ] Commit & Push durchgeführt?
 
 ---
 
-*Development Setup â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Development Setup – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ERROR_HANDLING.md
+FILE: GUIDES/EXTENDED/ERROR_HANDLING.md
 ================================================================================
 
 # Error Handling & Recovery
@@ -2560,54 +2779,54 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\ERROR_HANDLING.m
 ## Fehlertypen
 
 ### Entwicklung (Dev)
-- **Syntax Error** â€“ Code-Fehler
-- **Runtime Error** â€“ Fehler wÃ¤hrend AusfÃ¼hrung
-- **Logic Error** â€“ Code lÃ¤uft, macht aber was Falsches
+- **Syntax Error** – Code-Fehler
+- **Runtime Error** – Fehler während Ausführung
+- **Logic Error** – Code läuft, macht aber was Falsches
 
-**LÃ¶sung:** Logs checken, Debugger nutzen
+**Lösung:** Logs checken, Debugger nutzen
 
 ### Production (Live)
-- **HTTP Errors** â€“ 404, 500, etc.
-- **Network Errors** â€“ Server down, Timeout
-- **Client Errors** â€“ JS-Fehler im Browser
+- **HTTP Errors** – 404, 500, etc.
+- **Network Errors** – Server down, Timeout
+- **Client Errors** – JS-Fehler im Browser
 
-**LÃ¶sung:** Error Monitoring, Fallback-Seiten
+**Lösung:** Error Monitoring, Fallback-Seiten
 
 ---
 
 ## Error Pages (HTML)
 
-### 404 â€“ Not Found
+### 404 – Not Found
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <title>404 â€“ Seite nicht gefunden</title>
+  <title>404 – Seite nicht gefunden</title>
 </head>
 <body>
-  <h1>404 â€“ Diese Seite existiert nicht</h1>
+  <h1>404 – Diese Seite existiert nicht</h1>
   <p>Die gesuchte Seite wurde nicht gefunden.</p>
-  <a href="/">â† Zur Startseite</a>
+  <a href="/">← Zur Startseite</a>
 </body>
 </html>
 ```
 
-### 500 â€“ Server Error
+### 500 – Server Error
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <title>500 â€“ Fehler</title>
+  <title>500 – Fehler</title>
 </head>
 <body>
-  <h1>500 â€“ Fehler auf dem Server</h1>
+  <h1>500 – Fehler auf dem Server</h1>
   <p>Es ist ein unerwarteter Fehler aufgetreten.</p>
-  <a href="/">â† Zur Startseite</a>
+  <a href="/">← Zur Startseite</a>
 </body>
 </html>
 ```
 
-**Alle Error Pages mÃ¼ssen:**
+**Alle Error Pages müssen:**
 - Hilfreiche Botschaft geben
 - Link zur Startseite
 - Nicht zu technisch sein
@@ -2646,7 +2865,7 @@ fetch('/api/data')
 
 ## Deployment Rollback
 
-### Wenn Deploy fehlschlÃ¤gt:
+### Wenn Deploy fehlschlägt:
 
 **Option 1: Git Revert**
 ```bash
@@ -2654,7 +2873,7 @@ git revert COMMIT_HASH
 git push origin main
 ```
 
-**Option 2: Zu Ã¤lterem Tag zurÃ¼ck**
+**Option 2: Zu älterem Tag zurück**
 ```bash
 git checkout v1.1.0
 git push -f origin main
@@ -2662,12 +2881,12 @@ git push -f origin main
 
 **Option 3: Webspace Manual Rollback**
 - Hosting Provider Backup nutzen
-- Ã„ltere Dateien zurÃ¼ck-uploaden
+- Ältere Dateien zurück-uploaden
 
 ### Rollback Checklist
 - [ ] Fehler identifiziert?
-- [ ] Rollback-Methode gewÃ¤hlt?
-- [ ] Rollback durchgefÃ¼hrt?
+- [ ] Rollback-Methode gewählt?
+- [ ] Rollback durchgeführt?
 - [ ] Live-Site getestet?
 - [ ] User informiert?
 - [ ] Fehler dokumentiert?
@@ -2717,7 +2936,7 @@ console.error("User action failed", {
 - Error Context
 
 **Was NICHT loggen:**
-- PasswÃ¶rter
+- Passwörter
 - API Keys
 - Payment Info
 - Personal Data
@@ -2775,11 +2994,11 @@ Nach jedem Error:
 
 ---
 
-*Error Handling & Recovery â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Error Handling & Recovery – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\MONITORING.md
+FILE: GUIDES/EXTENDED/MONITORING.md
 ================================================================================
 
 # Monitoring & Uptime Checking
@@ -2795,7 +3014,7 @@ FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\MONITORING.md
 curl -I https://example.com
 # Erwartet: HTTP 200
 
-# Test 2: SSL Certificate gÃ¼ltig?
+# Test 2: SSL Certificate gültig?
 curl -v https://example.com
 # Erwartet: SSL/TLS erfolgreich
 
@@ -2828,7 +3047,7 @@ curl https://example.com/contact
 
 ### Setup (UptimeRobot Beispiel)
 ```
-1. UptimeRobot â†’ Create Monitor
+1. UptimeRobot → Create Monitor
 2. Type: HTTP(S)
 3. URL: https://example.com
 4. Interval: 5 minutes
@@ -2845,7 +3064,7 @@ import * as Sentry from "@sentry/browser";
 Sentry.init({
   dsn: "https://examplePublicKey@sentry.io/12345",
   environment: "production",
-  tracesSampleRate: 0.1  // Nur 10% samplen (fÃ¼r Performance)
+  tracesSampleRate: 0.1  // Nur 10% samplen (für Performance)
 });
 
 // Errors werden automatisch captured
@@ -2866,7 +3085,7 @@ Sentry.captureMessage("Something interesting happened");
 
 ### Lighthouse Continuous Monitoring
 ```javascript
-// Nach Deploy Lighthouse Score prÃ¼fen
+// Nach Deploy Lighthouse Score prüfen
 // Manual: PageSpeed Insights
 // Automated: Lighthouse CI (GitHub Actions)
 ```
@@ -2941,8 +3160,8 @@ Metrics zu tracken:
 
 ## Alert Configuration
 
-**E-Mail Alerts fÃ¼r:**
-- Website down (HTTP 200 â†’ nicht mehr erreichbar)
+**E-Mail Alerts für:**
+- Website down (HTTP 200 → nicht mehr erreichbar)
 - High error rate (> 10% errors)
 - Performance degradation (Response > 3s)
 - SSL certificate expiring (< 30 days)
@@ -2954,7 +3173,7 @@ Metrics zu tracken:
 Jeden Monat checken:
 - [ ] Uptime Report anschauen (Sollte > 99.5%)
 - [ ] Top Errors in Sentry reviewen
-- [ ] Performance Score (Lighthouse â‰¥ 90)
+- [ ] Performance Score (Lighthouse ≥ 90)
 - [ ] Core Web Vitals OK?
 - [ ] Traffic Trends normal?
 - [ ] User complaints?
@@ -2972,16 +3191,16 @@ Nach jedem Downtime/Error:
 
 ---
 
-*Monitoring & Uptime â€“ Push8 Web Agency â€“ Stand Mai 2026*
+*Monitoring & Uptime – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\EXTENDED\TECHSTACK.md
+FILE: GUIDES/EXTENDED/TECHSTACK.md
 ================================================================================
 
-# Push8 â€“ Tech Stack & Skalierbarkeit
+# Tech Stack & Skalierbarkeit
 
-Verbindliche Stack-Entscheidungen fuer Push8-Webprojekte. Basiert auf Performance, DSGVO, Wartbarkeit und Agentur-Skalierung.
+Verbindliche Stack-Entscheidungen fuer Webprojekte. Basiert auf Performance, DSGVO, Wartbarkeit und Agentur-Skalierung.
 
 ---
 
@@ -3002,7 +3221,7 @@ Wenn Kunde React fordert:    Next.js (nur dann)
 ## Layer 1: Plain HTML/CSS/JS
 
 ### Wann verwenden
-- 1â€“2 Seiten, einmalig gebaut
+- 1–2 Seiten, einmalig gebaut
 - Kein wiederverwendbarer Komponenten-Bedarf
 - Maximale Robustheit gewuenscht
 
@@ -3027,32 +3246,32 @@ Wenn Kunde React fordert:    Next.js (nur dann)
 
 ### Das Kern-Prinzip: Zero JS by default
 
-Astro rendert alles zu statischem HTML. Im Browser landet kein JavaScript â€“ ausser du willst es explizit.
+Astro rendert alles zu statischem HTML. Im Browser landet kein JavaScript – ausser du willst es explizit.
 
 ```
-Next.js Landing Page:    ~150â€“300 KB JS (React Runtime + Hydration)
+Next.js Landing Page:    ~150–300 KB JS (React Runtime + Hydration)
 Astro Landing Page:        0 KB JS (reines HTML/CSS)
 ```
 
 ### Vorteile
-- Lighthouse Score 95â€“100 fast automatisch
+- Lighthouse Score 95–100 fast automatisch
 - LCP unter 2s ohne Optimierungsarbeit
 - Komponenten-Struktur ohne Framework-Overhead im Browser
 - Partial Hydration: nur interaktive Teile laden JS
 - Markdown + Content Collections fuer Blog/Case Studies
-- Deploy als statische Dateien â€“ kein Server noetig
+- Deploy als statische Dateien – kein Server noetig
 
 ### Bekannte Schwaechen
 - Hydration-Fehler (client:load / client:visible) sind subtil und schwer zu debuggen
-- Build-Fehler statt Runtime-Fehler â€“ tauchen erst beim Build auf
+- Build-Fehler statt Runtime-Fehler – tauchen erst beim Build auf
 - Oekosystem kleiner als Next.js (weniger Plugins, weniger Community-Antworten)
 - TypeScript + Drittanbieter-Pakete hakt gelegentlich
 - Config-Aenderungen erfordern manuellen Neustart
 
 ### Wann Astro NICHT nehmen
-- Web-App mit Login, Datenbank, komplexem State â†’ SvelteKit
-- Wenn der Kunde explizit React fordert â†’ Next.js
-- Wenn plain HTML reicht â†’ plain HTML
+- Web-App mit Login, Datenbank, komplexem State → SvelteKit
+- Wenn der Kunde explizit React fordert → Next.js
+- Wenn plain HTML reicht → plain HTML
 
 ---
 
@@ -3092,7 +3311,7 @@ Astro Landing Page:        0 KB JS (reines HTML/CSS)
 | SplitText | Club (99$/Jahr) | Text-Animationen Zeile/Buchstabe |
 | Draggable | Free | Drag-Interaktionen |
 
-### Pflicht-Animationen bei Push8
+### Pflicht-Animationen
 
 **Hero-Animation (jede Seite):**
 - Paragraph-Reveal: Ueberschrift + Text kommen nacheinander von unten
@@ -3123,11 +3342,11 @@ gsap.from(".reveal", {
 | Button Hover | 120ms | ease-out |
 | Modal oeffnen | 300ms | spring |
 | Modal schliessen | 200ms | ease-in |
-| Scroll-Reveal | 600â€“800ms | power3.out |
+| Scroll-Reveal | 600–800ms | power3.out |
 | Seitenwechsel | 500ms | ease-in-out |
 
 ### Niemals
-- `transition: all` â€“ immer spezifische Properties
+- `transition: all` – immer spezifische Properties
 - Animationen laenger als 1s fuer UI-Feedback
 - Lineare Bewegung fuer Objekte
 - Animationen ohne `prefers-reduced-motion` Fallback
@@ -3153,11 +3372,11 @@ gsap.from(".reveal", {
 
 ### 3 verschiedene Skalierbarkeitsprobleme
 
-**1. Agentur-Skalierung** â€“ Mehr Projekte pro Jahr bauen
-**2. Projekt-Skalierung** â€“ Kunde will aus 1-Pager eine 10-Seiten-Site
-**3. Traffic-Skalierung** â€“ Kunde wird viral
+**1. Agentur-Skalierung** – Mehr Projekte pro Jahr bauen
+**2. Projekt-Skalierung** – Kunde will aus 1-Pager eine 10-Seiten-Site
+**3. Traffic-Skalierung** – Kunde wird viral
 
-### Agentur-Skalierung (fuer Push8 am relevantesten)
+### Agentur-Skalierung
 
 ```
 Astro + eigenes Component-System + Sanity CMS
@@ -3165,23 +3384,23 @@ Astro + eigenes Component-System + Sanity CMS
 
 - Einmal sauberes Astro-Komponenten-Set bauen (Hero, CTA, Cards, Nav, Footer)
 - Fuer jeden Kunden nur Tokens + Inhalte austauschen
-- Sanity als headless CMS â†’ Kunde pflegt selbst, Push8 baut schneller
+- Sanity als headless CMS → Kunde pflegt selbst, die Agentur baut schneller
 
 **Die echten Skalierungs-Hebel:**
 
 | Hebel | Warum |
 |---|---|
 | Token-System | Jedes Projekt nutzt dieselbe Struktur, nur andere Werte |
-| Komponenten-Bibliothek | Hero, Nav, CTA einmal gebaut â€“ 20x wiederverwendet |
+| Komponenten-Bibliothek | Hero, Nav, CTA einmal gebaut – 20x wiederverwendet |
 | Klarer Brief-Prozess | Weniger Nacharbeit, schnellere Abnahme |
-| CMS-Strategie | Kunde pflegt selbst â†’ Push8 spart Support-Zeit |
+| CMS-Strategie | Kunde pflegt selbst → die Agentur spart Support-Zeit |
 
 Nicht das Framework skaliert. Das System skaliert.
 
 ### Projekt-Skalierung
 
 ```
-1â€“50 Seiten:   Astro + Content Collections
+1–50 Seiten:   Astro + Content Collections
 50+ Seiten:    Astro + Sanity CMS (strukturierte Inhalte)
 Web-App:       SvelteKit
 ```
@@ -3191,27 +3410,27 @@ Web-App:       SvelteKit
 Kein Problem bei statischen Sites.
 
 ```
-Statisches HTML auf CDN â†’ skaliert auf 10 Millionen Besucher
+Statisches HTML auf CDN → skaliert auf 10 Millionen Besucher
 Kein Server noetig. Vercel/Netlify Edge-CDN reicht.
 ```
 
 ---
 
-## Roadmap Push8-Stack
+## Roadmap Stack
 
 ```
-Kurzfristig (0â€“2 Jahre):
+Kurzfristig (0–2 Jahre):
   Plain HTML-Blueprint + Token-System
-  â†’ Schnell ausrollbar, kein Overhead
+  → Schnell ausrollbar, kein Overhead
 
-Mittelfristig (2â€“4 Jahre):
+Mittelfristig (2–4 Jahre):
   Astro-Component-Library + Sanity CMS
-  â†’ Kunde kann selbst editieren
-  â†’ Push8 baut schneller weil Komponenten fertig sind
+  → Kunde kann selbst editieren
+  → die Agentur baut schneller weil Komponenten fertig sind
 
 Langfristig (4+ Jahre):
   SvelteKit wenn Web-App-Features gefragt sind
-  â†’ Next.js nur wenn Kunde explizit React fordert
+  → Next.js nur wenn Kunde explizit React fordert
 ```
 
 ---
@@ -3223,7 +3442,7 @@ Framework:    Astro (ab 3 Seiten) / Plain HTML (darunter)
 CSS:          Custom Properties (Tokens), kein Tailwind
 JS:           Vanilla ES6+, Alpine.js fuer kleine Interaktivitaet
 Animationen:  GSAP + ScrollTrigger
-Icons:        Inline SVG (Lucide / Phosphor â€“ MIT-Lizenz)
+Icons:        Inline SVG (Lucide / Phosphor – MIT-Lizenz)
 Fonts:        Self-hosted WOFF2 (kein Google Fonts CDN)
 Bilder:       WebP, <200KB Desktop, <picture> fuer Responsive
 CMS:          Sanity (wenn Kundenredaktion gewuenscht)
@@ -3233,28 +3452,28 @@ Hosting:      Vercel / Netlify / Hetzner VPS
 
 ---
 
-*Push8 TechStack Guide â€“ Stand Mai 2026*
+*TechStack Guide – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\KERN\CONTEXT.md
+FILE: GUIDES/KERN/CONTEXT.md
 ================================================================================
 
-# Projekt-Kontext fÃ¼r Agenten
+# Projekt-Kontext für Agenten
 
-Dieser Guide gibt KI-Agenten den notwendigen Kontext Ã¼ber die Arbeitsweise und die typischen Kundenprojekte. Vor dem ersten Code lesen.
+Dieser Guide gibt KI-Agenten den notwendigen Kontext über die Arbeitsweise und die typischen Kundenprojekte. Vor dem ersten Code lesen.
 
 ---
 
 ## Was ist dieses Repo?
 
-Dieses Repository ist der **zentrale Wissens-Hub** fÃ¼r alle Webprojekte. Es enthÃ¤lt:
+Dieses Repository ist der **zentrale Wissens-Hub** für alle Webprojekte. Es enthält:
 - Verbindliche Design- und Code-Regeln.
-- Workflow-Anleitungen fÃ¼r wiederkehrende Aufgaben.
-- Checklisten fÃ¼r qualitÃ¤tssichere Deliverables.
+- Workflow-Anleitungen für wiederkehrende Aufgaben.
+- Checklisten für qualitätssichere Deliverables.
 - Referenz-Beispiele und Templates.
 
-**Kein Code lÃ¤uft hier.** Das Repo ist eine reine Dokumentations- und Skill-Basis.
+**Kein Code läuft hier.** Das Repo ist eine reine Dokumentations- und Skill-Basis.
 
 ---
 
@@ -3265,7 +3484,7 @@ Dieses Repository ist der **zentrale Wissens-Hub** fÃ¼r alle Webprojekte. Es e
 | Typ | Beispiele | Hauptziel |
 |---|---|---|
 | Handwerker | Elektriker, Maurer, Schreiner | Kontaktanfragen generieren |
-| Berater | Coaches, Steuerberater, AnwÃ¤lte | Vertrauen aufbauen, Termine buchen |
+| Berater | Coaches, Steuerberater, Anwälte | Vertrauen aufbauen, Termine buchen |
 | Lokale Dienstleister | Hebammen, Therapeuten, Fitnessstudios | Reichweite lokal, Buchungen |
 | Agenturen/Freelancer | Fotografen, Designer, Marketingagenturen | Portfolio, Neukundengewinnung |
 
@@ -3273,7 +3492,7 @@ Dieses Repository ist der **zentrale Wissens-Hub** fÃ¼r alle Webprojekte. Es e
 
 - 1-Pager bis 5-Seiter (kein komplexes Backend).
 - HTML/CSS/JS oder leichtes Framework (Astro, 11ty).
-- Next.js fÃ¼r Content-heavy Projekte oder wenn explizit verlangt.
+- Next.js für Content-heavy Projekte oder wenn explizit verlangt.
 - Hosting: Webspace (FTP/rsync), Vercel, Netlify oder VPS.
 
 ---
@@ -3283,19 +3502,19 @@ Dieses Repository ist der **zentrale Wissens-Hub** fÃ¼r alle Webprojekte. Es e
 ### Der Workflow-Prozess
 
 ```
-1. PROJEKT_BRIEF.md ausfÃ¼llen (Analyse vor Code)
+1. PROJEKT_BRIEF.md ausfüllen (Analyse vor Code)
 2. Design-Tokens ableiten (keine Magic Numbers)
-3. Sektionen-Reihenfolge bestÃ¤tigen (kein Code ohne Freigabe)
+3. Sektionen-Reihenfolge bestätigen (kein Code ohne Freigabe)
 4. Bauen (iterativ, mit Validator-Loop)
 5. QA + Deploy (Checkliste abarbeiten)
 ```
 
-### QualitÃ¤tsstandards
+### Qualitätsstandards
 
-- **Kein generisches AI-Slop:** Inter-Font + lila Gradient + weiÃŸe Cards = verboten.
-- **Performance first:** Core Web Vitals mÃ¼ssen grÃ¼n sein. LCP < 2.5s.
+- **Kein generisches AI-Slop:** Inter-Font + lila Gradient + weiße Cards = verboten.
+- **Performance first:** Core Web Vitals müssen grün sein. LCP < 2.5s.
 - **Mobile first:** Immer. Kein Desktop-Design, das dann "responsive gemacht" wird.
-- **DSGVO by default:** Kein CDN ohne PrÃ¼fung. Kein Google Fonts direkt. Kein Google Analytics ohne Consent.
+- **DSGVO by default:** Kein CDN ohne Prüfung. Kein Google Fonts direkt. Kein Google Analytics ohne Consent.
 
 ---
 
@@ -3309,20 +3528,20 @@ Dieses Repository ist der **zentrale Wissens-Hub** fÃ¼r alle Webprojekte. Es e
 | `GUIDES/03_EXECUTION/technical/` | Technische Guides (SEO, Legal, Security, QA, Deploy, Forms, Automation) |
 | `GUIDES/KERN/STYLE.md` | Code-Stil-Konventionen |
 | `GUIDES/KERN/RULES.md` | Verbindliche Agenten-Regeln |
-| `GUIDES/KERN/PROJEKT_BRIEF.md` | Template fÃ¼r das Projektbriefing |
+| `GUIDES/KERN/PROJEKT_BRIEF.md` | Template für das Projektbriefing |
 | `CHECKLISTS/` | Schnell-Referenzen pro Workflow |
 
 ---
 
-## Technischer Stack â€“ Defaults
+## Technischer Stack – Defaults
 
 ```
-HTML/CSS/JS:    Vanilla-first. Kein Framework-Overhead fÃ¼r einfache Sites.
-CSS:            Custom Properties (Tokens), kein Tailwind in Produktion (auÃŸer User wÃ¼nscht es)
-JS:             Vanilla ES6+. Kein jQuery. Alpine.js erlaubt fÃ¼r kleine InteraktivitÃ¤t.
-Framework:      Astro (Static), Next.js (wenn SSR nÃ¶tig)
-Build:          Vite oder Parcel (kein Webpack auÃŸer Zwang)
-Icons:          Inline SVG (Heroicons, Lucide, Phosphor â€“ MIT-Lizenz)
+HTML/CSS/JS:    Vanilla-first. Kein Framework-Overhead für einfache Sites.
+CSS:            Custom Properties (Tokens), kein Tailwind in Produktion (außer User wünscht es)
+JS:             Vanilla ES6+. Kein jQuery. Alpine.js erlaubt für kleine Interaktivität.
+Framework:      Astro (Static), Next.js (wenn SSR nötig)
+Build:          Vite oder Parcel (kein Webpack außer Zwang)
+Icons:          Inline SVG (Heroicons, Lucide, Phosphor – MIT-Lizenz)
 Fonts:          Self-hosted WOFF2
 Bilder:         WebP, <200KB Desktop
 ```
@@ -3332,157 +3551,51 @@ Bilder:         WebP, <200KB Desktop
 ## Was dieser Agent NICHT tut
 
 - Keine Entscheidungen ohne Kontext treffen.
-- Keinen Code schreiben, bevor der Projektbrief ausgefÃ¼llt ist.
-- Keine externen CDN-Requests ohne DSGVO-PrÃ¼fung einbauen.
-- Keine Magic Numbers â€“ alles aus dem Token-System.
+- Keinen Code schreiben, bevor der Projektbrief ausgefüllt ist.
+- Keine externen CDN-Requests ohne DSGVO-Prüfung einbauen.
+- Keine Magic Numbers – alles aus dem Token-System.
 
 ---
 
-*Agent Context â€“ Stand Juni 2026*
+*Agent Context – Stand Juni 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\KERN\design-tokens-mini.md
+FILE: GUIDES/KERN/PROJEKT_BRIEF.md
 ================================================================================
 
-# Design Tokens â€“ Kurzreferenz
-
-> Nur Token-Werte. Keine ErklÃ¤rungen. FÃ¼r Details â†’ GUIDES/03_EXECUTION/
-
----
-
-## Spacing (8pt Grid)
-
-```css
---space-100:  4px;
---space-200:  8px;
---space-300: 16px;
---space-400: 24px;
---space-500: 32px;
---space-600: 48px;
---space-700: 64px;
---space-800: 96px;
-```
-
-## Farbskala (300 = Base)
-
-```css
---color-primary-100: hsl(H, S%, 95%);
---color-primary-200: hsl(H, S%, 85%);
---color-primary-300: hsl(H, S%, 60%);  /* BASE â€“ aus PROJEKT_BRIEF */
---color-primary-400: hsl(H, S%, 45%);
---color-primary-500: hsl(H, S%, 30%);
---color-primary-600: hsl(H, S%, 20%);
---color-primary-700: hsl(H, S%, 10%);
-
---color-neutral-100: hsl(0, 0%, 97%);
---color-neutral-200: hsl(0, 0%, 90%);
---color-neutral-300: hsl(0, 0%, 70%);
---color-neutral-400: hsl(0, 0%, 50%);
---color-neutral-500: hsl(0, 0%, 30%);
---color-neutral-600: hsl(0, 0%, 15%);
---color-neutral-700: hsl(0, 0%,  5%);
-```
-
-## Radien
-
-```css
---radius-squircle:    28%;   /* quintic superellipse approx */
---radius-squircle-sm: 20%;
---radius-pill:       999px;
---radius-sm:           4px;
---radius-md:           8px;
---radius-lg:          16px;
-```
-
-## Typografie
-
-```css
---font-base: 'Inter', system-ui, sans-serif;
---text-xs:   0.75rem;   /*  12px */
---text-sm:   0.875rem;  /*  14px */
---text-md:   1rem;      /*  16px */
---text-lg:   1.25rem;   /*  20px */
---text-xl:   1.5rem;    /*  24px */
---text-2xl:  2rem;      /*  32px */
---text-3xl:  2.5rem;    /*  40px */
---text-4xl:  3.5rem;    /*  56px */
-
---leading-tight:  1.2;
---leading-body:   1.6;
---weight-regular: 400;
---weight-medium:  500;
---weight-bold:    700;
-```
-
-## Breakpoints
-
-```css
---bp-mobile:  768px;
---bp-tablet:  1024px;
---bp-desktop: 1280px;
-```
-
-## Bento-Ratios
-
-```css
-.bento-square   { aspect-ratio: 1 / 1; }
-.bento-wide     { aspect-ratio: 16 / 9; }
-.bento-portrait { aspect-ratio: 4 / 5; }
-.bento-card     { aspect-ratio: 3 / 2; }
-```
-
-## Kern-Regeln (nicht verhandelbar)
-
-- Kein Magic Number â€“ immer Token verwenden
-- Mobile-First: Single Column â†’ 3-Column Grid
-- Kontrast min 4.5:1 (WCAG AA)
-- Touch-Targets min 48Ã—48px
-- Inline SVG fÃ¼r Icons â€“ nie CDN
-- Fonts lokal hosten â€“ nie Google Fonts CDN
-- `100svh` statt `100vh` (iOS Safari)
-
----
-
-*FÃ¼r Muster, Komponenten, Motion, Go-Live-Checkliste â†’ GUIDES/03_EXECUTION/
-
-
-================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\KERN\PROJEKT_BRIEF.md
-================================================================================
-
-# Projekt-Brief â€“ Website Rebuild Workflow
+# Projekt-Brief – Website Rebuild Workflow
 
 Dieser Guide regelt den Prozess, wenn eine bestehende Website neu gebaut werden soll.
-**Der Agent fÃ¼llt diesen Brief aus, bevor er einen einzigen Guide liest oder Code schreibt.**
+**Der Agent füllt diesen Brief aus, bevor er einen einzigen Guide liest oder Code schreibt.**
 
 > **TL;DR**
-> - Phase 0 zuerst: alte Website analysieren â†’ Zielgruppe ableiten â†’ Entscheidungen dokumentieren
-> - Danach: Token-Mapping, Sektionen bestÃ¤tigen lassen, dann erst Code
-> - Projekt schlÃ¤gt Generic-Guide â€“ Zielgruppe entscheidet, nicht das Template
-> - AnschlieÃŸend PLAN.md aus `TEMPLATES/` auswÃ¤hlen und anpassen
+> - Phase 0 zuerst: alte Website analysieren → Zielgruppe ableiten → Entscheidungen dokumentieren
+> - Danach: Token-Mapping, Sektionen bestätigen lassen, dann erst Code
+> - Projekt schlägt Generic-Guide – Zielgruppe entscheidet, nicht das Template
+> - Anschließend PLAN.md aus `TEMPLATES/` auswählen und anpassen
 
 ---
 
 ## Warum dieser Brief zuerst?
 
-Generische Design-Regeln (Token-System, Grid, Komponenten) sind Werkzeuge â€“ kein Ziel.
+Generische Design-Regeln (Token-System, Grid, Komponenten) sind Werkzeuge – kein Ziel.
 Ohne Projekt-Brief konkurrieren sie mit dem, was die alte Website zeigt und was die Zielgruppe braucht.
-Erst wenn dieser Brief vollstÃ¤ndig ist, ist klar, welche Regeln gelten und welche angepasst werden.
+Erst wenn dieser Brief vollständig ist, ist klar, welche Regeln gelten und welche angepasst werden.
 
 ---
 
-## Phase 0: Brief ausfÃ¼llen (vor allem anderen)
+## Phase 0: Brief ausfüllen (vor allem anderen)
 
-### 0.1 â€“ Alte Website analysieren
+### 0.1 – Alte Website analysieren
 
 Agent untersucht die alte Website und dokumentiert:
 
 ```
 ALTE WEBSITE
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+─────────────────────────────────────────────
 URL / Dateipfad:
-PrimÃ¤re SchwÃ¤chen:
+Primäre Schwächen:
   - [ ] Kein klarer CTA
   - [ ] Veraltetes Layout
   - [ ] Schlechte Mobile-Darstellung
@@ -3496,91 +3609,91 @@ Was funktioniert / behalten:
   - Inhalte die gut performen:
 
 Vorhandene Farbcodes:
-  PrimÃ¤r:    #______
-  SekundÃ¤r:  #______
+  Primär:    #______
+  Sekundär:  #______
   Hintergrund: #______
 ```
 
-### 0.2 â€“ Zielgruppe ableiten
+### 0.2 – Zielgruppe ableiten
 
 Agent analysiert oder fragt nach Zielgruppe und dokumentiert:
 
 ```
 ZIELGRUPPE
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+─────────────────────────────────────────────
 Persona (kurz):
-Alter / technische AffinitÃ¤t:
-Entscheidungstreiber (sortiert nach PrioritÃ¤t):
+Alter / technische Affinität:
+Entscheidungstreiber (sortiert nach Priorität):
   1.
   2.
   3.
-PrimÃ¤res GerÃ¤t: [ ] Desktop  [ ] Mobile  [ ] Beides
+Primäres Gerät: [ ] Desktop  [ ] Mobile  [ ] Beides
 Sprache / Ton der Ansprache: [ ] Sachlich  [ ] Emotional  [ ] Premium  [ ] Locker
-GrÃ¶ÃŸter Einwand vor dem Kauf/Kontakt:
+Größter Einwand vor dem Kauf/Kontakt:
 ```
 
-### 0.3 â€“ Design-Entscheidungen ableiten
+### 0.3 – Design-Entscheidungen ableiten
 
-Drei Felder â€“ mehr nicht. Alles andere ergibt sich aus dem Projekt-Typ-Bundle oder ist Standard.
+Drei Felder – mehr nicht. Alles andere ergibt sich aus dem Projekt-Typ-Bundle oder ist Standard.
 
 ```
 DESIGN-ENTSCHEIDUNGEN
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+─────────────────────────────────────────────
 Projekt-Typ:
   [ ] local-service   [ ] portfolio   [ ] ecommerce   [ ] saas   [ ] corporate
 
 TON (leer = "Klar, authentisch, aktiv"):
   ________________________________  Grund: ________________________________
 
-PRIMÃ„RFARBE (leer = aus Kontext ableiten):
+PRIMÄRFARBE (leer = aus Kontext ableiten):
   #______  Grund: ________________________________
 
 MOTION (leer = Standard):
   [ ] Standard (Parallax + Reveal)  [ ] Subtil (kein Parallax)  [ ] Keine
 
 ABOVE-THE-FOLD-ZIEL:   ________________________________
-PRIMÃ„RER CTA:          ________________________________  â†’  ________________________________
+PRIMÄRER CTA:          ________________________________  →  ________________________________
 VERTRAUENSELEMENTE:    1. ________  2. ________  3. ________
 
 SEKTIONEN:  1. Hero  2.________  3.________  4.________  5.________
 ```
 
-**Regel:** Accessibility / Security / Legal nie Ã¼berschreibbar. Alles andere mit BegrÃ¼ndung Ã¤nderbar.
+**Regel:** Accessibility / Security / Legal nie überschreibbar. Alles andere mit Begründung änderbar.
 
-### 0.4 â€“ Guides automatisch auswÃ¤hlen
+### 0.4 – Guides automatisch auswählen
 
-Projekt-Typ aus 0.3 â†’ Bundle aus `guides-index.json` `project-types` laden. Dann ergÃ¤nzen:
+Projekt-Typ aus 0.3 → Bundle aus `guides-index.json` `project-types` laden. Dann ergänzen:
 
 ```
-GUIDES FÃœR DIESES PROJEKT
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+GUIDES FÜR DIESES PROJEKT
+─────────────────────────────────────────────
 Bundle (Projekt-Typ):   _______________ (aus guides-index.json)
-EnthÃ¤lt automatisch:    _______________
+Enthält automatisch:    _______________
 
-ZusÃ¤tzlich laden:
-[ ] tone_of_voice.md        â€“ wenn Texte miterstellt werden
-[ ] components.md           â€“ wenn Video/Bild-Optimierung nÃ¶tig
-[ ] qa_testing.md           â€“ bei erhÃ¶hter A11y-Anforderung
+Zusätzlich laden:
+[ ] tone_of_voice.md        – wenn Texte miterstellt werden
+[ ] components.md           – wenn Video/Bild-Optimierung nötig
+[ ] qa_testing.md           – bei erhöhter A11y-Anforderung
 [ ] Sonstiges: ___
 ```
 
-**Alle anderen Guides werden nicht geladen** â€“ sie stehen bei Bedarf zur VerfÃ¼gung, belasten aber nicht den Kontext.
+**Alle anderen Guides werden nicht geladen** – sie stehen bei Bedarf zur Verfügung, belasten aber nicht den Kontext.
 
 ---
 
-## Phase 1: Token-Mapping (alte Website â†’ neues System)
+## Phase 1: Token-Mapping (alte Website → neues System)
 
-Vor dem Coding werden die Werte aus 0.3 direkt in CSS-Token Ã¼bertragen:
+Vor dem Coding werden die Werte aus 0.3 direkt in CSS-Token übertragen:
 
 ```css
 :root {
   /* Abgeleitet aus Zielgruppenanalyse, nicht aus Standard-Template */
-  --color-primary-300: /* PrimÃ¤rfarbe aus 0.3 */;
+  --color-primary-300: /* Primärfarbe aus 0.3 */;
 
-  /* Aus alter Website Ã¼bernommen / angepasst */
+  /* Aus alter Website übernommen / angepasst */
   --color-brand-trust: /* Vertrauensfarbe, wenn vorhanden */;
 
-  /* Spacing & Radius nach Design System â€“ keine Anpassung nÃ¶tig */
+  /* Spacing & Radius nach Design System – keine Anpassung nötig */
   --space-300: 16px;
   --radius-squircle: 28%;
 }
@@ -3590,56 +3703,56 @@ Erst wenn das Token-Mapping dokumentiert ist, beginnt der erste HTML/CSS-Block.
 
 ---
 
-## Phase 2: Sektionen-Reihenfolge bestÃ¤tigen
+## Phase 2: Sektionen-Reihenfolge bestätigen
 
-Agent legt Sektionen-Reihenfolge aus 0.3 vor und wartet auf BestÃ¤tigung:
+Agent legt Sektionen-Reihenfolge aus 0.3 vor und wartet auf Bestätigung:
 
 ```
 Geplante Sektionen:
-1. Hero â€“ [CTA-Text] â†’ [Ziel]
+1. Hero – [CTA-Text] → [Ziel]
 2. Problem / Schmerz der Zielgruppe
-3. LÃ¶sung / Leistungen
+3. Lösung / Leistungen
 4. Vertrauen (Logos, Testimonials)
 5. CTA / Kontakt
 
-BestÃ¤tigung abwarten bevor mit Coding begonnen wird.
+Bestätigung abwarten bevor mit Coding begonnen wird.
 ```
 
 ---
 
-## Regeln fÃ¼r den gesamten Rebuild-Prozess
+## Regeln für den gesamten Rebuild-Prozess
 
-1. **Brief vor Code.** Kein HTML ohne ausgefÃ¼llte Phase 0.
-2. **Projekt schlÃ¤gt Guide.** Wenn die Zielgruppe sachliche Ansprache braucht, gilt das â€“ auch wenn ein Generic-Template etwas anderes zeigt.
+1. **Brief vor Code.** Kein HTML ohne ausgefüllte Phase 0.
+2. **Projekt schlägt Guide.** Wenn die Zielgruppe sachliche Ansprache braucht, gilt das – auch wenn ein Generic-Template etwas anderes zeigt.
 3. **Minimal-Guides.** Nur die in 0.4 markierten Guides werden aktiv gelesen.
-4. **Token-Mapping dokumentieren.** Jede Farbentscheidung braucht eine BegrÃ¼ndung aus 0.1 or 0.2.
-5. **Sektionen bestÃ¤tigen lassen.** Reihenfolge vor dem Coding freigeben lassen.
-6. **Keine parallelen Entscheidungen.** Entweder altes Design weiterverwenden oder neu ableiten â€“ nicht beides gleichzeitig.
+4. **Token-Mapping dokumentieren.** Jede Farbentscheidung braucht eine Begründung aus 0.1 or 0.2.
+5. **Sektionen bestätigen lassen.** Reihenfolge vor dem Coding freigeben lassen.
+6. **Keine parallelen Entscheidungen.** Entweder altes Design weiterverwenden oder neu ableiten – nicht beides gleichzeitig.
 
 ---
 
 ## Verbindung zur Automation
 
-Dieser Brief ist die Pflichtbasis fÃ¼r jeden automatisierten Build. Nach Phase 2 (Sektionen bestÃ¤tigt) wird aus dem Brief direkt der **PLAN.md** generiert:
+Dieser Brief ist die Pflichtbasis für jeden automatisierten Build. Nach Phase 2 (Sektionen bestätigt) wird aus dem Brief direkt der **PLAN.md** generiert:
 
-- Jede Section aus 0.3 â†’ ein Step im PLAN.md
-- Token-Mapping aus Phase 1 â†’ Step 1 im PLAN.md
-- Relevante Guides aus 0.4 â†’ werden pro Step geladen, nicht alle auf einmal
+- Jede Section aus 0.3 → ein Step im PLAN.md
+- Token-Mapping aus Phase 1 → Step 1 im PLAN.md
+- Relevante Guides aus 0.4 → werden pro Step geladen, nicht alle auf einmal
 
-â†’ Wie PLAN.md strukturiert sein muss: **[automation.md](../03_EXECUTION/technical/automation.md)**
+→ Wie PLAN.md strukturiert sein muss: **[automation.md](../03_EXECUTION/technical/automation.md)**
 
 ---
 
-*Website Guide â€“ Stand Mai 2026*
+*Website Guide – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\KERN\RULES.md
+FILE: GUIDES/KERN/RULES.md
 ================================================================================
 
 # Verbindliche Agenten-Regeln
 
-Diese Regeln gelten fÃ¼r alle KI-Agenten, die in diesem Projekt arbeiten. Keine Ausnahmen ohne explizite Freigabe durch den User.
+Diese Regeln gelten für alle KI-Agenten, die in diesem Projekt arbeiten. Keine Ausnahmen ohne explizite Freigabe durch den User.
 
 ---
 
@@ -3649,11 +3762,11 @@ Diese Regeln gelten fÃ¼r alle KI-Agenten, die in diesem Projekt arbeiten. Kein
 
 Vor dem ersten Keystroke muss bekannt sein:
 - Branche des Kunden
-- PrimÃ¤re Conversion-Action (was soll der Besucher tun?)
+- Primäre Conversion-Action (was soll der Besucher tun?)
 - Stack (HTML/CSS/JS, Next.js, Astro?)
 - Gibt es eine alte Website? Was wird behalten?
 
-**Wenn unklar â†’ fragen, nicht raten.**
+**Wenn unklar → fragen, nicht raten.**
 
 ---
 
@@ -3673,7 +3786,7 @@ Kein einziger hardcodierter Wert fuer Spacing, Farbe oder Radius in Production-C
 /* Einzige Ausnahme: 0 und 100% */
 margin: 0;        /* OK */
 width: 100%;      /* OK */
-padding: 24px;    /* VERBOTEN â†’ var(--space-400) */
+padding: 24px;    /* VERBOTEN → var(--space-400) */
 ```
 
 ---
@@ -3688,11 +3801,11 @@ Lighthouse Performance-Score < 80 = Deploy blockiert.
 
 ### 5. DSGVO ist nicht verhandelbar
 
-Kein CDN-Request ohne Pruefung:
-- Google Fonts CDN: **verboten**
-- Font Awesome CDN: **verboten**
+Externe Fonts und Icons: **grundsaetzlich verboten** – egal welcher Host.
+- Jeder externe Font (Google Fonts, Typekit, Bunny, cdnfonts, externes `@font-face src` …): **verboten** → Fonts immer lokal als WOFF2.
+- Jede externe Icon-Quelle (Font Awesome, Lucide/Feather/Material/Iconify/Boxicons-CDN, Icon-Fonts …): **verboten** → Icons immer Inline-SVG.
 - Google Analytics ohne Consent: **verboten**
-- Inline SVG statt CDN-Icons: **Pflicht**
+- `./check.sh` blockiert externe Font-/Icon-Requests automatisch (kein Deploy).
 
 ---
 
@@ -3710,7 +3823,7 @@ Kein CDN-Request ohne Pruefung:
 
 Design beginnt immer bei 375px Breite. Desktop ist die Erweiterung.
 
-Kein Entwickeln auf Desktop und dann "responsiv machen" â€“ das fuehrt immer zu schlechten Mobile-Ergebnissen.
+Kein Entwickeln auf Desktop und dann "responsiv machen" – das fuehrt immer zu schlechten Mobile-Ergebnissen.
 
 ---
 
@@ -3726,7 +3839,7 @@ Jede Liste, jeder Grid, jedes Dashboard braucht:
 
 ### 9. Dokumentation bleibt aktuell
 
-Wenn eine Design-Entscheidung getroffen wird (neue Farbe, neuer Font, neue Sektion) â†’ CD-Manual aktualisieren.
+Wenn eine Design-Entscheidung getroffen wird (neue Farbe, neuer Font, neue Sektion) → CD-Manual aktualisieren.
 
 Nicht: "ich mach das spaeter". Sofort.
 
@@ -3755,7 +3868,7 @@ Wenn Regeln in Konflikt stehen, gilt:
 
 ## Was der Agent NICHT entscheidet
 
-- PrimÃ¤rfarbe ohne Begruendung und BestÃ¤tigung
+- Primärfarbe ohne Begruendung und Bestätigung
 - Sektionen-Reihenfolge ohne Freigabe
 - Deployment ohne explizite Anweisung
 - CDN-Einbindung externer Dienste
@@ -3773,7 +3886,7 @@ Wenn etwas schieflaeuft:
 
 ---
 
-## Anti-Patterns â€“ nie wieder
+## Anti-Patterns – nie wieder
 
 | Pattern | Warum verboten |
 |---|---|
@@ -3781,22 +3894,22 @@ Wenn etwas schieflaeuft:
 | `!important` im CSS | Spezifitaets-Chaos |
 | Inline-Styles im HTML | Nicht wartbar, kein Token-System |
 | `position: absolute` fuer Layout | Bricht auf anderen Screens |
-| `100vh` fuer Mobile-Hero | iOS Safari Bug â†’ `100svh` |
-| `font-weight: bold` | â†’ `font-weight: 700` (explizit) |
+| `100vh` fuer Mobile-Hero | iOS Safari Bug → `100svh` |
+| `font-weight: bold` | → `font-weight: 700` (explizit) |
 | CDN-Scripts ohne SRI-Hash | Sicherheitsrisiko |
 
 ---
 
-*Agent Rules â€“ Stand Mai 2026*
+*Agent Rules – Stand Mai 2026*
 
 
 ================================================================================
-FILE: C:\Users\Hagen\Desktop\Buiness\designguid\GUIDES\KERN\STYLE.md
+FILE: GUIDES/KERN/STYLE.md
 ================================================================================
 
 # Code Style Guide
 
-Verbindliche Code-Konventionen fÃ¼r Webprojekte. KI-Agenten halten sich daran ohne Ausnahme.
+Verbindliche Code-Konventionen für Webprojekte. KI-Agenten halten sich daran ohne Ausnahme.
 
 ---
 
@@ -3970,22 +4083,22 @@ if (!prefersReducedMotion) {
 
 ```
 project/
-â”œâ”€â”€ index.html
-â”œâ”€â”€ public/              â† was deployed wird
-â”‚   â”œâ”€â”€ css/
-â”‚   â”‚   â””â”€â”€ style.css   â† eine Haupt-CSS-Datei (oder kompiliert)
-â”‚   â”œâ”€â”€ js/
-â”‚   â”‚   â””â”€â”€ main.js
-â”‚   â”œâ”€â”€ fonts/           â† self-hosted WOFF2
-â”‚   â””â”€â”€ img/             â† WebP-Bilder
-â”œâ”€â”€ src/                 â† Quellcode (nicht deployed)
-â””â”€â”€ docs/                â† Dokumentation
+├── index.html
+├── public/              ← was deployed wird
+│   ├── css/
+│   │   └── style.css   ← eine Haupt-CSS-Datei (oder kompiliert)
+│   ├── js/
+│   │   └── main.js
+│   ├── fonts/           ← self-hosted WOFF2
+│   └── img/             ← WebP-Bilder
+├── src/                 ← Quellcode (nicht deployed)
+└── docs/                ← Dokumentation
 ```
 
 **Dateinamen:** immer kebab-case. Kein camelCase, kein snake_case fuer Dateien.
-- `hero-background.webp` âœ…
-- `heroBackground.webp` âŒ
-- `hero_background.webp` âŒ
+- `hero-background.webp` ✅
+- `heroBackground.webp` ❌
+- `hero_background.webp` ❌
 
 ---
 
@@ -3995,7 +4108,7 @@ project/
 feat: Hero-Section mit Paragraph-Reveal hinzugefuegt
 fix: Mobile Navigation Overflow behoben
 style: Spacing-Token in Card-Komponente vereinheitlicht
-docs: CD-Manual mit PrimÃ¤rfarbe aktualisiert
+docs: CD-Manual mit Primärfarbe aktualisiert
 perf: Hero-Video auf 1.8MB komprimiert
 ```
 
@@ -4003,5 +4116,111 @@ Format: `type: kurze Beschreibung (Imperativ, Deutsch)`
 
 ---
 
-*Code Style Guide â€“ Stand Mai 2026*
+*Code Style Guide – Stand Mai 2026*
+
+
+================================================================================
+FILE: GUIDES/KERN/design-tokens-mini.md
+================================================================================
+
+# Design Tokens – Kurzreferenz
+
+> Nur Token-Werte. Keine Erklärungen. Für Details → GUIDES/03_EXECUTION/
+
+---
+
+## Spacing (8pt Grid)
+
+```css
+--space-100:  4px;
+--space-200:  8px;
+--space-300: 16px;
+--space-400: 24px;
+--space-500: 32px;
+--space-600: 48px;
+--space-700: 64px;
+--space-800: 96px;
+```
+
+## Farbskala (300 = Base)
+
+```css
+--color-primary-100: hsl(H, S%, 95%);
+--color-primary-200: hsl(H, S%, 85%);
+--color-primary-300: hsl(H, S%, 60%);  /* BASE – aus PROJEKT_BRIEF */
+--color-primary-400: hsl(H, S%, 45%);
+--color-primary-500: hsl(H, S%, 30%);
+--color-primary-600: hsl(H, S%, 20%);
+--color-primary-700: hsl(H, S%, 10%);
+
+--color-neutral-100: hsl(0, 0%, 97%);
+--color-neutral-200: hsl(0, 0%, 90%);
+--color-neutral-300: hsl(0, 0%, 70%);
+--color-neutral-400: hsl(0, 0%, 50%);
+--color-neutral-500: hsl(0, 0%, 30%);
+--color-neutral-600: hsl(0, 0%, 15%);
+--color-neutral-700: hsl(0, 0%,  5%);
+```
+
+## Radien
+
+```css
+--radius-squircle:    28%;   /* quintic superellipse approx */
+--radius-squircle-sm: 20%;
+--radius-pill:       999px;
+--radius-sm:           4px;
+--radius-md:           8px;
+--radius-lg:          16px;
+```
+
+## Typografie
+
+```css
+--font-base: 'Inter', system-ui, sans-serif;
+--text-xs:   0.75rem;   /*  12px */
+--text-sm:   0.875rem;  /*  14px */
+--text-md:   1rem;      /*  16px */
+--text-lg:   1.25rem;   /*  20px */
+--text-xl:   1.5rem;    /*  24px */
+--text-2xl:  2rem;      /*  32px */
+--text-3xl:  2.5rem;    /*  40px */
+--text-4xl:  3.5rem;    /*  56px */
+
+--leading-tight:  1.2;
+--leading-body:   1.6;
+--weight-regular: 400;
+--weight-medium:  500;
+--weight-bold:    700;
+```
+
+## Breakpoints
+
+```css
+--bp-mobile:  768px;
+--bp-tablet:  1024px;
+--bp-desktop: 1280px;
+```
+
+## Bento-Ratios
+
+```css
+.bento-square   { aspect-ratio: 1 / 1; }
+.bento-wide     { aspect-ratio: 16 / 9; }
+.bento-portrait { aspect-ratio: 4 / 5; }
+.bento-card     { aspect-ratio: 3 / 2; }
+```
+
+## Kern-Regeln (nicht verhandelbar)
+
+- Kein Magic Number – immer Token verwenden
+- Mobile-First: Single Column → 3-Column Grid
+- Kontrast min 4.5:1 (WCAG AA)
+- Touch-Targets min 48×48px
+- Inline SVG für Icons – nie CDN
+- Fonts lokal hosten – nie Google Fonts CDN
+- `100svh` statt `100vh` (iOS Safari)
+
+---
+
+*Für Muster, Komponenten, Motion, Go-Live-Checkliste → GUIDES/03_EXECUTION/
 

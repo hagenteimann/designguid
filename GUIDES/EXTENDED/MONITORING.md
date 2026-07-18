@@ -188,4 +188,4 @@ Nach jedem Downtime/Error:
 
 ---
 
-*Monitoring & Uptime – Push8 Web Agency – Stand Mai 2026*
+*Monitoring & Uptime – Stand Mai 2026*

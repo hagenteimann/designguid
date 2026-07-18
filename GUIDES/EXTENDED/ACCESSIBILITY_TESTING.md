@@ -253,4 +253,4 @@ jobs:
 
 ---
 
-*Accessibility Testing – Push8 Web Agency – Stand Mai 2026*
+*Accessibility Testing – Stand Mai 2026*
