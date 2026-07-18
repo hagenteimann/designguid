@@ -17,6 +17,24 @@
 --space-800: 96px;
 ```
 
+### Section-Spacing (fluid – vertikaler Rhythmus zwischen Sektionen)
+
+```css
+--space-section-sm: clamp(2.5rem,  6vw,  4rem);   /* 40 → 64px  – enge Sektionen  */
+--space-section:    clamp(4rem,    9vw,  7.5rem); /* 64 → 120px – Standard        */
+--space-section-lg: clamp(6rem,   12vw, 11rem);   /* 96 → 176px – Hero/großzügig  */
+```
+
+### Content-Rahmen (Whitespace an den Seiten)
+
+```css
+--content-max:   72rem;                     /* ~1152px Inhaltsbreite        */
+--measure:       65ch;                      /* Textspalte: 45–75 Zeichen    */
+--gutter-inline: clamp(1rem, 4vw, 2.5rem);  /* Seiten-Padding mobil→desktop */
+```
+
+> Rhythmus-Regel: Abstand **zwischen** Sektionen ≈ **2×** der größte Abstand **innerhalb** (Gestalt-Nähe). Innen `--space-500/600`, außen `--space-section`.
+
 ## Farbskala (300 = Base)
 
 ```css
@@ -88,6 +106,9 @@
 ## Kern-Regeln (nicht verhandelbar)
 
 - Kein Magic Number – immer Token verwenden
+- Spacing: `gap` für Rhythmus, Margins nur als Ausnahme (einseitig, `margin-block-start`)
+- Section-Abstand ≈ 2× größter Innen-Abstand (Gestalt-Gruppierung ohne Trennlinien)
+- Textspalte max `65ch`; Sektionen fluid via `--space-section`
 - Mobile-First: Single Column → 3-Column Grid
 - Kontrast min 4.5:1 (WCAG AA)
 - Touch-Targets min 48×48px

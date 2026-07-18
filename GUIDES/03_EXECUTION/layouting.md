@@ -80,3 +80,35 @@ Move beyond fixed viewport breakpoints toward context-aware, fluid layouts:
   .card { grid-template-columns: 1fr 2fr; }
 }
 ```
+
+---
+
+## 6. Spacing System & Whitespace Rhythm
+Spacing is a system on three levels — never guessed:
+
+**a) Scale (the allowed values).** The 8pt grid tokens `--space-100 … --space-800` for component-level padding/gaps. Use tokens only, no magic numbers.
+
+**b) Section spacing (fluid).** Vertical rhythm *between* sections uses dedicated fluid tokens (defined in `design-tokens-mini.md`), so sections breathe more on desktop and tighten on mobile — one value, no breakpoint jumps:
+```css
+section { padding-block: var(--space-section); }        /* 64 → 120px */
+.section--hero  { padding-block: var(--space-section-lg); } /* 96 → 176px */
+.section--tight { padding-block: var(--space-section-sm); } /* 40 → 64px  */
+```
+
+**c) Relational rule (Gestalt — the pro lever).** Space communicates grouping. Space *between* independent groups must be clearly larger than *within* one — target **≈ 2×**. Element→label tight, card→card medium, section→section large. This creates structure **without** divider lines.
+
+**Mechanics:**
+- **`gap` for rhythm** (flex *and* grid) — no margin-collapsing, no "last child" special cases. Margins only as an exception, and then one-directional (`margin-block-start`).
+- **The Stack primitive** for consistent vertical spacing:
+  ```css
+  .stack { display: flex; flex-direction: column; gap: var(--space-500); }
+  ```
+- **Content frame** for side whitespace: cap width, center, fluid gutters; keep body text at a readable measure.
+  ```css
+  .wrap { max-inline-size: var(--content-max); margin-inline: auto;
+          padding-inline: var(--gutter-inline); }
+  .prose { max-inline-size: var(--measure); }   /* 45–75 chars */
+  ```
+- **Logical properties** (`padding-block`, `margin-inline`) for i18n/RTL by default.
+
+**Optics over math:** the grid is the base, not the law — large headlines need more space above than below; the last section before the footer needs extra breathing room. Optical adjustment is the final 10 % that separates senior from mid.

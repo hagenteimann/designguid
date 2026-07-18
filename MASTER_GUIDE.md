@@ -611,6 +611,38 @@ Move beyond fixed viewport breakpoints toward context-aware, fluid layouts:
 }
 ```
 
+---
+
+## 6. Spacing System & Whitespace Rhythm
+Spacing is a system on three levels — never guessed:
+
+**a) Scale (the allowed values).** The 8pt grid tokens `--space-100 … --space-800` for component-level padding/gaps. Use tokens only, no magic numbers.
+
+**b) Section spacing (fluid).** Vertical rhythm *between* sections uses dedicated fluid tokens (defined in `design-tokens-mini.md`), so sections breathe more on desktop and tighten on mobile — one value, no breakpoint jumps:
+```css
+section { padding-block: var(--space-section); }        /* 64 → 120px */
+.section--hero  { padding-block: var(--space-section-lg); } /* 96 → 176px */
+.section--tight { padding-block: var(--space-section-sm); } /* 40 → 64px  */
+```
+
+**c) Relational rule (Gestalt — the pro lever).** Space communicates grouping. Space *between* independent groups must be clearly larger than *within* one — target **≈ 2×**. Element→label tight, card→card medium, section→section large. This creates structure **without** divider lines.
+
+**Mechanics:**
+- **`gap` for rhythm** (flex *and* grid) — no margin-collapsing, no "last child" special cases. Margins only as an exception, and then one-directional (`margin-block-start`).
+- **The Stack primitive** for consistent vertical spacing:
+  ```css
+  .stack { display: flex; flex-direction: column; gap: var(--space-500); }
+  ```
+- **Content frame** for side whitespace: cap width, center, fluid gutters; keep body text at a readable measure.
+  ```css
+  .wrap { max-inline-size: var(--content-max); margin-inline: auto;
+          padding-inline: var(--gutter-inline); }
+  .prose { max-inline-size: var(--measure); }   /* 45–75 chars */
+  ```
+- **Logical properties** (`padding-block`, `margin-inline`) for i18n/RTL by default.
+
+**Optics over math:** the grid is the base, not the law — large headlines need more space above than below; the last section before the footer needs extra breathing room. Optical adjustment is the final 10 % that separates senior from mid.
+
 
 ================================================================================
 FILE: GUIDES/03_EXECUTION/logo.md
@@ -4142,6 +4174,24 @@ FILE: GUIDES/KERN/design-tokens-mini.md
 --space-800: 96px;
 ```
 
+### Section-Spacing (fluid – vertikaler Rhythmus zwischen Sektionen)
+
+```css
+--space-section-sm: clamp(2.5rem,  6vw,  4rem);   /* 40 → 64px  – enge Sektionen  */
+--space-section:    clamp(4rem,    9vw,  7.5rem); /* 64 → 120px – Standard        */
+--space-section-lg: clamp(6rem,   12vw, 11rem);   /* 96 → 176px – Hero/großzügig  */
+```
+
+### Content-Rahmen (Whitespace an den Seiten)
+
+```css
+--content-max:   72rem;                     /* ~1152px Inhaltsbreite        */
+--measure:       65ch;                      /* Textspalte: 45–75 Zeichen    */
+--gutter-inline: clamp(1rem, 4vw, 2.5rem);  /* Seiten-Padding mobil→desktop */
+```
+
+> Rhythmus-Regel: Abstand **zwischen** Sektionen ≈ **2×** der größte Abstand **innerhalb** (Gestalt-Nähe). Innen `--space-500/600`, außen `--space-section`.
+
 ## Farbskala (300 = Base)
 
 ```css
@@ -4213,6 +4263,9 @@ FILE: GUIDES/KERN/design-tokens-mini.md
 ## Kern-Regeln (nicht verhandelbar)
 
 - Kein Magic Number – immer Token verwenden
+- Spacing: `gap` für Rhythmus, Margins nur als Ausnahme (einseitig, `margin-block-start`)
+- Section-Abstand ≈ 2× größter Innen-Abstand (Gestalt-Gruppierung ohne Trennlinien)
+- Textspalte max `65ch`; Sektionen fluid via `--space-section`
 - Mobile-First: Single Column → 3-Column Grid
 - Kontrast min 4.5:1 (WCAG AA)
 - Touch-Targets min 48×48px
