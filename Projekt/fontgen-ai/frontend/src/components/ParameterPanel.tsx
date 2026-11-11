@@ -5,11 +5,12 @@ interface ParameterPanelProps {
   familyName: string;
   notes: string;
   onChange: (params: FontParams) => void;
+  onSave: () => void;
 }
 
 const fmt = (v: number, step: number) => (step < 1 ? v.toFixed(step < 0.1 ? 2 : 2) : String(Math.round(v)));
 
-export function ParameterPanel({ params, familyName, notes, onChange }: ParameterPanelProps) {
+export function ParameterPanel({ params, familyName, notes, onChange, onSave }: ParameterPanelProps) {
   return (
     <div className="bg-white rounded-lg shadow p-4 space-y-4">
       <div className="flex items-start justify-between gap-4">
@@ -19,12 +20,20 @@ export function ParameterPanel({ params, familyName, notes, onChange }: Paramete
             One change updates every letter at once. These sliders work locally and cost nothing.
           </p>
         </div>
-        <button
-          onClick={() => onChange(DEFAULT_PARAMS)}
-          className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors shrink-0"
-        >
-          Reset
-        </button>
+        <div className="flex gap-2 shrink-0">
+          <button
+            onClick={onSave}
+            className="text-xs px-3 py-1.5 bg-primary-300 hover:bg-primary-400 text-white rounded-md transition-colors"
+          >
+            Save to public library
+          </button>
+          <button
+            onClick={() => onChange(DEFAULT_PARAMS)}
+            className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       {notes && (

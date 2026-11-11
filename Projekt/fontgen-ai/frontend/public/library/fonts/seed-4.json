@@ -1,0 +1,19 @@
+{
+  "id": "seed-4",
+  "name": "Tech Mono",
+  "author": "FontGen",
+  "description": "Squarish monospace for code and interfaces.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 420,
+    "width": 1,
+    "xHeight": 520,
+    "contrast": 0.1,
+    "squareness": 0.55,
+    "slant": 0,
+    "spacing": 1,
+    "terminal": "flat",
+    "mono": true
+  },
+  "createdAt": "2026-11-11T12:04:00.000Z"
+}

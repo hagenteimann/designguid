@@ -1,0 +1,65 @@
+name: Publish font to library
+
+# Runs when the maintainer adds the "approved" label to a font submission issue.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: library-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'font-submission')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./Projekt/fontgen-ai/frontend
+        run: npm install
+
+      - name: Validate submission and write library entry
+        working-directory: ./Projekt/fontgen-ai/frontend
+        run: |
+          npx esbuild scripts/publish-font.ts --bundle --platform=node --format=cjs --outfile="$RUNNER_TEMP/publish.cjs" --log-level=warning
+          node "$RUNNER_TEMP/publish.cjs"
+
+      - name: Commit entry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Projekt/fontgen-ai/frontend/public/library/fonts
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "library: add font from issue #$ISSUE"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Deploy site
+        run: gh workflow run deploy.yml --ref main
+
+      - name: Confirm and close issue
+        run: |
+          gh issue comment "$ISSUE" --body "Published. The font appears in the library after the next deploy (a few minutes). Thank you!"
+          gh issue close "$ISSUE" --reason completed
+
+      - name: Report failure
+        if: failure()
+        run: |
+          gh issue comment "$ISSUE" --body "Publishing failed, the submission could not be validated or committed. Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -1,0 +1,19 @@
+{
+  "id": "seed-5",
+  "name": "Editorial Contrast",
+  "author": "FontGen",
+  "description": "Light, narrow letters with pronounced stroke contrast.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 350,
+    "width": 0.95,
+    "xHeight": 480,
+    "contrast": 0.45,
+    "squareness": 0.1,
+    "slant": 0,
+    "spacing": 1.1,
+    "terminal": "flat",
+    "mono": false
+  },
+  "createdAt": "2026-11-11T12:05:00.000Z"
+}

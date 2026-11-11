@@ -1,0 +1,22 @@
+name: Create library labels
+
+# Creates the labels used by the font library workflow. Runs once on push and can be re-run manually.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/library-labels.yml
+
+permissions:
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Create labels
+        run: |
+          gh label create font-submission --repo "$GITHUB_REPOSITORY" --color 1d76db --description "Font submitted from the studio" || true
+          gh label create approved --repo "$GITHUB_REPOSITORY" --color 0e8a16 --description "Maintainer approved, publish to the public library" || true

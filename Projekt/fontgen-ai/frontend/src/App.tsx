@@ -5,6 +5,9 @@ import { PromptBuilder } from './components/PromptBuilder';
 import { PreviewPanel } from './components/PreviewPanel';
 import { OutputPanel } from './components/OutputPanel';
 import { ParameterPanel } from './components/ParameterPanel';
+import { SaveDialog } from './components/SaveDialog';
+import { LibraryView } from './components/LibraryView';
+import { LibraryEntry } from './lib/library';
 import { ApiProvider, API_PROVIDERS, DesignTokens, GlyphInfo, QAStatus } from './services/api';
 import { DEFAULT_PARAMS, FontParams } from './lib/engine/params';
 import { renderFont, suggestParams } from './lib/generate';
@@ -20,7 +23,12 @@ interface RenderState {
   qaStatus: QAStatus;
 }
 
+type View = 'studio' | 'library';
+
 export function App() {
+  const [view, setView] = useState<View>('studio');
+  const [skipKey, setSkipKey] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [apiType, setApiType] = useState<ApiProvider>('gemini');
   const [model, setModel] = useState('');
@@ -141,8 +149,15 @@ export function App() {
     setDesignTokens(newTokens);
   };
 
+  const openFromLibrary = (entry: LibraryEntry) => {
+    setParams(entry.params);
+    setFamilyName(entry.name);
+    setNotes(`“${entry.name}” by ${entry.author} (CC0). Adjust it freely with the sliders.`);
+    setView('studio');
+  };
+
   const handleGenerate = () => {
-    if (!prompt.trim() || isLoading) return;
+    if (!apiKey || !prompt.trim() || isLoading) return;
     suggestion.mutate();
   };
 
@@ -150,7 +165,8 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-neutral-100 flex flex-col">
-      {!hasApiKey && <ApiKeyInput onSubmit={handleApiKeySubmit} />}
+      {!hasApiKey && !skipKey && <ApiKeyInput onSubmit={handleApiKeySubmit} onSkip={() => setSkipKey(true)} />}
+      {saving && <SaveDialog params={params} familyName={familyName} onClose={() => setSaving(false)} />}
 
       <header className="bg-white border-b border-neutral-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -160,18 +176,45 @@ export function App() {
               AI chooses the design, a parametric type engine draws every letter
             </p>
           </div>
-          {hasApiKey && (
-            <button
-              onClick={handleResetApiKey}
-              className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
-            >
-              Forget key
-            </button>
-          )}
+          <nav className="flex items-center gap-2" aria-label="Main">
+            {(['studio', 'library'] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                aria-current={view === v ? 'page' : undefined}
+                className={`text-sm px-4 py-1.5 rounded-md font-medium transition-colors ${
+                  view === v ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                }`}
+              >
+                {v === 'studio' ? 'Studio' : 'Library'}
+              </button>
+            ))}
+            {hasApiKey ? (
+              <button
+                onClick={handleResetApiKey}
+                className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
+              >
+                Forget key
+              </button>
+            ) : (
+              <button
+                onClick={() => setSkipKey(false)}
+                className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
+              >
+                Add API key
+              </button>
+            )}
+          </nav>
         </div>
       </header>
 
-      {hasApiKey && (
+      {(hasApiKey || skipKey) && view === 'library' && (
+        <main className="flex-1 max-w-7xl w-full mx-auto p-4">
+          <LibraryView onOpen={openFromLibrary} />
+        </main>
+      )}
+
+      {(hasApiKey || skipKey) && view === 'studio' && (
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-4 sticky top-4">
@@ -180,7 +223,7 @@ export function App() {
 
               <button
                 onClick={handleGenerate}
-                disabled={!prompt.trim() || isLoading}
+                disabled={!apiKey || !prompt.trim() || isLoading}
                 className="w-full mt-6 bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center gap-2"
               >
                 {isLoading ? (
@@ -192,6 +235,9 @@ export function App() {
                   '✨ Design with AI'
                 )}
               </button>
+              {!apiKey && (
+                <p className="text-xs text-neutral-500 mt-2">Add an API key to let AI design for you. The sliders and the library work without one.</p>
+              )}
 
               {errorMessage && (
                 <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
@@ -235,7 +281,7 @@ export function App() {
               </div>
             </div>
 
-            <ParameterPanel params={params} familyName={familyName} notes={notes} onChange={setParams} />
+            <ParameterPanel params={params} familyName={familyName} notes={notes} onChange={setParams} onSave={() => setSaving(true)} />
           </div>
         </main>
       )}

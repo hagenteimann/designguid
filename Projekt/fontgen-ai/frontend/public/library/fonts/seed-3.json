@@ -1,0 +1,19 @@
+{
+  "id": "seed-3",
+  "name": "Sporty Slant",
+  "author": "FontGen",
+  "description": "Heavy, slightly condensed oblique with soft terminals.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 720,
+    "width": 0.95,
+    "xHeight": 540,
+    "contrast": 0.1,
+    "squareness": 0.45,
+    "slant": 8,
+    "spacing": 0.92,
+    "terminal": "round",
+    "mono": false
+  },
+  "createdAt": "2026-11-11T12:03:00.000Z"
+}

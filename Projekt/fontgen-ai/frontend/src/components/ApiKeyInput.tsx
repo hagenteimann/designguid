@@ -12,9 +12,10 @@ export interface ApiKeySubmit {
 interface ApiKeyInputProps {
   onSubmit: (value: ApiKeySubmit) => void;
   isLoading?: boolean;
+  onSkip?: () => void;
 }
 
-export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
+export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInputProps) {
   const [apiKey, setApiKey] = useState('');
   const [provider, setProvider] = useState<ApiProvider>('gemini');
   const [model, setModel] = useState('');
@@ -168,6 +169,15 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
           >
             Continue
           </button>
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="w-full text-sm text-neutral-600 hover:text-neutral-900 underline"
+            >
+              Skip: use sliders and the library without AI
+            </button>
+          )}
         </form>
       </div>
     </div>

@@ -18,7 +18,7 @@ export interface GlyphSet {
 
 const EDGE_FACTOR: Record<Edge, number> = { s: 1, r: 0.62, d: 0.22, o: 0.12 };
 
-export function buildGlyphs(p: FontParams): GlyphSet {
+export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
   const m = computeMetrics(p);
   const defs = buildDefs({ m, squareness: p.squareness });
   const pen = { a: m.a, b: m.b };
@@ -27,8 +27,10 @@ export function buildGlyphs(p: FontParams): GlyphSet {
   const unit = (90 - m.stem * 0.15) * p.spacing;
   const monoAdvance = Math.round(600 * p.width);
 
+  const wanted = only ? new Set([...only]) : null;
   const glyphs: BuiltGlyph[] = [];
   for (const [char, def] of Object.entries(defs)) {
+    if (wanted && !wanted.has(char)) continue;
     let contours: Contour[] = def.skel.strokes.flatMap(s => strokeToContours(s, pen, { terminal: p.terminal }));
     for (const d of def.skel.dots) {
       const r = square ? d.r * 0.92 : d.r;

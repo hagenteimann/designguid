@@ -1,0 +1,19 @@
+{
+  "id": "seed-1",
+  "name": "Geometric Light",
+  "author": "FontGen",
+  "description": "Airy monoline geometric sans for headlines.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 250,
+    "width": 1.05,
+    "xHeight": 520,
+    "contrast": 0.04,
+    "squareness": 0,
+    "slant": 0,
+    "spacing": 1.1,
+    "terminal": "flat",
+    "mono": false
+  },
+  "createdAt": "2026-11-11T12:01:00.000Z"
+}
