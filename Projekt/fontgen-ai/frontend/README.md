@@ -1,9 +1,11 @@
 # FontGen AI - Frontend
 
-> **Architecture note:** The app runs entirely in the browser. The LLM (Gemini, OpenAI or Anthropic) is called
-> directly with the user's own key (stored in `localStorage` only if the user opts in), and the OTF file is built
-> locally with opentype.js (`src/lib/`). No backend is required; the Flask code in `../backend` is an optional,
-> unused legacy path.
+> **Architecture note:** Runs entirely in the browser. The LLM (Gemini, OpenAI or Anthropic) is called directly with
+> the user's own key and is only asked for *design parameters* (weight, width, x-height, contrast, squareness, slant,
+> spacing, terminals, mono). A deterministic parametric engine in `src/lib/engine/` draws every glyph from stroke
+> skeletons with an elliptical pen (consistent stems, overshoots, optical sidebearings), and `src/lib/fontBuilder.ts`
+> assembles the OTF with opentype.js. No backend is required; the Flask code in `../backend` is an unused legacy path.
+> Not yet supported: serifs, kerning, italics beyond oblique slant, overlap removal.
 
 
 A React 18 + TypeScript web application for generating custom fonts using AI-powered design tokens and interactive glyph editing.

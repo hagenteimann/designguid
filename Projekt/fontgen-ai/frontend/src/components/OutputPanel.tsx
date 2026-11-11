@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QAStatus, ExportType, exportFont, downloadFont, getExportFormats } from '../services/api';
+import { QAStatus, ExportFormat, exportFont, downloadFont, getExportFormats } from '../services/api';
 
 interface OutputPanelProps {
   qaStatus?: QAStatus;
@@ -13,18 +13,17 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
   const [exporting, setExporting] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
-  const handleExport = async (format: ExportType) => {
-    const url = format === 'json' ? glyphDataUrl : fontUrl;
+  const handleExport = async (format: ExportFormat) => {
+    const url = format.type === 'json' ? glyphDataUrl : fontUrl;
     if (!url) return;
 
-    setExporting(format);
+    setExporting(format.type);
     setExportError(null);
 
     try {
-      const blob = await exportFont(url, format);
-      const filename = format === 'json' ? 'generated-font.glyphs.json' : 'generated-font.otf';
-      downloadFont(blob, filename);
-      onExport?.(format);
+      const blob = await exportFont(url);
+      downloadFont(blob, format.filename);
+      onExport?.(format.type);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Export failed';
       setExportError(message);
@@ -105,7 +104,7 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
           {exportFormats.map((format) => (
             <button
               key={format.type}
-              onClick={() => handleExport(format.type)}
+              onClick={() => handleExport(format)}
               disabled={!fontUrl || isLoading || exporting !== null}
               className={`px-3 py-2 rounded-md text-xs font-medium transition-all ${
                 !fontUrl || isLoading || exporting !== null
@@ -116,10 +115,10 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
               {exporting === format.type ? (
                 <>
                   <span className="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
-                  {format.type.toUpperCase()}
+                  {format.label}
                 </>
               ) : (
-                format.type === 'json' ? 'GLYPH DATA (JSON)' : 'OTF'
+                format.label
               )}
             </button>
           ))}
@@ -130,7 +129,7 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
             <span className="font-medium">OTF:</span> installable font file (OpenType/CFF)
           </p>
           <p className="text-neutral-600">
-            <span className="font-medium">Glyph data:</span> raw SVG outlines, for editing or re-import
+            <span className="font-medium">Parameters:</span> the design settings, to recreate this font later
           </p>
         </div>
 

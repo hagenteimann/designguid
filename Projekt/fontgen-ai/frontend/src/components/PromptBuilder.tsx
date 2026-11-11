@@ -20,10 +20,9 @@ const DESIGN_TOKENS = {
     { label: 'High', value: 'high', icon: '●' }
   ] as Array<{ label: string; value: 'low' | 'medium' | 'high'; icon: string }>,
   style: [
-    { label: 'Serif', value: 'serif', icon: 'Γ' },
     { label: 'Sans', value: 'sans', icon: '⊥' },
     { label: 'Mono', value: 'mono', icon: '|' }
-  ] as Array<{ label: string; value: 'serif' | 'sans' | 'mono'; icon: string }>,
+  ] as Array<{ label: string; value: 'sans' | 'mono'; icon: string }>,
   mood: [
     { label: 'Elegant', value: 'elegant', icon: '✧' },
     { label: 'Playful', value: 'playful', icon: '◡' },
@@ -57,7 +56,7 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
 
   const QUICK_TEMPLATES = [
     'Modern geometric sans-serif',
-    'Elegant serif with high contrast',
+    'Elegant high-contrast sans',
     'Playful rounded sans',
     'Technical monospace typeface',
     'Sophisticated display font',
