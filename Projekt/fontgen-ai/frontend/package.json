@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run generate-static-files",
+    "build": "tsc && vite build",
     "build:gh-pages": "tsc && vite build --outDir ../docs",
     "generate-static-files": "node scripts/generate-static-files.js",
     "preview": "vite preview",

@@ -45,7 +45,7 @@
     <meta name="apple-mobile-web-app-title" content="FontGen AI" />
 
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/fontgen-ai/manifest.json" />
+    <link rel="manifest" href="./manifest.json" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%231f2937'>F</text></svg>" />
 
     <!-- Preload critical assets -->
@@ -80,10 +80,10 @@
         FontGen AI requires JavaScript to run. Please enable JavaScript in your browser settings.
       </p>
     </noscript>
-    <script type="module" src="/fontgen-ai/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/fontgen-ai/sw.js', { scope: '/fontgen-ai/' })
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
           .then(reg => console.log('Service Worker registered:', reg))
           .catch(err => console.log('Service Worker registration failed:', err));
       }
