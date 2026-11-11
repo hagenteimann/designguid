@@ -58,18 +58,7 @@ Return ONLY this JSON, no markdown, no commentary:
 {"glyphs":{"A":{"paths":["M... Z"],"width":600},"B":{"paths":["M... Z"],"width":580}}}`;
 }
 
-function extractGlyphs(text: string): Record<string, RawGlyph> {
-  const tryParse = (s: string) => { try { return JSON.parse(s); } catch { return null; } };
-  const cleaned = text.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
-  let data = tryParse(cleaned);
-  if (!data) {
-    const m = cleaned.match(/\{[\s\S]*\}/);
-    if (m) data = tryParse(m[0]);
-  }
-  const glyphs = data?.glyphs;
-  if (!glyphs || typeof glyphs !== 'object') {
-    throw new Error('The model did not return valid glyph JSON. Try again or pick a different model.');
-  }
+function normalizeGlyphs(glyphs: Record<string, any>): Record<string, RawGlyph> {
   const out: Record<string, RawGlyph> = {};
   for (const [k, v] of Object.entries<any>(glyphs)) {
     const paths = typeof v?.paths === 'string' ? [v.paths] : Array.isArray(v?.paths) ? v.paths : [];
@@ -78,10 +67,44 @@ function extractGlyphs(text: string): Record<string, RawGlyph> {
   return out;
 }
 
+/** Last resort for cut-off or sloppy JSON: pull out every glyph entry that is complete. */
+function salvageGlyphs(text: string): Record<string, RawGlyph> {
+  const out: Record<string, RawGlyph> = {};
+  const entry = /"(.)"\s*:\s*\{\s*"paths"\s*:\s*\[((?:\s*"[^"]*"\s*,?)*)\s*\]\s*,\s*"width"\s*:\s*(\d+(?:\.\d+)?)\s*\}/g;
+  let m: RegExpExecArray | null;
+  while ((m = entry.exec(text)) !== null) {
+    const paths = [...m[2].matchAll(/"([^"]*)"/g)].map(x => x[1]);
+    if (paths.length) out[m[1]] = { paths, width: Number(m[3]) };
+  }
+  return out;
+}
+
+function extractGlyphs(text: string, truncated: boolean): Record<string, RawGlyph> {
+  const tryParse = (s: string) => { try { return JSON.parse(s); } catch { return null; } };
+  const cleaned = text.replace(/^\s*```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
+  let data = tryParse(cleaned);
+  if (!data) {
+    const m = cleaned.match(/\{[\s\S]*\}/);
+    if (m) data = tryParse(m[0]);
+  }
+  if (data?.glyphs && typeof data.glyphs === 'object') {
+    const glyphs = normalizeGlyphs(data.glyphs);
+    if (Object.keys(glyphs).length > 0) return glyphs;
+  }
+
+  const salvaged = salvageGlyphs(cleaned);
+  if (Object.keys(salvaged).length > 0) return salvaged;
+
+  const hint = truncated
+    ? 'The answer was cut off (output limit reached). Pick a model with a larger output limit.'
+    : 'The model did not return glyph JSON. Try again or pick a different model.';
+  throw new Error(`${hint} (${text.length} characters received: "${text.slice(0, 120).replace(/\s+/g, ' ')}…")`);
+}
+
 export async function generateLocally(input: GenerateInput): Promise<LocalResult> {
   const model = input.model?.trim() || DEFAULT_MODELS[input.provider];
-  const text = await callLLM(input.provider, input.apiKey, model, buildPrompt(input));
-  const raw = extractGlyphs(text);
+  const { text, truncated } = await callLLM(input.provider, input.apiKey, model, buildPrompt(input));
+  const raw = extractGlyphs(text, truncated);
 
   const familyName = 'FontGen ' + (input.prompt.replace(/[^\w ]/g, '').trim().split(/\s+/).slice(0, 2).join(' ') || 'Font');
   const built = buildFont(raw, familyName, REQUIRED);

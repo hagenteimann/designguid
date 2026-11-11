@@ -7,6 +7,7 @@ export const DEFAULT_MODELS: Record<ApiProvider, string> = {
 };
 
 const MAX_OUTPUT_TOKENS = 12000;
+const GEMINI_MAX_OUTPUT_TOKENS = 32000;
 const TIMEOUT_MS = 120_000;
 
 async function postJson(url: string, headers: Record<string, string>, body: unknown, label: string): Promise<any> {
@@ -38,8 +39,13 @@ async function postJson(url: string, headers: Record<string, string>, body: unkn
   }
 }
 
+export interface LLMResult {
+  text: string;
+  truncated: boolean;
+}
+
 /** Calls the provider directly from the browser. The key only ever goes to the provider's own API host. */
-export async function callLLM(provider: ApiProvider, apiKey: string, model: string, prompt: string): Promise<string> {
+export async function callLLM(provider: ApiProvider, apiKey: string, model: string, prompt: string): Promise<LLMResult> {
   const key = apiKey.trim();
   if (provider === 'gemini') {
     const data = await postJson(
@@ -47,13 +53,23 @@ export async function callLLM(provider: ApiProvider, apiKey: string, model: stri
       { 'x-goog-api-key': key },
       {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: MAX_OUTPUT_TOKENS, responseMimeType: 'application/json' }
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: GEMINI_MAX_OUTPUT_TOKENS,
+          responseMimeType: 'application/json',
+          // Thinking tokens count against the output limit and truncate the JSON; Flash models allow turning it off.
+          ...(/flash/i.test(model) ? { thinkingConfig: { thinkingBudget: 0 } } : {})
+        }
       },
       'Gemini'
     );
-    const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text ?? '').join('');
-    if (!text) throw new Error('Gemini returned no content (possibly blocked or empty).');
-    return text;
+    const cand = data?.candidates?.[0];
+    const text = cand?.content?.parts?.filter((p: any) => !p.thought).map((p: any) => p.text ?? '').join('');
+    if (!text) {
+      const reason = cand?.finishReason ?? data?.promptFeedback?.blockReason ?? 'unknown';
+      throw new Error(`Gemini returned no content (reason: ${reason}).`);
+    }
+    return { text, truncated: cand?.finishReason === 'MAX_TOKENS' };
   }
   if (provider === 'openai') {
     const data = await postJson(
@@ -70,7 +86,7 @@ export async function callLLM(provider: ApiProvider, apiKey: string, model: stri
     );
     const text = data?.choices?.[0]?.message?.content;
     if (!text) throw new Error('OpenAI returned no content.');
-    return text;
+    return { text, truncated: data?.choices?.[0]?.finish_reason === 'length' };
   }
   const data = await postJson(
     'https://api.anthropic.com/v1/messages',
@@ -84,5 +100,5 @@ export async function callLLM(provider: ApiProvider, apiKey: string, model: stri
   );
   const text = data?.content?.map((c: any) => c.text ?? '').join('');
   if (!text) throw new Error('Anthropic returned no content.');
-  return text;
+  return { text, truncated: data?.stop_reason === 'max_tokens' };
 }
