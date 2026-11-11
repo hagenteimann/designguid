@@ -61,7 +61,7 @@ def generate_font():
             "x_height": 500
         },
         "apiKey": "sk-..." or "sk-ant-...",
-        "apiType": "openai" | "anthropic"  # optional, default: openai
+        "apiType": "openai" | "anthropic" | "gemini"  # optional, default: openai
     }
 
     Response:
@@ -96,6 +96,8 @@ def generate_font():
             'mood': 'neutral',
         })
         api_type = data.get('apiType', 'openai')
+        if api_type not in ('openai', 'anthropic', 'gemini'):
+            return jsonify({'status': 'error', 'error': 'Unsupported apiType'}), 400
 
         # Validate design tokens
         if not isinstance(design_tokens, dict):

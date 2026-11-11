@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { isValidApiKey } from '../services/api';
+import { isValidApiKey, detectProvider, API_PROVIDERS, ApiProvider } from '../services/api';
 
 interface ApiKeyInputProps {
-  onSubmit: (apiKey: string) => void;
+  onSubmit: (apiKey: string, provider: ApiProvider) => void;
   isLoading?: boolean;
 }
 
 export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
   const [apiKey, setApiKey] = useState('');
+  const [provider, setProvider] = useState<ApiProvider>('gemini');
   const [showKey, setShowKey] = useState(false);
   const [consented, setConsented] = useState(false);
   const [error, setError] = useState('');
@@ -21,12 +22,12 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
       return;
     }
 
-    if (!isValidApiKey(apiKey)) {
-      setError('Please enter a valid API key');
+    if (!isValidApiKey(apiKey, provider)) {
+      setError(`Please enter a valid ${API_PROVIDERS[provider].label} key (${API_PROVIDERS[provider].placeholder})`);
       return;
     }
 
-    onSubmit(apiKey);
+    onSubmit(apiKey.trim(), provider);
   };
 
   return (
@@ -42,6 +43,24 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
 
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {/* Provider */}
+          <div>
+            <label htmlFor="provider" className="block text-sm font-medium text-neutral-600 mb-2">
+              Provider
+            </label>
+            <select
+              id="provider"
+              value={provider}
+              onChange={(e) => setProvider(e.target.value as ApiProvider)}
+              disabled={isLoading}
+              className="w-full px-3 py-2 border border-neutral-300 rounded-md bg-white"
+            >
+              {(Object.keys(API_PROVIDERS) as ApiProvider[]).map((p) => (
+                <option key={p} value={p}>{API_PROVIDERS[p].label}</option>
+              ))}
+            </select>
+          </div>
+
           {/* API Key Input */}
           <div>
             <label htmlFor="apiKey" className="block text-sm font-medium text-neutral-600 mb-2">
@@ -52,8 +71,12 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
                 id="apiKey"
                 type={showKey ? 'text' : 'password'}
                 value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="sk-... or your custom API key"
+                onChange={(e) => {
+                  setApiKey(e.target.value);
+                  const detected = detectProvider(e.target.value);
+                  if (detected) setProvider(detected);
+                }}
+                placeholder={API_PROVIDERS[provider].placeholder}
                 className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:ring-2 focus:ring-primary-300 focus:border-transparent transition-all"
                 disabled={isLoading}
               />
@@ -67,7 +90,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
               </button>
             </div>
             <p className="text-xs text-neutral-500 mt-1">
-              Works with OpenAI, Claude, or custom endpoints
+              Gemini, OpenAI or Claude – the provider is detected from the key prefix
             </p>
           </div>
 

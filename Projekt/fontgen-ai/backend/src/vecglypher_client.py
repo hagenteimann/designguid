@@ -6,6 +6,7 @@ design tokens as scaffolding, then parsing SVG paths from model outputs.
 """
 
 import json
+import os
 import re
 from typing import Dict, List, Optional, Tuple
 import requests
@@ -19,7 +20,7 @@ class GlyphGenerationRequest:
     design_tokens: Dict
     characters: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     api_key: Optional[str] = None
-    api_type: str = "openai"  # 'openai' or 'anthropic'
+    api_type: str = "openai"  # 'openai', 'anthropic' or 'gemini'
 
 
 class VecGlypherClient:
@@ -36,13 +37,15 @@ class VecGlypherClient:
     def __init__(self, api_key: str, api_type: str = "openai"):
         """
         Args:
-            api_key: OpenAI or Anthropic API key
-            api_type: 'openai' or 'anthropic'
+            api_key: OpenAI, Anthropic or Google Gemini API key
+            api_type: 'openai', 'anthropic' or 'gemini'
         """
         self.api_key = api_key
         self.api_type = api_type
         self.openai_url = "https://api.openai.com/v1/chat/completions"
         self.anthropic_url = "https://api.anthropic.com/v1/messages"
+        self.gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        self.gemini_model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
     def generate_base_glyphs(self, request: GlyphGenerationRequest) -> Dict[str, Dict]:
         """
@@ -64,6 +67,8 @@ class VecGlypherClient:
             response_text = self._call_openai(prompt, request.api_key)
         elif request.api_type == "anthropic":
             response_text = self._call_anthropic(prompt, request.api_key)
+        elif request.api_type == "gemini":
+            response_text = self._call_gemini(prompt, request.api_key)
         else:
             raise ValueError(f"Unsupported API type: {request.api_type}")
 
@@ -191,6 +196,37 @@ IMPORTANT:
             return data['content'][0]['text']
         except requests.RequestException as e:
             raise RuntimeError(f"Anthropic API call failed: {e}")
+
+    def _call_gemini(self, prompt: str, api_key: str) -> str:
+        """Call Google Gemini API for glyph generation (key sent via header, not URL)."""
+        headers = {
+            "x-goog-api-key": api_key,
+            "Content-Type": "application/json",
+        }
+
+        payload = {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0.7,
+                "maxOutputTokens": 8000,
+                "responseMimeType": "application/json",
+            },
+        }
+
+        try:
+            response = requests.post(
+                self.gemini_url.format(model=self.gemini_model),
+                json=payload,
+                headers=headers,
+                timeout=90
+            )
+            response.raise_for_status()
+            data = response.json()
+            return data['candidates'][0]['content']['parts'][0]['text']
+        except requests.RequestException as e:
+            raise RuntimeError(f"Gemini API call failed: {e}")
+        except (KeyError, IndexError) as e:
+            raise RuntimeError(f"Gemini returned an unexpected response: {e}")
 
     def _parse_glyph_response(self, response_text: str, characters: str) -> Dict[str, Dict]:
         """

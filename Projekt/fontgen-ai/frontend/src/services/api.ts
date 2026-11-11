@@ -10,9 +10,26 @@ export interface DesignTokens {
   mood: 'elegant' | 'playful' | 'technical';
 }
 
+export type ApiProvider = 'gemini' | 'openai' | 'anthropic';
+
+export const API_PROVIDERS: Record<ApiProvider, { label: string; placeholder: string }> = {
+  gemini: { label: 'Google Gemini', placeholder: 'AIza...' },
+  openai: { label: 'OpenAI', placeholder: 'sk-...' },
+  anthropic: { label: 'Anthropic Claude', placeholder: 'sk-ant-...' }
+};
+
+export function detectProvider(key: string): ApiProvider | null {
+  const k = key.trim();
+  if (k.startsWith('AIza')) return 'gemini';
+  if (k.startsWith('sk-ant-')) return 'anthropic';
+  if (k.startsWith('sk-')) return 'openai';
+  return null;
+}
+
 export interface GenerateRequest {
   prompt: string;
   apiKey: string;
+  apiType: ApiProvider;
   designTokens: DesignTokens;
 }
 
@@ -105,6 +122,7 @@ export async function generateFont(
       body: JSON.stringify({
         prompt: request.prompt,
         apiKey: request.apiKey,
+        apiType: request.apiType,
         designTokens: request.designTokens
       })
     });
@@ -180,12 +198,13 @@ export function getExportFormats(): ExportFormat[] {
 /**
  * Validate API key format (basic check)
  */
-export function isValidApiKey(key: string): boolean {
-  if (!key || key.trim().length === 0) return false;
-  // OpenAI keys start with 'sk-'
-  // Claude API keys start with 'sk-ant-'
-  // Allow custom endpoints without format check
-  return key.length > 8;
+export function isValidApiKey(key: string, provider?: ApiProvider): boolean {
+  const k = key.trim();
+  if (k.length <= 8) return false;
+  if (provider === 'gemini') return k.startsWith('AIza');
+  if (provider === 'anthropic') return k.startsWith('sk-ant-');
+  if (provider === 'openai') return k.startsWith('sk-');
+  return true;
 }
 
 /**

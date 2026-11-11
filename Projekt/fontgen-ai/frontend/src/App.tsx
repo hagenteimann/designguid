@@ -4,13 +4,14 @@ import { ApiKeyInput } from './components/ApiKeyInput';
 import { PromptBuilder } from './components/PromptBuilder';
 import { PreviewPanel } from './components/PreviewPanel';
 import { OutputPanel } from './components/OutputPanel';
-import { generateFont, DesignTokens, GenerateResponse, getEstimatedTime } from './services/api';
+import { generateFont, DesignTokens, GenerateResponse, ApiProvider, getEstimatedTime } from './services/api';
 
 type Tab = 'generate' | 'edit';
 
 export function App() {
   const [tab, setTab] = useState<Tab>('generate');
   const [apiKey, setApiKey] = useState<string | null>(null);
+  const [apiType, setApiType] = useState<ApiProvider>('gemini');
   const [hasApiKey, setHasApiKey] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [designTokens, setDesignTokens] = useState<DesignTokens>({
@@ -26,6 +27,8 @@ export function App() {
   useEffect(() => {
     const stored = sessionStorage.getItem('fontgen_api_key');
     if (stored) {
+      const storedType = sessionStorage.getItem('fontgen_api_type') as ApiProvider | null;
+      if (storedType) setApiType(storedType);
       setApiKey(stored);
       setHasApiKey(true);
     }
@@ -39,7 +42,7 @@ export function App() {
 
   // Query for font generation
   const { data: generationResult, isLoading, error } = useQuery({
-    queryKey: ['generateFont', apiKey, prompt, designTokens, generateTrigger],
+    queryKey: ['generateFont', apiKey, apiType, prompt, designTokens, generateTrigger],
     queryFn: async () => {
       if (!apiKey || !prompt || !generateTrigger) return null;
 
@@ -49,6 +52,7 @@ export function App() {
         {
           prompt,
           apiKey,
+          apiType,
           designTokens
         },
         (update) => {
@@ -63,9 +67,11 @@ export function App() {
     retry: false
   });
 
-  const handleApiKeySubmit = (key: string) => {
+  const handleApiKeySubmit = (key: string, provider: ApiProvider) => {
     setApiKey(key);
+    setApiType(provider);
     sessionStorage.setItem('fontgen_api_key', key);
+    sessionStorage.setItem('fontgen_api_type', provider);
     setHasApiKey(true);
   };
 
@@ -83,6 +89,7 @@ export function App() {
 
   const handleResetApiKey = () => {
     sessionStorage.removeItem('fontgen_api_key');
+    sessionStorage.removeItem('fontgen_api_type');
     setApiKey(null);
     setHasApiKey(false);
     setGenerateTrigger(false);

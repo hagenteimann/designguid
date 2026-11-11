@@ -49,7 +49,7 @@ class FontGenerator:
         """
         Args:
             api_key: OpenAI or Anthropic API key
-            api_type: 'openai' or 'anthropic'
+            api_type: 'openai', 'anthropic' or 'gemini'
             cache_dir: Directory for caching intermediate files (default: /tmp)
         """
         self.api_key = api_key
