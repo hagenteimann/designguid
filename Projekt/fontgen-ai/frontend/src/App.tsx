@@ -288,7 +288,7 @@ export function App() {
 
       <footer className="bg-white border-t border-neutral-200 mt-auto">
         <div className="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-neutral-600">
-          <p>FontGen AI • Runs entirely in your browser – no data is sent to our servers</p>
+          <p>FontGen AI • Runs entirely in your browser. Nothing is sent anywhere unless you publish a font to the library.</p>
         </div>
       </footer>
     </div>

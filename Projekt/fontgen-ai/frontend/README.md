@@ -7,6 +7,16 @@
 > merges overlaps (Clipper) and assembles the OTF with opentype.js. No backend is required; the Flask code in `../backend` is an unused legacy path.
 > Not yet supported: serifs, kerning, italics beyond oblique slant.
 
+## Public font library
+
+Fonts are stored as tiny parameter files in `public/library/fonts/` (CC0). Flow, no server involved:
+1. Studio → "Save to public library" opens a prefilled GitHub issue (`.github/ISSUE_TEMPLATE/font-submission.yml`).
+2. The maintainer reviews it and adds the label `approved`.
+3. `.github/workflows/library-publish.yml` validates the data (`scripts/publish-font.ts`), commits `fonts/<issue>.json`,
+   triggers the deploy and closes the issue. `scripts/build-library-index.mjs` builds `library/index.json` at build time.
+
+The labels `font-submission` and `approved` are created by `.github/workflows/library-labels.yml`.
+
 
 A React 18 + TypeScript web application for generating custom fonts using AI-powered design tokens and interactive glyph editing.
 
