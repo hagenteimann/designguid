@@ -15,14 +15,14 @@ export interface DesignTokens {
 }
 
 export const API_PROVIDERS: Record<ApiProvider, { label: string; placeholder: string }> = {
-  gemini: { label: 'Google Gemini', placeholder: 'AIza...' },
+  gemini: { label: 'Google Gemini', placeholder: 'AIza… or AQ.…' },
   openai: { label: 'OpenAI', placeholder: 'sk-...' },
   anthropic: { label: 'Anthropic Claude', placeholder: 'sk-ant-...' }
 };
 
 export function detectProvider(key: string): ApiProvider | null {
   const k = key.trim();
-  if (k.startsWith('AIza')) return 'gemini';
+  if (k.startsWith('AIza') || k.startsWith('AQ.')) return 'gemini';
   if (k.startsWith('sk-ant-')) return 'anthropic';
   if (k.startsWith('sk-')) return 'openai';
   return null;
@@ -189,7 +189,7 @@ export function getExportFormats(): ExportFormat[] {
 export function isValidApiKey(key: string, provider?: ApiProvider): boolean {
   const k = key.trim();
   if (k.length <= 8) return false;
-  if (provider === 'gemini') return k.startsWith('AIza');
+  if (provider === 'gemini') return k.startsWith('AIza') || k.startsWith('AQ.');
   if (provider === 'anthropic') return k.startsWith('sk-ant-');
   if (provider === 'openai') return k.startsWith('sk-');
   return true;
