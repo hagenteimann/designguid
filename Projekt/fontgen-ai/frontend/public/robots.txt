@@ -9,7 +9,7 @@ Disallow: /.well-known/
 # Crawl-delay: 1
 # Request-rate: 30/1m
 
-Sitemap: https://hagenteimann.github.io/fontgen-ai/sitemap.xml
+Sitemap: https://hagenteimann.github.io/designguid/sitemap.xml
 
 # Specific bot rules
 User-agent: GPTBot

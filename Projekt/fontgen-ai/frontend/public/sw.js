@@ -5,9 +5,9 @@
 
 const CACHE_NAME = 'fontgen-ai-v1';
 const PRECACHE_URLS = [
-  '/fontgen-ai/',
-  '/fontgen-ai/index.html',
-  '/fontgen-ai/manifest.json'
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
 const API_ENDPOINTS = [
@@ -196,7 +196,7 @@ function createOfflinePage() {
       <div class="container">
         <h1>You're Offline</h1>
         <p>You're currently offline. Some features may be limited, but cached content is available.</p>
-        <a href="/fontgen-ai/">← Return to FontGen AI</a>
+        <a href="./">← Return to FontGen AI</a>
       </div>
     </body>
     </html>`,

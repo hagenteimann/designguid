@@ -16,7 +16,6 @@
       object-src 'none';
       base-uri 'self';
       form-action 'self';
-      frame-ancestors 'none';
       upgrade-insecure-requests;
     " />
 
@@ -81,12 +80,6 @@
       </p>
     </noscript>
     <script type="module" src="./src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js', { scope: './' })
-          .then(reg => console.log('Service Worker registered:', reg))
-          .catch(err => console.log('Service Worker registration failed:', err));
-      }
-    </script>
+    <script src="./register-sw.js"></script>
   </body>
 </html>
