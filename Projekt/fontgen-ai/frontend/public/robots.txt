@@ -1,0 +1,22 @@
+# FontGen AI – Font Generator
+# Robots Exclusion Protocol
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.well-known/
+
+# Crawl-delay: 1
+# Request-rate: 30/1m
+
+Sitemap: https://hagenteimann.github.io/fontgen-ai/sitemap.xml
+
+# Specific bot rules
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /

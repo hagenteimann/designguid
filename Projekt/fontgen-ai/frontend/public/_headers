@@ -1,0 +1,25 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/fontgen-ai/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https://api.openai.com https://api.anthropic.com; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;
+
+/fontgen-ai/sw.js
+  Service-Worker-Allowed: /fontgen-ai/
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/fontgen-ai/*.woff2
+  Cache-Control: public, immutable, max-age=31536000
+  Content-Type: font/woff2
+
+/fontgen-ai/*.woff
+  Cache-Control: public, immutable, max-age=31536000
+  Content-Type: font/woff
+
+/fontgen-ai/[!.]*
+  Cache-Control: no-cache, no-store, must-revalidate

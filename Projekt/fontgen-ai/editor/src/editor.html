@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Glyph Editor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .editor-container {
+      display: flex;
+      height: 100vh;
+      gap: 16px;
+      padding: 16px;
+      background: #fafafa;
+    }
+
+    .editor-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .editor-header {
+      padding: 16px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .editor-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 4px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: 1px solid #d0d0d0;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #f5f5f5;
+      border-color: #999;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button.active {
+      background: #0066cc;
+      color: white;
+      border-color: #0066cc;
+    }
+
+    .canvas-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border: 1px solid #e0e0e0;
+      margin: 0 16px;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
+      border: none;
+    }
+
+    .glyph-navigator {
+      padding: 16px;
+      border-top: 1px solid #e0e0e0;
+      background: #fafafa;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .glyph-info {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .glyph-name {
+      font-weight: 600;
+    }
+
+    .glyph-unicode {
+      color: #666;
+    }
+
+    .glyph-select-container {
+      margin-bottom: 12px;
+    }
+
+    .glyph-select {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+    }
+
+    .quick-nav {
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 4px;
+    }
+
+    .quick-nav-btn {
+      padding: 4px 0;
+      font-size: 10px;
+      border: 1px solid #d0d0d0;
+    }
+
+    .sidebar {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 12px 16px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .panel-content {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .parameter-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .parameter-group {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+    }
+
+    .group-header:hover {
+      background: #f0f0f0;
+    }
+
+    .group-toggle {
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      flex: 1;
+      text-align: left;
+    }
+
+    .toggle-icon {
+      display: inline-block;
+      font-size: 8px;
+    }
+
+    .group-reset {
+      padding: 4px 8px;
+      font-size: 10px;
+      height: 24px;
+      width: 24px;
+      padding: 2px;
+    }
+
+    .parameters-container {
+      padding: 8px;
+      background: white;
+    }
+
+    .parameter-control {
+      padding: 8px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .parameter-control:last-child {
+      border-bottom: none;
+    }
+
+    .parameter-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #333;
+    }
+
+    .parameter-input-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .parameter-slider {
+      flex: 1;
+      height: 4px;
+      cursor: pointer;
+    }
+
+    .parameter-value {
+      width: 50px;
+      padding: 3px 6px;
+      font-size: 11px;
+      border: 1px solid #d0d0d0;
+      border-radius: 3px;
+      text-align: right;
+    }
+
+    .parameter-display {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0066cc;
+      text-align: right;
+      margin-top: 2px;
+    }
+
+    .file-upload {
+      padding: 16px;
+      border: 2px dashed #d0d0d0;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .file-upload:hover {
+      border-color: #0066cc;
+      background: #f0f7ff;
+    }
+
+    .file-upload-input {
+      display: none;
+    }
+
+    .file-upload-label {
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .status-bar {
+      padding: 8px 16px;
+      border-top: 1px solid #e0e0e0;
+      background: #f9f9f9;
+      font-size: 11px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .keyboard-shortcuts {
+      padding: 12px;
+      background: #f0f7ff;
+      border-radius: 4px;
+      font-size: 11px;
+      border: 1px solid #b3d9ff;
+    }
+
+    .shortcut-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .shortcut-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .shortcut-key {
+      font-weight: 600;
+      font-family: monospace;
+      color: #0066cc;
+    }
+
+    @media (max-width: 1200px) {
+      .editor-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="editor-container">
+    <!-- Main Editor Area -->
+    <div class="editor-main">
+      <div class="editor-header">
+        <div class="editor-title">Glyph Editor</div>
+        <div class="editor-controls">
+          <div class="control-group">
+            <button id="undoBtn" title="Undo (Ctrl+Z)">↶ Undo</button>
+            <button id="redoBtn" title="Redo (Ctrl+Y)">↷ Redo</button>
+          </div>
+          <div class="control-group">
+            <button id="zoomInBtn" title="Zoom In (Ctrl++)">🔍+</button>
+            <button id="zoomOutBtn" title="Zoom Out (Ctrl+-)">🔍-</button>
+            <button id="fitViewBtn" title="Fit to View">⊡</button>
+          </div>
+          <div class="control-group">
+            <button id="exportGlifBtn" title="Export as GLIF">📥 GLIF</button>
+            <button id="exportSvgBtn" title="Export as SVG">📥 SVG</button>
+            <button id="exportPngBtn" title="Export as PNG">📥 PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="glyph-canvas"></canvas>
+      </div>
+
+      <div id="glyph-navigator"></div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+      <!-- File Upload -->
+      <div class="panel">
+        <div class="panel-header">Load Font</div>
+        <div class="panel-content">
+          <div class="file-upload">
+            <input type="file" id="ufoFileInput" class="file-upload-input" accept=".ufo,.zip" />
+            <label for="ufoFileInput" class="file-upload-label">
+              Click to load UFO file
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parameter Panel -->
+      <div class="panel" style="flex: 1; overflow: hidden;">
+        <div class="panel-header">Parameters</div>
+        <div class="panel-content" id="parameters-panel"></div>
+      </div>
+
+      <!-- Keyboard Shortcuts -->
+      <div class="panel">
+        <div class="panel-header">Shortcuts</div>
+        <div class="panel-content">
+          <div class="keyboard-shortcuts">
+            <div class="shortcut-item">
+              <span>Undo</span>
+              <span class="shortcut-key">Ctrl+Z</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Redo</span>
+              <span class="shortcut-key">Ctrl+Y</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Delete Point</span>
+              <span class="shortcut-key">Delete</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Next Glyph</span>
+              <span class="shortcut-key">→</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Prev Glyph</span>
+              <span class="shortcut-key">←</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span id="statusMessage">Ready</span>
+    <span id="glyphStats"></span>
+  </div>
+
+  <!-- Load Paper.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.20/paper-full.min.js"></script>
+
+  <!-- Main Editor Script -->
+  <script type="module">
+    import GlyphEditor from './GlyphEditor.js';
+
+    // Initialize editor
+    const editor = new GlyphEditor({
+      canvasId: 'glyph-canvas',
+      parametersId: 'parameters-panel',
+      navigatorId: 'glyph-navigator',
+      canvasWidth: 1000,
+      canvasHeight: 1000,
+      maxUndoSteps: 100
+    });
+
+    // UI Event Handlers
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      editor.undo();
+      updateButtonStates();
+    });
+
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      editor.redo();
+      updateButtonStates();
+    });
+
+    document.getElementById('zoomInBtn').addEventListener('click', () => {
+      editor.zoom(1.2);
+    });
+
+    document.getElementById('zoomOutBtn').addEventListener('click', () => {
+      editor.zoom(0.8);
+    });
+
+    document.getElementById('fitViewBtn').addEventListener('click', () => {
+      editor.fitToView();
+    });
+
+    document.getElementById('exportGlifBtn').addEventListener('click', () => {
+      const glif = editor.exportGlif();
+      downloadFile(glif, `${editor.currentGlyph.name}.glif`, 'text/xml');
+    });
+
+    document.getElementById('exportSvgBtn').addEventListener('click', () => {
+      const svg = editor.exportSvg();
+      if (svg) {
+        downloadFile(svg, `${editor.currentGlyph.name}.svg`, 'image/svg+xml');
+      }
+    });
+
+    document.getElementById('exportPngBtn').addEventListener('click', () => {
+      const png = editor.exportPng();
+      downloadFile(png, `${editor.currentGlyph.name}.png`, 'image/png', true);
+    });
+
+    document.getElementById('ufoFileInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          setStatus(`Loading ${file.name}...`);
+          const glyphs = await editor.loadUfoFile(file);
+          setStatus(`Loaded ${glyphs.length} glyphs`);
+        } catch (error) {
+          setStatus(`Error: ${error.message}`);
+        }
+      }
+    });
+
+    // Editor event handlers
+    editor.addEventListener('glyphLoaded', ({ glyph }) => {
+      const metrics = editor.bezierEditor.getMetrics();
+      if (metrics) {
+        document.getElementById('glyphStats').textContent =
+          `${glyph.name} | Points: ${metrics.pointCount} | Box: ${Math.round(metrics.boundingBox.width)}×${Math.round(metrics.boundingBox.height)}`;
+      }
+      updateButtonStates();
+    });
+
+    editor.addEventListener('glyphModified', ({ type }) => {
+      setStatus(`Modified: ${type}`);
+    });
+
+    editor.addEventListener('error', ({ message }) => {
+      setStatus(`Error: ${message}`);
+    });
+
+    // Helper functions
+    function updateButtonStates() {
+      document.getElementById('undoBtn').disabled = !editor.canUndo();
+      document.getElementById('redoBtn').disabled = !editor.canRedo();
+    }
+
+    function setStatus(message) {
+      document.getElementById('statusMessage').textContent = message;
+    }
+
+    function downloadFile(content, filename, mimeType, isDataUrl = false) {
+      const blob = isDataUrl ? dataUrlToBlob(content) : new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function dataUrlToBlob(dataUrl) {
+      const parts = dataUrl.split(',');
+      const mime = parts[0].match(/:(.*?);/)[1];
+      const bstr = atob(parts[1]);
+      const n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      for (let i = 0; i < n; i++) {
+        u8arr[i] = bstr.charCodeAt(i);
+      }
+      return new Blob([u8arr], { type: mime });
+    }
+
+    // Initialize
+    updateButtonStates();
+    setStatus('Ready. Load a UFO file to begin.');
+
+    // Expose editor to window for console debugging
+    window.editor = editor;
+  </script>
+</body>
+</html>

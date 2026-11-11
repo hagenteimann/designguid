@@ -3,9 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI-powered font generator with interactive glyph editing" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- Security CSP Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self';
+      style-src 'self' 'unsafe-inline';
+      font-src 'self' data:;
+      connect-src 'self' https://api.openai.com https://api.anthropic.com;
+      img-src 'self' data: blob:;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      upgrade-insecure-requests;
+    " />
+
+    <!-- Referrer Policy -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Permissions Policy -->
+    <meta http-equiv="Permissions-Policy" content="
+      geolocation=(),
+      microphone=(),
+      camera=(),
+      payment=(),
+      usb=(),
+      magnetometer=(),
+      gyroscope=(),
+      accelerometer=()
+    " />
+
+    <!-- SEO & Meta -->
+    <meta name="description" content="AI-powered font generator with interactive glyph editing. Create custom fonts using artificial intelligence." />
+    <meta name="keywords" content="font generator, AI, typography, glyph editor, custom fonts" />
+    <meta name="author" content="FontGen AI" />
     <meta name="theme-color" content="#1f2937" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FontGen AI" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/fontgen-ai/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%231f2937'>F</text></svg>" />
+
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://api.openai.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.openai.com" />
+
     <title>FontGen AI – Generate Custom Fonts</title>
+
     <style>
       :root {
         --color-primary-100: 210, 100%, 95%;
@@ -16,10 +64,29 @@
         --color-primary-600: 210, 100%, 20%;
         --color-primary-700: 210, 100%, 10%;
       }
+
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <noscript>
+      <p style="font-family: system-ui, -apple-system, sans-serif; padding: 2rem; color: #666;">
+        FontGen AI requires JavaScript to run. Please enable JavaScript in your browser settings.
+      </p>
+    </noscript>
+    <script type="module" src="/fontgen-ai/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/fontgen-ai/sw.js', { scope: '/fontgen-ai/' })
+          .then(reg => console.log('Service Worker registered:', reg))
+          .catch(err => console.log('Service Worker registration failed:', err));
+      }
+    </script>
   </body>
 </html>
