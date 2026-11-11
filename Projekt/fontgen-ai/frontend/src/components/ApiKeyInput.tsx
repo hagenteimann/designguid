@@ -42,8 +42,8 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full my-auto">
         <div className="px-6 py-4 border-b border-neutral-200">
           <h2 className="text-xl font-bold text-neutral-700">API Configuration</h2>
           <p className="text-sm text-neutral-500 mt-1">
@@ -61,7 +61,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
               value={provider}
               onChange={(e) => setProvider(e.target.value as ApiProvider)}
               disabled={isLoading}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md bg-white"
+              className="w-full px-3 py-2.5 border border-neutral-300 rounded-md bg-white"
             >
               {(Object.keys(API_PROVIDERS) as ApiProvider[]).map((p) => (
                 <option key={p} value={p}>{API_PROVIDERS[p].label}</option>
@@ -85,13 +85,13 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
                   if (detected) setProvider(detected);
                 }}
                 placeholder={API_PROVIDERS[provider].placeholder}
-                className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:ring-2 focus:ring-primary-300 focus:border-transparent transition-all"
+                className="w-full px-3 py-2.5 border border-neutral-300 rounded-md focus:ring-2 focus:ring-primary-300 focus:border-transparent transition-all"
                 disabled={isLoading}
               />
               <button
                 type="button"
                 onClick={() => setShowKey(!showKey)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700 text-sm font-medium transition-colors"
+                className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-2 text-neutral-500 hover:text-neutral-700 text-sm font-medium transition-colors"
                 disabled={isLoading}
               >
                 {showKey ? 'Hide' : 'Show'}
@@ -113,7 +113,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
               autoComplete="off"
               onChange={(e) => setModel(e.target.value)}
               placeholder={DEFAULT_MODELS[provider]}
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md"
+              className="w-full px-3 py-2.5 border border-neutral-300 rounded-md"
               disabled={isLoading}
             />
           </div>
@@ -165,7 +165,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
           <button
             type="submit"
             disabled={isLoading || !consented}
-            className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-2 px-4 rounded-md transition-colors"
+            className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-3 px-4 rounded-md transition-colors"
           >
             Continue
           </button>
@@ -173,7 +173,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false, onSkip }: ApiKeyInput
             <button
               type="button"
               onClick={onSkip}
-              className="w-full text-sm text-neutral-600 hover:text-neutral-900 underline"
+              className="w-full min-h-[44px] text-sm text-neutral-600 hover:text-neutral-900 underline"
             >
               Skip: use sliders and the library without AI
             </button>

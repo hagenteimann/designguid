@@ -27,28 +27,28 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Save to public library">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Save to public library">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full my-auto">
         <div className="px-6 py-4 border-b border-neutral-200 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-neutral-700">Save to public library</h2>
             <p className="text-sm text-neutral-500 mt-1">Share this font so everyone can use it.</p>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-neutral-500 hover:text-neutral-700 text-xl leading-none">×</button>
+          <button onClick={onClose} aria-label="Close" className="text-neutral-500 hover:text-neutral-700 text-2xl leading-none w-11 h-11 -mr-2 -mt-2 shrink-0">×</button>
         </div>
 
         <div className="p-6 space-y-4">
           <label className="block">
             <span className="block text-sm font-medium text-neutral-600 mb-1">Font name</span>
-            <input value={name} maxLength={40} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 border border-neutral-300 rounded-md" />
+            <input value={name} maxLength={40} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
           </label>
           <label className="block">
             <span className="block text-sm font-medium text-neutral-600 mb-1">Credit as <span className="font-normal text-neutral-400">(optional, public)</span></span>
-            <input value={author} maxLength={40} onChange={(e) => setAuthor(e.target.value)} placeholder="Anonymous" className="w-full px-3 py-2 border border-neutral-300 rounded-md" />
+            <input value={author} maxLength={40} onChange={(e) => setAuthor(e.target.value)} placeholder="Anonymous" className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
           </label>
           <label className="block">
             <span className="block text-sm font-medium text-neutral-600 mb-1">Short description <span className="font-normal text-neutral-400">(optional)</span></span>
-            <textarea value={description} maxLength={200} rows={2} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 border border-neutral-300 rounded-md" />
+            <textarea value={description} maxLength={200} rows={2} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
           </label>
 
           <div className="bg-amber-50 border border-amber-200 rounded-md p-3">
@@ -73,7 +73,7 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
             rel="noopener noreferrer"
             aria-disabled={!valid}
             onClick={(e) => { if (!valid) e.preventDefault(); else setTimeout(onClose, 300); }}
-            className={`block w-full text-center font-medium py-2 px-4 rounded-md transition-colors ${
+            className={`block w-full text-center font-medium py-3 px-4 rounded-md transition-colors ${
               valid ? 'bg-primary-300 hover:bg-primary-400 text-white' : 'bg-neutral-300 text-white cursor-not-allowed'
             }`}
           >

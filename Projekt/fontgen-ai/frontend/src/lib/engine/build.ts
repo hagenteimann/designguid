@@ -1,7 +1,8 @@
-import { Box, Contour, bounds, mapContours } from './contour';
+import { Box, Contour, area, bounds, mapContours, reverseContour } from './contour';
 import { buildDefs, Edge } from './glyphs';
 import { FontParams, computeMetrics } from './params';
 import { removeOverlaps } from './overlap';
+import { serifGeometry } from './serifs';
 import { dotContour, strokeToContours } from './stroker';
 
 export interface BuiltGlyph {
@@ -24,14 +25,19 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
   const pen = { a: m.a, b: m.b };
   const square = p.terminal === 'flat';
   const shear = Math.tan((p.slant * Math.PI) / 180);
-  const unit = (90 - m.stem * 0.15) * p.spacing;
+  const unit = (90 - m.stem * 0.15) * p.spacing * (p.serif === 'none' ? 1 : 0.75);
   const monoAdvance = Math.round(600 * p.width);
 
   const wanted = only ? new Set([...only]) : null;
   const glyphs: BuiltGlyph[] = [];
   for (const [char, def] of Object.entries(defs)) {
     if (wanted && !wanted.has(char)) continue;
-    let contours: Contour[] = def.skel.strokes.flatMap(s => strokeToContours(s, pen, { terminal: p.terminal }));
+    const extra = p.serif !== 'none' && /[\p{L}\p{N}]/u.test(char) ? serifGeometry(def, m, p) : { strokes: [], polys: [] };
+    let contours: Contour[] = [...def.skel.strokes, ...extra.strokes].flatMap(s => strokeToContours(s, pen, { terminal: p.terminal }));
+    for (const poly of extra.polys) {
+      const c: Contour = { sx: poly[0][0], sy: poly[0][1], segs: poly.slice(1).map(([x, y]) => ({ t: 'L' as const, x, y })) };
+      contours.push(area(c) < 0 ? c : reverseContour(c));
+    }
     for (const d of def.skel.dots) {
       const r = square ? d.r * 0.92 : d.r;
       contours.push(dotContour(d.x, d.y, r, r, square));

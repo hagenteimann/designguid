@@ -64,7 +64,7 @@ export function PreviewPanel({ glyphs = [], isLoading = false, fontUrl }: Previe
       </div>
 
       <div className="flex-1 overflow-y-auto bg-neutral-50 p-2">
-        <div className="grid grid-cols-6 gap-1">
+        <div className="grid grid-cols-5 sm:grid-cols-6 gap-1">
           {glyphs.map((g) => (
             <button
               key={g.unicode}

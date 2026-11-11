@@ -39,10 +39,10 @@ function Card({ entry, onOpen }: { entry: LibraryEntry; onOpen: (e: LibraryEntry
         {entry.description && <p className="text-sm text-neutral-600 mt-1">{entry.description}</p>}
       </div>
       <div className="flex gap-2 mt-auto">
-        <button onClick={() => onOpen(entry)} className="flex-1 px-3 py-1.5 rounded-md text-xs font-medium bg-primary-300 hover:bg-primary-400 text-white transition-colors">
+        <button onClick={() => onOpen(entry)} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-xs font-medium bg-primary-300 hover:bg-primary-400 text-white transition-colors">
           Open in studio
         </button>
-        <button onClick={download} className="flex-1 px-3 py-1.5 rounded-md text-xs font-medium bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition-colors">
+        <button onClick={download} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-xs font-medium bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition-colors">
           Download OTF
         </button>
       </div>
@@ -66,7 +66,7 @@ export function LibraryView({ onOpen }: LibraryViewProps) {
   }, [entries, query]);
 
   return (
-    <section className="space-y-4" aria-label="Public font library">
+    <section className="space-y-4 min-w-0" aria-label="Public font library">
       <div className="bg-white rounded-lg shadow p-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-neutral-900">Public library</h2>
@@ -77,7 +77,7 @@ export function LibraryView({ onOpen }: LibraryViewProps) {
           onChange={(e) => { setQuery(e.target.value); setShown(PAGE); }}
           placeholder="Search name or author"
           aria-label="Search fonts"
-          className="px-3 py-2 border border-neutral-300 rounded-md text-sm w-full sm:w-64"
+          className="px-3 py-2.5 border border-neutral-300 rounded-md text-sm w-full sm:w-64"
         />
       </div>
 

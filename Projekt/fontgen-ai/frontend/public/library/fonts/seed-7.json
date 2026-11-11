@@ -1,0 +1,21 @@
+{
+  "id": "seed-7",
+  "name": "Brutal Block",
+  "author": "FontGen",
+  "description": "Ultra heavy, extended and boxy. No decoration.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 880,
+    "width": 1.4,
+    "xHeight": 600,
+    "contrast": 0,
+    "squareness": 1.4,
+    "slant": 0,
+    "spacing": 0.6,
+    "terminal": "flat",
+    "mono": false,
+    "serif": "none",
+    "serifSize": 1
+  },
+  "createdAt": "2026-11-11T12:17:00.000Z"
+}

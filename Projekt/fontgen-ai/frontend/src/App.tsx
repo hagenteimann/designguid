@@ -169,20 +169,20 @@ export function App() {
       {saving && <SaveDialog params={params} familyName={familyName} onClose={() => setSaving(false)} />}
 
       <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-neutral-900">FontGen AI</h1>
-            <p className="text-sm text-neutral-600 mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-bold text-neutral-900">FontGen AI</h1>
+            <p className="text-xs sm:text-sm text-neutral-600 mt-0.5">
               AI chooses the design, a parametric type engine draws every letter
             </p>
           </div>
-          <nav className="flex items-center gap-2" aria-label="Main">
+          <nav className="flex flex-wrap items-center gap-2" aria-label="Main">
             {(['studio', 'library'] as const).map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
                 aria-current={view === v ? 'page' : undefined}
-                className={`text-sm px-4 py-1.5 rounded-md font-medium transition-colors ${
+                className={`text-sm px-4 py-2 min-h-[44px] rounded-md font-medium transition-colors ${
                   view === v ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                 }`}
               >
@@ -192,14 +192,14 @@ export function App() {
             {hasApiKey ? (
               <button
                 onClick={handleResetApiKey}
-                className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
+                className="text-xs px-3 py-2 min-h-[44px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
               >
                 Forget key
               </button>
             ) : (
               <button
                 onClick={() => setSkipKey(false)}
-                className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
+                className="text-xs px-3 py-2 min-h-[44px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
               >
                 Add API key
               </button>
@@ -209,15 +209,15 @@ export function App() {
       </header>
 
       {(hasApiKey || skipKey) && view === 'library' && (
-        <main className="flex-1 max-w-7xl w-full mx-auto p-4">
+        <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-4">
           <LibraryView onOpen={openFromLibrary} />
         </main>
       )}
 
       {(hasApiKey || skipKey) && view === 'studio' && (
-        <main className="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-4 sticky top-4">
+        <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-1 min-w-0">
+            <div className="bg-white rounded-lg shadow p-4 lg:sticky lg:top-4">
               <h2 className="text-lg font-bold text-neutral-900 mb-4">Design Your Font</h2>
               <PromptBuilder onPromptChange={handlePromptChange} isLoading={isLoading} />
 
@@ -266,12 +266,12 @@ export function App() {
             </div>
           </div>
 
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-4 min-w-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg shadow overflow-hidden h-[28rem]">
+              <div className="bg-white rounded-lg shadow overflow-hidden h-[32rem] md:h-[28rem]">
                 <PreviewPanel glyphs={rendered?.glyphs} isLoading={isLoading} fontUrl={rendered?.fontUrl} />
               </div>
-              <div className="overflow-y-auto max-h-[28rem]">
+              <div className="md:overflow-y-auto md:max-h-[28rem]">
                 <OutputPanel
                   qaStatus={rendered?.qaStatus}
                   fontUrl={rendered?.fontUrl}

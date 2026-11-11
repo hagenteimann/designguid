@@ -106,7 +106,7 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
               key={format.type}
               onClick={() => handleExport(format)}
               disabled={!fontUrl || isLoading || exporting !== null}
-              className={`px-3 py-2 rounded-md text-xs font-medium transition-all ${
+              className={`px-3 py-2 min-h-[44px] rounded-md text-xs font-medium transition-all ${
                 !fontUrl || isLoading || exporting !== null
                   ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
                   : 'bg-primary-300 hover:bg-primary-400 text-white'

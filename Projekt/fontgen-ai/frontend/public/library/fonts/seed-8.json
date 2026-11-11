@@ -1,0 +1,21 @@
+{
+  "id": "seed-8",
+  "name": "Typewriter Slab",
+  "author": "FontGen",
+  "description": "Monospaced slab for a raw, brutalist terminal look.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 700,
+    "width": 1,
+    "xHeight": 560,
+    "contrast": 0,
+    "squareness": 1.5,
+    "slant": 0,
+    "spacing": 1,
+    "terminal": "flat",
+    "mono": true,
+    "serif": "slab",
+    "serifSize": 0.9
+  },
+  "createdAt": "2026-11-11T12:18:00.000Z"
+}

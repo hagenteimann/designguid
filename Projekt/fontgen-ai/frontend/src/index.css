@@ -117,3 +117,15 @@ canvas {
     transform: rotate(360deg);
   }
 }
+
+/* Touch-friendly range inputs */
+input[type='range'] {
+  height: 2rem;
+  touch-action: pan-y;
+}
+
+@media (max-width: 640px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+}

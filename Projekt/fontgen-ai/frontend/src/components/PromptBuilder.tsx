@@ -21,8 +21,11 @@ const DESIGN_TOKENS = {
   ] as Array<{ label: string; value: 'low' | 'medium' | 'high'; icon: string }>,
   style: [
     { label: 'Sans', value: 'sans', icon: '⊥' },
+    { label: 'Serif', value: 'serif', icon: 'Γ' },
+    { label: 'Slab', value: 'slab', icon: '▬' },
+    { label: 'Brutalist', value: 'brutalist', icon: '■' },
     { label: 'Mono', value: 'mono', icon: '|' }
-  ] as Array<{ label: string; value: 'sans' | 'mono'; icon: string }>,
+  ] as Array<{ label: string; value: 'sans' | 'serif' | 'slab' | 'brutalist' | 'mono'; icon: string }>,
   mood: [
     { label: 'Elegant', value: 'elegant', icon: '✧' },
     { label: 'Playful', value: 'playful', icon: '◡' },
@@ -56,11 +59,11 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
 
   const QUICK_TEMPLATES = [
     'Modern geometric sans-serif',
-    'Elegant high-contrast sans',
-    'Playful rounded sans',
-    'Technical monospace typeface',
-    'Sophisticated display font',
-    'Futuristic minimal letterforms'
+    'Classic bookish serif',
+    'Chunky slab serif',
+    'Brutalist heavy grotesque',
+    'Raw brutalist typewriter mono',
+    'Playful rounded sans'
   ];
 
   return (
@@ -93,7 +96,7 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
               key={template}
               onClick={() => handleQuickTemplate(template)}
               disabled={isLoading}
-              className="text-left px-3 py-2 text-sm bg-neutral-100 hover:bg-primary-200 disabled:bg-neutral-200 disabled:text-neutral-400 text-neutral-700 rounded-md transition-colors truncate"
+              className="text-left px-3 py-2 min-h-[44px] text-sm bg-neutral-100 hover:bg-primary-200 disabled:bg-neutral-200 disabled:text-neutral-400 text-neutral-700 rounded-md transition-colors truncate"
             >
               {template}
             </button>
@@ -111,7 +114,7 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
                 key={opt.value}
                 onClick={() => handleTokenChange('weight', opt.value)}
                 disabled={isLoading}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-3 py-2 min-h-[44px] rounded-md text-sm font-medium transition-all ${
                   tokens.weight === opt.value
                     ? 'bg-primary-300 text-white shadow-md'
                     : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-400'
@@ -132,7 +135,7 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
                 key={opt.value}
                 onClick={() => handleTokenChange('contrast', opt.value)}
                 disabled={isLoading}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-3 py-2 min-h-[44px] rounded-md text-sm font-medium transition-all ${
                   tokens.contrast === opt.value
                     ? 'bg-primary-300 text-white shadow-md'
                     : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-400'
@@ -147,13 +150,13 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
 
         <div>
           <p className="text-xs font-medium text-neutral-600 uppercase tracking-wide mb-2">Style</p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {DESIGN_TOKENS.style.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => handleTokenChange('style', opt.value)}
                 disabled={isLoading}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-3 py-2 min-h-[44px] rounded-md text-sm font-medium transition-all ${
                   tokens.style === opt.value
                     ? 'bg-primary-300 text-white shadow-md'
                     : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-400'
@@ -174,7 +177,7 @@ export function PromptBuilder({ onPromptChange, isLoading = false }: PromptBuild
                 key={opt.value}
                 onClick={() => handleTokenChange('mood', opt.value)}
                 disabled={isLoading}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-3 py-2 min-h-[44px] rounded-md text-sm font-medium transition-all ${
                   tokens.mood === opt.value
                     ? 'bg-primary-300 text-white shadow-md'
                     : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-400'

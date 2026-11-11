@@ -14,6 +14,8 @@ export interface Stroke {
   closed?: boolean;
   capStart?: Cap;
   capEnd?: Cap;
+  /** scales the pen for this stroke only (thin serifs and beaks) */
+  scale?: { a?: number; b?: number };
 }
 
 /** Elliptical pen: a = half width of vertical stems, b = half thickness of horizontal strokes. */
@@ -167,7 +169,8 @@ function orient(c: Contour, clockwise: boolean): Contour {
   return (area(c) < 0) === clockwise ? c : reverseContour(c);
 }
 
-export function strokeToContours(stroke: Stroke, pen: Pen, opts: StrokeOptions): Contour[] {
+export function strokeToContours(stroke: Stroke, basePen: Pen, opts: StrokeOptions): Contour[] {
+  const pen: Pen = stroke.scale ? { a: basePen.a * (stroke.scale.a ?? 1), b: basePen.b * (stroke.scale.b ?? 1) } : basePen;
   const segs = stroke.segs;
   if (segs.length === 0) return [];
   const tol = opts.tolerance ?? 0.7;

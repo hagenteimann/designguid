@@ -1,0 +1,21 @@
+{
+  "id": "seed-6",
+  "name": "Classic Serif",
+  "author": "FontGen",
+  "description": "Bookish serif with bracketed serifs and pronounced contrast.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 400,
+    "width": 1,
+    "xHeight": 500,
+    "contrast": 0.4,
+    "squareness": 0,
+    "slant": 0,
+    "spacing": 1.05,
+    "terminal": "flat",
+    "mono": false,
+    "serif": "bracketed",
+    "serifSize": 1
+  },
+  "createdAt": "2026-11-11T12:16:00.000Z"
+}
