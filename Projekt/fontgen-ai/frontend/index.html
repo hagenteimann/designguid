@@ -10,8 +10,8 @@
       default-src 'self';
       script-src 'self';
       style-src 'self' 'unsafe-inline';
-      font-src 'self' data:;
-      connect-src 'self' https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com;
+      font-src 'self' data: blob:;
+      connect-src 'self' blob: https://api.openai.com https://api.anthropic.com https://generativelanguage.googleapis.com;
       img-src 'self' data: blob:;
       object-src 'none';
       base-uri 'self';
@@ -47,21 +47,17 @@
     <link rel="manifest" href="./manifest.json" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' font-weight='bold' fill='%231f2937'>F</text></svg>" />
 
-    <!-- Preload critical assets -->
-    <link rel="preconnect" href="https://api.openai.com" crossorigin />
-    <link rel="dns-prefetch" href="https://api.openai.com" />
-
     <title>FontGen AI – Generate Custom Fonts</title>
 
     <style>
       :root {
-        --color-primary-100: 210, 100%, 95%;
-        --color-primary-200: 210, 100%, 85%;
-        --color-primary-300: 210, 100%, 60%;
-        --color-primary-400: 210, 100%, 45%;
-        --color-primary-500: 210, 100%, 30%;
-        --color-primary-600: 210, 100%, 20%;
-        --color-primary-700: 210, 100%, 10%;
+        --color-primary-100: 210 100% 95%;
+        --color-primary-200: 210 100% 85%;
+        --color-primary-300: 210 100% 60%;
+        --color-primary-400: 210 100% 45%;
+        --color-primary-500: 210 100% 30%;
+        --color-primary-600: 210 100% 20%;
+        --color-primary-700: 210 100% 10%;
       }
 
       html, body, #root {

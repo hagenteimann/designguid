@@ -1,7 +1,11 @@
 /**
- * API Service for Font Generator
- * Handles communication with backend generator pipeline
+ * Font generator service. Runs entirely in the browser: the LLM is called directly with the
+ * user's own key and the font file is built locally. No data is sent to any server of ours.
  */
+import { ApiProvider as Provider } from '../lib/llm';
+import { generateLocally } from '../lib/generate';
+
+export type ApiProvider = Provider;
 
 export interface DesignTokens {
   weight: 'light' | 'regular' | 'bold';
@@ -9,8 +13,6 @@ export interface DesignTokens {
   style: 'serif' | 'sans' | 'mono';
   mood: 'elegant' | 'playful' | 'technical';
 }
-
-export type ApiProvider = 'gemini' | 'openai' | 'anthropic';
 
 export const API_PROVIDERS: Record<ApiProvider, { label: string; placeholder: string }> = {
   gemini: { label: 'Google Gemini', placeholder: 'AIza...' },
@@ -30,12 +32,14 @@ export interface GenerateRequest {
   prompt: string;
   apiKey: string;
   apiType: ApiProvider;
+  model?: string;
   designTokens: DesignTokens;
 }
 
 export interface GenerateResponse {
   status: 'pending' | 'success' | 'error';
   fontUrl?: string;
+  glyphDataUrl?: string;
   glyphs?: GlyphInfo[];
   qaStatus?: QAStatus;
   error?: string;
@@ -61,91 +65,75 @@ export interface QACheck {
   message?: string;
 }
 
+export type ExportType = 'otf' | 'json';
+
 export interface ExportFormat {
-  type: 'otf' | 'ttf' | 'ufo';
+  type: ExportType;
   mimeType: string;
   extension: string;
 }
 
-const EXPORT_FORMATS: Record<string, ExportFormat> = {
+const EXPORT_FORMATS: Record<ExportType, ExportFormat> = {
   otf: {
     type: 'otf',
     mimeType: 'font/otf',
     extension: 'otf'
   },
-  ttf: {
-    type: 'ttf',
-    mimeType: 'font/ttf',
-    extension: 'ttf'
-  },
-  ufo: {
-    type: 'ufo',
-    mimeType: 'application/zip',
-    extension: 'ufo.zip'
+  json: {
+    type: 'json',
+    mimeType: 'application/json',
+    extension: 'glyphs.json'
   }
 };
 
+let glyphDataBlobUrl: string | null = null;
+
 /**
- * Generate font from prompt and design tokens
- * Calls backend API at POST /api/generate
+ * Generate a font from prompt and design tokens, fully client-side.
  */
 export async function generateFont(
   request: GenerateRequest,
   onProgress?: (update: Partial<GenerateResponse>) => void
 ): Promise<GenerateResponse> {
+  if (!request.apiKey || request.apiKey.trim().length === 0) {
+    return { status: 'error', error: 'API key is required' };
+  }
+  if (!request.prompt || request.prompt.trim().length === 0) {
+    return { status: 'error', error: 'Prompt is required' };
+  }
+
+  onProgress?.({ status: 'pending', estimatedTime: getEstimatedTime(request.designTokens) });
+
   try {
-    // Validate API key
-    if (!request.apiKey || request.apiKey.trim().length === 0) {
-      return {
-        status: 'error',
-        error: 'API key is required'
-      };
-    }
-
-    // Validate prompt
-    if (!request.prompt || request.prompt.trim().length === 0) {
-      return {
-        status: 'error',
-        error: 'Prompt is required'
-      };
-    }
-
-    // Emit initial pending state
-    onProgress?.({ status: 'pending', estimatedTime: 7000 });
-
-    // Call backend API
-    const response = await fetch('/api/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: request.prompt,
-        apiKey: request.apiKey,
-        apiType: request.apiType,
-        designTokens: request.designTokens
-      })
+    const result = await generateLocally({
+      prompt: request.prompt,
+      apiKey: request.apiKey,
+      provider: request.apiType,
+      model: request.model,
+      designTokens: request.designTokens
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      return {
-        status: 'error',
-        error: errorData.error || `HTTP ${response.status}: ${response.statusText}`
-      };
-    }
+    const fontUrl = URL.createObjectURL(new Blob([result.buffer], { type: 'font/otf' }));
+    if (glyphDataBlobUrl) URL.revokeObjectURL(glyphDataBlobUrl);
+    glyphDataBlobUrl = URL.createObjectURL(
+      new Blob([JSON.stringify(result.glyphData, null, 2)], { type: 'application/json' })
+    );
 
-    const data = await response.json() as GenerateResponse;
     return {
-      ...data,
-      status: data.status || 'success'
+      status: 'success',
+      fontUrl,
+      glyphDataUrl: glyphDataBlobUrl,
+      glyphs: result.glyphs,
+      qaStatus: {
+        passed: result.checks.every(c => c.passed),
+        checks: result.checks,
+        issues: result.checks.filter(c => !c.passed).map(c => `${c.name}${c.message ? ': ' + c.message : ''}`)
+      }
     };
-
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error occurred';
     return {
       status: 'error',
-      error: `Failed to generate font: ${message}`
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
     };
   }
 }
@@ -156,7 +144,7 @@ export async function generateFont(
  */
 export async function exportFont(
   fontUrl: string,
-  format: 'otf' | 'ttf' | 'ufo'
+  format: ExportType
 ): Promise<Blob> {
   const response = await fetch(fontUrl);
   if (!response.ok) {

@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { QAStatus, ExportFormat, exportFont, downloadFont, formatFileSize, getExportFormats } from '../services/api';
+import { QAStatus, ExportType, exportFont, downloadFont, getExportFormats } from '../services/api';
 
 interface OutputPanelProps {
   qaStatus?: QAStatus;
   fontUrl?: string;
+  glyphDataUrl?: string;
   isLoading?: boolean;
   onExport?: (format: string) => void;
 }
 
-export function OutputPanel({ qaStatus, fontUrl, isLoading = false, onExport }: OutputPanelProps) {
+export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false, onExport }: OutputPanelProps) {
   const [exporting, setExporting] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
-  const handleExport = async (format: 'otf' | 'ttf' | 'ufo') => {
-    if (!fontUrl) return;
+  const handleExport = async (format: ExportType) => {
+    const url = format === 'json' ? glyphDataUrl : fontUrl;
+    if (!url) return;
 
     setExporting(format);
     setExportError(null);
 
     try {
-      const blob = await exportFont(fontUrl, format);
-      const filename = `generated-font.${format}`;
+      const blob = await exportFont(url, format);
+      const filename = format === 'json' ? 'generated-font.glyphs.json' : 'generated-font.otf';
       downloadFont(blob, filename);
       onExport?.(format);
     } catch (error) {
@@ -94,19 +96,19 @@ export function OutputPanel({ qaStatus, fontUrl, isLoading = false, onExport }: 
         <div>
           <h3 className="text-sm font-medium text-neutral-700 mb-2">Export Font</h3>
           <p className="text-xs text-neutral-500">
-            Choose your preferred format. UFO is for editing, OTF/TTF for installation.
+            The font is built in your browser. Nothing is uploaded.
           </p>
         </div>
 
         {/* Export Buttons */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {exportFormats.map((format) => (
             <button
               key={format.type}
-              onClick={() => handleExport(format.type as 'otf' | 'ttf' | 'ufo')}
-              disabled={!fontUrl || isLoading || exporting !== null || !qaStatus?.passed}
+              onClick={() => handleExport(format.type)}
+              disabled={!fontUrl || isLoading || exporting !== null}
               className={`px-3 py-2 rounded-md text-xs font-medium transition-all ${
-                !fontUrl || isLoading || exporting !== null || !qaStatus?.passed
+                !fontUrl || isLoading || exporting !== null
                   ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
                   : 'bg-primary-300 hover:bg-primary-400 text-white'
               }`}
@@ -117,22 +119,18 @@ export function OutputPanel({ qaStatus, fontUrl, isLoading = false, onExport }: 
                   {format.type.toUpperCase()}
                 </>
               ) : (
-                format.type.toUpperCase()
+                format.type === 'json' ? 'GLYPH DATA (JSON)' : 'OTF'
               )}
             </button>
           ))}
         </div>
 
-        {/* Format Descriptions */}
         <div className="space-y-1 text-xs">
           <p className="text-neutral-600">
-            <span className="font-medium">OTF:</span> OpenType Format - for installation and design software
+            <span className="font-medium">OTF:</span> installable font file (OpenType/CFF)
           </p>
           <p className="text-neutral-600">
-            <span className="font-medium">TTF:</span> TrueType Format - universal font format
-          </p>
-          <p className="text-neutral-600">
-            <span className="font-medium">UFO:</span> Unified Font Object - for further editing
+            <span className="font-medium">Glyph data:</span> raw SVG outlines, for editing or re-import
           </p>
         </div>
 
@@ -152,8 +150,7 @@ export function OutputPanel({ qaStatus, fontUrl, isLoading = false, onExport }: 
         </p>
         <ol className="text-xs text-blue-800 space-y-1 list-decimal list-inside">
           <li>Export in your preferred format</li>
-          <li>For OTF/TTF: Install on your system or add to your project</li>
-          <li>For UFO: Open in font editors like FontLab, Glyphs, or FontForge</li>
+          <li>Install the OTF on your system or self-host it in your project</li>
           <li>Use in design tools, websites, or applications</li>
         </ol>
       </div>

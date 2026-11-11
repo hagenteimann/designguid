@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { isValidApiKey, detectProvider, API_PROVIDERS, ApiProvider } from '../services/api';
+import { DEFAULT_MODELS } from '../lib/llm';
+
+export interface ApiKeySubmit {
+  apiKey: string;
+  provider: ApiProvider;
+  model: string;
+  remember: boolean;
+}
 
 interface ApiKeyInputProps {
-  onSubmit: (apiKey: string, provider: ApiProvider) => void;
+  onSubmit: (value: ApiKeySubmit) => void;
   isLoading?: boolean;
 }
 
 export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
   const [apiKey, setApiKey] = useState('');
   const [provider, setProvider] = useState<ApiProvider>('gemini');
+  const [model, setModel] = useState('');
+  const [remember, setRemember] = useState(true);
   const [showKey, setShowKey] = useState(false);
   const [consented, setConsented] = useState(false);
   const [error, setError] = useState('');
@@ -18,7 +28,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
     setError('');
 
     if (!consented) {
-      setError('You must acknowledge the security warning');
+      setError('You must acknowledge the security notice');
       return;
     }
 
@@ -27,23 +37,20 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
       return;
     }
 
-    onSubmit(apiKey.trim(), provider);
+    onSubmit({ apiKey: apiKey.trim(), provider, model: model.trim(), remember });
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-        {/* Header */}
         <div className="px-6 py-4 border-b border-neutral-200">
           <h2 className="text-xl font-bold text-neutral-700">API Configuration</h2>
           <p className="text-sm text-neutral-500 mt-1">
-            Configure your API key to start generating fonts
+            Use your own key. Everything runs in your browser – there is no server.
           </p>
         </div>
 
-        {/* Content */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {/* Provider */}
           <div>
             <label htmlFor="provider" className="block text-sm font-medium text-neutral-600 mb-2">
               Provider
@@ -61,7 +68,6 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
             </select>
           </div>
 
-          {/* API Key Input */}
           <div>
             <label htmlFor="apiKey" className="block text-sm font-medium text-neutral-600 mb-2">
               API Key
@@ -71,6 +77,7 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
                 id="apiKey"
                 type={showKey ? 'text' : 'password'}
                 value={apiKey}
+                autoComplete="off"
                 onChange={(e) => {
                   setApiKey(e.target.value);
                   const detected = detectProvider(e.target.value);
@@ -90,32 +97,51 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
               </button>
             </div>
             <p className="text-xs text-neutral-500 mt-1">
-              Gemini, OpenAI or Claude – the provider is detected from the key prefix
+              The provider is detected from the key prefix.
             </p>
           </div>
 
-          {/* Security Warning */}
+          <div>
+            <label htmlFor="model" className="block text-sm font-medium text-neutral-600 mb-2">
+              Model <span className="font-normal text-neutral-400">(optional)</span>
+            </label>
+            <input
+              id="model"
+              type="text"
+              value={model}
+              autoComplete="off"
+              onChange={(e) => setModel(e.target.value)}
+              placeholder={DEFAULT_MODELS[provider]}
+              className="w-full px-3 py-2 border border-neutral-300 rounded-md"
+              disabled={isLoading}
+            />
+          </div>
+
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+              disabled={isLoading}
+              className="mt-1 w-4 h-4 border border-neutral-300 rounded accent-primary-300 cursor-pointer"
+            />
+            <span className="text-sm text-neutral-600 flex-1">
+              Remember the key on this device (browser storage). Otherwise it is forgotten when you close the tab.
+            </span>
+          </label>
+
           <div className="bg-amber-50 border border-amber-200 rounded-md p-3 space-y-2">
-            <div className="flex gap-2">
-              <span className="text-lg leading-none">⚠️</span>
-              <div>
-                <p className="text-xs font-semibold text-amber-900">Security Warning</p>
-                <p className="text-xs text-amber-800 mt-1">
-                  Your API key will be:
-                </p>
-                <ul className="text-xs text-amber-800 mt-1 space-y-1 list-disc list-inside">
-                  <li>Stored in browser sessionStorage (cleared on close)</li>
-                  <li>Sent directly to the API with each request</li>
-                  <li>Exposed to this website and browser extensions</li>
-                </ul>
-              </div>
-            </div>
+            <p className="text-xs font-semibold text-amber-900">Security notice</p>
+            <ul className="text-xs text-amber-800 space-y-1 list-disc list-inside">
+              <li>Your key is sent only to the provider you picked, directly from your browser</li>
+              <li>Nothing is sent to or stored on any server of this site</li>
+              <li>Browser extensions and anyone using this browser profile can read it</li>
+            </ul>
             <p className="text-xs text-amber-800 font-medium">
-              Use a spend-limited or temporary API key only.
+              Use a spend-limited or temporary key. Use “Forget key” on shared computers.
             </p>
           </div>
 
-          {/* Consent Checkbox */}
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -125,40 +151,24 @@ export function ApiKeyInput({ onSubmit, isLoading = false }: ApiKeyInputProps) {
               className="mt-1 w-4 h-4 border border-neutral-300 rounded accent-primary-300 cursor-pointer"
             />
             <span className="text-sm text-neutral-600 flex-1">
-              I understand the security implications and will use a spend-limited API key
+              I understand this and will use a spend-limited API key
             </span>
           </label>
 
-          {/* Error Message */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-md p-3 text-sm text-red-700">
               {error}
             </div>
           )}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading || !consented}
-            className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-2 px-4 rounded-md transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-2 px-4 rounded-md transition-colors"
           >
-            {isLoading ? (
-              <>
-                <span className="spinner" style={{ borderWidth: '2px', width: '16px', height: '16px' }} />
-                Connecting...
-              </>
-            ) : (
-              'Continue'
-            )}
+            Continue
           </button>
         </form>
-
-        {/* Footer Info */}
-        <div className="px-6 py-3 bg-neutral-50 border-t border-neutral-200 rounded-b-lg">
-          <p className="text-xs text-neutral-500 text-center">
-            Your key is never stored permanently and only used for this session.
-          </p>
-        </div>
       </div>
     </div>
   );

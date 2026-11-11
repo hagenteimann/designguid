@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ApiKeyInput } from './components/ApiKeyInput';
+import { useMutation } from '@tanstack/react-query';
+import { ApiKeyInput, ApiKeySubmit } from './components/ApiKeyInput';
 import { PromptBuilder } from './components/PromptBuilder';
 import { PreviewPanel } from './components/PreviewPanel';
 import { OutputPanel } from './components/OutputPanel';
@@ -8,10 +8,15 @@ import { generateFont, DesignTokens, GenerateResponse, ApiProvider, getEstimated
 
 type Tab = 'generate' | 'edit';
 
+const KEY_STORE = 'fontgen_api_key';
+const TYPE_STORE = 'fontgen_api_type';
+const MODEL_STORE = 'fontgen_api_model';
+
 export function App() {
   const [tab, setTab] = useState<Tab>('generate');
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [apiType, setApiType] = useState<ApiProvider>('gemini');
+  const [model, setModel] = useState('');
   const [hasApiKey, setHasApiKey] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [designTokens, setDesignTokens] = useState<DesignTokens>({
@@ -20,58 +25,63 @@ export function App() {
     style: 'sans',
     mood: 'elegant'
   });
-  const [generateTrigger, setGenerateTrigger] = useState(false);
   const [estimatedTime, setEstimatedTime] = useState(0);
 
-  // Load API key from sessionStorage on mount
+  // Restore key from this browser's storage (localStorage if remembered, else sessionStorage)
   useEffect(() => {
-    const stored = sessionStorage.getItem('fontgen_api_key');
-    if (stored) {
-      const storedType = sessionStorage.getItem('fontgen_api_type') as ApiProvider | null;
-      if (storedType) setApiType(storedType);
-      setApiKey(stored);
-      setHasApiKey(true);
+    try {
+      const store = localStorage.getItem(KEY_STORE) ? localStorage : sessionStorage;
+      const stored = store.getItem(KEY_STORE);
+      if (stored) {
+        setApiKey(stored);
+        setApiType((store.getItem(TYPE_STORE) as ApiProvider) || 'gemini');
+        setModel(store.getItem(MODEL_STORE) || '');
+        setHasApiKey(true);
+      }
+    } catch {
+      /* storage unavailable (private mode) */
     }
   }, []);
 
-  // Update estimated time when design tokens change
   useEffect(() => {
-    const time = getEstimatedTime(designTokens);
-    setEstimatedTime(time);
+    setEstimatedTime(getEstimatedTime(designTokens));
   }, [designTokens]);
 
-  // Query for font generation
-  const { data: generationResult, isLoading, error } = useQuery({
-    queryKey: ['generateFont', apiKey, apiType, prompt, designTokens, generateTrigger],
-    queryFn: async () => {
-      if (!apiKey || !prompt || !generateTrigger) return null;
-
-      let progressUpdate: Partial<GenerateResponse> | null = null;
-
-      const result = await generateFont(
-        {
-          prompt,
-          apiKey,
-          apiType,
-          designTokens
-        },
-        (update) => {
-          progressUpdate = update;
-        }
-      );
-
-      return result;
-    },
-    enabled: !!apiKey && !!prompt && generateTrigger,
-    staleTime: Infinity,
-    retry: false
+  const generation = useMutation({
+    mutationFn: async () => {
+      if (!apiKey) throw new Error('No API key');
+      return generateFont({ prompt, apiKey, apiType, model, designTokens });
+    }
   });
+  const isLoading = generation.isPending;
+  const generationResult: GenerateResponse | undefined = generation.data;
+  const error = generation.error;
 
-  const handleApiKeySubmit = (key: string, provider: ApiProvider) => {
+  const clearStoredKey = () => {
+    try {
+      for (const store of [localStorage, sessionStorage]) {
+        store.removeItem(KEY_STORE);
+        store.removeItem(TYPE_STORE);
+        store.removeItem(MODEL_STORE);
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const handleApiKeySubmit = ({ apiKey: key, provider, model: m, remember }: ApiKeySubmit) => {
+    clearStoredKey();
+    try {
+      const store = remember ? localStorage : sessionStorage;
+      store.setItem(KEY_STORE, key);
+      store.setItem(TYPE_STORE, provider);
+      store.setItem(MODEL_STORE, m);
+    } catch {
+      /* keep in memory only */
+    }
     setApiKey(key);
     setApiType(provider);
-    sessionStorage.setItem('fontgen_api_key', key);
-    sessionStorage.setItem('fontgen_api_type', provider);
+    setModel(m);
     setHasApiKey(true);
   };
 
@@ -81,18 +91,17 @@ export function App() {
   };
 
   const handleGenerate = () => {
-    if (!prompt.trim()) {
+    if (!prompt.trim() || isLoading) {
       return;
     }
-    setGenerateTrigger(true);
+    generation.mutate();
   };
 
   const handleResetApiKey = () => {
-    sessionStorage.removeItem('fontgen_api_key');
-    sessionStorage.removeItem('fontgen_api_type');
+    clearStoredKey();
     setApiKey(null);
     setHasApiKey(false);
-    setGenerateTrigger(false);
+    generation.reset();
   };
 
   const handleEditFont = () => {
@@ -103,7 +112,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-neutral-100 flex flex-col">
       {/* API Key Modal */}
-      {!hasApiKey && <ApiKeyInput onSubmit={handleApiKeySubmit} isLoading={isLoading} />}
+      {!hasApiKey && <ApiKeyInput onSubmit={handleApiKeySubmit} />}
 
       {/* Header */}
       <header className="bg-white border-b border-neutral-200 shadow-sm">
@@ -117,7 +126,7 @@ export function App() {
               onClick={handleResetApiKey}
               className="text-xs px-3 py-1.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
             >
-              Change API Key
+              Forget key
             </button>
           )}
         </div>
@@ -158,7 +167,7 @@ export function App() {
                     <span className="font-medium">Error:</span> {typeof error === 'object' && error && 'message' in error ? error.message : String(error)}
                   </p>
                   <p className="text-xs text-red-600 mt-1">
-                    Check your API key and spend limits
+                    Check your API key, model name and spend limits
                   </p>
                 </div>
               )}
@@ -229,6 +238,7 @@ export function App() {
                   <OutputPanel
                     qaStatus={generationResult?.qaStatus}
                     fontUrl={generationResult?.fontUrl}
+                    glyphDataUrl={generationResult?.glyphDataUrl}
                     isLoading={isLoading}
                   />
                 </div>
@@ -256,7 +266,7 @@ export function App() {
       <footer className="bg-white border-t border-neutral-200 mt-auto">
         <div className="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-neutral-600">
           <p>
-            FontGen AI • Powered by generative AI • Your API key is never stored permanently
+            FontGen AI • Powered by generative AI • Runs entirely in your browser – no data is sent to our servers
           </p>
           <p className="mt-1">
             <a href="#" className="hover:text-primary-300 transition-colors">Privacy</a> •

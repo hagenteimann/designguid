@@ -7,28 +7,39 @@ interface PreviewPanelProps {
   fontUrl?: string;
 }
 
+const PREVIEW_FAMILY = 'FontGenPreview';
+
 export function PreviewPanel({ glyphs = [], isLoading = false, fontUrl }: PreviewPanelProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [loadedFont, setLoadedFont] = useState<ArrayBuffer | null>(null);
+  const [fontReady, setFontReady] = useState(false);
   const [selectedGlyph, setSelectedGlyph] = useState<GlyphInfo | null>(null);
-  const previewTextRef = useRef('AaBbCcDdEeFfGg');
+  const [sample, setSample] = useState('Hamburgefonstiv 0123456789');
 
-  // Load font from URL
+  // Register the generated font (built in this browser) so previews use the real outlines
   useEffect(() => {
+    setFontReady(false);
     if (!fontUrl) return;
 
-    const loadFont = async () => {
+    let cancelled = false;
+    let face: FontFace | null = null;
+
+    (async () => {
       try {
-        const response = await fetch(fontUrl);
-        if (!response.ok) throw new Error('Failed to load font');
-        const buffer = await response.arrayBuffer();
-        setLoadedFont(buffer);
+        const buffer = await (await fetch(fontUrl)).arrayBuffer();
+        face = new FontFace(PREVIEW_FAMILY, buffer);
+        await face.load();
+        if (cancelled) return;
+        document.fonts.add(face);
+        setFontReady(true);
       } catch (error) {
         console.error('Font loading error:', error);
       }
-    };
+    })();
 
-    loadFont();
+    return () => {
+      cancelled = true;
+      if (face) document.fonts.delete(face);
+    };
   }, [fontUrl]);
 
   // Render glyphs on canvas
@@ -68,49 +79,35 @@ export function PreviewPanel({ glyphs = [], isLoading = false, fontUrl }: Previe
       return;
     }
 
-    // Draw preview text or glyphs grid
-    if (loadedFont && previewTextRef.current) {
-      // Try to render preview text
-      ctx.fillStyle = 'hsl(0, 0%, 15%)';
-      ctx.font = 'bold 48px system-ui';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(previewTextRef.current, canvas.width / 2 / window.devicePixelRatio, canvas.height / 2 / window.devicePixelRatio);
-    } else {
-      // Draw glyph grid
-      const cols = Math.floor(canvas.width / window.devicePixelRatio / 100);
-      const rows = Math.ceil(glyphs.length / cols);
-      const cellWidth = (canvas.width / window.devicePixelRatio) / cols;
-      const cellHeight = (canvas.height / window.devicePixelRatio) / rows;
+    // Draw glyph grid using the generated font
+    const w = canvas.width / window.devicePixelRatio;
+    const h = canvas.height / window.devicePixelRatio;
+    const cols = Math.max(1, Math.floor(w / 64));
+    const rows = Math.ceil(glyphs.length / cols);
+    const cellWidth = w / cols;
+    const cellHeight = Math.min(h / rows, 64);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = fontReady ? `${Math.round(cellHeight * 0.55)}px "${PREVIEW_FAMILY}"` : '24px monospace';
+
+    glyphs.forEach((glyph, index) => {
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      const x = col * cellWidth;
+      const y = row * cellHeight;
+
+      ctx.fillStyle = selectedGlyph?.char === glyph.char ? 'hsl(210, 100%, 90%)' : 'hsl(0, 0%, 94%)';
+      ctx.fillRect(x, y, cellWidth, cellHeight);
 
       ctx.fillStyle = 'hsl(0, 0%, 15%)';
-      ctx.font = '32px monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.fillText(glyph.char, x + cellWidth / 2, y + cellHeight * 0.72);
 
-      glyphs.forEach((glyph, index) => {
-        const col = index % cols;
-        const row = Math.floor(index / cols);
-        const x = col * cellWidth + cellWidth / 2;
-        const y = row * cellHeight + cellHeight / 2;
-
-        // Draw cell background
-        ctx.fillStyle = selectedGlyph?.char === glyph.char
-          ? 'hsl(210, 100%, 90%)'
-          : 'hsl(0, 0%, 90%)';
-        ctx.fillRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
-
-        // Draw glyph
-        ctx.fillStyle = 'hsl(0, 0%, 15%)';
-        ctx.fillText(glyph.char, x, y);
-
-        // Draw border
-        ctx.strokeStyle = 'hsl(0, 0%, 70%)';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
-      });
-    }
-  }, [glyphs, isLoading, loadedFont, selectedGlyph]);
+      ctx.strokeStyle = 'hsl(0, 0%, 80%)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, cellWidth, cellHeight);
+    });
+  }, [glyphs, isLoading, fontReady, selectedGlyph]);
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (glyphs.length === 0) return;
@@ -122,10 +119,10 @@ export function PreviewPanel({ glyphs = [], isLoading = false, fontUrl }: Previe
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Calculate which glyph was clicked
-    const cols = Math.floor(canvas.width / window.devicePixelRatio / 100);
-    const cellWidth = (canvas.width / window.devicePixelRatio) / cols;
-    const cellHeight = (canvas.height / window.devicePixelRatio) / (Math.ceil(glyphs.length / cols));
+    const cols = Math.max(1, Math.floor(rect.width / 64));
+    const rows = Math.ceil(glyphs.length / cols);
+    const cellWidth = rect.width / cols;
+    const cellHeight = Math.min(rect.height / rows, 64);
 
     const col = Math.floor(x / cellWidth);
     const row = Math.floor(y / cellHeight);
@@ -156,6 +153,21 @@ export function PreviewPanel({ glyphs = [], isLoading = false, fontUrl }: Previe
           className="w-full h-full cursor-pointer"
         />
       </div>
+
+      {/* Sample text in the generated font */}
+      {fontReady && (
+        <div className="px-4 py-3 border-t border-neutral-200">
+          <input
+            value={sample}
+            onChange={(e) => setSample(e.target.value)}
+            aria-label="Sample text"
+            className="w-full text-xs px-2 py-1 border border-neutral-300 rounded mb-2"
+          />
+          <p style={{ fontFamily: `"${PREVIEW_FAMILY}"`, fontSize: '28px', lineHeight: 1.2 }} className="break-words text-neutral-900">
+            {sample}
+          </p>
+        </div>
+      )}
 
       {/* Glyph Details */}
       {selectedGlyph && (
