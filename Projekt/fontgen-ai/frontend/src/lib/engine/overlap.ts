@@ -1,0 +1,133 @@
+import ClipperLib from 'clipper-lib';
+import { Contour, Seg } from './contour';
+import { V, cubicAt, dist, fitCurve, neg, norm, sub } from './geometry';
+
+const SCALE = 64;
+const WINDOW = 4;
+const CORNER_DEG = 32;
+const NEIGHBOUR = 6;
+const TOLERANCE = 0.4;
+
+function flatten(c: Contour): V[] {
+  const pts: V[] = [[c.sx, c.sy]];
+  let cur: V = [c.sx, c.sy];
+  for (const s of c.segs) {
+    if (s.t === 'L') {
+      cur = [s.x, s.y];
+      pts.push(cur);
+    } else {
+      const p: V[] = [cur, [s.x1, s.y1], [s.x2, s.y2], [s.x, s.y]];
+      const poly = dist(p[0], p[1]) + dist(p[1], p[2]) + dist(p[2], p[3]);
+      const steps = Math.min(120, Math.max(12, Math.ceil(poly / 5)));
+      for (let i = 1; i <= steps; i++) pts.push(cubicAt(p, i / steps));
+      cur = p[3];
+    }
+  }
+  if (pts.length > 1 && dist(pts[0], pts[pts.length - 1]) < 1e-6) pts.pop();
+  return pts;
+}
+
+function walk(P: V[], i: number, dir: 1 | -1): V {
+  const n = P.length;
+  let k = i, d = 0, steps = 0;
+  while (d < WINDOW && steps < n / 2) {
+    k = (k + dir + n) % n;
+    d = dist(P[i], P[k]);
+    steps++;
+  }
+  return P[k];
+}
+
+function angleAt(P: V[], i: number): number {
+  const a = norm(sub(P[i], walk(P, i, -1)));
+  const b = norm(sub(walk(P, i, 1), P[i]));
+  return (Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1])) ) * 180) / Math.PI;
+}
+
+function isStraight(pts: V[]): boolean {
+  const a = pts[0], b = pts[pts.length - 1];
+  const l = dist(a, b);
+  if (l < 1e-9) return false;
+  for (const p of pts) {
+    const d = Math.abs((b[0] - a[0]) * (a[1] - p[1]) - (a[0] - p[0]) * (b[1] - a[1])) / l;
+    if (d > 0.25) return false;
+  }
+  return true;
+}
+
+/** Turn a dense polygon back into a contour of lines and smooth cubics, keeping sharp corners sharp. */
+function fitPolygon(P: V[]): Contour | null {
+  const n = P.length;
+  if (n < 3) return null;
+
+  const ang = P.map((_, i) => angleAt(P, i));
+  const corners: number[] = [];
+  for (let i = 0; i < n; i++) {
+    if (ang[i] < CORNER_DEG) continue;
+    let isMax = true;
+    for (const dir of [1, -1]) {
+      for (let d = 1; d < n && isMax; d++) {
+        const j = (i + dir * d + n) % n;
+        if (dist(P[i], P[j]) > NEIGHBOUR) break;
+        if (ang[j] > ang[i] || (ang[j] === ang[i] && dir === -1)) isMax = false;
+      }
+    }
+    if (isMax) corners.push(i);
+  }
+
+  const smooth = corners.length === 0;
+  const knots = smooth ? [0, Math.floor(n / 2)] : corners;
+
+  const segs: Seg[] = [];
+  for (let k = 0; k < knots.length; k++) {
+    const i = knots[k], j = knots[(k + 1) % knots.length];
+    const pts: V[] = [];
+    for (let m = i; ; m = (m + 1) % n) {
+      pts.push(P[m]);
+      if (m === j && pts.length > 1) break;
+      if (pts.length > n + 1) break;
+    }
+    if (pts.length < 2) continue;
+
+    if (pts.length === 2 || isStraight(pts)) {
+      segs.push({ t: 'L', x: pts[pts.length - 1][0], y: pts[pts.length - 1][1] });
+      continue;
+    }
+
+    const fwdI = walk(P, i, 1), backJ = walk(P, j, -1);
+    let t1 = norm(sub(fwdI, P[i]));
+    let t2 = norm(sub(backJ, P[j]));
+    if (smooth) {
+      t1 = norm(sub(walk(P, i, 1), walk(P, i, -1)));
+      t2 = neg(norm(sub(walk(P, j, 1), walk(P, j, -1))));
+    }
+    for (const c of fitCurve(pts, t1, t2, TOLERANCE)) {
+      segs.push({ t: 'C', x1: c[1][0], y1: c[1][1], x2: c[2][0], y2: c[2][1], x: c[3][0], y: c[3][1] });
+    }
+  }
+  return segs.length ? { sx: P[knots[0]][0], sy: P[knots[0]][1], segs } : null;
+}
+
+/**
+ * Merge overlapping strokes into clean outlines (outer contours clockwise, counters counter-clockwise),
+ * so every rasterizer and font editor renders the glyph identically.
+ */
+export function removeOverlaps(contours: Contour[]): Contour[] {
+  if (contours.length === 0) return contours;
+
+  const subject = contours.map(c => flatten(c).map(([x, y]) => ({ X: Math.round(x * SCALE), Y: Math.round(y * SCALE) })));
+  const clipper = new ClipperLib.Clipper();
+  clipper.AddPaths(subject, ClipperLib.PolyType.ptSubject, true);
+  const solution = new ClipperLib.Paths();
+  clipper.Execute(ClipperLib.ClipType.ctUnion, solution, ClipperLib.PolyFillType.pftNonZero, ClipperLib.PolyFillType.pftNonZero);
+  const cleaned = ClipperLib.Clipper.CleanPolygons(solution, SCALE * 0.1);
+
+  const out: Contour[] = [];
+  for (const path of cleaned) {
+    // Clipper returns outers counter-clockwise (positive area); fonts want them clockwise.
+    const pts: V[] = path.map((p: { X: number; Y: number }): V => [p.X / SCALE, p.Y / SCALE]).reverse();
+    const fitted = fitPolygon(pts);
+    if (fitted) out.push(fitted);
+  }
+  return out;
+}

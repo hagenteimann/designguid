@@ -122,9 +122,9 @@ export function renderFont(params: FontParams, familyName: string): Rendered {
   });
 
   checks.push({
-    name: 'Overlapping strokes',
+    name: 'Overlaps removed',
     passed: true,
-    message: 'Strokes are not merged into single outlines. Fine for use; run "Remove Overlap" in a font editor before commercial release.'
+    message: 'Strokes are merged into clean outlines, so every renderer and font editor shows the same shape'
   });
 
   return {

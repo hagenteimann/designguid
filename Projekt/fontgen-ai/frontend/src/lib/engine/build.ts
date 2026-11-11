@@ -1,6 +1,7 @@
 import { Box, Contour, bounds, mapContours } from './contour';
 import { buildDefs, Edge } from './glyphs';
 import { FontParams, computeMetrics } from './params';
+import { removeOverlaps } from './overlap';
 import { dotContour, strokeToContours } from './stroker';
 
 export interface BuiltGlyph {
@@ -33,6 +34,8 @@ export function buildGlyphs(p: FontParams): GlyphSet {
       const r = square ? d.r * 0.92 : d.r;
       contours.push(dotContour(d.x, d.y, r, r, square));
     }
+    if (contours.length === 0) continue;
+    contours = removeOverlaps(contours);
     if (contours.length === 0) continue;
     if (shear) contours = mapContours(contours, (x, y) => [x + y * shear, y]);
 
