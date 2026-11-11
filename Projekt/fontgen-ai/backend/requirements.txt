@@ -1,0 +1,9 @@
+fonttools>=4.58.4
+uharfbuzz>=0.16.0
+fontbakery>=0.9.0
+ufoLib2>=0.17.0
+requests>=2.31.0
+Pillow>=10.0.0
+svgpath2mpl>=1.2.0
+lxml>=4.9.0
+python-dotenv>=1.0.0
