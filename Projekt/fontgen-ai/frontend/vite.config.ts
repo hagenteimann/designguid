@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 export default defineConfig({
-  base: '/fontgen-ai/',
+  base: '/designguid/fontgen-ai/',
   plugins: [react()],
   build: {
     target: 'ES2020',
