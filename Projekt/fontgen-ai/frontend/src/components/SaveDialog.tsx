@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FontParams } from '../lib/engine/params';
 import { LICENSE, Submission, cleanText, submissionUrl } from '../lib/library';
 
+const ALIAS_KEY = 'fontgen_alias';
+
 interface SaveDialogProps {
   params: FontParams;
   familyName: string;
@@ -10,7 +12,13 @@ interface SaveDialogProps {
 
 export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
   const [name, setName] = useState(familyName);
-  const [author, setAuthor] = useState('');
+  const [author, setAuthor] = useState(() => {
+    try {
+      return localStorage.getItem(ALIAS_KEY) ?? '';
+    } catch {
+      return '';
+    }
+  });
   const [description, setDescription] = useState('');
   const [consent, setConsent] = useState(false);
 
@@ -32,19 +40,20 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
         <div className="px-6 py-4 border-b border-neutral-200 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-neutral-700">Save to public library</h2>
-            <p className="text-sm text-neutral-500 mt-1">Share this font so everyone can use it.</p>
+            <p className="text-sm text-neutral-500 mt-1">Give it a name and credit yourself. Everyone can then use it for free.</p>
           </div>
           <button onClick={onClose} aria-label="Close" className="text-neutral-500 hover:text-neutral-700 text-2xl leading-none w-11 h-11 -mr-2 -mt-2 shrink-0">×</button>
         </div>
 
         <div className="p-6 space-y-4">
           <label className="block">
-            <span className="block text-sm font-medium text-neutral-600 mb-1">Font name</span>
-            <input value={name} maxLength={40} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
+            <span className="block text-sm font-medium text-neutral-700 mb-1">Font name</span>
+            <input value={name} maxLength={40} onChange={(e) => setName(e.target.value)} placeholder="e.g. Soft Candy" className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
           </label>
           <label className="block">
-            <span className="block text-sm font-medium text-neutral-600 mb-1">Credit as <span className="font-normal text-neutral-400">(optional, public)</span></span>
+            <span className="block text-sm font-medium text-neutral-700 mb-1">Your alias</span>
             <input value={author} maxLength={40} onChange={(e) => setAuthor(e.target.value)} placeholder="Anonymous" className="w-full px-3 py-2.5 border border-neutral-300 rounded-md" />
+            <span className="block text-xs text-neutral-500 mt-1">Shown as “by …” on your font in the library. A nickname is fine. We remember it for next time.</span>
           </label>
           <label className="block">
             <span className="block text-sm font-medium text-neutral-600 mb-1">Short description <span className="font-normal text-neutral-400">(optional)</span></span>
@@ -72,7 +81,18 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-disabled={!valid}
-            onClick={(e) => { if (!valid) e.preventDefault(); else setTimeout(onClose, 300); }}
+            onClick={(e) => {
+              if (!valid) {
+                e.preventDefault();
+                return;
+              }
+              try {
+                localStorage.setItem(ALIAS_KEY, cleanText(author, 40));
+              } catch {
+                /* storage unavailable */
+              }
+              setTimeout(onClose, 300);
+            }}
             className={`block w-full text-center font-medium py-3 px-4 rounded-md transition-colors ${
               valid ? 'bg-primary-300 hover:bg-primary-400 text-white' : 'bg-neutral-300 text-white cursor-not-allowed'
             }`}

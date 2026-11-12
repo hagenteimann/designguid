@@ -41,6 +41,20 @@ jobs:
           npx esbuild scripts/publish-font.ts --bundle --platform=node --format=cjs --outfile="$RUNNER_TEMP/publish.cjs" --log-level=warning
           node "$RUNNER_TEMP/publish.cjs"
 
+      - name: Build download package and upload it to the library release
+        working-directory: ./Projekt/fontgen-ai/frontend
+        run: |
+          npx esbuild scripts/make-family-zip.ts --bundle --platform=node --format=cjs --outfile="$RUNNER_TEMP/zip.cjs" --log-level=warning
+          node "$RUNNER_TEMP/zip.cjs" "public/library/fonts/$ISSUE.json" "$RUNNER_TEMP/zips"
+          gh release view library >/dev/null 2>&1 || gh release create library --title "Font library downloads" --notes "Download packages of the public font library (CC0). The download counts shown in the library come from these files." --latest=false
+          for f in "$RUNNER_TEMP"/zips/*.zip; do
+            if gh release view library --json assets -q '.assets[].name' | grep -qxF "$(basename "$f")"; then
+              echo "$(basename "$f") already uploaded"
+            else
+              gh release upload library "$f"
+            fi
+          done
+
       - name: Commit entry
         run: |
           git config user.name "github-actions[bot]"

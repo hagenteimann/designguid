@@ -2,6 +2,14 @@ import { FontParams, sanitizeParams } from './engine/params';
 
 export const REPO = 'hagenteimann/designguid';
 export const LICENSE = 'CC0-1.0';
+export const RELEASE_TAG = 'library';
+
+export const fileSlug = (name: string) => name.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'font';
+
+/** Name of the download package of a library font, stored as an asset of the "library" release. */
+export const zipAssetName = (id: string | number, name: string) => `${id}-${fileSlug(name)}-family.zip`;
+
+export const zipDownloadUrl = (asset: string) => `https://github.com/${REPO}/releases/download/${RELEASE_TAG}/${encodeURIComponent(asset)}`;
 
 export interface LibraryEntry {
   id: string | number;
@@ -11,6 +19,10 @@ export interface LibraryEntry {
   license: typeof LICENSE;
   params: FontParams;
   createdAt: string;
+  /** package in the release, only set once it exists */
+  zip?: string;
+  /** downloads of that package, counted by GitHub */
+  downloads?: number;
 }
 
 export interface Submission {
@@ -77,7 +89,9 @@ export async function fetchLibrary(): Promise<LibraryEntry[]> {
       description: cleanText(e.description, 200),
       license: LICENSE,
       params: sanitizeParams(e.params),
-      createdAt: typeof e.createdAt === 'string' ? e.createdAt : ''
+      createdAt: typeof e.createdAt === 'string' ? e.createdAt : '',
+      zip: typeof e.zip === 'string' && /^[\w.-]+$/.test(e.zip) ? e.zip : undefined,
+      downloads: typeof e.downloads === 'number' && isFinite(e.downloads) && e.downloads >= 0 ? Math.floor(e.downloads) : undefined
     });
   }
   return out;

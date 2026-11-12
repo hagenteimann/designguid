@@ -273,7 +273,7 @@ export function App() {
                 busy={zipBusy}
                 onDownload={downloadCurrent}
                 onFamily={downloadFamily}
-                onShare={() => setSaving(true)}
+                onSave={() => setSaving(true)}
               />
             </PreviewCard>
           </div>
@@ -298,6 +298,17 @@ export function App() {
 
             <Step n={3} title="Fine-tune" hint="Every change updates all letters at once">
               <TuneControls params={params} onChange={setParams} />
+            </Step>
+
+            <Step n={4} title="Save it to the public library" hint="Everyone can use your font for free (CC0)">
+              <p className="text-sm text-neutral-600">Give your font a name and your alias, and it appears in the library with your credit.</p>
+              <button
+                onClick={() => setSaving(true)}
+                disabled={!rendered}
+                className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-3 px-4 rounded-md transition-colors"
+              >
+                Save to public library
+              </button>
             </Step>
           </div>
         </main>

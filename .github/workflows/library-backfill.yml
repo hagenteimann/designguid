@@ -1,0 +1,53 @@
+name: Backfill library download packages
+
+# Creates the download package of every library font that does not have one yet and uploads it to
+# the "library" release. Run it manually once; it never overwrites existing packages (that would reset counts).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: library-publish
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./Projekt/fontgen-ai/frontend
+        run: npm install
+
+      - name: Build packages for all library fonts
+        working-directory: ./Projekt/fontgen-ai/frontend
+        run: |
+          npx esbuild scripts/make-family-zip.ts --bundle --platform=node --format=cjs --outfile="$RUNNER_TEMP/zip.cjs" --log-level=warning
+          for f in public/library/fonts/*.json; do
+            node "$RUNNER_TEMP/zip.cjs" "$f" "$RUNNER_TEMP/zips"
+          done
+
+      - name: Upload missing packages
+        run: |
+          gh release view library >/dev/null 2>&1 || gh release create library --title "Font library downloads" --notes "Download packages of the public font library (CC0). The download counts shown in the library come from these files." --latest=false
+          gh release view library --json assets -q '.assets[].name' > "$RUNNER_TEMP/existing.txt" || true
+          for f in "$RUNNER_TEMP"/zips/*.zip; do
+            if grep -qxF "$(basename "$f")" "$RUNNER_TEMP/existing.txt"; then
+              echo "skip $(basename "$f")"
+            else
+              gh release upload library "$f"
+              echo "uploaded $(basename "$f")"
+            fi
+          done
+
+      - name: Deploy site
+        run: gh workflow run deploy.yml --ref main

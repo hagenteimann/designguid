@@ -5,6 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    # refresh the download counts shown in the library
+    - cron: '23 */6 * * *'
 
 permissions:
   contents: read
@@ -29,6 +32,8 @@ jobs:
 
       - name: Install dependencies and build frontend
         working-directory: ./Projekt/fontgen-ai/frontend
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm install && npm run build
 
       - name: Upload artifact to GitHub Pages

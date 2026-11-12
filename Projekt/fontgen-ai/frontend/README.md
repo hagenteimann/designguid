@@ -18,6 +18,15 @@ Fonts are stored as tiny parameter files in `public/library/fonts/` (CC0). Flow,
 
 The labels `font-submission` and `approved` are created by `.github/workflows/library-labels.yml`.
 
+### Name, alias and download counts
+
+The save dialog asks for the font name and an alias (shown as "by …", remembered in this browser). Each library font has a
+ready-made ZIP (4 styles) as an asset of the GitHub release `library`; GitHub counts the downloads. `build-library-index.mjs`
+reads those counts at deploy time (and a cron job redeploys every 6 hours), so the library shows "↓ N downloads" and can be
+sorted by "Most downloaded". `library-publish.yml` uploads the ZIP for every new font; run `library-backfill.yml` once
+(Actions → Run workflow) to create ZIPs for existing fonts. Needs Settings → Actions → General → Workflow permissions →
+"Read and write". Only downloads of the library ZIP are counted (not in-browser downloads from the studio).
+
 
 A React 18 + TypeScript web application for generating custom fonts using AI-powered design tokens and interactive glyph editing.
 

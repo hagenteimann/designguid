@@ -4,13 +4,13 @@ interface ActionsBarProps {
   busy?: boolean;
   onDownload: () => void;
   onFamily: () => void;
-  onShare: () => void;
+  onSave: () => void;
 }
 
 /** One element: pinned to the bottom edge on phones and tablets, inline in the preview card on desktop. */
-export function ActionsBar({ styleLabel, disabled, busy, onDownload, onFamily, onShare }: ActionsBarProps) {
+export function ActionsBar({ styleLabel, disabled, busy, onDownload, onFamily, onSave }: ActionsBarProps) {
   const off = disabled || busy;
-  const secondary = `px-3 py-2 min-h-[44px] rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+  const secondary = `px-2.5 sm:px-3 py-2 min-h-[44px] rounded-md text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
     off ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed' : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-800'
   }`;
   return (
@@ -28,8 +28,8 @@ export function ActionsBar({ styleLabel, disabled, busy, onDownload, onFamily, o
         <button onClick={onFamily} disabled={off} className={secondary} title="Regular, Bold, Italic and Bold Italic as a ZIP">
           {busy ? 'Building…' : 'All 4 styles'}
         </button>
-        <button onClick={onShare} disabled={disabled} className={secondary} title="Add this font to the public library">
-          Share
+        <button onClick={onSave} disabled={disabled} className={secondary} title="Add this font to the public library">
+          Save to library
         </button>
       </div>
     </div>

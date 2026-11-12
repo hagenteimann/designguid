@@ -2,8 +2,9 @@ import { FontParams } from './engine/params';
 import { STYLE_KEYS, STYLE_LABEL, StyleKey } from './engine/variants';
 import { renderFont } from './generate';
 import { zip } from './zip';
+import { fileSlug } from './library';
 
-export const fileSlug = (name: string) => name.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'font';
+export { fileSlug };
 
 export const styleFileName = (name: string, style: StyleKey) => `${fileSlug(name)}-${STYLE_LABEL[style].replace(' ', '')}.otf`;
 
