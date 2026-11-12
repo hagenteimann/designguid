@@ -4,7 +4,7 @@ import { ApiKeyInput, ApiKeySubmit } from './components/ApiKeyInput';
 import { PreviewCard } from './components/PreviewCard';
 import { ActionsBar } from './components/ActionsBar';
 import { PresetPicker } from './components/PresetPicker';
-import { AiPrompt } from './components/AiPrompt';
+import { AiChat, ChatEntry } from './components/AiChat';
 import { TuneControls } from './components/TuneControls';
 import { GlyphEditor } from './components/GlyphEditor';
 import { Disclosure } from './components/Disclosure';
@@ -12,7 +12,8 @@ import { SaveDialog } from './components/SaveDialog';
 import { LibraryView } from './components/LibraryView';
 import { ApiProvider, API_PROVIDERS, GlyphInfo, QAStatus, downloadFont } from './services/api';
 import { DEFAULT_PARAMS, FontParams, Preset } from './lib/engine/params';
-import { renderFont, suggestParams } from './lib/generate';
+import { renderFont } from './lib/generate';
+import { chatTurn } from './lib/chat';
 import { STYLE_LABEL, StyleKey } from './lib/engine/variants';
 import { buildFamilyZip, fileSlug, styleFileName } from './lib/family';
 import { LibraryEntry } from './lib/library';
@@ -51,17 +52,19 @@ export function App() {
   const [view, setView] = useState<View>('studio');
   const [saving, setSaving] = useState(false);
   const [keyDialog, setKeyDialog] = useState(false);
-  const [pendingAi, setPendingAi] = useState(false);
+  const [pendingText, setPendingText] = useState<string | null>(null);
 
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [apiType, setApiType] = useState<ApiProvider>('gemini');
   const [model, setModel] = useState('');
-  const [prompt, setPrompt] = useState('');
+  const [draft, setDraft] = useState('');
+  const [chat, setChat] = useState<ChatEntry[]>([]);
+  const [chatUndo, setChatUndo] = useState<Record<number, { params: FontParams; name: string }>>({});
+  const nextId = useRef(1);
 
   const [params, setParams] = useState<FontParams>(DEFAULT_PARAMS);
   const [familyName, setFamilyName] = useState('Sans');
   const [style, setStyle] = useState<StyleKey>('regular');
-  const [notes, setNotes] = useState('');
   const [rendered, setRendered] = useState<RenderState | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
   const [zipBusy, setZipBusy] = useState(false);
@@ -112,25 +115,66 @@ export function App() {
 
   useEffect(() => () => urls.current.forEach((u) => URL.revokeObjectURL(u)), []);
 
-  const suggestion = useMutation({
-    mutationFn: async () => {
+  const chatMutation = useMutation({
+    mutationFn: async (v: { message: string; history: ChatEntry[]; params: FontParams; name: string }) => {
       if (!apiKey) throw new Error('No API key');
-      return suggestParams({ prompt, apiKey, provider: apiType, model, current: params });
+      return chatTurn({
+        message: v.message,
+        history: v.history.map(({ role, text }) => ({ role, text })),
+        params: v.params,
+        familyName: v.name,
+        apiKey,
+        provider: apiType,
+        model
+      });
     },
-    onSuccess: (s) => {
-      setParams(s.params);
-      setFamilyName(s.familyName);
-      setNotes(s.notes);
+    onSuccess: (r, v) => {
+      const id = nextId.current++;
+      if (r.changes.length) {
+        setParams(r.params);
+        setFamilyName(r.familyName);
+        setChatUndo((u) => ({ ...u, [id]: { params: v.params, name: v.name } }));
+      }
+      setChat((c) => [...c, { id, role: 'assistant', text: r.reply, changes: r.changes }]);
     }
   });
 
-  // Run the AI request that was waiting for the key
-  useEffect(() => {
-    if (pendingAi && apiKey) {
-      setPendingAi(false);
-      suggestion.mutate();
+  const sendChat = (text: string) => {
+    const message = text.trim();
+    if (!message || chatMutation.isPending) return;
+    if (!apiKey) {
+      setPendingText(message);
+      setKeyDialog(true);
+      return;
     }
-  }, [pendingAi, apiKey]); // eslint-disable-line react-hooks/exhaustive-deps
+    chatMutation.reset();
+    setChat((c) => [...c, { id: nextId.current++, role: 'user', text: message }]);
+    setDraft('');
+    chatMutation.mutate({ message, history: chat, params, name: familyName });
+  };
+
+  // Send the message that was waiting for the key
+  useEffect(() => {
+    if (pendingText && apiKey) {
+      const t = pendingText;
+      setPendingText(null);
+      sendChat(t);
+    }
+  }, [pendingText, apiKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const lastApplied = [...chat].reverse().find((e) => e.role === 'assistant' && e.changes?.length && chatUndo[e.id]);
+  const undoChat = (id: number) => {
+    const snap = chatUndo[id];
+    if (!snap) return;
+    setParams(snap.params);
+    setFamilyName(snap.name);
+    setChat((c) => c.map((e) => (e.id === id ? { ...e, undone: true } : e)));
+    setChatUndo((u) => {
+      const n = { ...u };
+      delete n[id];
+      return n;
+    });
+  };
 
   const clearStoredKey = () => {
     try {
@@ -163,30 +207,18 @@ export function App() {
   const forgetKey = () => {
     clearStoredKey();
     setApiKey(null);
-    suggestion.reset();
-  };
-
-  const askAi = () => {
-    if (!prompt.trim() || suggestion.isPending) return;
-    if (!apiKey) {
-      setPendingAi(true);
-      setKeyDialog(true);
-      return;
-    }
-    suggestion.mutate();
+    chatMutation.reset();
   };
 
   const pickPreset = (preset: Preset) => {
     setParams({ ...DEFAULT_PARAMS, ...preset.params });
     setFamilyName(preset.label);
-    setNotes('');
   };
 
   const openFromLibrary = (entry: LibraryEntry) => {
     setParams(entry.params);
     setFamilyName(entry.name);
     setStyle('regular');
-    setNotes('');
     setView('studio');
   };
 
@@ -206,7 +238,7 @@ export function App() {
     downloadFont(blob, styleFileName(familyName, style));
   };
 
-  const aiError = suggestion.error instanceof Error ? `${suggestion.error.message}. Check your key, model name and spending limit.` : null;
+  const aiError = chatMutation.error instanceof Error ? `${chatMutation.error.message}. Check your key, model name and spending limit.` : null;
   const tab = (v: View) =>
     `text-sm px-4 py-2 min-h-[44px] rounded-md font-medium transition-colors ${view === v ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'}`;
 
@@ -217,7 +249,7 @@ export function App() {
           onSubmit={handleKeySubmit}
           onClose={() => {
             setKeyDialog(false);
-            setPendingAi(false);
+            setPendingText(null);
           }}
         />
       )}
@@ -285,16 +317,18 @@ export function App() {
               <PresetPicker current={params} onPick={pickPreset} />
             </Step>
 
-            <Step n={2} title="Or describe it" hint="Optional: AI chooses the settings from your description">
-              <AiPrompt
-                value={prompt}
-                onChange={setPrompt}
-                onSubmit={askAi}
-                loading={suggestion.isPending}
+            <Step n={2} title="Chat with the AI" hint="Optional: describe a font or ask for changes, also to single letters">
+              <AiChat
+                entries={chat}
+                draft={draft}
+                onDraft={setDraft}
+                onSend={() => sendChat(draft)}
+                busy={chatMutation.isPending}
                 hasKey={!!apiKey}
                 providerLabel={API_PROVIDERS[apiType].label}
                 error={aiError}
-                notes={suggestion.isSuccess ? notes : ''}
+                undoId={lastApplied ? lastApplied.id : null}
+                onUndo={undoChat}
               />
             </Step>
 

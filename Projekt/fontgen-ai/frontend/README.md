@@ -332,3 +332,11 @@ of 10 letters, 3 in parallel). The model returns new positions for the points th
 (±250), nodes snap to the metric lines, and handles follow their node. Letters edited by hand in the session are kept, the
 rest is replaced, and Undo restores the previous state. Up to 900 edited points are allowed. Fonts too large for the prefilled
 GitHub link are submitted by copying the data into the issue form ("Copy data and continue on GitHub").
+
+### Chat with the AI
+
+Studio step 2 is a chat (`src/components/AiChat.tsx`, `src/lib/chat.ts`). Each turn sends the current settings, the
+parameter guide and the conversation to the user's own AI key. The answer may change design parameters and reshape single
+letters. For letter shapes the model first asks for the skeletons it wants to see (`needSkeletons`, up to 8 letters), the app
+sends them in a second request, and the model returns new point positions (same validation as the editor: clamped, snapped,
+handles follow). Parameters are validated by `sanitizeParams`. The latest change can be undone from its chat bubble.

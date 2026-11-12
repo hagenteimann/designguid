@@ -90,12 +90,13 @@ function parseJson(text: string): any {
 }
 
 /** Turns the model's absolute positions into stored offsets: validated, clamped, nodes snapped to the metric lines, handles follow their node. */
-function toOffsets(def: GlyphDef, raw: unknown, m: ReturnType<typeof computeMetrics>): number[] | undefined {
+export function toOffsets(def: GlyphDef, raw: unknown, m: ReturnType<typeof computeMetrics>, existing?: number[]): number[] | undefined {
   if (!raw || typeof raw !== 'object') return undefined;
   const slots = slotsOf(def);
   const lines = [0, m.xh, m.cap, m.asc, -m.desc, m.b, m.cap - m.b, m.xh - m.b];
   const clamp = (v: number) => Math.max(-MAX_MOVE, Math.min(MAX_MOVE, r0(v)));
-  const offsets = new Map<number, V>();
+  const prior = readOffsets(def, existing);
+  const offsets = new Map<number, V>(prior);
   const given = new Set<number>();
 
   // models sometimes echo the input shape: {"points": {...}} and ["n", x, y] instead of [x, y]
@@ -112,11 +113,12 @@ function toOffsets(def: GlyphDef, raw: unknown, m: ReturnType<typeof computeMetr
     offsets.set(i, [clamp(x - slots[i].x), clamp(ty - slots[i].y)]);
     given.add(i);
   }
-  // a node that moved drags the handles the model did not mention
+  // a node that moved drags the handles the model did not mention (by the same amount)
   slots.forEach((s, i) => {
-    if (s.kind !== 'handle' || given.has(i) || s.anchor === undefined) return;
-    const a = offsets.get(s.anchor);
-    if (a) offsets.set(i, [a[0], a[1]]);
+    if (s.kind !== 'handle' || given.has(i) || s.anchor === undefined || !given.has(s.anchor)) return;
+    const now = offsets.get(s.anchor) ?? [0, 0], was = prior.get(s.anchor) ?? [0, 0];
+    const h = offsets.get(i) ?? [0, 0];
+    offsets.set(i, [clamp(h[0] + now[0] - was[0]), clamp(h[1] + now[1] - was[1])]);
   });
   return writeOffsets(def, offsets);
 }
