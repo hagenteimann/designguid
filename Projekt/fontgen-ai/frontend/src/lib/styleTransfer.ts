@@ -72,7 +72,7 @@ ${JSON.stringify(todo)}
 How to work:
 1. Work out what the designer changed (for example squarer corners, straight instead of curved sides, flatter or longer terminals, different proportions, a hand-cut feel) and transfer exactly that character to each target letter.
 2. Move only the points that need to move; leave points that already fit. Do not add or remove points.
-3. When you move a node, move its handles with it or reshape them on purpose so curves stay smooth.
+3. When you move a node, move its handles with it or reshape them on purpose so curves stay smooth. Handles are the arms of the curves: longer arms make a curve fuller and squarer, shorter arms flatter, an arm on its node makes a corner, horizontal or vertical arms give horizontal or vertical tangents.
 4. Keep every letter recognisable and consistent with its neighbours. Keep tops of capitals on the cap line, tops of lowercase bodies on the x-height, feet on the baseline.
 5. Keep moves moderate (normally under 120 units).
 
