@@ -3,7 +3,6 @@
  * called directly), and the font is drawn and assembled locally. No data is sent to any server of ours.
  */
 import type { ApiProvider as Provider } from '../lib/llm';
-export type { DesignTokens } from '../lib/engine/params';
 
 export type ApiProvider = Provider;
 
@@ -46,29 +45,6 @@ export interface QAStatus {
   passed: boolean;
   checks: QACheck[];
   issues: string[];
-}
-
-export type ExportType = 'otf' | 'json';
-
-export interface ExportFormat {
-  type: ExportType;
-  label: string;
-  filename: string;
-}
-
-const EXPORT_FORMATS: ExportFormat[] = [
-  { type: 'otf', label: 'OTF', filename: 'generated-font.otf' },
-  { type: 'json', label: 'PARAMETERS (JSON)', filename: 'generated-font.params.json' }
-];
-
-export function getExportFormats(): ExportFormat[] {
-  return EXPORT_FORMATS;
-}
-
-export async function exportFont(url: string): Promise<Blob> {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to read file: ${response.statusText}`);
-  return response.blob();
 }
 
 export function downloadFont(blob: Blob, filename: string): void {

@@ -39,20 +39,24 @@ export interface ParamSpec {
   min: number;
   max: number;
   step: number;
-  hint: string;
+  /** what the slider's left / right end looks like */
+  low: string;
+  high: string;
+  /** shown directly, or tucked into "More controls" */
+  group: 'basic' | 'advanced';
 }
 
 export const PARAM_SPECS: ParamSpec[] = [
-  { key: 'weight', label: 'Weight', min: 100, max: 1000, step: 10, hint: 'Stem thickness: 400 regular, 700 bold, 900+ ultra heavy' },
-  { key: 'width', label: 'Width', min: 0.7, max: 1.6, step: 0.01, hint: 'Condensed ↔ extended letterforms' },
-  { key: 'xHeight', label: 'x-height', min: 440, max: 640, step: 5, hint: 'Large x-height reads better at small sizes' },
-  { key: 'contrast', label: 'Contrast', min: 0, max: 0.6, step: 0.01, hint: '0 = monoline, higher = thinner horizontals' },
-  { key: 'squareness', label: 'Squareness', min: 0, max: 1.5, step: 0.01, hint: '0 = circular, 1 = squarish, 1.5 = boxy / brutalist' },
-  { key: 'slant', label: 'Slant', min: 0, max: 20, step: 0.5, hint: 'Oblique angle in degrees (Italic style uses at least 11°)' },
-  { key: 'spacing', label: 'Spacing', min: 0.4, max: 1.5, step: 0.01, hint: 'Very tight (brutalist) ↔ loose text spacing' },
-  { key: 'serifSize', label: 'Serif size', min: 0.4, max: 1.8, step: 0.05, hint: 'Length of serifs (needs a serif style)' },
-  { key: 'corner', label: 'Corner rounding', min: 0, max: 1, step: 0.01, hint: '0 = sharp, 1 = fully rounded corners and stroke ends' },
-  { key: 'wax', label: 'Wax', min: 0, max: 1, step: 0.01, hint: 'Soft, melted look: gooey joints and slightly lumpy, organic edges' }
+  { key: 'weight', label: 'Weight', min: 100, max: 1000, step: 10, low: 'Thin', high: 'Heavy', group: 'basic' },
+  { key: 'width', label: 'Width', min: 0.7, max: 1.6, step: 0.01, low: 'Narrow', high: 'Wide', group: 'basic' },
+  { key: 'corner', label: 'Roundness', min: 0, max: 1, step: 0.01, low: 'Sharp', high: 'Round', group: 'basic' },
+  { key: 'slant', label: 'Slant', min: 0, max: 20, step: 0.5, low: 'Upright', high: 'Slanted', group: 'basic' },
+  { key: 'spacing', label: 'Letter spacing', min: 0.4, max: 1.5, step: 0.01, low: 'Tight', high: 'Loose', group: 'basic' },
+  { key: 'xHeight', label: 'Lowercase height', min: 440, max: 640, step: 5, low: 'Small', high: 'Tall', group: 'advanced' },
+  { key: 'contrast', label: 'Stroke contrast', min: 0, max: 0.6, step: 0.01, low: 'Even', high: 'High', group: 'advanced' },
+  { key: 'squareness', label: 'Boxiness', min: 0, max: 1.5, step: 0.01, low: 'Circular', high: 'Boxy', group: 'advanced' },
+  { key: 'wax', label: 'Wax / melt', min: 0, max: 1, step: 0.01, low: 'Off', high: 'Gooey', group: 'advanced' },
+  { key: 'serifSize', label: 'Serif length', min: 0.4, max: 1.8, step: 0.05, low: 'Short', high: 'Long', group: 'advanced' }
 ];
 
 const num = (v: unknown, min: number, max: number, fallback: number) => {
@@ -69,32 +73,6 @@ export function sanitizeParams(raw: unknown, base: FontParams = DEFAULT_PARAMS):
   if (typeof r.mono === 'boolean') p.mono = r.mono;
   if (SERIF_STYLES.includes(r.serif as SerifStyle)) p.serif = r.serif as SerifStyle;
   return p;
-}
-
-export interface DesignTokens {
-  weight: 'light' | 'regular' | 'bold';
-  contrast: 'low' | 'medium' | 'high';
-  style: 'sans' | 'serif' | 'slab' | 'brutalist' | 'mono';
-  mood: 'elegant' | 'playful' | 'technical';
-}
-
-/** Deterministic starting point derived from the quick-pick chips. */
-export function paramsFromTokens(t: DesignTokens): FontParams {
-  const p: Partial<FontParams> = {
-    weight: t.weight === 'light' ? 280 : t.weight === 'bold' ? 700 : 400,
-    contrast: t.contrast === 'low' ? 0.04 : t.contrast === 'high' ? 0.42 : 0.18,
-    mono: t.style === 'mono',
-    squareness: t.mood === 'technical' ? 0.55 : t.mood === 'playful' ? 0 : 0.15,
-    terminal: t.mood === 'playful' ? 'round' : 'flat',
-    corner: t.mood === 'playful' ? 0.5 : 0,
-    spacing: t.mood === 'elegant' ? 1.1 : 1
-  };
-  if (t.style === 'serif') Object.assign(p, { serif: 'bracketed', contrast: Math.max(p.contrast as number, 0.3), xHeight: 500 });
-  if (t.style === 'slab') Object.assign(p, { serif: 'slab', contrast: Math.min(p.contrast as number, 0.1) });
-  if (t.style === 'brutalist') {
-    Object.assign(p, { weight: Math.max(p.weight as number, 850), width: 1.35, squareness: 1.3, spacing: 0.6, xHeight: 590, contrast: 0, terminal: 'flat' });
-  }
-  return sanitizeParams(p);
 }
 
 export interface Preset {

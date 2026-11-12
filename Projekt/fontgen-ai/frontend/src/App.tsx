@@ -1,22 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { ReactNode, useState, useEffect, useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { ApiKeyInput, ApiKeySubmit } from './components/ApiKeyInput';
-import { PromptBuilder } from './components/PromptBuilder';
-import { PreviewPanel } from './components/PreviewPanel';
-import { OutputPanel } from './components/OutputPanel';
-import { ParameterPanel } from './components/ParameterPanel';
+import { PreviewCard } from './components/PreviewCard';
+import { ActionsBar } from './components/ActionsBar';
+import { PresetPicker } from './components/PresetPicker';
+import { AiPrompt } from './components/AiPrompt';
+import { TuneControls } from './components/TuneControls';
 import { SaveDialog } from './components/SaveDialog';
 import { LibraryView } from './components/LibraryView';
-import { LibraryEntry } from './lib/library';
-import { ApiProvider, API_PROVIDERS, DesignTokens, GlyphInfo, QAStatus } from './services/api';
-import { DEFAULT_PARAMS, FontParams } from './lib/engine/params';
+import { ApiProvider, API_PROVIDERS, GlyphInfo, QAStatus, downloadFont } from './services/api';
+import { DEFAULT_PARAMS, FontParams, Preset } from './lib/engine/params';
 import { renderFont, suggestParams } from './lib/generate';
-import { STYLE_KEYS, STYLE_LABEL, StyleKey } from './lib/engine/variants';
+import { STYLE_LABEL, StyleKey } from './lib/engine/variants';
 import { buildFamilyZip, fileSlug, styleFileName } from './lib/family';
+import { LibraryEntry } from './lib/library';
 
 const KEY_STORE = 'fontgen_api_key';
 const TYPE_STORE = 'fontgen_api_type';
 const MODEL_STORE = 'fontgen_api_model';
+
+type View = 'studio' | 'library';
 
 interface RenderState {
   fontUrl: string;
@@ -25,23 +28,33 @@ interface RenderState {
   qaStatus: QAStatus;
 }
 
-type View = 'studio' | 'library';
+function Step({ n, title, hint, children }: { n: number; title: string; hint?: string; children: ReactNode }) {
+  return (
+    <section className="bg-white rounded-xl shadow p-4 space-y-3" aria-label={title}>
+      <div className="flex items-start gap-3">
+        <span className="shrink-0 w-7 h-7 rounded-full bg-primary-100 text-primary-600 text-sm font-bold flex items-center justify-center" aria-hidden="true">
+          {n}
+        </span>
+        <div>
+          <h2 className="font-bold text-neutral-900 leading-7">{title}</h2>
+          {hint && <p className="text-xs text-neutral-500 -mt-0.5">{hint}</p>}
+        </div>
+      </div>
+      {children}
+    </section>
+  );
+}
 
 export function App() {
   const [view, setView] = useState<View>('studio');
-  const [skipKey, setSkipKey] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [keyDialog, setKeyDialog] = useState(false);
+  const [pendingAi, setPendingAi] = useState(false);
+
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [apiType, setApiType] = useState<ApiProvider>('gemini');
   const [model, setModel] = useState('');
-  const [hasApiKey, setHasApiKey] = useState(false);
   const [prompt, setPrompt] = useState('');
-  const [designTokens, setDesignTokens] = useState<DesignTokens>({
-    weight: 'regular',
-    contrast: 'medium',
-    style: 'sans',
-    mood: 'elegant'
-  });
 
   const [params, setParams] = useState<FontParams>(DEFAULT_PARAMS);
   const [familyName, setFamilyName] = useState('Sans');
@@ -49,9 +62,10 @@ export function App() {
   const [notes, setNotes] = useState('');
   const [rendered, setRendered] = useState<RenderState | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
+  const [zipBusy, setZipBusy] = useState(false);
   const urls = useRef<string[]>([]);
 
-  // Restore key from this browser's storage (localStorage if remembered, else sessionStorage)
+  // Restore a saved key (localStorage if remembered, else sessionStorage)
   useEffect(() => {
     try {
       const store = localStorage.getItem(KEY_STORE) ? localStorage : sessionStorage;
@@ -60,22 +74,19 @@ export function App() {
         setApiKey(stored);
         setApiType((store.getItem(TYPE_STORE) as ApiProvider) || 'gemini');
         setModel(store.getItem(MODEL_STORE) || '');
-        setHasApiKey(true);
       }
     } catch {
       /* storage unavailable (private mode) */
     }
   }, []);
 
-  // Rebuild the font locally whenever parameters change (fast, free, no network)
+  // Rebuild the font locally whenever the settings change (fast, free, no network)
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
         const r = renderFont(params, familyName, style);
         const fontUrl = URL.createObjectURL(new Blob([r.buffer], { type: 'font/otf' }));
-        const paramsUrl = URL.createObjectURL(
-          new Blob([JSON.stringify({ familyName, params }, null, 2)], { type: 'application/json' })
-        );
+        const paramsUrl = URL.createObjectURL(new Blob([JSON.stringify({ familyName, params }, null, 2)], { type: 'application/json' }));
         const old = urls.current;
         urls.current = [fontUrl, paramsUrl];
         setRendered({
@@ -102,7 +113,7 @@ export function App() {
   const suggestion = useMutation({
     mutationFn: async () => {
       if (!apiKey) throw new Error('No API key');
-      return suggestParams({ prompt, apiKey, provider: apiType, model, designTokens });
+      return suggestParams({ prompt, apiKey, provider: apiType, model, current: params });
     },
     onSuccess: (s) => {
       setParams(s.params);
@@ -110,7 +121,14 @@ export function App() {
       setNotes(s.notes);
     }
   });
-  const isLoading = suggestion.isPending;
+
+  // Run the AI request that was waiting for the key
+  useEffect(() => {
+    if (pendingAi && apiKey) {
+      setPendingAi(false);
+      suggestion.mutate();
+    }
+  }, [pendingAi, apiKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clearStoredKey = () => {
     try {
@@ -124,7 +142,7 @@ export function App() {
     }
   };
 
-  const handleApiKeySubmit = ({ apiKey: key, provider, model: m, remember }: ApiKeySubmit) => {
+  const handleKeySubmit = ({ apiKey: key, provider, model: m, remember }: ApiKeySubmit) => {
     clearStoredKey();
     try {
       const store = remember ? localStorage : sessionStorage;
@@ -137,183 +155,157 @@ export function App() {
     setApiKey(key);
     setApiType(provider);
     setModel(m);
-    setHasApiKey(true);
+    setKeyDialog(false);
   };
 
-  const handleResetApiKey = () => {
+  const forgetKey = () => {
     clearStoredKey();
     setApiKey(null);
-    setHasApiKey(false);
     suggestion.reset();
   };
 
-  const handlePromptChange = (newPrompt: string, newTokens: DesignTokens) => {
-    setPrompt(newPrompt);
-    setDesignTokens(newTokens);
+  const askAi = () => {
+    if (!prompt.trim() || suggestion.isPending) return;
+    if (!apiKey) {
+      setPendingAi(true);
+      setKeyDialog(true);
+      return;
+    }
+    suggestion.mutate();
+  };
+
+  const pickPreset = (preset: Preset) => {
+    setParams({ ...DEFAULT_PARAMS, ...preset.params });
+    setFamilyName(preset.label);
+    setNotes('');
   };
 
   const openFromLibrary = (entry: LibraryEntry) => {
     setParams(entry.params);
     setFamilyName(entry.name);
-    setNotes(`“${entry.name}” by ${entry.author} (CC0). Adjust it freely with the sliders.`);
+    setStyle('regular');
+    setNotes('');
     setView('studio');
   };
 
-  const handleGenerate = () => {
-    if (!apiKey || !prompt.trim() || isLoading) return;
-    suggestion.mutate();
+  const downloadFamily = async () => {
+    setZipBusy(true);
+    await new Promise((r) => setTimeout(r, 30));
+    try {
+      downloadFont(buildFamilyZip(params, familyName), `${fileSlug(familyName)}-family.zip`);
+    } finally {
+      setZipBusy(false);
+    }
   };
 
-  const errorMessage = suggestion.error instanceof Error ? suggestion.error.message : null;
+  const downloadCurrent = async () => {
+    if (!rendered) return;
+    const blob = await (await fetch(rendered.fontUrl)).blob();
+    downloadFont(blob, styleFileName(familyName, style));
+  };
+
+  const aiError = suggestion.error instanceof Error ? `${suggestion.error.message}. Check your key, model name and spending limit.` : null;
+  const tab = (v: View) =>
+    `text-sm px-4 py-2 min-h-[44px] rounded-md font-medium transition-colors ${view === v ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'}`;
 
   return (
     <div className="min-h-screen bg-neutral-100 flex flex-col">
-      {!hasApiKey && !skipKey && <ApiKeyInput onSubmit={handleApiKeySubmit} onSkip={() => setSkipKey(true)} />}
+      {keyDialog && (
+        <ApiKeyInput
+          onSubmit={handleKeySubmit}
+          onClose={() => {
+            setKeyDialog(false);
+            setPendingAi(false);
+          }}
+        />
+      )}
       {saving && <SaveDialog params={params} familyName={familyName} onClose={() => setSaving(false)} />}
 
-      <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-neutral-900">FontGen AI</h1>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-0.5">
-              AI chooses the design, a parametric type engine draws every letter
-            </p>
-          </div>
-          <nav className="flex flex-wrap items-center gap-2" aria-label="Main">
-            {(['studio', 'library'] as const).map((v) => (
-              <button
-                key={v}
-                onClick={() => setView(v)}
-                aria-current={view === v ? 'page' : undefined}
-                className={`text-sm px-4 py-2 min-h-[44px] rounded-md font-medium transition-colors ${
-                  view === v ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                }`}
-              >
-                {v === 'studio' ? 'Studio' : 'Library'}
-              </button>
-            ))}
-            {hasApiKey ? (
-              <button
-                onClick={handleResetApiKey}
-                className="text-xs px-3 py-2 min-h-[44px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
-              >
-                Forget key
-              </button>
-            ) : (
-              <button
-                onClick={() => setSkipKey(false)}
-                className="text-xs px-3 py-2 min-h-[44px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md transition-colors"
-              >
-                Add API key
-              </button>
-            )}
+      <header className="bg-white border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+          <h1 className="text-xl font-bold text-neutral-900">FontGen</h1>
+          <nav className="flex items-center gap-2" aria-label="Main">
+            <button onClick={() => setView('studio')} aria-current={view === 'studio' ? 'page' : undefined} className={tab('studio')}>
+              Studio
+            </button>
+            <button onClick={() => setView('library')} aria-current={view === 'library' ? 'page' : undefined} className={tab('library')}>
+              Library
+            </button>
+            <button
+              onClick={apiKey ? forgetKey : () => setKeyDialog(true)}
+              className="text-xs px-3 py-2 min-h-[44px] rounded-md text-neutral-600 hover:bg-neutral-100 transition-colors"
+              title={apiKey ? 'Remove the saved key from this browser' : 'Connect your own AI key'}
+            >
+              {apiKey ? 'AI connected · Forget key' : 'Connect AI'}
+            </button>
           </nav>
         </div>
       </header>
 
-      {(hasApiKey || skipKey) && view === 'library' && (
+      {view === 'library' && (
         <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-4">
           <LibraryView onOpen={openFromLibrary} />
         </main>
       )}
 
-      {(hasApiKey || skipKey) && view === 'studio' && (
-        <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-1 min-w-0">
-            <div className="bg-white rounded-lg shadow p-4 lg:sticky lg:top-4">
-              <h2 className="text-lg font-bold text-neutral-900 mb-4">Design Your Font</h2>
-              <PromptBuilder onPromptChange={handlePromptChange} isLoading={isLoading} />
-
-              <button
-                onClick={handleGenerate}
-                disabled={!apiKey || !prompt.trim() || isLoading}
-                className="w-full mt-6 bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center gap-2"
-              >
-                {isLoading ? (
-                  <>
-                    <span className="spinner" style={{ borderWidth: '2px', width: '18px', height: '18px' }} />
-                    Asking {API_PROVIDERS[apiType].label}…
-                  </>
-                ) : (
-                  '✨ Design with AI'
-                )}
-              </button>
-              {!apiKey && (
-                <p className="text-xs text-neutral-500 mt-2">Add an API key to let AI design for you. The sliders and the library work without one.</p>
-              )}
-
-              {errorMessage && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <p className="text-sm text-red-700">
-                    <span className="font-medium">Request failed:</span> {errorMessage}
-                  </p>
-                  <p className="text-xs text-red-600 mt-1">Check your API key, model name and spend limits</p>
-                </div>
-              )}
-
-              {suggestion.isSuccess && (
-                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-                  <p className="text-sm text-green-700">
-                    <span className="font-medium">✓ Design applied.</span> Fine-tune it with the sliders.
-                  </p>
-                </div>
-              )}
-
+      {view === 'studio' && (
+        <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-4 pb-28 lg:pb-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+          <div className="lg:col-span-7 min-w-0 lg:sticky lg:top-4">
+            <PreviewCard
+              name={familyName}
+              onNameChange={setFamilyName}
+              style={style}
+              onStyleChange={setStyle}
+              fontUrl={rendered?.fontUrl}
+              glyphs={rendered?.glyphs ?? []}
+              qa={rendered?.qaStatus}
+              paramsUrl={rendered?.paramsUrl}
+              paramsName={`${fileSlug(familyName)}.params.json`}
+            >
               {renderError && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <p className="text-sm text-red-700">
-                    <span className="font-medium">Font build failed:</span> {renderError}
-                  </p>
-                </div>
+                <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-md p-3" role="alert">
+                  Font build failed: {renderError}
+                </p>
               )}
-            </div>
+              <ActionsBar
+                styleLabel={STYLE_LABEL[style]}
+                disabled={!rendered}
+                busy={zipBusy}
+                onDownload={downloadCurrent}
+                onFamily={downloadFamily}
+                onShare={() => setSaving(true)}
+              />
+            </PreviewCard>
           </div>
 
-          <div className="lg:col-span-2 space-y-4 min-w-0">
-            <div className="bg-white rounded-lg shadow p-3 flex flex-wrap items-center gap-3" role="group" aria-label="Preview style">
-              <span className="text-xs font-medium text-neutral-600">Style</span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1 min-w-[16rem]">
-                {STYLE_KEYS.map((k) => (
-                  <button
-                    key={k}
-                    onClick={() => setStyle(k)}
-                    aria-pressed={style === k}
-                    className={`px-3 py-2 min-h-[44px] rounded-md text-xs font-medium transition-colors ${
-                      style === k ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                    }`}
-                  >
-                    {STYLE_LABEL[k]}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="lg:col-span-5 space-y-4 min-w-0">
+            <Step n={1} title="Pick a starting point">
+              <PresetPicker current={params} onPick={pickPreset} />
+            </Step>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg shadow overflow-hidden h-[32rem] md:h-[28rem]">
-                <PreviewPanel glyphs={rendered?.glyphs} isLoading={isLoading} fontUrl={rendered?.fontUrl} />
-              </div>
-              <div className="md:overflow-y-auto md:max-h-[28rem]">
-                <OutputPanel
-                  qaStatus={rendered?.qaStatus}
-                  fontUrl={rendered?.fontUrl}
-                  glyphDataUrl={rendered?.paramsUrl}
-                  otfName={styleFileName(familyName, style)}
-                  paramsName={`${fileSlug(familyName)}.params.json`}
-                  styleLabel={STYLE_LABEL[style]}
-                  onDownloadFamily={() => buildFamilyZip(params, familyName)}
-                  isLoading={isLoading}
-                />
-              </div>
-            </div>
+            <Step n={2} title="Or describe it" hint="Optional: AI chooses the settings from your description">
+              <AiPrompt
+                value={prompt}
+                onChange={setPrompt}
+                onSubmit={askAi}
+                loading={suggestion.isPending}
+                hasKey={!!apiKey}
+                providerLabel={API_PROVIDERS[apiType].label}
+                error={aiError}
+                notes={suggestion.isSuccess ? notes : ''}
+              />
+            </Step>
 
-            <ParameterPanel params={params} familyName={familyName} notes={notes} onChange={setParams} onSave={() => setSaving(true)} />
+            <Step n={3} title="Fine-tune" hint="Every change updates all letters at once">
+              <TuneControls params={params} onChange={setParams} />
+            </Step>
           </div>
         </main>
       )}
 
-      <footer className="bg-white border-t border-neutral-200 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-neutral-600">
-          <p>FontGen AI • Runs entirely in your browser. Nothing is sent anywhere unless you publish a font to the library.</p>
+      <footer className="bg-white border-t border-neutral-200 mt-auto hidden lg:block">
+        <div className="max-w-7xl mx-auto px-4 py-3 text-center text-xs text-neutral-500">
+          Runs in your browser. Nothing is sent anywhere unless you share a font to the library.
         </div>
       </footer>
     </div>

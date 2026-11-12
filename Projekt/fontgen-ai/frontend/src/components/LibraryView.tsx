@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { LibraryEntry, fetchLibrary } from '../lib/library';
 import { textPath } from '../lib/preview';
-import { renderFont } from '../lib/generate';
 import { downloadFont } from '../services/api';
 import { buildFamilyZip, fileSlug } from '../lib/family';
 
@@ -22,11 +21,6 @@ function Card({ entry, onOpen }: { entry: LibraryEntry; onOpen: (e: LibraryEntry
 
   const downloadFamily = () => downloadFont(buildFamilyZip(entry.params, entry.name), `${fileSlug(entry.name)}-family.zip`);
 
-  const download = () => {
-    const r = renderFont(entry.params, entry.name);
-    downloadFont(new Blob([r.buffer], { type: 'font/otf' }), `${entry.name.replace(/[^\w-]+/g, '-')}.otf`);
-  };
-
   return (
     <article className="bg-white rounded-lg shadow p-4 flex flex-col gap-3">
       <div className="overflow-hidden bg-neutral-50 rounded-md px-3 py-2" aria-label={`Preview of ${entry.name}`}>
@@ -38,18 +32,15 @@ function Card({ entry, onOpen }: { entry: LibraryEntry; onOpen: (e: LibraryEntry
       </div>
       <div>
         <h3 className="font-bold text-neutral-900">{entry.name}</h3>
-        <p className="text-xs text-neutral-500">by {entry.author} · CC0 · 4 styles</p>
+        <p className="text-xs text-neutral-500">by {entry.author} · free to use (CC0)</p>
         {entry.description && <p className="text-sm text-neutral-600 mt-1">{entry.description}</p>}
       </div>
-      <div className="flex flex-wrap gap-2 mt-auto">
-        <button onClick={() => onOpen(entry)} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-xs font-medium bg-primary-300 hover:bg-primary-400 text-white transition-colors">
+      <div className="flex gap-2 mt-auto">
+        <button onClick={() => onOpen(entry)} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-sm font-medium bg-primary-300 hover:bg-primary-400 text-white transition-colors">
           Open in studio
         </button>
-        <button onClick={download} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-xs font-medium bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition-colors">
-          Download OTF
-        </button>
-        <button onClick={downloadFamily} className="w-full px-3 py-2 min-h-[44px] rounded-md text-xs font-medium bg-neutral-800 hover:bg-neutral-700 text-white transition-colors">
-          Download family (Regular, Bold, Italic, Bold Italic)
+        <button onClick={downloadFamily} className="flex-1 px-3 py-2 min-h-[44px] rounded-md text-sm font-medium bg-neutral-100 hover:bg-neutral-200 text-neutral-800 transition-colors" title="Regular, Bold, Italic and Bold Italic as a ZIP">
+          Download
         </button>
       </div>
     </article>
