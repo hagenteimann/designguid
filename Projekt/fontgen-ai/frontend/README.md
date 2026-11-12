@@ -347,3 +347,11 @@ handles follow). Parameters are validated by `sanitizeParams`. The latest change
 (skeleton, pen, serifs, overlap removal, rounding, spacing, slant), the metrics of the current font, the point/handle data
 format, rules for moving points and curve handles, handle geometry, recipes for typical wishes and things to avoid. Its numbers
 are generated from the current metrics. Update it whenever the engine changes (new parameters, glyph construction).
+
+### Cut and join paths
+
+In the editor, select a point (click), then "Cut at point" splits the line there (an open line becomes two, a closed ring becomes
+open), or "Join points" connects it with another open end (orange): ends on top of each other merge into one point, otherwise
+a straight line is added. These structural steps are stored per letter in `params.paths` as `[op, a, b]` triples
+(`src/lib/engine/skeleton.ts`: `applyPathOp`, `applyPaths`) and are applied to the original skeleton before the offsets in
+`params.edits`; offsets are carried over to the new points. Limits: 12 steps per letter, 80 in total. Undo/Redo cover them too.

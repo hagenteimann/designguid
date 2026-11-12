@@ -1,6 +1,6 @@
 import type { V } from './geometry';
 import type { GlyphDef } from './glyphs';
-import type { Stroke } from './stroker';
+import type { Cap, Stroke } from './stroker';
 
 /**
  * Editable skeleton points of a glyph. Every glyph is built from centre lines (strokes) and dots; the user may move
@@ -165,3 +165,165 @@ export function sanitizeEdits(raw: unknown): Edits | undefined {
 
 export const editedPointCount = (e: Edits | undefined) =>
   e ? Object.values(e).reduce((n, v) => n + (v.length - 1) / 3, 0) : 0;
+
+
+/* ── Path operations: cut and join ─────────────────────────────────────────────────────────────────────────────────
+ * Structural changes of a letter's centre lines, stored per letter as a flat list of [op, a, b] triples that are applied
+ * in order to the original skeleton (a and b are node slots in the structure at that moment). The offsets in `edits`
+ * refer to the structure after all operations.
+ *   1 cut   (a)    split the path at node a (an open path becomes two, a closed path becomes open at that node)
+ *   2 join  (a, b) connect two open ends with a straight line
+ *   3 merge (a, b) connect two open ends that lie on top of each other into one node
+ */
+export type Paths = Record<string, number[]>;
+export const OP_CUT = 1;
+export const OP_JOIN = 2;
+export const OP_MERGE = 3;
+export const MAX_PATH_OPS = 12;
+export const MAX_TOTAL_PATH_OPS = 80;
+
+interface TSeg { p: V[]; ids: number[] }
+interface TStroke { segs: TSeg[]; closed: boolean; capStart?: Cap; capEnd?: Cap; scale?: Stroke['scale'] }
+
+const clone = (q: V): V => [q[0], q[1]];
+
+function locate(def: GlyphDef, slot: number): { si: number; k: number; n: number; closed: boolean } | null {
+  let at = 0;
+  for (let si = 0; si < def.skel.strokes.length; si++) {
+    const s = def.skel.strokes[si];
+    const n = s.segs.length;
+    if (n === 0) continue;
+    const nodeCount = s.closed ? n : n + 1;
+    if (slot >= at && slot < at + nodeCount) return { si, k: slot - at, n, closed: !!s.closed };
+    at += nodeCount + 2 * s.segs.filter(g => g.p.length === 4).length;
+  }
+  return null;
+}
+
+const reverseStroke = (t: TStroke): TStroke => ({
+  ...t,
+  segs: [...t.segs].reverse().map(g => ({ p: [...g.p].reverse(), ids: [...g.ids].reverse() })),
+  capStart: t.capEnd,
+  capEnd: t.capStart
+});
+
+/** Is this node an open end of an open path, an inner node of one, or a node of a closed path? */
+export function nodeRole(def: GlyphDef, slot: number): 'end' | 'inner' | 'ring' | null {
+  const L = locate(def, slot);
+  if (!L) return null;
+  if (L.closed) return 'ring';
+  return L.k === 0 || L.k === L.n ? 'end' : 'inner';
+}
+
+/** Applies one operation. Returns the new skeleton and, for every new slot, the slot it came from (for carrying offsets over). */
+export function applyPathOp(def: GlyphDef, code: number, a: number, b = 0): { def: GlyphDef; map: number[] } | null {
+  const oldSlots = collect(def);
+  const ids: number[][][] = def.skel.strokes.map(s => s.segs.map(g => g.p.map(() => -1)));
+  oldSlots.forEach((sl, i) => { for (const r of sl.refs) if (!('dot' in r)) ids[r.stroke][r.seg][r.pt] = i; });
+  const ts: TStroke[] = def.skel.strokes.map((s, si) => ({
+    segs: s.segs.map((g, k) => ({ p: g.p.map(clone), ids: [...ids[si][k]] })),
+    closed: !!s.closed, capStart: s.capStart, capEnd: s.capEnd, scale: s.scale
+  }));
+
+  const A = locate(def, a);
+  if (!A) return null;
+  let out: TStroke[];
+
+  if (code === OP_CUT) {
+    const t = ts[A.si];
+    let parts: TStroke[];
+    if (!t.closed) {
+      if (A.k === 0 || A.k === A.n) return null;
+      parts = [
+        { ...t, segs: t.segs.slice(0, A.k), capEnd: 'butt' },
+        { ...t, segs: t.segs.slice(A.k), capStart: 'butt' }
+      ];
+    } else {
+      parts = [{ ...t, segs: [...t.segs.slice(A.k), ...t.segs.slice(0, A.k)], closed: false, capStart: 'butt', capEnd: 'butt' }];
+    }
+    out = [...ts.slice(0, A.si), ...parts, ...ts.slice(A.si + 1)];
+  } else if (code === OP_JOIN || code === OP_MERGE) {
+    const B = locate(def, b);
+    if (!B || a === b) return null;
+    const ta = ts[A.si], tb = ts[B.si];
+    if (ta.closed || tb.closed) return null;
+    const aEnd = A.k === A.n ? 'end' : A.k === 0 ? 'start' : null;
+    const bEnd = B.k === B.n ? 'end' : B.k === 0 ? 'start' : null;
+    if (!aEnd || !bEnd) return null;
+    if (A.si === B.si) {
+      if (A.n < 2 || aEnd === bEnd) return null;
+      const first = ta.segs[0], last = ta.segs[ta.segs.length - 1];
+      const lastIdx = last.p.length - 1;
+      if (code === OP_MERGE) {
+        last.p[lastIdx] = clone(first.p[0]);
+        last.ids[lastIdx] = first.ids[0];
+      } else {
+        ta.segs.push({ p: [clone(last.p[lastIdx]), clone(first.p[0])], ids: [last.ids[lastIdx], first.ids[0]] });
+      }
+      ta.closed = true;
+      out = ts;
+    } else {
+      const s1 = aEnd === 'start' ? reverseStroke(ta) : ta;
+      const s2 = bEnd === 'end' ? reverseStroke(tb) : tb;
+      const e1 = s1.segs[s1.segs.length - 1], st2 = s2.segs[0];
+      const i1 = e1.p.length - 1;
+      let segs: TSeg[];
+      if (code === OP_MERGE) {
+        st2.p[0] = clone(e1.p[i1]);
+        st2.ids[0] = e1.ids[i1];
+        segs = [...s1.segs, ...s2.segs];
+      } else {
+        segs = [...s1.segs, { p: [clone(e1.p[i1]), clone(st2.p[0])], ids: [e1.ids[i1], st2.ids[0]] }, ...s2.segs];
+      }
+      const joined: TStroke = { segs, closed: false, capStart: s1.capStart, capEnd: s2.capEnd, scale: s1.scale };
+      out = ts.map((t, i) => (i === A.si ? joined : t)).filter((_, i) => i !== B.si);
+    }
+  } else return null;
+
+  const strokes: Stroke[] = out.map(t => ({
+    segs: t.segs.map(g => ({ p: g.p })),
+    ...(t.closed ? { closed: true } : {}),
+    capStart: t.capStart, capEnd: t.capEnd, scale: t.scale
+  }));
+  const nd: GlyphDef = { ...def, skel: { strokes, dots: def.skel.dots.map(d => ({ ...d })) } };
+  const nowSlots = collect(nd);
+  const dotsOld = oldSlots.length - def.skel.dots.length, dotsNew = nowSlots.length - def.skel.dots.length;
+  const map = nowSlots.map((sl, i) => {
+    if (sl.kind === 'dot') return dotsOld + (i - dotsNew);
+    const r = sl.refs[0] as { stroke: number; seg: number; pt: number };
+    return out[r.stroke].segs[r.seg].ids[r.pt];
+  });
+  return { def: nd, map };
+}
+
+/** Applies a letter's stored operations to its original skeleton (operations that no longer fit are skipped). */
+export function applyPaths(def: GlyphDef, ops: number[] | undefined): GlyphDef {
+  if (!ops || ops.length < 3) return def;
+  let cur = def;
+  for (let i = 0; i + 2 < ops.length; i += 3) cur = applyPathOp(cur, ops[i], ops[i + 1], ops[i + 2])?.def ?? cur;
+  return cur;
+}
+
+/** Validates untrusted stored operations. */
+export function sanitizePaths(raw: unknown): Paths | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: Paths = {};
+  let total = 0;
+  for (const [ch, v] of Object.entries(raw as Record<string, unknown>)) {
+    if ([...ch].length !== 1 || !Array.isArray(v) || v.length < 3 || v.length % 3 !== 0) continue;
+    const clean: number[] = [];
+    for (let i = 0; i + 2 < v.length && clean.length / 3 < MAX_PATH_OPS; i += 3) {
+      const [code, a, b] = [v[i], v[i + 1], v[i + 2]];
+      if (![OP_CUT, OP_JOIN, OP_MERGE].includes(code as number) || !Number.isInteger(a) || a < 0 || a > 199 || !Number.isInteger(b) || b < 0 || b > 199) break;
+      clean.push(code, a, b);
+    }
+    if (!clean.length) continue;
+    total += clean.length / 3;
+    if (total > MAX_TOTAL_PATH_OPS) break;
+    out[ch] = clean;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+/** The skeleton of a letter with its operations and offsets applied. */
+export const shapeOf = (def: GlyphDef, paths: number[] | undefined, edits: number[] | undefined): GlyphDef => applyEdits(applyPaths(def, paths), edits);

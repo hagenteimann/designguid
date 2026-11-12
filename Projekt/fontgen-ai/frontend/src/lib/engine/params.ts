@@ -1,4 +1,4 @@
-import { Edits, sanitizeEdits } from './skeleton';
+import { Edits, Paths, sanitizeEdits, sanitizePaths } from './skeleton';
 
 export interface FontParams {
   weight: number;
@@ -16,6 +16,8 @@ export interface FontParams {
   wax: number;
   /** hand-edited skeleton points per letter (see skeleton.ts) */
   edits?: Edits;
+  /** cut / join operations per letter (see skeleton.ts) */
+  paths?: Paths;
 }
 
 export type SerifStyle = 'none' | 'slab' | 'bracketed' | 'hairline';
@@ -38,7 +40,7 @@ export const DEFAULT_PARAMS: FontParams = {
 };
 
 export interface ParamSpec {
-  key: Exclude<keyof FontParams, 'terminal' | 'mono' | 'serif' | 'edits'>;
+  key: Exclude<keyof FontParams, 'terminal' | 'mono' | 'serif' | 'edits' | 'paths'>;
   label: string;
   min: number;
   max: number;
@@ -78,6 +80,8 @@ export function sanitizeParams(raw: unknown, base: FontParams = DEFAULT_PARAMS):
   if (SERIF_STYLES.includes(r.serif as SerifStyle)) p.serif = r.serif as SerifStyle;
   if ('edits' in r) p.edits = sanitizeEdits(r.edits);
   if (!p.edits) delete p.edits;
+  if ('paths' in r) p.paths = sanitizePaths(r.paths);
+  if (!p.paths) delete p.paths;
   return p;
 }
 

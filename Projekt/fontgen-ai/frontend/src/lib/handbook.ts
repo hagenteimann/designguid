@@ -13,7 +13,7 @@ export function handbook(m: Metrics): string {
 1. WHAT YOU CAN CHANGE
  a) Design parameters (global, all letters): weight, width, xHeight, contrast, squareness, slant, spacing, terminal, mono, serif, serifSize, corner, wax. Fast, safe, always preferred when the wish applies to the whole font.
  b) Letter skeletons (single letters): you move the points and curve handles of a letter's centre lines. Use this when the user talks about specific letters or a shape that no parameter can produce.
- You cannot: add or delete points, change the cap height (fixed ${m.cap}), change the spacing of one letter directly (it follows from the letter's outline), or draw an outline directly.
+ The user can cut and join paths in the editor (Cut at point, Join points); the data you receive already reflects that, so a letter may consist of several separate or closed paths. You cannot cut or join paths yourself. You also cannot: add or delete points, change the cap height (fixed ${m.cap}), change the spacing of one letter directly (it follows from the letter's outline), or draw an outline directly.
 
 2. HOW A LETTER IS BUILT (the pipeline, in this order)
  1. Skeleton: every letter is a few centre lines (strokes) made of straight segments and cubic Bézier curves, plus dots (i, j, punctuation).

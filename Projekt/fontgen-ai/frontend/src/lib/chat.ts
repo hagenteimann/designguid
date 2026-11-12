@@ -1,5 +1,5 @@
 import { ApiProvider, DEFAULT_MODELS, callLLM } from './llm';
-import { buildDefs } from './engine/glyphs';
+import { shapeDefs } from './engine/shapes';
 import { FontParams, PARAM_SPECS, computeMetrics, sanitizeParams } from './engine/params';
 import { Edits, applyEdits, sanitizeEdits } from './engine/skeleton';
 import { parameterGuide } from './generate';
@@ -72,7 +72,7 @@ const fmt = (v: unknown) => (typeof v === 'number' ? String(Math.round(v * 100) 
 /** One chat turn: the model answers and may change parameters and letter shapes; it may ask to see letter skeletons first. */
 export async function chatTurn(i: ChatInput): Promise<ChatResult> {
   const model = i.model?.trim() || DEFAULT_MODELS[i.provider];
-  const defs = buildDefs({ m: computeMetrics(i.params), squareness: i.params.squareness });
+  const defs = shapeDefs(i.params).defs;
   let skeletons: Record<string, unknown> | null = null;
   let data: any = null;
   let text = '';
@@ -97,6 +97,7 @@ export async function chatTurn(i: ChatInput): Promise<ChatResult> {
   if (data.params && typeof data.params === 'object') {
     const incoming = { ...(data.params as Record<string, unknown>) };
     delete incoming.edits;
+    delete incoming.paths;
     const next = sanitizeParams({ ...i.params, ...incoming }, i.params);
     for (const s of PARAM_SPECS) if (next[s.key] !== i.params[s.key]) changes.push(`${s.label.toLowerCase()} ${fmt(i.params[s.key])} → ${fmt(next[s.key])}`);
     for (const k of ['terminal', 'serif', 'mono'] as const) if (next[k] !== i.params[k]) changes.push(`${k} ${fmt(i.params[k])} → ${fmt(next[k])}`);
@@ -105,7 +106,7 @@ export async function chatTurn(i: ChatInput): Promise<ChatResult> {
 
   // letter shapes
   const m = computeMetrics(params);
-  const letterDefs = buildDefs({ m, squareness: params.squareness });
+  const letterDefs = shapeDefs(params).defs;
   let edits: Edits = { ...(params.edits ?? {}) };
   const touched: string[] = [];
   if (Array.isArray(data.resetLetters)) {

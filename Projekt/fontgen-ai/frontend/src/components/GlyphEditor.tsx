@@ -5,7 +5,10 @@ import { buildDefs } from '../lib/engine/glyphs';
 import { FontParams, computeMetrics } from '../lib/engine/params';
 import { ApiProvider } from '../lib/llm';
 import { adaptToStyle } from '../lib/styleTransfer';
-import { Edits, MAX_EDIT_POINTS, adjacencyOf, applyEdits, editedPointCount, readOffsets, slotsOf, writeOffsets } from '../lib/engine/skeleton';
+import {
+  Edits, MAX_EDIT_POINTS, MAX_PATH_OPS, MAX_TOTAL_PATH_OPS, OP_CUT, OP_JOIN, OP_MERGE, Paths,
+  adjacencyOf, applyEdits, applyPathOp, applyPaths, editedPointCount, nodeRole, readOffsets, slotsOf, writeOffsets
+} from '../lib/engine/skeleton';
 
 const CHARS = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
 const GRID = 5;
@@ -47,6 +50,25 @@ const withEdit = (edits: Edits | undefined, ch: string, value: number[] | undefi
   return Object.keys(next).length ? next : undefined;
 };
 
+interface Snapshot {
+  edits?: Edits;
+  paths?: Paths;
+}
+const snapshotOf = (p: FontParams): Snapshot => ({ edits: p.edits, paths: p.paths });
+const withSnapshot = (p: FontParams, s: Snapshot): FontParams => {
+  const next: FontParams = { ...p, edits: s.edits, paths: s.paths };
+  if (!next.edits) delete next.edits;
+  if (!next.paths) delete next.paths;
+  return next;
+};
+const withPaths = (paths: Paths | undefined, ch: string, value: number[] | undefined): Paths | undefined => {
+  const next: Paths = { ...(paths ?? {}) };
+  if (value && value.length) next[ch] = value;
+  else delete next[ch];
+  return Object.keys(next).length ? next : undefined;
+};
+const OPEN_END = '#ea580c';
+
 const btn =
   'px-3 min-h-[44px] rounded-md text-sm font-medium bg-neutral-100 text-neutral-700 hover:bg-neutral-200 disabled:opacity-40 disabled:hover:bg-neutral-100 transition-colors';
 
@@ -58,8 +80,11 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   const [ch, setCh] = useState('G');
   const [live, setLive] = useState<Map<number, V> | null>(null);
   const [focus, setFocus] = useState<number | null>(null);
-  const [past, setPast] = useState<(Edits | undefined)[]>([]);
-  const [future, setFuture] = useState<(Edits | undefined)[]>([]);
+  const [past, setPast] = useState<Snapshot[]>([]);
+  const [future, setFuture] = useState<Snapshot[]>([]);
+  const [sel, setSel] = useState<number | null>(null);
+  const [joinFrom, setJoinFrom] = useState<number | null>(null);
+  const [pathNote, setPathNote] = useState<string | null>(null);
   const [manual, setManual] = useState<Set<string>>(new Set());
   const [hint, setHint] = useState('');
   const [busy, setBusy] = useState<{ done: number; total: number } | null>(null);
@@ -72,7 +97,9 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
 
   const m = useMemo(() => computeMetrics(params), [params.weight, params.width, params.xHeight, params.contrast]); // eslint-disable-line react-hooks/exhaustive-deps
   const defs = useMemo(() => buildDefs({ m, squareness: params.squareness }), [m, params.squareness]);
-  const base = defs[ch];
+  const letterOps = params.paths?.[ch];
+  const base = useMemo(() => applyPaths(defs[ch], letterOps), [defs, ch, letterOps]);
+  const roles = useMemo(() => slotsOf(base).map((_, i) => nodeRole(base, i)), [base]);
   const slots = useMemo(() => slotsOf(base), [base]);
   const adjacency = useMemo(() => adjacencyOf(base), [base]);
   const offsets = live ?? readOffsets(base, params.edits?.[ch]);
@@ -104,7 +131,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   const commit = (value: number[] | undefined) => {
     const next = withEdit(params.edits, ch, value);
     if (JSON.stringify(next) === JSON.stringify(params.edits)) return;
-    setPast((p) => [...p.slice(-100), params.edits]);
+    setPast((p) => [...p.slice(-100), snapshotOf(params)]);
     setFuture([]);
     setManual((set) => {
       const n = new Set(set);
@@ -126,7 +153,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
       const next: Edits = {};
       for (const c of reference) if (current.edits?.[c]) next[c] = current.edits[c];
       Object.assign(next, r.edits);
-      setPast((p) => [...p.slice(-100), current.edits]);
+      setPast((p) => [...p.slice(-100), snapshotOf(current)]);
       setFuture([]);
       onChange({ ...current, edits: Object.keys(next).length ? next : undefined });
       setMessage({
@@ -182,6 +209,12 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
 
   const down = (slot: number) => (e: PointerEvent<SVGElement>) => {
     e.preventDefault();
+    e.stopPropagation();
+    if (joinFrom !== null) {
+      if (slot !== joinFrom && roles[slot] === 'end') { joinWith(slot); return; }
+      setJoinFrom(null);
+    }
+    if (slots[slot].kind === 'node') { setSel(slot); setPathNote(null); }
     e.currentTarget.setPointerCapture(e.pointerId);
     const p = pos(slot);
     const f = toFont(e);
@@ -275,15 +308,19 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
     if (!past.length) return;
     const prev = past[past.length - 1];
     setPast(past.slice(0, -1));
-    setFuture([params.edits, ...future]);
-    onChange({ ...params, edits: prev });
+    setFuture([snapshotOf(params), ...future]);
+    setSel(null);
+    setJoinFrom(null);
+    onChange(withSnapshot(params, prev));
   };
   const redo = () => {
     if (!future.length) return;
     const [next, ...rest] = future;
     setFuture(rest);
-    setPast([...past, params.edits]);
-    onChange({ ...params, edits: next });
+    setPast([...past, snapshotOf(params)]);
+    setSel(null);
+    setJoinFrom(null);
+    onChange(withSnapshot(params, next));
   };
   // Ctrl/Cmd+Z undoes one step, Ctrl+Y or Ctrl+Shift+Z redoes (not while typing in a text field)
   const undoRef = useRef(undo), redoRef = useRef(redo);
@@ -302,11 +339,58 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const resetLetter = () => commit(undefined);
-  const resetAll = () => {
-    setPast((p) => [...p.slice(-100), params.edits]);
+  const resetLetter = () => {
+    setPast((p) => [...p.slice(-100), snapshotOf(params)]);
     setFuture([]);
-    onChange({ ...params, edits: undefined });
+    setSel(null);
+    setJoinFrom(null);
+    setPathNote(null);
+    onChange(withSnapshot(params, { edits: withEdit(params.edits, ch, undefined), paths: withPaths(params.paths, ch, undefined) }));
+  };
+  const resetAll = () => {
+    setPast((p) => [...p.slice(-100), snapshotOf(params)]);
+    setFuture([]);
+    setSel(null);
+    setJoinFrom(null);
+    setPathNote(null);
+    onChange(withSnapshot(params, {}));
+  };
+
+  /** Cut or join: changes the structure of the letter; offsets already made are carried over to the new points. */
+  const structural = (code: number, a: number, b = 0) => {
+    const ops = params.paths?.[ch] ?? [];
+    const total = Object.values(params.paths ?? {}).reduce((n, v) => n + v.length / 3, 0);
+    if (ops.length / 3 >= MAX_PATH_OPS || total >= MAX_TOTAL_PATH_OPS) {
+      setPathNote('The limit of cut and join steps for this letter is reached. Reset the letter to start over.');
+      return;
+    }
+    const r = applyPathOp(base, code, a, b);
+    if (!r) {
+      setPathNote(code === OP_CUT ? 'This point cannot be cut here (it is already an open end).' : 'These two points cannot be joined.');
+      return;
+    }
+    const old = readOffsets(base, params.edits?.[ch]);
+    const carried = new Map<number, V>();
+    r.map.forEach((from, i) => {
+      const o = from >= 0 ? old.get(from) : undefined;
+      if (o) carried.set(i, [o[0], o[1]]);
+    });
+    setPast((p) => [...p.slice(-100), snapshotOf(params)]);
+    setFuture([]);
+    setManual((set) => new Set(set).add(ch));
+    setSel(null);
+    setJoinFrom(null);
+    setPathNote(null);
+    onChange(withSnapshot(params, { edits: withEdit(params.edits, ch, writeOffsets(r.def, carried)), paths: withPaths(params.paths, ch, [...ops, code, a, b]) }));
+  };
+
+  const selRole = sel !== null ? roles[sel] : null;
+  const canCut = selRole === 'inner' || selRole === 'ring';
+  const canJoin = selRole === 'end';
+  const joinWith = (target: number) => {
+    if (joinFrom === null) return;
+    const a = pos(joinFrom), b = pos(target);
+    structural(Math.hypot(a[0] - b[0], a[1] - b[1]) < 2.5 ? OP_MERGE : OP_JOIN, joinFrom, target);
   };
 
   const step = (n: number) => setCh(CHARS[(CHARS.indexOf(ch) + n + CHARS.length) % CHARS.length]);
@@ -324,12 +408,12 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   const minX = -80, width = base.w + 160;
   const top = m.asc + 70, bottom = -m.desc - 70;
   const guides: [number, string][] = [[m.asc, 'asc'], [m.cap, 'cap'], [m.xh, 'x'], [0, '0'], [-m.desc, 'desc']];
-  const editedChars = Object.keys(params.edits ?? {});
+  const editedChars = [...new Set([...Object.keys(params.edits ?? {}), ...Object.keys(params.paths ?? {})])];
 
   return (
     <div className="space-y-3">
       <p className="text-xs text-neutral-500">
-        Drag the round points to move the centre line of a letter. Squares are curve handles. The letter is drawn around the line with your current weight and style. Points snap to the guide lines. Double-click a point to make its line horizontal, again for vertical. Hold Shift while dragging to move in 45° steps. Ctrl + Z undoes the last step; arrow keys also move a selected point.
+        Drag the round points to move the centre line of a letter. Squares are curve handles. Orange points are open ends. Click a point to select it, then cut the line there or join it with another open end. The letter is drawn around the line with your current weight and style. Points snap to the guide lines. Double-click a point to make its line horizontal, again for vertical. Hold Shift while dragging to move in 45° steps. Ctrl + Z undoes the last step; arrow keys also move a selected point.
       </p>
 
       <div className="flex items-center gap-2">
@@ -341,7 +425,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
           className="flex-1 min-h-[44px] px-3 border border-neutral-300 rounded-md bg-white text-base"
         >
           {CHARS.map((c) => (
-            <option key={c} value={c}>{c}{params.edits?.[c] ? '  •  edited' : ''}</option>
+            <option key={c} value={c}>{c}{params.edits?.[c] || params.paths?.[c] ? '  •  edited' : ''}</option>
           ))}
         </select>
         <button type="button" onClick={() => step(1)} className={btn} aria-label="Next letter">▶</button>
@@ -352,6 +436,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
         className="w-full max-h-[70vh] bg-white border border-neutral-200 rounded-md select-none"
         role="group"
         aria-label={`Skeleton of the letter ${ch}`}
+        onPointerDown={() => { setSel(null); setJoinFrom(null); }}
         onPointerMove={move}
         onPointerUp={up}
         onPointerCancel={up}
@@ -372,7 +457,8 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
             const a = pos(s.anchor as number), h = pos(i);
             return <line key={`l${i}`} x1={a[0]} y1={a[1]} x2={h[0]} y2={h[1]} stroke="#93c5fd" strokeWidth={1.5} vectorEffect="non-scaling-stroke" />;
           })}
-          {slots.map((s, i) => {
+          {/* handles first, so a node on top of a nearby handle is the one you grab */}
+          {slots.map((s, i) => ({ s, i })).sort((u, v) => (u.s.kind === 'node' ? 1 : 0) - (v.s.kind === 'node' ? 1 : 0)).map(({ s, i }) => {
             const [x, y] = pos(i);
             const moved = offsets.has(i);
             const label = `${s.kind === 'handle' ? 'Curve handle' : s.kind === 'dot' ? 'Dot' : 'Point'} ${i + 1}`;
@@ -389,11 +475,14 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
                 style={{ touchAction: 'none', cursor: 'grab', outline: 'none' }}
               >
                 <circle cx={x} cy={y} r={HIT} fill="transparent" />
-                <circle opacity={focus === i ? 1 : 0} cx={x} cy={y} r={22} fill="none" stroke="#2563eb" strokeWidth={2} vectorEffect="non-scaling-stroke" />
+                <circle opacity={focus === i || sel === i ? 1 : 0} cx={x} cy={y} r={22} fill="none" stroke="#2563eb" strokeWidth={sel === i ? 3 : 2} vectorEffect="non-scaling-stroke" />
+                {joinFrom !== null && roles[i] === 'end' && i !== joinFrom && (
+                  <circle cx={x} cy={y} r={28} fill="none" stroke={OPEN_END} strokeWidth={2.5} strokeDasharray="5 4" vectorEffect="non-scaling-stroke" />
+                )}
                 {s.kind === 'handle' ? (
                   <rect x={x - 8} y={y - 8} width={16} height={16} fill="#fff" stroke="#2563eb" strokeWidth={2} vectorEffect="non-scaling-stroke" />
                 ) : (
-                  <circle cx={x} cy={y} r={11} fill={moved ? '#2563eb' : '#fff'} stroke="#2563eb" strokeWidth={2.5} vectorEffect="non-scaling-stroke" />
+                  <circle cx={x} cy={y} r={11} fill={moved ? '#2563eb' : '#fff'} stroke={roles[i] === 'end' ? OPEN_END : '#2563eb'} strokeWidth={2.5} vectorEffect="non-scaling-stroke" />
                 )}
               </g>
             );
@@ -401,10 +490,37 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
         </g>
       </svg>
 
+      <div className="flex flex-wrap items-center gap-2" aria-label="Path tools">
+        <button type="button" onClick={() => sel !== null && structural(OP_CUT, sel)} disabled={!canCut} className={btn} title="Split the line at the selected point">
+          Cut at point
+        </button>
+        <button
+          type="button"
+          onClick={() => setJoinFrom(joinFrom === null ? sel : null)}
+          disabled={!canJoin && joinFrom === null}
+          aria-pressed={joinFrom !== null}
+          className={`${btn} ${joinFrom !== null ? 'ring-2 ring-orange-500' : ''}`}
+          title="Connect the selected open end with another open end"
+        >
+          {joinFrom !== null ? 'Cancel join' : 'Join points'}
+        </button>
+        <span className="text-xs text-neutral-500" role="status">
+          {joinFrom !== null
+            ? 'Now click another open end (orange, dashed ring) to connect it.'
+            : sel === null
+              ? 'Select a point to cut or join.'
+              : canCut
+                ? 'Selected: a point on a line. You can cut here.'
+                : canJoin
+                  ? 'Selected: an open end. You can join it.'
+                  : ''}
+        </span>
+      </div>
+      {pathNote && <p className="text-xs text-red-700" role="alert">{pathNote}</p>}
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={undo} disabled={!past.length} className={btn}>Undo</button>
         <button type="button" onClick={redo} disabled={!future.length} className={btn}>Redo</button>
-        <button type="button" onClick={resetLetter} disabled={!params.edits?.[ch]} className={btn}>Reset “{ch}”</button>
+        <button type="button" onClick={resetLetter} disabled={!params.edits?.[ch] && !params.paths?.[ch]} className={btn}>Reset “{ch}”</button>
         {editedChars.length > 0 && (
           <button type="button" onClick={resetAll} className={btn}>Reset all ({editedChars.length})</button>
         )}

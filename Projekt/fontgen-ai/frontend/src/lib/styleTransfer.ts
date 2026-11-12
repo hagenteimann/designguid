@@ -1,6 +1,7 @@
 import { ApiProvider, DEFAULT_MODELS, callLLM } from './llm';
 import { V } from './engine/geometry';
-import { GlyphDef, buildDefs } from './engine/glyphs';
+import { GlyphDef } from './engine/glyphs';
+import { shapeDefs } from './engine/shapes';
 import { FontParams, computeMetrics } from './engine/params';
 import { handbook } from './handbook';
 import { Edits, applyEdits, readOffsets, sanitizeEdits, slotsOf, strokeLayout, writeOffsets } from './engine/skeleton';
@@ -151,8 +152,7 @@ async function runBatch(i: TransferInput, defs: Record<string, GlyphDef>, target
 /** Asks the model to carry the character of the hand-edited letters over to the other letters. */
 export async function adaptToStyle(i: TransferInput): Promise<TransferResult> {
   const model = i.model?.trim() || DEFAULT_MODELS[i.provider];
-  const m = computeMetrics(i.params);
-  const defs = buildDefs({ m, squareness: i.params.squareness });
+  const { defs } = shapeDefs(i.params);
   const batches: string[][] = [];
   for (let k = 0; k < i.targets.length; k += BATCH) batches.push(i.targets.slice(k, k + BATCH));
 
