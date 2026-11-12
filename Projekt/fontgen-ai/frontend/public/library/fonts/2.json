@@ -1,0 +1,23 @@
+{
+  "id": 2,
+  "name": "Brutal Enton",
+  "author": "Typo",
+  "description": "",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 900,
+    "width": 1.4,
+    "xHeight": 580,
+    "contrast": 0,
+    "squareness": 0.51,
+    "slant": 0,
+    "spacing": 0.4,
+    "terminal": "round",
+    "mono": false,
+    "serif": "none",
+    "serifSize": 1,
+    "corner": 1,
+    "wax": 0
+  },
+  "createdAt": "2026-11-12T08:01:37.170Z"
+}
