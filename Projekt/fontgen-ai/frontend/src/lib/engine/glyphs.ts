@@ -224,11 +224,13 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
     // the flag's flat top ends flush with the stem's right edge, however heavy the pen is
     def('1', ['o', 's'], [ln(xs, 0, xs, cap), ln(xs - fx, cap - fy, xs + a - hd / 2, cap, 'butt', 'hcut')], W); }
   { const W = capW(0.58), rx = W / 2 - a, ryT = cap * 0.26, cyT = cap + ov - b - ryT;
-    // the diagonal's left edge ends exactly at the bar's left end (x = 0): solve its width from the real slope
+    // the diagonal lands in the bar's top-left corner: its left edge meets the bar's left end exactly (no step), the foot ends
+    // just inside the bar. Its width is solved from the real slope.
     const ex = W / 2 + rx * Math.cos(rad(-40)), ey = cyT + ryT * Math.sin(rad(-40));
+    const yf = 2 * b - 1;
     let e2 = 0;
-    for (let i = 0; i < 12; i++) e2 = hw(ex - e2, ey) / 2;
-    def('2', ['r', 'o'], [pb().arc(W / 2, cyT, rx, ryT, 160, -40).L(e2, 0).stroke('term', 'hcut'), ln(0, b, W, b)], W); }
+    for (let i = 0; i < 12; i++) e2 = hw(ex - e2, ey - yf) / 2;
+    def('2', ['r', 'o'], [pb().arc(W / 2, cyT, rx, ryT, 160, -40).L(e2, yf).stroke('term', 'hcut'), ln(0, b, W, b)], W); }
   { const W = capW(0.58), ym = cap * 0.52;
     const ryT = (cap + ov - b - ym) / 2, cyT = ym + ryT, ryB = (ym - (b - ov)) / 2, cyB = b - ov + ryB;
     const rxT = W / 2 - a - cap * 0.02, rxB = W / 2 - a;
