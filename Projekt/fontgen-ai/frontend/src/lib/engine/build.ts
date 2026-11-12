@@ -54,7 +54,6 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
       contours = roundCorners(contours, convex, Math.max(convex, p.wax * m.stem * 0.55));
     }
     if (contours.length === 0) continue;
-    if (shear) contours = mapContours(contours, (x, y) => [x + y * shear, y]);
 
     let box = bounds(contours) as Box;
     let width = box.xMax - box.xMin;
@@ -78,7 +77,9 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
       shift = lsb - box.xMin;
     }
 
-    contours = mapContours(contours, (x, y) => [Math.round(x + shift), Math.round(y)]);
+    // Slant after spacing: the advance comes from the upright shape (as in real italics), the lean pivots around mid x-height
+    const pivot = m.xh / 2;
+    contours = mapContours(contours, (x, y) => [Math.round(x + shift + (y - pivot) * shear), Math.round(y)]);
     glyphs.push({ char, unicode: char.codePointAt(0) as number, advance: Math.round(advance), contours });
   }
 

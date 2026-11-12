@@ -1,15 +1,21 @@
 import { useState } from 'react';
 import { QAStatus, ExportFormat, exportFont, downloadFont, getExportFormats } from '../services/api';
 
+const familyZipName = (otfName: string) => otfName.replace(/-[A-Za-z]+\.otf$/, '') + '-family.zip';
+
 interface OutputPanelProps {
   qaStatus?: QAStatus;
   fontUrl?: string;
   glyphDataUrl?: string;
+  otfName: string;
+  paramsName: string;
+  styleLabel: string;
+  onDownloadFamily: () => Blob;
   isLoading?: boolean;
   onExport?: (format: string) => void;
 }
 
-export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false, onExport }: OutputPanelProps) {
+export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, otfName, paramsName, styleLabel, onDownloadFamily, isLoading = false, onExport }: OutputPanelProps) {
   const [exporting, setExporting] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
@@ -22,7 +28,7 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
 
     try {
       const blob = await exportFont(url);
-      downloadFont(blob, format.filename);
+      downloadFont(blob, format.type === 'json' ? paramsName : otfName);
       onExport?.(format.type);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Export failed';
@@ -33,6 +39,21 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
   };
 
   const exportFormats = getExportFormats();
+
+  const handleFamily = async () => {
+    setExporting('family');
+    setExportError(null);
+    // let the button state paint before the (synchronous) build of four fonts
+    await new Promise((r) => setTimeout(r, 30));
+    try {
+      downloadFont(onDownloadFamily(), familyZipName(otfName));
+      onExport?.('family');
+    } catch (error) {
+      setExportError(error instanceof Error ? error.message : 'Export failed');
+    } finally {
+      setExporting(null);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -118,15 +139,25 @@ export function OutputPanel({ qaStatus, fontUrl, glyphDataUrl, isLoading = false
                   {format.label}
                 </>
               ) : (
-                format.label
+                format.type === 'otf' ? `OTF · ${styleLabel}` : format.label
               )}
             </button>
           ))}
         </div>
 
+        <button
+          onClick={handleFamily}
+          disabled={!fontUrl || isLoading || exporting !== null}
+          className={`w-full px-3 py-2 min-h-[44px] rounded-md text-xs font-medium transition-all ${
+            !fontUrl || isLoading || exporting !== null ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed' : 'bg-neutral-800 hover:bg-neutral-700 text-white'
+          }`}
+        >
+          {exporting === 'family' ? 'Building family…' : 'Download family (4 styles, ZIP)'}
+        </button>
+
         <div className="space-y-1 text-xs">
           <p className="text-neutral-600">
-            <span className="font-medium">OTF:</span> installable font file (OpenType/CFF)
+            <span className="font-medium">OTF:</span> the style shown in the preview. <span className="font-medium">Family:</span> Regular, Bold, Italic and Bold Italic
           </p>
           <p className="text-neutral-600">
             <span className="font-medium">Parameters:</span> the design settings, to recreate this font later

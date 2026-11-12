@@ -3,6 +3,7 @@ import { buildGlyphs } from './engine/build';
 import { bounds } from './engine/contour';
 import { CAP_HEIGHT, DEFAULT_PARAMS, computeMetrics, DesignTokens, FontParams, PARAM_SPECS, paramsFromTokens, sanitizeParams } from './engine/params';
 import { assembleFont, parseFont } from './fontBuilder';
+import { StyleKey, variantOf } from './engine/variants';
 
 export interface SuggestInput {
   prompt: string;
@@ -34,7 +35,7 @@ Parameters:
 - xHeight ${range('xHeight')}: lowercase height (cap height is fixed at 700). 520 normal, 560+ friendly/readable at small sizes, <490 elegant/classical, 600+ brutalist/poster.
 - contrast ${range('contrast')}: thinning of horizontal strokes. 0 monoline, 0.15 subtle, 0.35+ pronounced (classical serif, didone).
 - squareness ${range('squareness')}: 0 circular geometric curves, 0.5 technical, 1 squarish, 1.3+ boxy and brutalist.
-- slant ${range('slant')}: oblique angle in degrees (0 upright).
+- slant ${range('slant')}: oblique angle in degrees (0 upright). Leave 0 unless the brief asks for an oblique style: the app derives Bold and Italic styles automatically, so describe the Regular style.
 - spacing ${range('spacing')}: letter spacing. 0.5-0.7 very tight (brutalist display), 0.8-0.95 tight display, 1 text, 1.15+ loose / small sizes.
 - terminal: "flat" (cut, square dots) or "round" (soft, round dots).
 - mono: true only for a monospaced typeface.
@@ -102,14 +103,15 @@ export interface Rendered {
 const BASIC = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
 const EXTENDED = [...'äöüÄÖÜßéèêàâîôûçÉÈ'];
 
-export function renderFont(params: FontParams, familyName: string): Rendered {
+export function renderFont(base: FontParams, familyName: string, style: StyleKey = 'regular'): Rendered {
+  const params = variantOf(base, style);
   const set = buildGlyphs(params);
   let top = 800, bottom = 200;
   for (const g of set.glyphs) {
     const b = bounds(g.contours);
     if (b) { top = Math.max(top, b.yMax); bottom = Math.max(bottom, -b.yMin); }
   }
-  const buffer = assembleFont(set.glyphs, set.spaceAdvance, `FontGen ${familyName}`.slice(0, 40), Math.ceil(top / 10) * 10, -Math.ceil(bottom / 10) * 10);
+  const buffer = assembleFont(set.glyphs, set.spaceAdvance, `FontGen ${familyName}`.slice(0, 40), Math.ceil(top / 10) * 10, -Math.ceil(bottom / 10) * 10, { key: style, weight: params.weight, slant: params.slant });
   const have = new Set(set.glyphs.map(g => g.char));
 
   const checks: QACheck[] = [];

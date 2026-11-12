@@ -48,7 +48,7 @@ export const PARAM_SPECS: ParamSpec[] = [
   { key: 'xHeight', label: 'x-height', min: 440, max: 640, step: 5, hint: 'Large x-height reads better at small sizes' },
   { key: 'contrast', label: 'Contrast', min: 0, max: 0.6, step: 0.01, hint: '0 = monoline, higher = thinner horizontals' },
   { key: 'squareness', label: 'Squareness', min: 0, max: 1.5, step: 0.01, hint: '0 = circular, 1 = squarish, 1.5 = boxy / brutalist' },
-  { key: 'slant', label: 'Slant', min: 0, max: 14, step: 0.5, hint: 'Oblique angle in degrees' },
+  { key: 'slant', label: 'Slant', min: 0, max: 20, step: 0.5, hint: 'Oblique angle in degrees (Italic style uses at least 11°)' },
   { key: 'spacing', label: 'Spacing', min: 0.4, max: 1.5, step: 0.01, hint: 'Very tight (brutalist) ↔ loose text spacing' },
   { key: 'serifSize', label: 'Serif size', min: 0.4, max: 1.8, step: 0.05, hint: 'Length of serifs (needs a serif style)' },
   { key: 'corner', label: 'Corner rounding', min: 0, max: 1, step: 0.01, hint: '0 = sharp, 1 = fully rounded corners and stroke ends' },

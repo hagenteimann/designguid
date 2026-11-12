@@ -11,6 +11,8 @@ import { LibraryEntry } from './lib/library';
 import { ApiProvider, API_PROVIDERS, DesignTokens, GlyphInfo, QAStatus } from './services/api';
 import { DEFAULT_PARAMS, FontParams } from './lib/engine/params';
 import { renderFont, suggestParams } from './lib/generate';
+import { STYLE_KEYS, STYLE_LABEL, StyleKey } from './lib/engine/variants';
+import { buildFamilyZip, fileSlug, styleFileName } from './lib/family';
 
 const KEY_STORE = 'fontgen_api_key';
 const TYPE_STORE = 'fontgen_api_type';
@@ -43,6 +45,7 @@ export function App() {
 
   const [params, setParams] = useState<FontParams>(DEFAULT_PARAMS);
   const [familyName, setFamilyName] = useState('Sans');
+  const [style, setStyle] = useState<StyleKey>('regular');
   const [notes, setNotes] = useState('');
   const [rendered, setRendered] = useState<RenderState | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
@@ -68,7 +71,7 @@ export function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
-        const r = renderFont(params, familyName);
+        const r = renderFont(params, familyName, style);
         const fontUrl = URL.createObjectURL(new Blob([r.buffer], { type: 'font/otf' }));
         const paramsUrl = URL.createObjectURL(
           new Blob([JSON.stringify({ familyName, params }, null, 2)], { type: 'application/json' })
@@ -92,7 +95,7 @@ export function App() {
       }
     }, 80);
     return () => clearTimeout(timer);
-  }, [params, familyName]);
+  }, [params, familyName, style]);
 
   useEffect(() => () => urls.current.forEach((u) => URL.revokeObjectURL(u)), []);
 
@@ -267,6 +270,24 @@ export function App() {
           </div>
 
           <div className="lg:col-span-2 space-y-4 min-w-0">
+            <div className="bg-white rounded-lg shadow p-3 flex flex-wrap items-center gap-3" role="group" aria-label="Preview style">
+              <span className="text-xs font-medium text-neutral-600">Style</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1 min-w-[16rem]">
+                {STYLE_KEYS.map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setStyle(k)}
+                    aria-pressed={style === k}
+                    className={`px-3 py-2 min-h-[44px] rounded-md text-xs font-medium transition-colors ${
+                      style === k ? 'bg-primary-300 text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                    }`}
+                  >
+                    {STYLE_LABEL[k]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg shadow overflow-hidden h-[32rem] md:h-[28rem]">
                 <PreviewPanel glyphs={rendered?.glyphs} isLoading={isLoading} fontUrl={rendered?.fontUrl} />
@@ -276,6 +297,10 @@ export function App() {
                   qaStatus={rendered?.qaStatus}
                   fontUrl={rendered?.fontUrl}
                   glyphDataUrl={rendered?.paramsUrl}
+                  otfName={styleFileName(familyName, style)}
+                  paramsName={`${fileSlug(familyName)}.params.json`}
+                  styleLabel={STYLE_LABEL[style]}
+                  onDownloadFamily={() => buildFamilyZip(params, familyName)}
                   isLoading={isLoading}
                 />
               </div>
