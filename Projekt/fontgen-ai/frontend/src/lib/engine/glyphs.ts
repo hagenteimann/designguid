@@ -119,6 +119,9 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
   const capW = (f: number) => cap * f * wf;
   const lcW = (f: number) => xh * f * wf;
   const hw = m.hw;
+  /** Horizontal width of a diagonal that runs corner to corner of a box D wide and h tall, so that its outer edges end exactly on the box
+   *  corners. k = 2: both ends inset by half the width (N, X, Z); k = 1: one end (V, M, A). Solved, because the slope depends on the width. */
+  const fhw = (D: number, h: number, k: 1 | 2) => { let e = 0; for (let i = 0; i < 12; i++) e = hw(D - k * e, h) / 2; return 2 * e; };
 
   const def = (ch: string, edges: [Edge, Edge], strokes: Stroke[], w: number, o: { dots?: Dot[]; cx?: number; top?: number } = {}) => {
     defs[ch] = { skel: { strokes, dots: o.dots ?? [] }, edges, w, cx: o.cx ?? w / 2, top: o.top ?? cap };
@@ -145,21 +148,21 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
   def('I', ['s', 's'], [ln(a, 0, a, cap)], stem);
   { const W = capW(0.62);
     def('T', ['o', 'o'], [ln(0, cap - b, W, cap - b), ln(W / 2, 0, W / 2, cap - b)], W); }
-  { const W = capW(0.7), hd = hw(W, cap);
+  { const W = capW(0.7), hd = fhw(W, cap, 2);
     def('N', ['s', 's'], [ln(a, 0, a, cap), ln(W - a, 0, W - a, cap), ln(hd / 2, cap, W - hd / 2, 0, 'hcut', 'hcut')], W); }
-  { const W = capW(0.9), hd = hw(W / 2, cap);
+  { const W = capW(0.9), hd = fhw(W / 2, cap, 1);
     def('M', ['s', 's'], [ln(a, 0, a, cap), ln(W - a, 0, W - a, cap), ln(hd / 2, cap, W / 2, 0, 'hcut', 'hcut'), ln(W / 2, 0, W - hd / 2, cap, 'hcut', 'hcut')], W); }
-  { const W = capW(0.72), hd = hw(W / 2, cap);
+  { const W = capW(0.72), hd = fhw(W / 2, cap, 1);
     def('V', ['d', 'd'], [ln(hd / 2, cap, W / 2, 0, 'hcut', 'hcut'), ln(W / 2, 0, W - hd / 2, cap, 'hcut', 'hcut')], W); }
   { const W = capW(1.02), hd = hw(W / 4, cap);
     def('W', ['d', 'd'], [
       ln(hd / 2, cap, W * 0.27, 0, 'hcut', 'hcut'), ln(W * 0.27, 0, W / 2, cap, 'hcut', 'hcut'),
       ln(W / 2, cap, W * 0.73, 0, 'hcut', 'hcut'), ln(W * 0.73, 0, W - hd / 2, cap, 'hcut', 'hcut')
     ], W); }
-  { const W = capW(0.74), hd = hw(W / 2, cap), yb = cap * 0.3;
+  { const W = capW(0.74), hd = fhw(W / 2, cap, 1), yb = cap * 0.3;
     const xl = hd / 2 + (W / 2 - hd / 2) * (yb / cap);
     def('A', ['d', 'd'], [ln(hd / 2, 0, W / 2, cap, 'hcut', 'hcut'), ln(W - hd / 2, 0, W / 2, cap, 'hcut', 'hcut'), ln(xl, yb, W - xl, yb)], W); }
-  { const W = capW(0.7), hd = hw(W, cap);
+  { const W = capW(0.7), hd = fhw(W, cap, 2);
     def('X', ['d', 'd'], [ln(hd / 2, cap, W - hd / 2, 0, 'hcut', 'hcut'), ln(W - hd / 2, cap, hd / 2, 0, 'hcut', 'hcut')], W); }
   { const W = capW(0.68), hd = hw(W / 2, cap * 0.55), yj = cap * 0.44;
     def('Y', ['d', 'd'], [ln(hd / 2, cap, W / 2, yj, 'hcut', 'butt'), ln(W - hd / 2, cap, W / 2, yj, 'hcut', 'butt'), ln(W / 2, 0, W / 2, yj + 20)], W); }
@@ -167,7 +170,7 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
     const xe = W - hd1 / 2, t = 0.55;
     const kx = a + (xe - a) * t, ky = yk + (cap - yk) * t;
     def('K', ['s', 'd'], [ln(a, 0, a, cap), ln(a, yk, xe, cap, 'butt', 'hcut'), ln(kx, ky, W - hw(W - kx, ky) / 2, 0, 'butt', 'hcut')], W); }
-  { const W = capW(0.62), hd = hw(W, cap);
+  { const W = capW(0.62), hd = fhw(W, cap, 2);
     def('Z', ['o', 'o'], [ln(0, cap - b, W, cap - b), ln(0, b, W, b), ln(W - hd / 2, cap, hd / 2, 0, 'hcut', 'hcut')], W); }
 
   const bowl = (yT: number, yB: number, xR: number): Stroke => {
@@ -310,20 +313,20 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
     def('r', ['s', 'o'], [ln(a, 0, a, xh), pb(a, cy).arc(a + rx, cy, rx, ry, 180, 55).stroke('butt', 'term')], W, { top: xh }); }
   { const W = lcW(0.88), rx = W / 2 - a, ry = Math.min(rx, xh * 0.45), yc = b - ov + ry;
     def('u', ['s', 's'], [pb(a, xh).L(a, yc).arc(W / 2, yc, rx, ry, 180, 360).stroke('butt', 'butt'), ln(W - a, xh, W - a, 0)], W, { top: xh }); }
-  { const W = lcW(0.8), hd = hw(W / 2, xh);
+  { const W = lcW(0.8), hd = fhw(W / 2, xh, 1);
     def('v', ['d', 'd'], [ln(hd / 2, xh, W / 2, 0, 'hcut', 'hcut'), ln(W / 2, 0, W - hd / 2, xh, 'hcut', 'hcut')], W, { top: xh }); }
   { const W = lcW(1.2), hd = hw(W / 4, xh);
     def('w', ['d', 'd'], [
       ln(hd / 2, xh, W * 0.27, 0, 'hcut', 'hcut'), ln(W * 0.27, 0, W / 2, xh, 'hcut', 'hcut'),
       ln(W / 2, xh, W * 0.73, 0, 'hcut', 'hcut'), ln(W * 0.73, 0, W - hd / 2, xh, 'hcut', 'hcut')
     ], W, { top: xh }); }
-  { const W = lcW(0.8), hd = hw(W, xh);
+  { const W = lcW(0.8), hd = fhw(W, xh, 2);
     def('x', ['d', 'd'], [ln(hd / 2, xh, W - hd / 2, 0, 'hcut', 'hcut'), ln(W - hd / 2, xh, hd / 2, 0, 'hcut', 'hcut')], W, { top: xh }); }
   { const W = lcW(0.8), hd = hw(W * 0.5, xh + desc);
     const P0: V = [W - hd / 2, xh], P1: V = [W * 0.12 + hd / 2, -desc];
     const xon = P0[0] + (P1[0] - P0[0]) * (xh / (xh + desc));
     def('y', ['d', 'd'], [ln(P0[0], P0[1], P1[0], P1[1], 'hcut', 'hcut'), ln(hd / 2, xh, xon, 0, 'hcut', 'butt')], W, { top: xh }); }
-  { const W = lcW(0.76), hd = hw(W, xh);
+  { const W = lcW(0.76), hd = fhw(W, xh, 2);
     def('z', ['o', 'o'], [ln(0, xh - b, W, xh - b), ln(0, b, W, b), ln(W - hd / 2, xh, hd / 2, 0, 'hcut', 'hcut')], W, { top: xh }); }
   { const W = lcW(0.78); def('s', ['r', 'r'], [sShape(W, xh)], W, { top: xh }); }
 
