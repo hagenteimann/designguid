@@ -340,3 +340,10 @@ parameter guide and the conversation to the user's own AI key. The answer may ch
 letters. For letter shapes the model first asks for the skeletons it wants to see (`needSkeletons`, up to 8 letters), the app
 sends them in a second request, and the model returns new point positions (same validation as the editor: clamped, snapped,
 handles follow). Parameters are validated by `sanitizeParams`. The latest change can be undone from its chat bubble.
+
+### AI manual
+
+`src/lib/handbook.ts` is the manual both AI features work from (chat and "Adapt all letters"): how the engine builds letters
+(skeleton, pen, serifs, overlap removal, rounding, spacing, slant), the metrics of the current font, the point/handle data
+format, rules for moving points and curve handles, handle geometry, recipes for typical wishes and things to avoid. Its numbers
+are generated from the current metrics. Update it whenever the engine changes (new parameters, glyph construction).
