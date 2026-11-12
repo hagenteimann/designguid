@@ -1,16 +1,30 @@
-import { KeyboardEvent, PointerEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { KeyboardEvent as ReactKeyboardEvent, PointerEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { buildGlyphs } from '../lib/engine/build';
 import { V } from '../lib/engine/geometry';
 import { buildDefs } from '../lib/engine/glyphs';
 import { FontParams, computeMetrics } from '../lib/engine/params';
 import { ApiProvider } from '../lib/llm';
 import { adaptToStyle } from '../lib/styleTransfer';
-import { Edits, MAX_EDIT_POINTS, applyEdits, editedPointCount, readOffsets, slotsOf, writeOffsets } from '../lib/engine/skeleton';
+import { Edits, MAX_EDIT_POINTS, adjacencyOf, applyEdits, editedPointCount, readOffsets, slotsOf, writeOffsets } from '../lib/engine/skeleton';
 
 const CHARS = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
 const GRID = 5;
 const SNAP_RANGE = 10;
 const HIT = 40;
+const DOUBLE_TAP_MS = 350;
+const DRAG_THRESHOLD = 6;
+
+/** Constrains a vector to the nearest multiple of 45 degrees (exact integer components). */
+const lock45 = (v: V): V => {
+  const len = Math.hypot(v[0], v[1]);
+  const a = Math.round(Math.atan2(v[1], v[0]) / (Math.PI / 4));
+  const diag = a % 2 !== 0;
+  const c = diag ? Math.round(len / Math.SQRT2) : Math.round(len);
+  const dir: V = [Math.round(Math.cos((a * Math.PI) / 4)), Math.round(Math.sin((a * Math.PI) / 4))];
+  return [dir[0] * c, dir[1] * c];
+};
+
+const sign = (n: number) => (n > 0 ? 1 : n < 0 ? -1 : 0);
 
 export interface AiAccess {
   apiKey: string;
@@ -53,12 +67,14 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   const latest = useRef(params);
   useEffect(() => { latest.current = params; }, [params]);
   const group = useRef<SVGGElement>(null);
-  const drag = useRef<{ slot: number; grab: V; start: Map<number, V>; moved: boolean } | null>(null);
+  const drag = useRef<{ slot: number; grab: V; start: Map<number, V>; from: V; moved: boolean } | null>(null);
+  const lastTap = useRef<{ slot: number; t: number } | null>(null);
 
   const m = useMemo(() => computeMetrics(params), [params.weight, params.width, params.xHeight, params.contrast]); // eslint-disable-line react-hooks/exhaustive-deps
   const defs = useMemo(() => buildDefs({ m, squareness: params.squareness }), [m, params.squareness]);
   const base = defs[ch];
   const slots = useMemo(() => slotsOf(base), [base]);
+  const adjacency = useMemo(() => adjacencyOf(base), [base]);
   const offsets = live ?? readOffsets(base, params.edits?.[ch]);
 
   const stored = live ? writeOffsets(base, live) : params.edits?.[ch];
@@ -88,7 +104,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   const commit = (value: number[] | undefined) => {
     const next = withEdit(params.edits, ch, value);
     if (JSON.stringify(next) === JSON.stringify(params.edits)) return;
-    setPast((p) => [...p.slice(-40), params.edits]);
+    setPast((p) => [...p.slice(-100), params.edits]);
     setFuture([]);
     setManual((set) => {
       const n = new Set(set);
@@ -110,7 +126,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
       const next: Edits = {};
       for (const c of reference) if (current.edits?.[c]) next[c] = current.edits[c];
       Object.assign(next, r.edits);
-      setPast((p) => [...p.slice(-40), current.edits]);
+      setPast((p) => [...p.slice(-100), current.edits]);
       setFuture([]);
       onChange({ ...current, edits: Object.keys(next).length ? next : undefined });
       setMessage({
@@ -135,7 +151,8 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
     return [r.x, r.y];
   };
 
-  const snap = (slot: number, x: number, y: number): V => {
+  const snap = (slot: number, x: number, y: number, free = false): V => {
+    if (free) return [Math.round(x), Math.round(y)];
     let sx = Math.round(x / GRID) * GRID, sy = Math.round(y / GRID) * GRID;
     if (slots[slot].kind !== 'handle') {
       for (const line of [0, m.xh, m.cap, m.asc, -m.desc, m.b, m.cap - m.b, m.xh - m.b]) if (Math.abs(sy - line) <= SNAP_RANGE) sy = line;
@@ -144,10 +161,10 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   };
 
   /** Sets a point to an absolute position; its handles travel with it. */
-  const moveTo = (start: Map<number, V>, slot: number, x: number, y: number): Map<number, V> => {
+  const moveTo = (start: Map<number, V>, slot: number, x: number, y: number, free = false): Map<number, V> => {
     const next = new Map(start);
     const [bx, by] = [slots[slot].x, slots[slot].y];
-    const [nx, ny] = snap(slot, x, y);
+    const [nx, ny] = snap(slot, x, y, free);
     const old = start.get(slot) ?? [0, 0];
     const o: V = [Math.max(-250, Math.min(250, nx - bx)), Math.max(-250, Math.min(250, ny - by))];
     const inc: V = [o[0] - old[0], o[1] - old[1]];
@@ -168,23 +185,83 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
     e.currentTarget.setPointerCapture(e.pointerId);
     const p = pos(slot);
     const f = toFont(e);
-    drag.current = { slot, grab: [f[0] - p[0], f[1] - p[1]], start: new Map(offsets), moved: false };
+    drag.current = { slot, grab: [f[0] - p[0], f[1] - p[1]], start: new Map(offsets), from: f, moved: false };
   };
   const move = (e: PointerEvent<SVGElement>) => {
     const d = drag.current;
     if (!d) return;
     const f = toFont(e);
+    if (!d.moved && Math.hypot(f[0] - d.from[0], f[1] - d.from[1]) < DRAG_THRESHOLD) return;
     d.moved = true;
-    setLive(moveTo(d.start, d.slot, f[0] - d.grab[0], f[1] - d.grab[1]));
+    let tx = f[0] - d.grab[0], ty = f[1] - d.grab[1];
+    let free = false;
+    if (e.shiftKey) {
+      // Shift: a handle turns around its node, a node moves away from where it started, in 45 degree steps
+      const s = slots[d.slot];
+      const origin: V = s.kind === 'handle'
+        ? (() => { const a = d.start.get(s.anchor as number) ?? [0, 0]; return [slots[s.anchor as number].x + a[0], slots[s.anchor as number].y + a[1]] as V; })()
+        : (() => { const o = d.start.get(d.slot) ?? [0, 0]; return [s.x + o[0], s.y + o[1]] as V; })();
+      const v = lock45([tx - origin[0], ty - origin[1]]);
+      tx = origin[0] + v[0];
+      ty = origin[1] + v[1];
+      free = true;
+    }
+    setLive(moveTo(d.start, d.slot, tx, ty, free));
   };
   const up = () => {
     const d = drag.current;
     drag.current = null;
-    if (d && d.moved && live) commit(writeOffsets(base, live));
+    if (d && d.moved && live) {
+      commit(writeOffsets(base, live));
+      lastTap.current = null;
+    } else if (d) {
+      // a click without dragging: two quick clicks on the same node make its line horizontal or vertical
+      const now = Date.now(), last = lastTap.current;
+      if (last && last.slot === d.slot && now - last.t < DOUBLE_TAP_MS) {
+        lastTap.current = null;
+        alignPoint(d.slot);
+      } else lastTap.current = { slot: d.slot, t: now };
+    }
     setLive(null);
   };
 
-  const key = (slot: number) => (e: KeyboardEvent<SVGElement>) => {
+  /** Double click on a node: its curve handles (or, for a straight line, the line itself) become horizontal; once horizontal, vertical. */
+  const alignPoint = (slot: number) => {
+    if (slots[slot].kind !== 'node') return;
+    const adj = adjacency.get(slot) ?? [];
+    const handles = adj.map((a) => a.handle).filter((h): h is number => h !== undefined);
+    const np = pos(slot);
+    const next = new Map(offsets);
+    const place = (i: number, target: V) => next.set(i, [Math.round(target[0] - slots[i].x), Math.round(target[1] - slots[i].y)]);
+    const pickAxis = (vs: V[], through: V): 0 | 1 => {
+      const nearest: 0 | 1 = Math.abs(through[0]) >= Math.abs(through[1]) ? 0 : 1;
+      const aligned = vs.every((v) => Math.abs(v[1 - nearest]) < 0.6);
+      return aligned ? ((1 - nearest) as 0 | 1) : nearest;
+    };
+
+    if (handles.length) {
+      const vs: V[] = handles.map((h) => { const q = pos(h); return [q[0] - np[0], q[1] - np[1]]; });
+      const through: V = vs.length === 2 ? [vs[0][0] - vs[1][0], vs[0][1] - vs[1][1]] : vs[0];
+      const axis = pickAxis(vs, through);
+      handles.forEach((h, i) => {
+        const len = Math.hypot(vs[i][0], vs[i][1]);
+        if (len < 0.5) return;
+        const dir = vs.length === 2 ? (i === 0 ? 1 : -1) * (sign(through[axis]) || sign(vs[0][axis]) || 1) : sign(vs[i][axis]) || sign(vs[i][1 - axis]) || 1;
+        place(h, [np[0] + (axis === 0 ? dir * len : 0), np[1] + (axis === 1 ? dir * len : 0)]);
+      });
+    } else if (adj.length) {
+      const cands = adj.map((a) => { const o = pos(a.other); const v: V = [np[0] - o[0], np[1] - o[1]]; return { o, v, dev: Math.min(Math.abs(v[0]), Math.abs(v[1])) }; });
+      const c = cands.sort((x, y) => x.dev - y.dev)[0];
+      const axis = pickAxis([c.v], c.v);
+      const len = Math.hypot(c.v[0], c.v[1]);
+      if (len < 0.5) return;
+      const dir = sign(c.v[axis]) || sign(c.v[1 - axis]) || 1;
+      place(slot, [c.o[0] + (axis === 0 ? dir * len : 0), c.o[1] + (axis === 1 ? dir * len : 0)]);
+    } else return;
+    commit(writeOffsets(base, next));
+  };
+
+  const key = (slot: number) => (e: ReactKeyboardEvent<SVGElement>) => {
     const step = e.shiftKey ? 20 : GRID;
     const dx = e.key === 'ArrowRight' ? step : e.key === 'ArrowLeft' ? -step : 0;
     const dy = e.key === 'ArrowUp' ? step : e.key === 'ArrowDown' ? -step : 0;
@@ -208,9 +285,26 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
     setPast([...past, params.edits]);
     onChange({ ...params, edits: next });
   };
+  // Ctrl/Cmd+Z undoes one step, Ctrl+Y or Ctrl+Shift+Z redoes (not while typing in a text field)
+  const undoRef = useRef(undo), redoRef = useRef(redo);
+  undoRef.current = undo;
+  redoRef.current = redo;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      const k = e.key.toLowerCase();
+      if (k === 'z' && !e.shiftKey) { e.preventDefault(); undoRef.current(); }
+      else if (k === 'y' || (k === 'z' && e.shiftKey)) { e.preventDefault(); redoRef.current(); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   const resetLetter = () => commit(undefined);
   const resetAll = () => {
-    setPast((p) => [...p.slice(-40), params.edits]);
+    setPast((p) => [...p.slice(-100), params.edits]);
     setFuture([]);
     onChange({ ...params, edits: undefined });
   };
@@ -235,7 +329,7 @@ export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProp
   return (
     <div className="space-y-3">
       <p className="text-xs text-neutral-500">
-        Drag the round points to move the centre line of a letter. Squares are curve handles. The letter is drawn around the line with your current weight and style. Points snap to the guide lines; arrow keys also work.
+        Drag the round points to move the centre line of a letter. Squares are curve handles. The letter is drawn around the line with your current weight and style. Points snap to the guide lines. Double-click a point to make its line horizontal, again for vertical. Hold Shift while dragging to move in 45° steps. Ctrl + Z undoes the last step; arrow keys also move a selected point.
       </p>
 
       <div className="flex items-center gap-2">

@@ -77,6 +77,28 @@ export function strokeLayout(def: GlyphDef): { closed: boolean; nodes: number[] 
   return out;
 }
 
+/** For every node: the nodes it is connected to and the handle (if the segment is a curve) that belongs to it on that segment. */
+export function adjacencyOf(def: GlyphDef): Map<number, { other: number; handle?: number }[]> {
+  const out = new Map<number, { other: number; handle?: number }[]>();
+  const add = (k: number, v: { other: number; handle?: number }) => out.set(k, [...(out.get(k) ?? []), v]);
+  let at = 0;
+  for (const s of def.skel.strokes) {
+    const n = s.segs.length;
+    if (n === 0) continue;
+    const nodeCount = s.closed ? n : n + 1;
+    let h = at + nodeCount;
+    s.segs.forEach((g, k) => {
+      const a = at + k, b = at + ((k + 1) % nodeCount);
+      const cubic = g.p.length === 4;
+      add(a, { other: b, handle: cubic ? h : undefined });
+      add(b, { other: a, handle: cubic ? h + 1 : undefined });
+      if (cubic) h += 2;
+    });
+    at = h;
+  }
+  return out;
+}
+
 /** Offsets as a slot → [dx, dy] map (empty when the stored data does not fit this glyph any more). */
 export function readOffsets(def: GlyphDef, stored: number[] | undefined): Map<number, V> {
   const out = new Map<number, V>();
