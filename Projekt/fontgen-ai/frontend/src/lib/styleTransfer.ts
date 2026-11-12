@@ -76,9 +76,9 @@ How to work:
 4. Keep every letter recognisable and consistent with its neighbours. Keep tops of capitals on the cap line, tops of lowercase bodies on the x-height, feet on the baseline.
 5. Keep moves moderate (normally under 120 units).
 
-Return ONLY this JSON, no markdown, no commentary. For every target letter list the points to move with their NEW absolute positions:
-{"letters":{"${targets[0] ?? 'A'}":{"3":[x,y],"4":[x,y]}}}
-Letters that need no change may be omitted.`;
+Answer format: ONLY a JSON object with the key "letters", no markdown, no commentary. Under it, one entry per target letter that needs changes; the entry maps a point id to its NEW absolute position [x, y]. Do not repeat the input structure ("strokes", "points", the point kind): only ids and positions. Example for the letter "${targets[0] ?? 'A'}":
+{"letters":{"${targets[0] ?? 'A'}":{"3":[120,640],"4":[120,310]}}}
+Letters or points that need no change are omitted.`;
 }
 
 function parseJson(text: string): any {
@@ -98,10 +98,14 @@ function toOffsets(def: GlyphDef, raw: unknown, m: ReturnType<typeof computeMetr
   const offsets = new Map<number, V>();
   const given = new Set<number>();
 
-  for (const [key, val] of Object.entries(raw as Record<string, unknown>)) {
+  // models sometimes echo the input shape: {"points": {...}} and ["n", x, y] instead of [x, y]
+  const pts = (raw as Record<string, unknown>).points;
+  const source = pts && typeof pts === 'object' && !Array.isArray(pts) ? (pts as Record<string, unknown>) : (raw as Record<string, unknown>);
+  for (const [key, val] of Object.entries(source)) {
     const i = Number(key);
     if (!Number.isInteger(i) || i < 0 || i >= slots.length || !Array.isArray(val)) continue;
-    const [x, y] = [Number(val[0]), Number(val[1])];
+    const c = typeof val[0] === 'string' ? val.slice(1) : val;
+    const [x, y] = [Number(c[0]), Number(c[1])];
     if (!isFinite(x) || !isFinite(y)) continue;
     let ty = y;
     if (slots[i].kind === 'node') for (const l of lines) if (Math.abs(ty - l) <= SNAP) ty = l;
@@ -117,17 +121,26 @@ function toOffsets(def: GlyphDef, raw: unknown, m: ReturnType<typeof computeMetr
   return writeOffsets(def, offsets);
 }
 
+/** {"letters": {...}} as asked, or the bare letter map {"A": {...}, "B": {...}} that some models return. */
+function lettersOf(data: any): Record<string, unknown> | null {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
+  if (data.letters && typeof data.letters === 'object') return data.letters;
+  const keys = Object.keys(data);
+  return keys.length > 0 && keys.every((k) => [...k].length === 1) ? data : null;
+}
+
 async function runBatch(i: TransferInput, defs: Record<string, GlyphDef>, targets: string[], model: string): Promise<Record<string, number[]>> {
   const { text, truncated } = await callLLM(i.provider, i.apiKey, model, buildPrompt(i, defs, targets));
   const data = parseJson(text);
-  if (!data || typeof data !== 'object' || !data.letters || typeof data.letters !== 'object') {
+  const letters = lettersOf(data);
+  if (!letters) {
     throw new Error(truncated ? 'The answer was cut off. Try a model with a larger output limit.' : `The model did not return letter data ("${text.slice(0, 80).replace(/\s+/g, ' ')}…").`);
   }
   const m = computeMetrics(i.params);
   const out: Record<string, number[]> = {};
   for (const ch of targets) {
     if (!defs[ch]) continue;
-    const stored = toOffsets(defs[ch], data.letters[ch], m);
+    const stored = toOffsets(defs[ch], letters[ch], m);
     if (stored) out[ch] = stored;
   }
   return out;
@@ -149,7 +162,9 @@ export async function adaptToStyle(i: TransferInput): Promise<TransferResult> {
     while (next < batches.length) {
       const batch = batches[next++];
       try {
-        Object.assign(merged, await runBatch(i, defs, batch, model));
+        let got: Record<string, number[]>;
+        try { got = await runBatch(i, defs, batch, model); } catch { got = await runBatch(i, defs, batch, model); }
+        Object.assign(merged, got);
       } catch (e) {
         failed += batch.length;
         firstError ??= e instanceof Error ? e.message : 'Request failed';
