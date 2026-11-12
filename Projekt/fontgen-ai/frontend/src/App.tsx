@@ -301,7 +301,7 @@ export function App() {
             <Step n={3} title="Fine-tune" hint="Every change updates all letters at once">
               <TuneControls params={params} onChange={setParams} />
               <Disclosure title="Edit letter shapes (advanced)" lazy>
-                <GlyphEditor params={params} onChange={setParams} />
+                <GlyphEditor params={params} onChange={setParams} ai={apiKey ? { apiKey, provider: apiType, model } : null} onConnect={() => setKeyDialog(true)} />
               </Disclosure>
             </Step>
 

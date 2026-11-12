@@ -20,7 +20,7 @@ export interface Slot {
 }
 
 export const MAX_EDIT_OFFSET = 250;
-export const MAX_EDIT_POINTS = 150;
+export const MAX_EDIT_POINTS = 900;
 
 type Ref = { stroke: number; seg: number; pt: number } | { dot: number };
 
@@ -61,6 +61,20 @@ function collect(def: GlyphDef): SlotInfo[] {
 /** Editable points of the unedited skeleton. */
 export function slotsOf(def: GlyphDef): Slot[] {
   return collect(def).map(({ x, y, kind, anchor }) => ({ x, y, kind, anchor }));
+}
+
+/** Which slots form each stroke, in path order (nodes only), so the layout can be described to a model. */
+export function strokeLayout(def: GlyphDef): { closed: boolean; nodes: number[] }[] {
+  const out: { closed: boolean; nodes: number[] }[] = [];
+  let at = 0;
+  for (const s of def.skel.strokes) {
+    const n = s.segs.length;
+    if (n === 0) continue;
+    const nodeCount = s.closed ? n : n + 1;
+    out.push({ closed: !!s.closed, nodes: Array.from({ length: nodeCount }, (_, k) => at + k) });
+    at += nodeCount + 2 * s.segs.filter(g => g.p.length === 4).length;
+  }
+  return out;
 }
 
 /** Offsets as a slot → [dx, dy] map (empty when the stored data does not fit this glyph any more). */

@@ -323,3 +323,12 @@ handles (`src/lib/engine/skeleton.ts`, `src/components/GlyphEditor.tsx`). Edits 
 point in `params.edits` (`{ "G": [pointCount, slot, dx, dy, ...] }`), so weight, contrast, serifs, roundness, wax, Bold and
 Italic keep working on the edited letters. Offsets are validated and limited (±250 units, 150 points in total) when a
 font is loaded or submitted; edits that do not fit a letter's current structure are ignored. Choosing a preset clears them.
+
+### Adapt all letters with AI
+
+In the editor, after one letter has been edited by hand, "Adapt all other letters" sends the original and edited points of
+the reference letter(s) plus the skeletons of the other letters to the user's own AI key (`src/lib/styleTransfer.ts`, batches
+of 10 letters, 3 in parallel). The model returns new positions for the points that should move; they are validated, clamped
+(±250), nodes snap to the metric lines, and handles follow their node. Letters edited by hand in the session are kept, the
+rest is replaced, and Undo restores the previous state. Up to 900 edited points are allowed. Fonts too large for the prefilled
+GitHub link are submitted by copying the data into the issue form ("Copy data and continue on GitHub").

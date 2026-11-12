@@ -1,8 +1,10 @@
-import { KeyboardEvent, PointerEvent, useMemo, useRef, useState } from 'react';
+import { KeyboardEvent, PointerEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { buildGlyphs } from '../lib/engine/build';
 import { V } from '../lib/engine/geometry';
 import { buildDefs } from '../lib/engine/glyphs';
 import { FontParams, computeMetrics } from '../lib/engine/params';
+import { ApiProvider } from '../lib/llm';
+import { adaptToStyle } from '../lib/styleTransfer';
 import { Edits, MAX_EDIT_POINTS, applyEdits, editedPointCount, readOffsets, slotsOf, writeOffsets } from '../lib/engine/skeleton';
 
 const CHARS = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
@@ -10,9 +12,18 @@ const GRID = 5;
 const SNAP_RANGE = 10;
 const HIT = 40;
 
+export interface AiAccess {
+  apiKey: string;
+  provider: ApiProvider;
+  model: string;
+}
+
 interface GlyphEditorProps {
   params: FontParams;
   onChange: (params: FontParams) => void;
+  /** the user's own AI key, if connected */
+  ai: AiAccess | null;
+  onConnect: () => void;
 }
 
 const withEdit = (edits: Edits | undefined, ch: string, value: number[] | undefined): Edits | undefined => {
@@ -29,12 +40,18 @@ const btn =
  * Moves the skeleton points (centre lines) of one letter. The outline is drawn from them with the current
  * weight, contrast, serifs and so on, so every other setting keeps working on the edited letter.
  */
-export function GlyphEditor({ params, onChange }: GlyphEditorProps) {
+export function GlyphEditor({ params, onChange, ai, onConnect }: GlyphEditorProps) {
   const [ch, setCh] = useState('G');
   const [live, setLive] = useState<Map<number, V> | null>(null);
   const [focus, setFocus] = useState<number | null>(null);
   const [past, setPast] = useState<(Edits | undefined)[]>([]);
   const [future, setFuture] = useState<(Edits | undefined)[]>([]);
+  const [manual, setManual] = useState<Set<string>>(new Set());
+  const [hint, setHint] = useState('');
+  const [busy, setBusy] = useState<{ done: number; total: number } | null>(null);
+  const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
+  const latest = useRef(params);
+  useEffect(() => { latest.current = params; }, [params]);
   const group = useRef<SVGGElement>(null);
   const drag = useRef<{ slot: number; grab: V; start: Map<number, V>; moved: boolean } | null>(null);
 
@@ -73,7 +90,38 @@ export function GlyphEditor({ params, onChange }: GlyphEditorProps) {
     if (JSON.stringify(next) === JSON.stringify(params.edits)) return;
     setPast((p) => [...p.slice(-40), params.edits]);
     setFuture([]);
+    setManual((set) => {
+      const n = new Set(set);
+      if (value) n.add(ch); else n.delete(ch);
+      return n;
+    });
     onChange({ ...params, edits: next });
+  };
+
+  const adapt = async () => {
+    if (!ai) { onConnect(); return; }
+    const reference = [...new Set([ch, ...manual])].filter((c) => params.edits?.[c]);
+    const targets = CHARS.filter((c) => !reference.includes(c));
+    setBusy({ done: 0, total: targets.length });
+    setMessage(null);
+    try {
+      const r = await adaptToStyle({ params, reference, targets, hint, ...ai, onProgress: (done, total) => setBusy({ done, total }) });
+      const current = latest.current;
+      const next: Edits = {};
+      for (const c of reference) if (current.edits?.[c]) next[c] = current.edits[c];
+      Object.assign(next, r.edits);
+      setPast((p) => [...p.slice(-40), current.edits]);
+      setFuture([]);
+      onChange({ ...current, edits: Object.keys(next).length ? next : undefined });
+      setMessage({
+        ok: true,
+        text: `Adapted ${r.adapted} letters to the style of ${reference.join(', ')}.${r.failed ? ` ${r.failed} letters failed (${r.firstError}).` : ''} Use Undo to go back.`
+      });
+    } catch (e) {
+      setMessage({ ok: false, text: `${e instanceof Error ? e.message : 'Adapting failed'}. Check your key, model and spending limit.` });
+    } finally {
+      setBusy(null);
+    }
   };
 
   const toFont = (e: PointerEvent): V => {
@@ -267,6 +315,35 @@ export function GlyphEditor({ params, onChange }: GlyphEditorProps) {
           <button type="button" onClick={resetAll} className={btn}>Reset all ({editedChars.length})</button>
         )}
       </div>
+      <div className="rounded-md border border-neutral-200 bg-neutral-50 p-3 space-y-2">
+        <p className="text-sm font-medium text-neutral-800">Adapt all letters with AI</p>
+        <p className="text-xs text-neutral-500">
+          Edit one letter the way you like (for example a squared G), then let the AI carry that look over to the other letters. Letters you edited by hand are kept. You can undo it.
+        </p>
+        <input
+          value={hint}
+          maxLength={300}
+          onChange={(e) => setHint(e.target.value)}
+          placeholder="Optional: describe the look, e.g. hand-cut, square corners"
+          aria-label="Describe the look"
+          className="w-full px-3 py-2.5 border border-neutral-300 rounded-md bg-white"
+        />
+        <button
+          type="button"
+          onClick={adapt}
+          disabled={!!busy || (!!ai && !params.edits?.[ch])}
+          className="w-full bg-primary-300 hover:bg-primary-400 disabled:bg-neutral-300 text-white font-medium py-3 px-4 rounded-md transition-colors"
+        >
+          {busy ? `Adapting… ${busy.done} of ${busy.total} letters` : !ai ? 'Connect AI to adapt all letters' : `Adapt all other letters to “${ch}”`}
+        </button>
+        {ai && !params.edits?.[ch] && !busy && <p className="text-xs text-neutral-500">Edit “{ch}” first, then this button becomes available.</p>}
+        {message && (
+          <p className={`text-sm rounded-md p-3 border ${message.ok ? 'text-green-800 bg-green-50 border-green-200' : 'text-red-700 bg-red-50 border-red-200'}`} role={message.ok ? 'status' : 'alert'}>
+            {message.text}
+          </p>
+        )}
+      </div>
+
       <p className="text-xs text-neutral-500">
         Edited points: {totalPoints} of {MAX_EDIT_POINTS}.{' '}
         Bold and Italic follow your edits. Accented letters and mirrored twins (b and d, p and q) are separate shapes and are not changed.

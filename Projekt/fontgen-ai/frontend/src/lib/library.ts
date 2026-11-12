@@ -64,19 +64,17 @@ export function validateSubmission(raw: unknown): Submission {
 }
 
 /** Readable header, compact parameters (hand edits would otherwise fill the URL with whitespace). */
-function submissionJson(sub: Submission): string {
+export function submissionJson(sub: Submission): string {
   const { params, ...rest } = sub;
   return `${JSON.stringify(rest, null, 2).slice(0, -2)},\n  "params": ${JSON.stringify(params)}\n}`;
 }
 
 export const MAX_URL_LENGTH = 7000;
 
-export function submissionUrl(sub: Submission): string {
-  const q = new URLSearchParams({
-    template: 'font-submission.yml',
-    title: `[Font] ${sub.name}`,
-    submission: submissionJson(sub)
-  });
+/** Link to the prefilled issue form. Without the data (for very large fonts) the data is pasted in by hand. */
+export function submissionUrl(sub: Submission, withData = true): string {
+  const q = new URLSearchParams({ template: 'font-submission.yml', title: `[Font] ${sub.name}` });
+  if (withData) q.set('submission', submissionJson(sub));
   return `https://github.com/${REPO}/issues/new?${q.toString()}`;
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontParams } from '../lib/engine/params';
-import { LICENSE, MAX_URL_LENGTH, Submission, cleanText, submissionUrl } from '../lib/library';
+import { LICENSE, MAX_URL_LENGTH, Submission, cleanText, submissionJson, submissionUrl } from '../lib/library';
 
 const ALIAS_KEY = 'fontgen_alias';
 
@@ -36,7 +36,8 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
 
   const url = submissionUrl(submission);
   const tooLong = url.length > MAX_URL_LENGTH;
-  const valid = consentOk && !tooLong;
+  const data = tooLong ? submissionJson(submission) : '';
+  const valid = consentOk;
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Save to public library">
@@ -81,13 +82,16 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
           </label>
 
           {tooLong && (
-            <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-md p-3" role="alert">
-              This font has too many hand-edited letters to share. Reset a few letters in “Edit letter shapes” and try again.
-            </p>
+            <div className="text-sm text-amber-900 bg-amber-50 border border-amber-200 rounded-md p-3 space-y-2">
+              <p>
+                This font has many hand-edited letters, so the data is too long for the link. The button copies it for you. Paste it (Ctrl/Cmd + V) into the “Font data” box on GitHub.
+              </p>
+              <textarea readOnly value={data} rows={3} onFocus={(e) => e.currentTarget.select()} aria-label="Font data to paste" className="w-full px-2 py-1.5 border border-amber-300 rounded-md font-mono text-[11px] bg-white" />
+            </div>
           )}
 
           <a
-            href={valid ? url : undefined}
+            href={valid ? (tooLong ? submissionUrl(submission, false) : url) : undefined}
             target="_blank"
             rel="noopener noreferrer"
             aria-disabled={!valid}
@@ -96,18 +100,19 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
                 e.preventDefault();
                 return;
               }
+              if (tooLong) navigator.clipboard?.writeText(data).catch(() => undefined);
               try {
                 localStorage.setItem(ALIAS_KEY, cleanText(author, 40));
               } catch {
                 /* storage unavailable */
               }
-              setTimeout(onClose, 300);
+              if (!tooLong) setTimeout(onClose, 300);
             }}
             className={`block w-full text-center font-medium py-3 px-4 rounded-md transition-colors ${
               valid ? 'bg-primary-300 hover:bg-primary-400 text-white' : 'bg-neutral-300 text-white cursor-not-allowed'
             }`}
           >
-            Continue on GitHub
+            {tooLong ? 'Copy data and continue on GitHub' : 'Continue on GitHub'}
           </a>
         </div>
       </div>
