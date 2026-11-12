@@ -1,0 +1,23 @@
+{
+  "id": 3,
+  "name": "HELLVETICA",
+  "author": "Typo",
+  "description": "",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 380,
+    "width": 1.11,
+    "xHeight": 560,
+    "contrast": 0.25,
+    "squareness": 0.3,
+    "slant": 0,
+    "spacing": 0.9,
+    "terminal": "flat",
+    "mono": false,
+    "serif": "none",
+    "serifSize": 1,
+    "corner": 0.1,
+    "wax": 0
+  },
+  "createdAt": "2026-11-12T08:34:39.839Z"
+}
