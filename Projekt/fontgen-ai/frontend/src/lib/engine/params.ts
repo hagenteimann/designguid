@@ -10,6 +10,8 @@ export interface FontParams {
   mono: boolean;
   serif: SerifStyle;
   serifSize: number;
+  corner: number;
+  wax: number;
 }
 
 export type SerifStyle = 'none' | 'slab' | 'bracketed' | 'hairline';
@@ -26,7 +28,9 @@ export const DEFAULT_PARAMS: FontParams = {
   terminal: 'flat',
   mono: false,
   serif: 'none',
-  serifSize: 1
+  serifSize: 1,
+  corner: 0,
+  wax: 0
 };
 
 export interface ParamSpec {
@@ -46,7 +50,9 @@ export const PARAM_SPECS: ParamSpec[] = [
   { key: 'squareness', label: 'Squareness', min: 0, max: 1.5, step: 0.01, hint: '0 = circular, 1 = squarish, 1.5 = boxy / brutalist' },
   { key: 'slant', label: 'Slant', min: 0, max: 14, step: 0.5, hint: 'Oblique angle in degrees' },
   { key: 'spacing', label: 'Spacing', min: 0.4, max: 1.5, step: 0.01, hint: 'Very tight (brutalist) ↔ loose text spacing' },
-  { key: 'serifSize', label: 'Serif size', min: 0.4, max: 1.8, step: 0.05, hint: 'Length of serifs (needs a serif style)' }
+  { key: 'serifSize', label: 'Serif size', min: 0.4, max: 1.8, step: 0.05, hint: 'Length of serifs (needs a serif style)' },
+  { key: 'corner', label: 'Corner rounding', min: 0, max: 1, step: 0.01, hint: '0 = sharp, 1 = fully rounded corners and stroke ends' },
+  { key: 'wax', label: 'Wax', min: 0, max: 1, step: 0.01, hint: 'Soft, melted look: gooey joints and slightly lumpy, organic edges' }
 ];
 
 const num = (v: unknown, min: number, max: number, fallback: number) => {
@@ -80,6 +86,7 @@ export function paramsFromTokens(t: DesignTokens): FontParams {
     mono: t.style === 'mono',
     squareness: t.mood === 'technical' ? 0.55 : t.mood === 'playful' ? 0 : 0.15,
     terminal: t.mood === 'playful' ? 'round' : 'flat',
+    corner: t.mood === 'playful' ? 0.5 : 0,
     spacing: t.mood === 'elegant' ? 1.1 : 1
   };
   if (t.style === 'serif') Object.assign(p, { serif: 'bracketed', contrast: Math.max(p.contrast as number, 0.3), xHeight: 500 });
@@ -99,6 +106,8 @@ export interface Preset {
 export const PRESETS: Preset[] = [
   { id: 'sans', label: 'Sans', params: {} },
   { id: 'rounded', label: 'Rounded', params: { weight: 480, xHeight: 560, squareness: 0.1, terminal: 'round', spacing: 1.05 } },
+  { id: 'soft', label: 'Soft', params: { weight: 520, xHeight: 550, squareness: 0.25, terminal: 'round', corner: 0.75, spacing: 1.05 } },
+  { id: 'wax', label: 'Wax', params: { weight: 640, width: 1.05, xHeight: 560, contrast: 0.05, squareness: 0.3, terminal: 'round', corner: 0.6, wax: 0.9, spacing: 0.95 } },
   { id: 'serif', label: 'Serif', params: { weight: 400, xHeight: 500, contrast: 0.4, squareness: 0, spacing: 1.05, serif: 'bracketed' } },
   { id: 'slab', label: 'Slab', params: { weight: 560, width: 1.05, xHeight: 530, contrast: 0.04, squareness: 0.15, serif: 'slab' } },
   { id: 'didone', label: 'Didone', params: { weight: 420, width: 0.95, xHeight: 470, contrast: 0.6, squareness: 0, spacing: 1.05, serif: 'hairline', serifSize: 1.2 } },

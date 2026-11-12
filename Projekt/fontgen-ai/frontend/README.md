@@ -5,7 +5,7 @@
 > spacing, terminals, mono). A deterministic parametric engine in `src/lib/engine/` draws every glyph from stroke
 > skeletons with an elliptical pen (consistent stems, overshoots, optical sidebearings), and `src/lib/fontBuilder.ts`
 > merges overlaps (Clipper) and assembles the OTF with opentype.js. No backend is required; the Flask code in `../backend` is an unused legacy path.
-> Styles: sans, rounded, serif (slab / bracketed / hairline), didone and brutalist via parameters and presets.
+> Styles: sans, rounded/soft (corner rounding), waxy/melted (wax), serif (slab / bracketed / hairline), didone and brutalist via parameters and presets.
 > Not yet supported: kerning, true italics (oblique slant only).
 
 ## Public font library

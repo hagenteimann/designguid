@@ -1,0 +1,23 @@
+{
+  "id": "seed-10",
+  "name": "Soft Candy",
+  "author": "FontGen",
+  "description": "Fully rounded corners and terminals, friendly and bubbly.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 520,
+    "width": 1,
+    "xHeight": 550,
+    "contrast": 0,
+    "squareness": 0.25,
+    "slant": 0,
+    "spacing": 1.05,
+    "terminal": "round",
+    "mono": false,
+    "serif": "none",
+    "serifSize": 1,
+    "corner": 0.85,
+    "wax": 0
+  },
+  "createdAt": "2026-11-12T10:10:00.000Z"
+}

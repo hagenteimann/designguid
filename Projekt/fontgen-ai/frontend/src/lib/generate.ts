@@ -1,7 +1,7 @@
 import { ApiProvider, DEFAULT_MODELS, callLLM } from './llm';
 import { buildGlyphs } from './engine/build';
 import { bounds } from './engine/contour';
-import { CAP_HEIGHT, DEFAULT_PARAMS, DesignTokens, FontParams, PARAM_SPECS, paramsFromTokens, sanitizeParams } from './engine/params';
+import { CAP_HEIGHT, DEFAULT_PARAMS, computeMetrics, DesignTokens, FontParams, PARAM_SPECS, paramsFromTokens, sanitizeParams } from './engine/params';
 import { assembleFont, parseFont } from './fontBuilder';
 
 export interface SuggestInput {
@@ -40,13 +40,17 @@ Parameters:
 - mono: true only for a monospaced typeface.
 - serif: "none" (sans), "slab" (blocky, same thickness as horizontals), "bracketed" (classical serifs with curved transitions), "hairline" (thin, long serifs for didone).
 - serifSize ${range('serifSize')}: serif length, 1 normal. Ignored when serif is "none".
+- corner ${range('corner')}: rounds all corners and stroke ends. 0 sharp, 0.5 softened, 1 fully rounded (candy, bubble, friendly UI).
+- wax ${range('wax')}: soft, melted candle-wax look with gooey joints and slightly lumpy organic edges. 0 off, 0.5 subtle, 1 very waxy. Also softens corners.
 
 Style recipes:
 - Classical serif / book: serif bracketed, contrast 0.3-0.45, weight 380-450, xHeight 480-510, spacing 1.05.
 - Slab / typewriter: serif slab, contrast 0-0.1, weight 450-700; with mono=true for typewriter.
 - Didone / fashion: serif hairline, contrast 0.5-0.6, weight 350-450, xHeight 460-480.
 - Brutalist: weight 850-950, width 1.3-1.5, squareness 1.2-1.5, contrast 0, spacing 0.5-0.65, xHeight 580-620, terminal flat; serif "none" for grotesque or "slab" for brutalist slab, mono for raw terminal look.
-- Friendly / rounded: weight 450-550, xHeight 540-580, terminal round, squareness under 0.2.
+- Friendly / rounded: weight 450-550, xHeight 540-580, terminal round, squareness under 0.2, corner 0.5-0.8.
+- Waxy / melted / candle: weight 550-750, wax 0.6-1, corner 0.5-0.8, terminal round, contrast under 0.1, spacing 0.9-1.
+- Do not combine strong wax with hairline serifs or very light weights (thin parts get lost).
 
 Best practices to apply:
 - Bold weights need tighter spacing than light weights; very light weights need more spacing.
@@ -56,7 +60,7 @@ Best practices to apply:
 - Express the brief clearly, avoid extremes unless the brief asks for them.
 
 Return ONLY this JSON, no markdown, no commentary:
-{"familyName":"short evocative name, 1-2 words","params":{"weight":400,"width":1,"xHeight":520,"contrast":0.12,"squareness":0.15,"slant":0,"spacing":1,"terminal":"flat","mono":false,"serif":"none","serifSize":1},"notes":"one or two sentences explaining the choices"}
+{"familyName":"short evocative name, 1-2 words","params":{"weight":400,"width":1,"xHeight":520,"contrast":0.12,"squareness":0.15,"slant":0,"spacing":1,"terminal":"flat","mono":false,"serif":"none","serifSize":1,"corner":0,"wax":0},"notes":"one or two sentences explaining the choices"}
 
 For reference, the neutral starting point derived from the quick picks is: ${JSON.stringify(base)}`;
 }
@@ -126,8 +130,9 @@ export function renderFont(params: FontParams, familyName: string): Rendered {
     const b = g && bounds(g.contours);
     return b ? b.yMax : NaN;
   };
-  const capOk = ['H', 'E', 'I', 'T'].every(c => Math.abs(yMax(c) - CAP_HEIGHT) <= 1);
-  const xOk = ['x', 'v', 'z'].every(c => Math.abs(yMax(c) - params.xHeight) <= 1);
+  const tol = 1 + params.wax * 0.11 * computeMetrics(params).stem;
+  const capOk = ['H', 'E', 'I', 'T'].every(c => Math.abs(yMax(c) - CAP_HEIGHT) <= tol);
+  const xOk = ['x', 'v', 'z'].every(c => Math.abs(yMax(c) - params.xHeight) <= tol);
   checks.push({
     name: 'Cap height and x-height aligned',
     passed: capOk && xOk,

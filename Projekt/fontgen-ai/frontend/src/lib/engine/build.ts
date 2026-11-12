@@ -2,6 +2,7 @@ import { Box, Contour, area, bounds, mapContours, reverseContour } from './conto
 import { buildDefs, Edge } from './glyphs';
 import { FontParams, computeMetrics } from './params';
 import { removeOverlaps } from './overlap';
+import { roundCorners } from './rounding';
 import { serifGeometry } from './serifs';
 import { dotContour, strokeToContours } from './stroker';
 
@@ -43,7 +44,15 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
       contours.push(dotContour(d.x, d.y, r, r, square));
     }
     if (contours.length === 0) continue;
-    contours = removeOverlaps(contours);
+    const waxAmp = Math.min(p.wax * 0.11 * m.stem, 0.3 * m.hstem * (p.serif === 'hairline' ? 0.35 : 1));
+    contours = removeOverlaps(contours, {
+      wobble: p.wax > 0 ? { amp: waxAmp, wavelength: 2.6 * m.stem + 60, seed: char.codePointAt(0) as number } : undefined
+    });
+    const rounding = Math.max(p.corner, p.wax * 0.7);
+    if (rounding > 0 || p.wax > 0) {
+      const convex = rounding * (m.stem * 0.55 + 10);
+      contours = roundCorners(contours, convex, Math.max(convex, p.wax * m.stem * 0.55));
+    }
     if (contours.length === 0) continue;
     if (shear) contours = mapContours(contours, (x, y) => [x + y * shear, y]);
 

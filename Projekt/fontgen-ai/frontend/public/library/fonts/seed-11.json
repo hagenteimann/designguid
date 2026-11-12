@@ -1,0 +1,23 @@
+{
+  "id": "seed-11",
+  "name": "Melted Wax",
+  "author": "FontGen",
+  "description": "Soft, lumpy letters with gooey joints, like poured candle wax.",
+  "license": "CC0-1.0",
+  "params": {
+    "weight": 640,
+    "width": 1.05,
+    "xHeight": 560,
+    "contrast": 0.05,
+    "squareness": 0.3,
+    "slant": 0,
+    "spacing": 0.95,
+    "terminal": "round",
+    "mono": false,
+    "serif": "none",
+    "serifSize": 1,
+    "corner": 0.6,
+    "wax": 0.9
+  },
+  "createdAt": "2026-11-12T10:11:00.000Z"
+}
