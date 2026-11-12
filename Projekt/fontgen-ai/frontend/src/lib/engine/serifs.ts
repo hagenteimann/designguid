@@ -116,7 +116,10 @@ export function serifGeometry(def: GlyphDef, m: Metrics, p: FontParams): SerifRe
       }
 
       // Beaks: free horizontal arm ends sitting at the top or bottom of the glyph
-      if (Math.abs(e.out[0]) > 0.9 && e.cap === 'butt' && isFree()) {
+      // (the bar end must also be clear of other strokes by the beak's reach, otherwise the beak lands beside the
+      //  diagonal of Z/z and fills the corner with a lump)
+      const clearOfBeak = paths.every((path, pi) => pi === si || distToPath(e.pt, path) > half + 8);
+      if (Math.abs(e.out[0]) > 0.9 && e.cap === 'butt' && clearOfBeak) {
         const lv = levels.find(l => Math.abs(y - (l.y + l.dir * b)) <= 2);
         if (!lv) continue;
         const xc = x - Math.sign(e.out[0]) * a * beakScale;

@@ -189,8 +189,9 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
   { const W = capW(0.76), rx = loopRx(W), ry = loopRy(cap + ov, -ov);
     def('C', ['r', 'o'], [pb().arc(W / 2, cap / 2, rx, ry, 38, 322).stroke()], W); }
   { const W = capW(0.8), rx = loopRx(W), ry = loopRy(cap + ov, -ov);
-    const endA = 353, yE = cap / 2 + ry * Math.sin(rad(endA));
-    def('G', ['r', 's'], [pb().arc(W / 2, cap / 2, rx, ry, 38, endA).L(W - a, yE).L(W * 0.52, yE).stroke('term', 'butt')], W); }
+    /* the bowl ends with a vertical tangent exactly at bar height, so the bar meets it in one clean corner */
+    const yE = cap / 2;
+    def('G', ['r', 's'], [pb().arc(W / 2, cap / 2, rx, ry, 38, 360).L(W * 0.52, yE).stroke('term', 'butt')], W); }
   { const W = capW(0.48), rx = (W - 2 * a) / 2, ry = cap * 0.2, yc = b - ov + ry;
     def('J', ['r', 's'], [pb(W - a, cap).L(W - a, yc).arc(W - a - rx, yc, rx, ry, 0, -170).stroke('butt', 'term')], W); }
   { const W = capW(0.7), rx = W / 2 - a, ry = Math.min(rx, cap * 0.45), yc = b - ov + ry;
