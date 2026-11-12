@@ -6,6 +6,8 @@ import { ActionsBar } from './components/ActionsBar';
 import { PresetPicker } from './components/PresetPicker';
 import { AiPrompt } from './components/AiPrompt';
 import { TuneControls } from './components/TuneControls';
+import { GlyphEditor } from './components/GlyphEditor';
+import { Disclosure } from './components/Disclosure';
 import { SaveDialog } from './components/SaveDialog';
 import { LibraryView } from './components/LibraryView';
 import { ApiProvider, API_PROVIDERS, GlyphInfo, QAStatus, downloadFont } from './services/api';
@@ -298,6 +300,9 @@ export function App() {
 
             <Step n={3} title="Fine-tune" hint="Every change updates all letters at once">
               <TuneControls params={params} onChange={setParams} />
+              <Disclosure title="Edit letter shapes (advanced)" lazy>
+                <GlyphEditor params={params} onChange={setParams} />
+              </Disclosure>
             </Step>
 
             <Step n={4} title="Save it to the public library" hint="Everyone can use your font for free (CC0)">

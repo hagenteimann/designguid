@@ -315,3 +315,11 @@ Your generated fonts are yours to use. Attribution appreciated.
 ## Support
 
 For issues or feature requests, contact the FontGen AI team or create an issue in the main repository.
+
+## Letter shape editor (advanced)
+
+Studio → step 3 → "Edit letter shapes". Every letter is built from centre lines; the editor moves their points and Bézier
+handles (`src/lib/engine/skeleton.ts`, `src/components/GlyphEditor.tsx`). Edits are stored as sparse integer offsets per
+point in `params.edits` (`{ "G": [pointCount, slot, dx, dy, ...] }`), so weight, contrast, serifs, roundness, wax, Bold and
+Italic keep working on the edited letters. Offsets are validated and limited (±250 units, 150 points in total) when a
+font is loaded or submitted; edits that do not fit a letter's current structure are ignored. Choosing a preset clears them.

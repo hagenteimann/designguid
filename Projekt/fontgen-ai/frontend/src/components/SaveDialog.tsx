@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontParams } from '../lib/engine/params';
-import { LICENSE, Submission, cleanText, submissionUrl } from '../lib/library';
+import { LICENSE, MAX_URL_LENGTH, Submission, cleanText, submissionUrl } from '../lib/library';
 
 const ALIAS_KEY = 'fontgen_alias';
 
@@ -23,7 +23,7 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
   const [consent, setConsent] = useState(false);
 
   const cleanName = cleanText(name, 40);
-  const valid = cleanName.length >= 2 && consent;
+  const consentOk = cleanName.length >= 2 && consent;
 
   const submission: Submission = {
     name: cleanName,
@@ -33,6 +33,10 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
     consent: true,
     params
   };
+
+  const url = submissionUrl(submission);
+  const tooLong = url.length > MAX_URL_LENGTH;
+  const valid = consentOk && !tooLong;
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Save to public library">
@@ -76,8 +80,14 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
             </span>
           </label>
 
+          {tooLong && (
+            <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-md p-3" role="alert">
+              This font has too many hand-edited letters to share. Reset a few letters in “Edit letter shapes” and try again.
+            </p>
+          )}
+
           <a
-            href={valid ? submissionUrl(submission) : undefined}
+            href={valid ? url : undefined}
             target="_blank"
             rel="noopener noreferrer"
             aria-disabled={!valid}

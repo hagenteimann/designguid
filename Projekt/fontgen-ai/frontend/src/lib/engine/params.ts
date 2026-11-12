@@ -1,3 +1,5 @@
+import { Edits, sanitizeEdits } from './skeleton';
+
 export interface FontParams {
   weight: number;
   width: number;
@@ -12,6 +14,8 @@ export interface FontParams {
   serifSize: number;
   corner: number;
   wax: number;
+  /** hand-edited skeleton points per letter (see skeleton.ts) */
+  edits?: Edits;
 }
 
 export type SerifStyle = 'none' | 'slab' | 'bracketed' | 'hairline';
@@ -34,7 +38,7 @@ export const DEFAULT_PARAMS: FontParams = {
 };
 
 export interface ParamSpec {
-  key: Exclude<keyof FontParams, 'terminal' | 'mono' | 'serif'>;
+  key: Exclude<keyof FontParams, 'terminal' | 'mono' | 'serif' | 'edits'>;
   label: string;
   min: number;
   max: number;
@@ -72,6 +76,8 @@ export function sanitizeParams(raw: unknown, base: FontParams = DEFAULT_PARAMS):
   if (r.terminal === 'flat' || r.terminal === 'round') p.terminal = r.terminal;
   if (typeof r.mono === 'boolean') p.mono = r.mono;
   if (SERIF_STYLES.includes(r.serif as SerifStyle)) p.serif = r.serif as SerifStyle;
+  if ('edits' in r) p.edits = sanitizeEdits(r.edits);
+  if (!p.edits) delete p.edits;
   return p;
 }
 

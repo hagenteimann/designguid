@@ -4,6 +4,7 @@ import { FontParams, computeMetrics } from './params';
 import { removeOverlaps } from './overlap';
 import { roundCorners } from './rounding';
 import { serifGeometry } from './serifs';
+import { applyEdits } from './skeleton';
 import { dotContour, strokeToContours } from './stroker';
 
 export interface BuiltGlyph {
@@ -11,6 +12,8 @@ export interface BuiltGlyph {
   unicode: number;
   advance: number;
   contours: Contour[];
+  /** x offset that moved the outline from skeleton space to its final place (before slant) */
+  shift: number;
 }
 
 export interface GlyphSet {
@@ -31,8 +34,9 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
 
   const wanted = only ? new Set([...only]) : null;
   const glyphs: BuiltGlyph[] = [];
-  for (const [char, def] of Object.entries(defs)) {
+  for (const [char, baseDef] of Object.entries(defs)) {
     if (wanted && !wanted.has(char)) continue;
+    const def = p.edits?.[char] ? applyEdits(baseDef, p.edits[char]) : baseDef;
     const extra = p.serif !== 'none' && /[\p{L}\p{N}]/u.test(char) ? serifGeometry(def, m, p) : { strokes: [], polys: [] };
     let contours: Contour[] = [...def.skel.strokes, ...extra.strokes].flatMap(s => strokeToContours(s, pen, { terminal: p.terminal }));
     for (const poly of extra.polys) {
@@ -80,7 +84,7 @@ export function buildGlyphs(p: FontParams, only?: string): GlyphSet {
     // Slant after spacing: the advance comes from the upright shape (as in real italics), the lean pivots around mid x-height
     const pivot = m.xh / 2;
     contours = mapContours(contours, (x, y) => [Math.round(x + shift + (y - pivot) * shear), Math.round(y)]);
-    glyphs.push({ char, unicode: char.codePointAt(0) as number, advance: Math.round(advance), contours });
+    glyphs.push({ char, unicode: char.codePointAt(0) as number, advance: Math.round(advance), contours, shift });
   }
 
   return {
