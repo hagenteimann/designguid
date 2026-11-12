@@ -224,8 +224,11 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
     // the flag's flat top ends flush with the stem's right edge, however heavy the pen is
     def('1', ['o', 's'], [ln(xs, 0, xs, cap), ln(xs - fx, cap - fy, xs + a - hd / 2, cap, 'butt', 'hcut')], W); }
   { const W = capW(0.58), rx = W / 2 - a, ryT = cap * 0.26, cyT = cap + ov - b - ryT;
-    const hd = hw(W * 0.7, cyT - ryT);
-    def('2', ['r', 'o'], [pb().arc(W / 2, cyT, rx, ryT, 160, -40).L(hd / 2, 0).stroke('term', 'hcut'), ln(0, b, W, b)], W); }
+    // the diagonal's left edge ends exactly at the bar's left end (x = 0): solve its width from the real slope
+    const ex = W / 2 + rx * Math.cos(rad(-40)), ey = cyT + ryT * Math.sin(rad(-40));
+    let e2 = 0;
+    for (let i = 0; i < 12; i++) e2 = hw(ex - e2, ey) / 2;
+    def('2', ['r', 'o'], [pb().arc(W / 2, cyT, rx, ryT, 160, -40).L(e2, 0).stroke('term', 'hcut'), ln(0, b, W, b)], W); }
   { const W = capW(0.58), ym = cap * 0.52;
     const ryT = (cap + ov - b - ym) / 2, cyT = ym + ryT, ryB = (ym - (b - ov)) / 2, cyB = b - ov + ryB;
     const rxT = W / 2 - a - cap * 0.02, rxB = W / 2 - a;
@@ -257,7 +260,7 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
   { const W = capW(0.58), ym = cap * 0.535;
     const ryU = (cap + ov - b - ym) / 2, cyU = ym + ryU, ryL = (ym - (b - ov)) / 2, cyL = b - ov + ryL;
     def('8', ['r', 'r'], [ring(W / 2, cyU, W / 2 - a - cap * 0.03, ryU), ring(W / 2, cyL, W / 2 - a, ryL)], W); }
-  { const W = capW(0.58), hd = hw(W * 0.7, cap);
+  { const W = capW(0.58), hd = fhw(W * 0.72, cap, 1);
     def('7', ['o', 'd'], [ln(0, cap - b, W, cap - b), ln(W - hd / 2, cap, W * 0.28, 0, 'hcut', 'hcut')], W); }
 
   /* ── Lowercase ─────────────────────────────────────────────────────────── */
