@@ -216,8 +216,9 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
 
   { const W = capW(0.62), rx = loopRx(W), ry = loopRy(cap + ov, -ov);
     def('0', ['r', 'r'], [ring(W / 2, cap / 2, rx, ry)], W); }
-  { const fx = capW(0.2), xs = fx + a + 8, W = xs + a;
-    def('1', ['o', 's'], [ln(xs, 0, xs, cap), ln(xs - fx, cap - cap * 0.18, xs, cap, 'butt', 'hcut')], W); }
+  { const fx = capW(0.2), xs = fx + a + 8, W = xs + a, fy = cap * 0.18, hd = hw(fx, fy);
+    // the flag's flat top ends flush with the stem's right edge, however heavy the pen is
+    def('1', ['o', 's'], [ln(xs, 0, xs, cap), ln(xs - fx, cap - fy, xs + a - hd / 2, cap, 'butt', 'hcut')], W); }
   { const W = capW(0.58), rx = W / 2 - a, ryT = cap * 0.26, cyT = cap + ov - b - ryT;
     const hd = hw(W * 0.7, cyT - ryT);
     def('2', ['r', 'o'], [pb().arc(W / 2, cyT, rx, ryT, 160, -40).L(hd / 2, 0).stroke('term', 'hcut'), ln(0, b, W, b)], W); }
@@ -228,8 +229,9 @@ export function buildDefs(c: DefContext): Record<string, GlyphDef> {
       pb().arc(W / 2, cyT, rxT, ryT, 155, -90).L(W / 2 - rxT * 0.45, ym).stroke('term', 'butt'),
       pb().arc(W / 2, cyB, rxB, ryB, 90, -155).stroke('butt', 'term')
     ], W); }
-  { const W = capW(0.64), xs = W - a - 20, yb = cap * 0.27, hd = hw(xs, cap - yb);
-    def('4', ['d', 's'], [ln(xs, 0, xs, cap), ln(xs, cap, hd / 2, yb, 'hcut', 'butt'), ln(0, yb, W, yb)], W); }
+  { const W = capW(0.64), xs = W - a - cap * 0.09, yb = cap * 0.27, hd = hw(xs, cap - yb);
+    // diagonal's flat top ends flush with the stem's right edge; the crossbar overhangs clearly
+    def('4', ['d', 's'], [ln(xs, 0, xs, cap), ln(xs + a - hd / 2, cap, hd / 2, yb, 'hcut', 'butt'), ln(0, yb, W, yb)], W); }
   { const W = capW(0.58), htop = cap * 0.62, cyb = (htop + b - ov) / 2, ryb = (htop - (b - ov)) / 2, rxb = W / 2 - a;
     const ys = cyb + ryb * Math.sin(rad(140));
     def('5', ['s', 'r'], [

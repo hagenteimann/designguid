@@ -82,7 +82,7 @@ function generateBezier(pts: V[], u: number[], t1: V, t2: V): Cubic {
   const aL = Math.abs(det) > 1e-12 ? (x0 * c11 - x1 * c01) / det : 0;
   const aR = Math.abs(det) > 1e-12 ? (c00 * x1 - c01 * x0) / det : 0;
   const eps = 1e-6 * seg;
-  if (aL < eps || aR < eps || aL > seg * 3 || aR > seg * 3) {
+  if (aL < eps || aR < eps || aL > seg * 1.2 || aR > seg * 1.2) {
     const d = seg / 3;
     return [p0, add(p0, mul(t1, d)), add(p3, mul(t2, d)), p3];
   }

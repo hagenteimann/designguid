@@ -4,6 +4,7 @@ import { V, cubicAt, dist, fitCurve, neg, norm, sub } from './geometry';
 
 const SCALE = 64;
 const WINDOW = 4;
+const ORGANIC_WINDOW = 16;
 const CORNER_DEG = 32;
 const NEIGHBOUR = 6;
 const TOLERANCE = 0.4;
@@ -29,10 +30,10 @@ function flatten(c: Contour): V[] {
   return pts;
 }
 
-function walk(P: V[], i: number, dir: 1 | -1): V {
+function walk(P: V[], i: number, dir: 1 | -1, win: number): V {
   const n = P.length;
   let k = i, d = 0, steps = 0;
-  while (d < WINDOW && steps < n / 2) {
+  while (d < win && steps < n / 2) {
     k = (k + dir + n) % n;
     d = dist(P[i], P[k]);
     steps++;
@@ -40,9 +41,9 @@ function walk(P: V[], i: number, dir: 1 | -1): V {
   return P[k];
 }
 
-function angleAt(P: V[], i: number): number {
-  const a = norm(sub(P[i], walk(P, i, -1)));
-  const b = norm(sub(walk(P, i, 1), P[i]));
+function angleAt(P: V[], i: number, win: number): number {
+  const a = norm(sub(P[i], walk(P, i, -1, win)));
+  const b = norm(sub(walk(P, i, 1, win), P[i]));
   return (Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1])) ) * 180) / Math.PI;
 }
 
@@ -58,11 +59,11 @@ function isStraight(pts: V[]): boolean {
 }
 
 /** Turn a dense polygon back into a contour of lines and smooth cubics, keeping sharp corners sharp. */
-function fitPolygon(P: V[], tolerance: number = TOLERANCE): Contour | null {
+function fitPolygon(P: V[], tolerance: number = TOLERANCE, win: number = WINDOW): Contour | null {
   const n = P.length;
   if (n < 3) return null;
 
-  const ang = P.map((_, i) => angleAt(P, i));
+  const ang = P.map((_, i) => angleAt(P, i, win));
   const corners: number[] = [];
   for (let i = 0; i < n; i++) {
     if (ang[i] < CORNER_DEG) continue;
@@ -96,12 +97,12 @@ function fitPolygon(P: V[], tolerance: number = TOLERANCE): Contour | null {
       continue;
     }
 
-    const fwdI = walk(P, i, 1), backJ = walk(P, j, -1);
+    const fwdI = walk(P, i, 1, win), backJ = walk(P, j, -1, win);
     let t1 = norm(sub(fwdI, P[i]));
     let t2 = norm(sub(backJ, P[j]));
     if (smooth) {
-      t1 = norm(sub(walk(P, i, 1), walk(P, i, -1)));
-      t2 = neg(norm(sub(walk(P, j, 1), walk(P, j, -1))));
+      t1 = norm(sub(walk(P, i, 1, win), walk(P, i, -1, win)));
+      t2 = neg(norm(sub(walk(P, j, 1, win), walk(P, j, -1, win))));
     }
     for (const c of fitCurve(pts, t1, t2, tolerance)) {
       segs.push({ t: 'C', x1: c[1][0], y1: c[1][1], x2: c[2][0], y2: c[2][1], x: c[3][0], y: c[3][1] });
@@ -178,7 +179,7 @@ export function removeOverlaps(contours: Contour[], opts: OverlapOptions = {}): 
   for (const path of cleaned) {
     // Clipper returns outers counter-clockwise (positive area); fonts want them clockwise.
     const pts: V[] = path.map((p: { X: number; Y: number }): V => [p.X / SCALE, p.Y / SCALE]).reverse();
-    const fitted = fitPolygon(pts, organic ? ORGANIC_TOLERANCE : TOLERANCE);
+    const fitted = fitPolygon(pts, organic ? ORGANIC_TOLERANCE : TOLERANCE, organic ? ORGANIC_WINDOW : WINDOW);
     if (fitted && Math.abs(area(fitted)) > 40) out.push(fitted);
   }
   return out;
