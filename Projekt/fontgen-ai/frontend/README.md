@@ -12,7 +12,7 @@
 
 Fonts are stored as tiny parameter files in `public/library/fonts/` (CC0). Flow, no server involved:
 1. Studio → "Save to public library" opens a prefilled GitHub issue (`.github/ISSUE_TEMPLATE/font-submission.yml`).
-2. The maintainer reviews it and adds the label `approved`.
+2. Issues opened by the repository owner/members/collaborators are published automatically; for everyone else the maintainer reviews it and adds the label `approved`.
 3. `.github/workflows/library-publish.yml` validates the data (`scripts/publish-font.ts`), commits `fonts/<issue>.json`,
    triggers the deploy and closes the issue. `scripts/build-library-index.mjs` builds `library/index.json` at build time.
 

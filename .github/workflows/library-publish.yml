@@ -1,9 +1,10 @@
 name: Publish font to library
 
-# Runs when the maintainer adds the "approved" label to a font submission issue.
+# Publishes a font submission when (a) the maintainer adds the "approved" label, or
+# (b) the issue was opened by the repository owner, a member or a collaborator (trusted, no review needed).
 on:
   issues:
-    types: [labeled]
+    types: [opened, labeled]
 
 permissions:
   contents: write
@@ -16,7 +17,9 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'font-submission')
+    if: >-
+      (github.event.action == 'labeled' && github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'font-submission')) ||
+      (github.event.action == 'opened' && startsWith(github.event.issue.title, '[Font]') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}

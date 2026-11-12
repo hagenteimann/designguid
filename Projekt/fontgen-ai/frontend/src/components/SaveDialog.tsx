@@ -56,7 +56,7 @@ export function SaveDialog({ params, familyName, onClose }: SaveDialogProps) {
             <ul className="text-xs text-amber-800 mt-1 space-y-1 list-disc list-inside">
               <li>A public GitHub issue is created under your GitHub account (a GitHub login is required)</li>
               <li>It contains only the font name, credit, description and design parameters</li>
-              <li>The maintainer reviews it; approved fonts appear in the library within minutes</li>
+              <li>Fonts from the maintainer appear in the library within minutes; others are reviewed first</li>
             </ul>
           </div>
 
